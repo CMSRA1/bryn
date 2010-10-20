@@ -7,7 +7,8 @@ Created by Bryn Mathias on 2010-05-07.
 
 # -----------------------------------------------------------------------------
 # Necessary includes
-
+import errno
+import os
 import setupSUSY
 from libFrameworkSUSY import *
 from libbryn import *
@@ -21,6 +22,14 @@ from BatchGoldenSamples import *
 # -----------------------------------------------------------------------------
 # Samples
 #import yours in your running script
+
+def ensure_dir(path):
+    try:
+      os.makedirs(path)
+    except OSError as exc: # Python >2.5
+      if exc.errno == errno.EEXIST:
+        pass
+      else: raise
 
 
 
@@ -423,7 +432,8 @@ cutTreeData.TAttach(NJet4,nHadStandard350_after_DeadEcal)
 
 cutTreeMC = Tree("MC")
 cutTreeMC.Attach(LeadingJetEta)
-cutTreeMC.TAttach(LeadingJetEta,LeadingJetCut)
+cutTreeMC.TAttach(LeadingJetEta,selection)
+cutTreeMC.TAttach(selection,LeadingJetCut)
 cutTreeMC.TAttach(LeadingJetCut,numComLeptons)
 cutTreeMC.TAttach(numComLeptons,numComPhotons)
 cutTreeMC.TAttach(numComPhotons,oddJet)

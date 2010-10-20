@@ -50,7 +50,7 @@ conf_ak7_caloData.Common = deepcopy(default_common)
 anal_ak7_caloData=Analysis("AK7Calo")
 addCutFlowData(anal_ak7_caloData)
 
-
+ensure_dir(../results/)
 anal_ak5_caloData.Run("../results/",conf_ak5_caloData,data38)
 # anal_ak5_caloData.Run("../results/",conf_ak5_caloData,[bryn1])
 #anal_ak5_caloData.Run("../results/",conf_ak5_caloData,[bryn2])
