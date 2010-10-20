@@ -54,9 +54,10 @@ conf_ak7_caloMC.Common = deepcopy(default_common)
 anal_ak7_caloMC=Analysis("AK7Calo")
 addCutFlowMC(anal_ak7_caloMC)
 
+ensure_dir(../results/JESetaMinus/)
 
-anal_ak5_caloMC.Run("../results/JESetaPlus/",conf_ak5_caloMC,MC)
-anal_ak5_caloMC.Run("../results/JESetaPlus/",conf_ak5_caloMC,[QCD_AllPtBins_7TeV_Pythia])
+anal_ak5_caloMC.Run("../results/JESetaMinus/",conf_ak5_caloMC,MC)
+anal_ak5_caloMC.Run("../results/JESetaMinus/",conf_ak5_caloMC,[QCD_AllPtBins_7TeV_Pythia])
 # anal_ak5_pfMC.Run("../results/JESetaPlus/",conf_ak5_pfMC,MC)
 # anal_ak5_pfMC.Run("../results/JESetaPlus/",conf_ak5_pfMC,[QCD_AllPtBins_7TeV_Pythia])
 # anal_ak5_jptMC.Run("../results/JESetaPlus/",conf_ak5_jptMC,MC)
