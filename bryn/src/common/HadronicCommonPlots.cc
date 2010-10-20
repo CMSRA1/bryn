@@ -66,9 +66,9 @@ void HadronicCommonPlots::StandardPlots() {
 
 
   BookHistArray( DPhi_MHT_MHTBaby_,
-    "DetlaPhi_MHT_MHTBaby_",
-    ";#Delta #phi(MHT,MHTbaby); Events/0.65 rad;",
-    40, 0., TMath::Pi(),
+    "CosDetlaPhi_MHT_MHTBaby_",
+    ";#Delta Cos#phi(MHT,MHTbaby); Events/0.65 rad;",
+    40, -1., 1,
     nMax_+1, 0, 1, true );
 
   BookHistArray( DPhi_MET_MHTBaby_,
@@ -87,9 +87,9 @@ void HadronicCommonPlots::StandardPlots() {
 
   BookHistArray( BabyJetMHT_StandardAlphaT_,
     "BabyJetMHT_vs_AlphaT",
-    "CommonAlphaT;BabyJetMHT;",
+    "Cos(Dphi(MHT,MHTbaby));CommonAlphaT;",
     60,0.,1.5,
-    200,0.,1000.,
+    20,-1.,1.,
     nMax_+1, 0, 1, true );
 
 
@@ -400,8 +400,8 @@ bool HadronicCommonPlots::StandardPlots( Event::Data& ev ) {
 
 
     if ( n >= nMin_ && n <= nMax_ && n < DPhi_MHT_MHTBaby_.size()) {
-      DPhi_MHT_MHTBaby_[0]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),weight);
-      DPhi_MHT_MHTBaby_[n]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),weight);
+      DPhi_MHT_MHTBaby_[0]->Fill(Cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),weight);
+      DPhi_MHT_MHTBaby_[n]->Fill(Cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),weight);
 
     }
 
@@ -434,8 +434,8 @@ bool HadronicCommonPlots::StandardPlots( Event::Data& ev ) {
     }
 
     if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHT_StandardAlphaT_.size()) {
-      BabyJetMHT_StandardAlphaT_[0]->Fill( ev.CommonAlphaT(), ev.JD_CommonJets().killedHT.Pt(), weight );
-      BabyJetMHT_StandardAlphaT_[n]->Fill( ev.CommonAlphaT(), ev.JD_CommonJets().killedHT.Pt(), weight );
+      BabyJetMHT_StandardAlphaT_[0]->Fill( ev.CommonAlphaT(), Cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT), weight );
+      BabyJetMHT_StandardAlphaT_[n]->Fill( ev.CommonAlphaT(), Cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT), weight );
     }
 
     if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHT_StandardAlphaT_.size()) {
@@ -569,7 +569,7 @@ bool HadronicCommonPlots::StandardPlots( Event::Data& ev ) {
         cout << "Alpha T is " << ev.CommonAlphaT() << " HT is "<< ev.CommonHT() <<" MHT is  " << ev.CommonMHT().Pt() << " and MT2 is " << HadronicCommonPlots::MT2_Leading(ev) << " Bised delta phi is " << ev.CommonMinBiasDPhi()<< " Meff is " << ev.CommonMHT().Pt()+ev.CommonHT()<<endl;
         if(HadronicCommonPlots::MT2_Leading(ev) > 300.){ cout << "MT2 Variables are: px,py, Leading Jet " <<
           ev.JD_CommonJets().accepted[0]->Px() << "," << ev.JD_CommonJets().accepted[0]->Py() << "," <<" px,py, Second Jet " << ev.JD_CommonJets().accepted[1]->Px()  <<"," <<  ev.JD_CommonJets().accepted[1]->Py() << "," << endl;}
-        cout << "run : " <<  ev.RunNumber() << "lumi Section "<< ev.LumiSection() <<  " event : "<<  ev.EventNumber() << " Alpha T is" << ev.CommonAlphaT() << " Effective mass is : " << ev.CommonMHT().Pt()+ev.CommonHT() << endl;
+        cout << "run : " <<  ev.RunNumber() << "lumi Section "<< ev.LumiSection() <<  " event : "<<  ev.EventNumber() << " Alpha T is" << ev.CommonAlphaT() << " Effective mass is : " << ev.CommonMHT().Pt()+ev.CommonHT() << " Dijet Mass is " << (ev.JD_CommonJets().accepted[0]+ev.JD_CommonJets().accepted[1]).M() << endl;
         cout << "x-cleaned"<<endl;
         ev.PrintStableVisRec();
         cout << "all"<<endl;
