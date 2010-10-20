@@ -400,8 +400,8 @@ bool HadronicCommonPlots::StandardPlots( Event::Data& ev ) {
 
 
     if ( n >= nMin_ && n <= nMax_ && n < DPhi_MHT_MHTBaby_.size()) {
-      DPhi_MHT_MHTBaby_[0]->Fill(Cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),weight);
-      DPhi_MHT_MHTBaby_[n]->Fill(Cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),weight);
+      DPhi_MHT_MHTBaby_[0]->Fill(ROOT::Math::Cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),weight);
+      DPhi_MHT_MHTBaby_[n]->Fill(ROOT::Math::Cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),weight);
 
     }
 
