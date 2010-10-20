@@ -76,9 +76,9 @@ ak5_jpt.Jets.Prefix="ak5JetJPT"
 
 ak5_pf = deepcopy(default_ntuple)
 ak5_pf.Jets.Prefix="ak5JetPF"
-ak5_pf.Electrons.Prefix="PF"
-ak5_pf.Muons.Prefix="PF"
-ak5_pf.SecMuons.Prefix="Pat"
+# ak5_pf.Electrons.Prefix="PF"
+# ak5_pf.Muons.Prefix="PF"
+# ak5_pf.SecMuons.Prefix="Pat"
 
 ak7_calo = deepcopy(default_ntuple)
 ak7_calo.Jets.Prefix="ak7Jet"
