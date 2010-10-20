@@ -567,8 +567,8 @@ bool HadronicCommonPlots::StandardPlots( Event::Data& ev ) {
         if(ev.CommonAlphaT() > 0.55 && ev.CommonHT() > 350.){
           LorentzV lv1(0.,0.,0.,0.);
           LorentzV lv2(0.,0.,0.,0.);
-          lv1 += (ev.JD_CommonJets().accepted[0];
-          lv2 += (ev.JD_CommonJets().accepted[1];
+          lv1 += (ev.JD_CommonJets().accepted[0]);
+          lv2 += (ev.JD_CommonJets().accepted[1]);
         cout << " This event passes offline cuts!!! " <<endl;
         cout << "Alpha T is " << ev.CommonAlphaT() << " HT is "<< ev.CommonHT() <<" MHT is  " << ev.CommonMHT().Pt() << " and MT2 is " << HadronicCommonPlots::MT2_Leading(ev) << " Bised delta phi is " << ev.CommonMinBiasDPhi()<< " Meff is " << ev.CommonMHT().Pt()+ev.CommonHT()<<endl;
         if(HadronicCommonPlots::MT2_Leading(ev) > 300.){ cout << "MT2 Variables are: px,py, Leading Jet " <<
