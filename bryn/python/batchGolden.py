@@ -22,16 +22,13 @@ from BatchGoldenSamples import *
 # -----------------------------------------------------------------------------
 # Samples
 #import yours in your running script
-
 def ensure_dir(path):
-    try:
-      os.makedirs(path)
-    except OSError as exc: # Python >2.5
-      if exc.errno == errno.EEXIST:
-        pass
-      else: raise
-
-
+    try:
+      os.makedirs(path)
+    except OSError as exc: # Python >2.5
+      if exc.errno == errno.EEXIST:
+        pass
+      else: raise
 
 # -----------------------------------------------------------------------------
 # Reading the collections from the ntuple
