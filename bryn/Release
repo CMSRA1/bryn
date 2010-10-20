@@ -1,6 +1,6 @@
 include ../config.inc
 include ../Makefile_Release.inc
-MODULE=TMP_MODULE_NAME
+MODULE=bryn
 
 INCDIR+=-I$(ROOTSYS_INC) \
 	-I$(PYTHON_INC) $(INCDIR_EXTRA) \

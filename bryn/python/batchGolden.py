@@ -10,7 +10,7 @@ Created by Bryn Mathias on 2010-05-07.
 
 import setupSUSY
 from libFrameworkSUSY import *
-from libHadronic import *
+from libbryn import *
 from icf.core import PSet,Analysis
 from icf.config import defaultConfig
 from copy import deepcopy

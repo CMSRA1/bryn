@@ -14,7 +14,7 @@
 
 using namespace boost::python;
 
-BOOST_PYTHON_MODULE(libHadronic) {
+BOOST_PYTHON_MODULE(libbryn) {
 
   class_<Operation::HadronicAlphaT, bases<Operation::_Base> >( "HadronicAlphaT",  init<float>() );
 
