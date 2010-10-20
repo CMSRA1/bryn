@@ -400,14 +400,14 @@ bool HadronicCommonPlots::StandardPlots( Event::Data& ev ) {
 
 
     if ( n >= nMin_ && n <= nMax_ && n < DPhi_MHT_MHTBaby_.size()) {
-      // DPhi_MHT_MHTBaby_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),weight);
-      // DPhi_MHT_MHTBaby_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),weight);
+      DPhi_MHT_MHTBaby_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),weight);
+      DPhi_MHT_MHTBaby_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),weight);
 
     }
 
     if ( n >= nMin_ && n <= nMax_ && n < DPhi_MET_MHTBaby_.size()) {
-      // DPhi_MET_MHTBaby_[0]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(ev.PFMET(),ev.JD_CommonJets().killedHT)),weight);
-      // DPhi_MET_MHTBaby_[n]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(ev.PFMET(),ev.JD_CommonJets().killedHT)),weight);
+      DPhi_MET_MHTBaby_[0]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(ev.PFMET(),ev.JD_CommonJets().killedHT)),weight);
+      DPhi_MET_MHTBaby_[n]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(ev.PFMET(),ev.JD_CommonJets().killedHT)),weight);
 
     }
 
@@ -424,23 +424,23 @@ bool HadronicCommonPlots::StandardPlots( Event::Data& ev ) {
     }
 
     if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHT_.size()) {
-      // BabyJetMHT_[0]->Fill( ev.JD_CommonJets().killedHT.Pt(), weight );
-      // BabyJetMHT_[n]->Fill( ev.JD_CommonJets().killedHT.Pt(), weight );
+      BabyJetMHT_[0]->Fill( ev.JD_CommonJets().killedHT.Pt(), weight );
+      BabyJetMHT_[n]->Fill( ev.JD_CommonJets().killedHT.Pt(), weight );
     }
 
     if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHT_StandardMHT_.size()) {
-      // BabyJetMHT_StandardMHT_[0]->Fill( ev.CommonMHT().Pt(),ev.JD_CommonJets().killedHT.Pt(), weight );
-      // BabyJetMHT_StandardMHT_[n]->Fill( ev.CommonMHT().Pt(),ev.JD_CommonJets().killedHT.Pt(), weight );
+      BabyJetMHT_StandardMHT_[0]->Fill( ev.CommonMHT().Pt(),ev.JD_CommonJets().killedHT.Pt(), weight );
+      BabyJetMHT_StandardMHT_[n]->Fill( ev.CommonMHT().Pt(),ev.JD_CommonJets().killedHT.Pt(), weight );
     }
 
     if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHT_StandardAlphaT_.size()) {
-      // BabyJetMHT_StandardAlphaT_[0]->Fill( ev.CommonAlphaT(), cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)), weight );
-      // BabyJetMHT_StandardAlphaT_[n]->Fill( ev.CommonAlphaT(), cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)), weight );
+      BabyJetMHT_StandardAlphaT_[0]->Fill( ev.CommonAlphaT(), cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)), weight );
+      BabyJetMHT_StandardAlphaT_[n]->Fill( ev.CommonAlphaT(), cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)), weight );
     }
 
     if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHT_StandardAlphaT_.size()) {
-      // BabyJetMHT_StandardHT_[0]->Fill( ev.CommonHT(), ev.JD_CommonJets().killedHT.Pt(), weight );
-      // BabyJetMHT_StandardHT_[n]->Fill( ev.CommonHT(), ev.JD_CommonJets().killedHT.Pt(), weight );
+      BabyJetMHT_StandardHT_[0]->Fill( ev.CommonHT(), ev.JD_CommonJets().killedHT.Pt(), weight );
+      BabyJetMHT_StandardHT_[n]->Fill( ev.CommonHT(), ev.JD_CommonJets().killedHT.Pt(), weight );
     }
 
 
@@ -472,8 +472,8 @@ bool HadronicCommonPlots::StandardPlots( Event::Data& ev ) {
       }
 
       if ( n >= nMin_ && n <= nMax_ && n < MissedHT_.size() ) {
-        // MissedHT_[0]->Fill(  ev.CommonRecoilMET().Pt()/(ev.CommonRecoilMET()+ev.JD_CommonJets().killedHT).Pt(), weight );
-        // MissedHT_[n]->Fill( ev.CommonRecoilMET().Pt()/(ev.CommonRecoilMET()+ev.JD_CommonJets().killedHT).Pt(), weight );
+        MissedHT_[0]->Fill(  ev.CommonRecoilMET().Pt()/(ev.CommonRecoilMET()+ev.JD_CommonJets().killedHT).Pt(), weight );
+        MissedHT_[n]->Fill( ev.CommonRecoilMET().Pt()/(ev.CommonRecoilMET()+ev.JD_CommonJets().killedHT).Pt(), weight );
       }
 
     }
