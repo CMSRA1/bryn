@@ -47,16 +47,19 @@ def ensure_dir(path):
 
 #Please enter the integrated lumi for the plots here:
 algo = "Calo"
-intlumi = 3.2 #inv pico barns
+intlumi = 11. #4.433 #inv pico barns
+# intlumi = 2.947
+#intlumi = 7.0
 print "The Integrated Luminosity your plots are being scaled to is: ", intlumi , "pb^{-1}"
 #Set your output file here
-outputfile = "../pdfs/50GeVJets/SmearJES/"
+# outputfile = "../pdfs/PlotsForPO38WithTPs/"
+outputfile = "~/public_html/11PB/"
 ensure_dir(outputfile)
 
 
 print "you are outputting to: " ,outputfile
 #SetWhere your results from your analysis are
-resultsDir ="../results/Smear/" #"/vols/cms02/bm409/SUSYv2/hadronic/results/"+algo
+resultsDir ="../results/NoSmear/" #"/vols/cms02/bm409/SUSYv2/hadronic/results/"+algo
 
 print "you are using the " , algo , " Jet collection"
 #close list is a global variable that has the file name appended to it so at the end of each hist loop the open files are closed. It is cleared each time a new hist is called.
@@ -71,6 +74,9 @@ def GetHist(DataSetName,col,norm,Legend):
       leg.AddEntry(Hist,Legend,"LP") # add a legend entry
     Hist.SetLineWidth(3)
     Hist.SetLineColor(col) #set colour
+    Hist.SetBinContent(Hist.GetNbinsX() ,Hist.GetBinContent(Hist.GetNbinsX())+Hist.GetBinContent(Hist.GetNbinsX()+1))
+    Hist.SetBinError(Hist.GetNbinsX() ,math.sqrt((Hist.GetBinError(Hist.GetNbinsX()))**2 + (Hist.GetBinError(Hist.GetNbinsX()+1))**2))
+    Hist.SetBinContent(Hist.GetNbinsX()+1,0)
     if norm != 0:
        Hist.Scale(intlumi/100.) #if not data normilse to the data by lumi, MC is by default weighted to 100pb-1, if you have changed this change here!
     return Hist
@@ -93,7 +99,7 @@ def RatioPlot(Data,BackGround):
 
   # top.SetTitleXOffset(0.9);
   # top.SetTitleYOffset(0.9);
-  top.GetXaxis().SetRangeUser(MinX,MaxX)
+  top.GetXaxis().SetRangeUser(MinX,MaxX+0.1)
   top.GetYaxis().SetRangeUser(0.,2.0)
   return top
 
@@ -102,7 +108,7 @@ def UnityLine (Data):
   top = Data.Clone()  #Draw a line though the perfectly matching point
   # unity = Root.TBox(top.GetXaxis().GetBinUpEdge(top.GetXaxis().GetFirst()), 0.89,top.GetXaxis().GetBinUpEdge(top.GetNbinsX()), 1.11);
   # top.
-  unity = Root.TBox(top.GetBinLowEdge(1+top.FindBin(MinX)), 0.89,top.GetBinLowEdge(1+top.FindBin(MaxX-top.GetBinWidth(2))), 1.11)
+  unity = Root.TBox(top.GetBinLowEdge(top.FindBin(MinX)), 0.89,top.GetBinLowEdge(top.FindBin((top.GetXaxis()).GetXmax())), 1.11)
   unity.SetLineWidth(2);
   unity.SetLineColor(2);
   unity.SetFillColor(2);
@@ -116,7 +122,7 @@ def PassingCutNumbers(Hist, name ,lowerBound):
   lowbin = Hist.FindBin(lowerBound)
   errorVal = Root.Double(0)
   passingCut = Hist.IntegralAndError(lowbin, Hist.GetNbinsX(), errorVal)
-  textLine = "Sample = " + DirKeys[dir].GetTitle() + " " + str(Hist.GetName()) + " " + name +  " , Number passing cut of " + str(lowerBound) +" is "+ " \t " + str(passingCut) + " +/- "  + str(errorVal) + "\n"
+  textLine = "Sample = " + DirKeys[dir].GetTitle()  + "   " + str(Hist.GetName()) + "     " + name +  " , Number passing cut of   " + str(lowerBound) + " is " + "       " + str(passingCut)+ " +/- " + str(errorVal) + "\n"
   CutNumbers.write(textLine)
 
 
@@ -124,7 +130,7 @@ time = strftime("%Y_%m_%d")
 print time
 
 #A file to open and scan for histograms inside directories
-RootFileList = ["../results/AK5"+algo+"_JetMET_ALL.root"]
+RootFileList = ["../results/AK5"+algo+"_Jet_ALL.root"]
 
 CutNumbers = open(outputfile+"CutTable.txt",'w')
 
@@ -137,22 +143,25 @@ SignalRegonPlots = ""
 ControlRegonPlotsAfterAT1 = ""
 ControlRegonPlotsAfterAT2 = ""
 SignalRegonPlotsAfterAT = ""
-
+SignalRegonPlotsAfterATandDeadEcal = ""
+SignalRegonPlotsAfterDeadEcal = ""
 temp = Root.TFile.Open(RootFileList[0])
 DirKeys = temp.GetListOfKeys()
 
 HistKeys = [ (dir.ReadObj()).GetListOfKeys() for dir in DirKeys]
 HistNames = [ [k.GetName() for k in D] for D in HistKeys]
 #Loops though all the histograms that have been read from the first input file, this is done by histogram name
-
+# print HistNames
 closeList = []
 for dir in range(0,len(DirKeys)):
-  print DirKeys[dir].GetTitle()
+  # print DirKeys[dir].GetTitle()
   for hist in HistNames[dir]:
     Draw = False
     if  "all" in hist: Draw = True
     # if DirKeys[dir].GetTitle()[0] != "n" and "_2" in hist: Draw = True
-    if "__" in hist: Draw = True
+    if "__1" in hist: Draw = True
+    if "__2" in hist: Draw = True
+    if "__3" in hist: Draw = True
     if not Draw : continue
     if "/" in hist : continue
     leg = Root.TLegend(0.5, 0.4, 0.95, 0.85)
@@ -180,15 +189,15 @@ for dir in range(0,len(DirKeys)):
     #make your histograms form each file, read in the files you want below
     # GetHist("RootFile",Colour, scale to lumi 0=false anything else = true, Legend entry)
     #NB the order in which you book the histos is the order in which they appear in the legend
-    Data = GetHist("../results/AK5"+algo+"_JetMET_ALL.root",1,0,"Data")
+    Data = GetHist("../results/AK5"+algo+"_Jet_ALL.root",1,0,"Data")
     QCD = GetHist(resultsDir+"/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kRed-7,1,"QCD")
     Data.SetMarkerStyle(20)
     Data.SetLineWidth(3)
     Data.SetLineColor(1)
     Data.SetFillColor(1)
-    ZJets  = GetHist(resultsDir+"/AK5"+algo+"_zjets_madgraph_9.root",Root.kTeal-7,1,"Z+Jets (Madgraph)")
-    Zinv = GetHist(resultsDir+"/AK5"+algo+"_Zinvisible_jets_10.root",91,1,"Z->#nu#nu + Jets")
-    WJets = GetHist(resultsDir+"/AK5"+algo+"_wjets_madgraph_8.root",Root.kPink+7,1,"W+Jets")
+    ZJets  = GetHist(resultsDir+"/AK5"+algo+"_zjets_madgraph_edwardSkim_9.root",Root.kTeal-7,1,"Z+Jets (Madgraph)")
+    Zinv = GetHist(resultsDir+"/AK5"+algo+"_Zinvisible_jets_edwardSkim_10.root",91,1,"Z->#nu#nu + Jets")
+    WJets = GetHist(resultsDir+"/AK5"+algo+"_wjets_madgraph_edwardSkim_8.root",Root.kPink+7,1,"W+Jets")
     ttbar = GetHist(resultsDir+"/AK5"+algo+"_ttbarTauola_11.root",Root.kBlue+1,1,"TTBar")
     LM0 = GetHist(resultsDir+"/AK5"+algo+"_LM0_1.root",2,1,"LM0")
     LM1 = GetHist(resultsDir+"/AK5"+algo+"_LM1_2.root",Root.kRed+3,1,"LM1")
@@ -213,39 +222,85 @@ for dir in range(0,len(DirKeys)):
     Total.Add(ZJets)
     Total.Add(WJets)
     Total.Add(ttbar)
-    if "AlphaT_all" == hist :
-      PassingCutNumbers(Data, "Data"               ,0.0)
-      PassingCutNumbers(Total, "Sm Backgrounds"    ,0.0)
-      PassingCutNumbers(QCD, "QCD"                 ,0.0)
-    if "AlphaT_all" == hist :
-     PassingCutNumbers(Data, "Data"               ,0.51)
-     PassingCutNumbers(Total, "Sm Backgrounds"    ,0.51)
-     PassingCutNumbers(QCD, "QCD"                 ,0.51)
-
-    if "AlphaT_all" == hist :
-     PassingCutNumbers(Data, "Data"               ,0.52)
-     PassingCutNumbers(Total, "Sm Backgrounds"    ,0.52)
-     PassingCutNumbers(QCD, "QCD"                 ,0.52)
-
-
-    if "AlphaT_all" == hist :
-     PassingCutNumbers(Data, "Data"               ,0.53)
-     PassingCutNumbers(Total, "Sm Backgrounds"    ,0.53)
-     PassingCutNumbers(QCD, "QCD"                 ,0.53)
-
-
-    if "AlphaT_all" == hist :
-     PassingCutNumbers(Data, "Data"               ,0.54)
-     PassingCutNumbers(Total, "Sm Backgrounds"    ,0.54)
-     PassingCutNumbers(QCD, "QCD"                 ,0.54)
-
-
-    if "AlphaT_all" == hist :
-     PassingCutNumbers(Data, "Data"               ,0.55)
-     PassingCutNumbers(Total, "Sm Backgrounds"    ,0.55)
-     PassingCutNumbers(QCD, "QCD"                 ,0.55)
-
-
+    # if "AlphaT_all" == hist :
+    #   PassingCutNumbers(Data, "Data"               ,0.0)
+    #   PassingCutNumbers(Total, "Sm Backgrounds"    ,0.0)
+    #   PassingCutNumbers(QCD, "QCD"                 ,0.0)
+    # if "AlphaT_all" == hist :
+    #  PassingCutNumbers(Data, "Data"               ,0.51)
+    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,0.51)
+    #  PassingCutNumbers(QCD, "QCD"                 ,0.51)
+    #
+    # if "AlphaT_all" == hist :
+    #  PassingCutNumbers(Data, "Data"               ,0.52)
+    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,0.52)
+    #  PassingCutNumbers(QCD, "QCD"                 ,0.52)
+    #
+    #
+    # if "AlphaT_all" == hist :
+    #  PassingCutNumbers(Data, "Data"               ,0.53)
+    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,0.53)
+    #  PassingCutNumbers(QCD, "QCD"                 ,0.53)
+    #
+    #
+    # if "AlphaT_all" == hist :
+    #  PassingCutNumbers(Data, "Data"               ,0.54)
+    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,0.54)
+    #  PassingCutNumbers(QCD, "QCD"                 ,0.54)
+    #
+    # if "AlphaT_all" == hist :
+    #  PassingCutNumbers(Data, "Data"               ,0.55)
+    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,0.55)
+    #  PassingCutNumbers(QCD, "QCD"                 ,0.55)
+    #  PassingCutNumbers(LM0, "LM0"                 ,0.55)
+    #  PassingCutNumbers(LM1, "LM1"                 ,0.55)
+    #
+    #
+    # if "AlphaT_afterMht_pfmet_all" == hist :
+    #  PassingCutNumbers(Data, "Data"               ,0.55)
+    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,0.55)
+    #  PassingCutNumbers(QCD, "QCD"                 ,0.55)
+    #  PassingCutNumbers(LM0, "LM0"                 ,0.55)
+    #  PassingCutNumbers(LM1, "LM1"                 ,0.55)
+    #
+    #
+    # if "Mt2_all" == hist :
+    #  PassingCutNumbers(Data, "Data"               ,0.)
+    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,0.)
+    #  PassingCutNumbers(QCD, "QCD"                 ,0.)
+    #  PassingCutNumbers(LM0, "LM0"                 ,0.)
+    #
+    # if "Mt2_all" == hist :
+    #  PassingCutNumbers(Data, "Data"               ,300.)
+    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,300.)
+    #  PassingCutNumbers(QCD, "QCD"                 ,300.)
+    #  PassingCutNumbers(LM0, "LM0"                 ,300.)
+    #
+    #
+    # if "Mt2_all" == hist :
+    #  PassingCutNumbers(Data, "Data"               ,400.)
+    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,400.)
+    #  PassingCutNumbers(QCD, "QCD"                 ,400.)
+    #  PassingCutNumbers(LM0, "LM0"                 ,400.)
+    #
+    # if "Mt2_LeadingJets_all" == hist :
+    #  PassingCutNumbers(Data, "Data"               ,0.)
+    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,0.)
+    #  PassingCutNumbers(QCD, "QCD"                 ,0.)
+    #  PassingCutNumbers(LM0, "LM0"                 ,0.)
+    #
+    #
+    # if "Mt2_LeadingJets_all" == hist :
+    #  PassingCutNumbers(Data, "Data"               ,300.)
+    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,300.)
+    #  PassingCutNumbers(QCD, "QCD"                 ,300.)
+    #  PassingCutNumbers(LM0, "LM0"                 ,300.)
+    #
+    # if "Mt2_LeadingJets_all" == hist :
+    #  PassingCutNumbers(Data, "Data"               ,400.)
+    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,400.)
+    #  PassingCutNumbers(QCD, "QCD"                 ,400.)
+    #  PassingCutNumbers(LM0, "LM0"                 ,400.)
 
       # PassingCutNumbers(LM0, "LM0"                 ,0.0)
       # PassingCutNumbers(LM1, "LM1"                 ,0.0)
@@ -283,10 +338,13 @@ for dir in range(0,len(DirKeys)):
     # Systematics
     ScaledUp = GetHist("../results/JESplus/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kTeal-7,1,0)
     ScaledDown = GetHist("../results/JESminus/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kTeal-7,1,0)
+    Smear = GetHist("../results/Smear/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia.root",Root.kTeal-7,1,0)
+    Total = SystematicsSmear(Total,Smear)
     # ScaledUpEta = GetHist("../results/JESetaPlus/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kTeal-7,1,0)
     # ScaledDownEta = GetHist("../results/JESetaMinus/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kTeal-7,1,0)
     Total = Systematics(Total,ScaledUp,ScaledDown)
     # Total = Systematics(Total,ScaledUpEta, ScaledDownEta)
+
     hcen=Total.Clone()
     herr=Total.Clone()
     herr.SetLineColor(Root.kTeal+3)
@@ -307,6 +365,7 @@ for dir in range(0,len(DirKeys)):
     leg.AddEntry(Total,"Standard Model","Lf")
 
     #Defind the ranges of the histogram for the two highest histograms ie the data and the total
+    if "AlphaT" in hist: MaxXOrig = Data.GetNbinsX()*Data.GetBinWidth(1)
     if HistogramMinX(Total) < MinX :
        MinX = HistogramMinX(Total)
     if HistogramMaxX(Total) > MaxX :
@@ -320,8 +379,8 @@ for dir in range(0,len(DirKeys)):
        MaxX = HistogramMaxX(Data)
     if HistogramMaxY(Data) > MaxY :
        MaxY = HistogramMaxY(Data)
-
-
+    if "Mt2" in hist: MaxX = 500.
+    if "AlphaT" in hist: MaxX = MaxXOrig
 
     herr.GetXaxis().SetRangeUser(MinX,MaxX)
     herr.GetYaxis().SetRangeUser(0.001,MaxY*5.)
@@ -333,7 +392,7 @@ for dir in range(0,len(DirKeys)):
 
     ZJets.Draw("9Sameh")
     Zinv.Draw("9SAMEh")
-    #WJets.Draw("9SAMEh")
+    WJets.Draw("9SAMEh")
     ttbar.Draw("9SAMEh")
     LM0.Draw("9SAMEh")
     LM1.Draw("9SAMEh")
@@ -364,30 +423,39 @@ for dir in range(0,len(DirKeys)):
     ratio.SetNdivisions(4, "Y");
     ratio.Draw()
     line.Draw()
-
+    c1.cd(1).SetLogy()
+    c1.Update()
+    # print "saving hist:", hist, "from dir:",DirKeys[dir].GetTitle()
+    c1.SaveAs(outputfile+(DirKeys[dir].GetTitle())+hist+".png")
+    if Total.GetEntries() == 0: Draw = False
     if Draw :
       c1.cd(1).SetLogy()
       c1.Update()
-      c1.SaveAs(outputfile+(DirKeys[dir].GetTitle())+hist+".png")
+      # c1.SaveAs(outputfile+(DirKeys[dir].GetTitle())+hist+".png")
       # c1.SaveAs(outputfile+(DirKeys[dir].GetTitle())+hist+".pdf")
       if "All" == (DirKeys[dir].GetTitle()):
-        AllPlots += PlotRow("All"+hist,"nAll"+hist)
+        AllPlots += PlotRow("All"+hist,"nAll"+hist,"Allcombined"+hist)
 
       if "250_300Gev" == (DirKeys[dir].GetTitle()):
-        if "_after_alphaT" in hist : ControlRegonPlotsAfterAT1 += PlotRow("250_300Gev"+hist,"n250_300Gev"+hist)
-        else: ControlRegonPlots1 += PlotRow("250_300Gev"+hist,"n250_300Gev"+hist)
+        if "_after_alphaT" in hist : ControlRegonPlotsAfterAT1 += PlotRow("250_300Gev"+hist,"n250_300Gev"+hist,"250_300Gevcombined"+hist)
+        else: ControlRegonPlots1 += PlotRow("250_300Gev"+hist,"n250_300Gev"+hist,"250_300Gevcombined"+hist)
 
       if "300_350Gev" == (DirKeys[dir].GetTitle()):
-        if "_after_alphaT" in hist : ControlRegonPlotsAfterAT2 += PlotRow("300_350Gev"+hist,"n300_350Gev"+hist)
-        else: ControlRegonPlots2 += PlotRow("300_350Gev"+hist,"n300_350Gev"+hist)
+        if "_after_alphaT" in hist : ControlRegonPlotsAfterAT2 += PlotRow("300_350Gev"+hist,"n300_350Gev"+hist, "300_350Gevcombined"+hist)
+        else: ControlRegonPlots2 += PlotRow("300_350Gev"+hist,"n300_350Gev"+hist,"300_350Gevcombined"+hist)
 
       if "350Gev" == (DirKeys[dir].GetTitle()):
-        if "_after_alphaT" in hist : SignalRegonPlotsAfterAT += PlotRow("350Gev"+hist,"n350Gev"+hist)
-        else: SignalRegonPlots += PlotRow("350Gev"+hist,"n350Gev"+hist)
+        if "_after_alphaT" in hist : SignalRegonPlotsAfterAT += PlotRow("350Gev"+hist,"n350Gev"+hist,"350Gevcombined"+hist)
+        else: SignalRegonPlots += PlotRow("350Gev"+hist,"n350Gev"+hist,"350Gevcombined"+hist)
+
+      if "350Gev_afterDeadEcal" == (DirKeys[dir].GetTitle()):
+        if "_after_alphaT" in hist : SignalRegonPlotsAfterATandDeadEcal += PlotRow("350Gev_afterDeadEcal"+hist,"n350Gev_afterDeadEcal"+hist,"350Gev_afterDeadEcalcombined"+hist)
+        else: SignalRegonPlotsAfterDeadEcal += PlotRow("350Gev_afterDeadEcal"+hist,"n350Gev_afterDeadEcal"+hist,"350Gev_afterDeadEcalcombined"+hist)
+
 
     for a in closeList :
       a.Close()
     closeList = []
-site = Header(intlumi) + BegSec("All Plots") + AllPlots + EndSec() + BegSec("Controll Region Plots 250-300GeV") + ControlRegonPlots1 + EndSec()  + BegSec("Controll Region 250-300GeV After AlphaT = 0.55 cut") +ControlRegonPlotsAfterAT1 + EndSec() + BegSec("Controll Region Plots 300-350GeV") + ControlRegonPlots2 + EndSec() + BegSec("Controll Region  300-350GeV After AlphaT = 0.55 cut") +ControlRegonPlotsAfterAT2 + EndSec() +  BegSec("Signal Region Plots") + SignalRegonPlots + EndSec() + BegSec("Signal Region After AlphaT = 0.55 cut") + SignalRegonPlotsAfterAT + EndSec() +  Footer()
+site = Header(intlumi) + BegSec("All Plots") + AllPlots + EndSec() + BegSec("Controll Region Plots 250-300GeV") + ControlRegonPlots1 + EndSec()  + BegSec("Controll Region 250-300GeV After AlphaT = 0.55 cut") +ControlRegonPlotsAfterAT1 + EndSec() + BegSec("Controll Region Plots 300-350GeV") + ControlRegonPlots2 + EndSec() + BegSec("Controll Region  300-350GeV After AlphaT = 0.55 cut") +ControlRegonPlotsAfterAT2 + EndSec() +  BegSec("Signal Region Plots") + SignalRegonPlots + EndSec() + BegSec("Signal Region After AlphaT = 0.55 cut") + SignalRegonPlotsAfterAT + EndSec() + BegSec("Signal Region Plots After Dead Ecal Cut") + SignalRegonPlotsAfterDeadEcal + EndSec() + BegSec("Signal Region After AlphaT = 0.55 cut && DeadEcal Cut") + SignalRegonPlotsAfterATandDeadEcal + EndSec() + Footer()
 
 Webpage.write(site)
