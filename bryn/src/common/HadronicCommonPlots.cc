@@ -173,13 +173,13 @@ void HadronicCommonPlots::StandardPlots() {
     nMax_+1, 0, 1, true );
 
   BookHistArray( AlphaT_METCut_,
-    "AlphaT_afterMht_pfmet",
+    "AlphaT_after_MHTRatio",
     ";#alpha_{T};Events/0.025;",
     60,0.,1.5,
     nMax_+1, 0, 1, true );
 
   BookHistArray( AlphaT_Zoomed_METCut_,
-    "AlphaT_Zoomed_afterMht_pfmet",
+    "AlphaT_Zoomed_after_MHTRatio",
     ";#alpha_{T}; Events/0.0025;",
     60,0.45,0.6,
     nMax_+1, 0, 1, true );
@@ -387,7 +387,7 @@ bool HadronicCommonPlots::StandardPlots( Event::Data& ev ) {
   if ( StandardPlots_ ){
 
 
-    if((ev.CommonMHT().Pt()-ev.PFMET().Pt())/(ev.CommonHT()+ev.CommonMHT().Pt()) < 0.15){
+    if(ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTyoeII()).Pt() < 1.25){
       if ( n >= nMin_ && n <= nMax_ && n < AlphaT_METCut_.size()) {
         AlphaT_METCut_[0]->Fill(ev.CommonAlphaT(),weight);
         AlphaT_METCut_[n]->Fill(ev.CommonAlphaT(),weight);
