@@ -387,7 +387,7 @@ bool HadronicCommonPlots::StandardPlots( Event::Data& ev ) {
   if ( StandardPlots_ ){
 
 
-    if(ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTyoeII()).Pt() < 1.25){
+    if(ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt() < 1.25){
       if ( n >= nMin_ && n <= nMax_ && n < AlphaT_METCut_.size()) {
         AlphaT_METCut_[0]->Fill(ev.CommonAlphaT(),weight);
         AlphaT_METCut_[n]->Fill(ev.CommonAlphaT(),weight);
