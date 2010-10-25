@@ -121,7 +121,6 @@ default_cc.Photons.PhotonIsoTypePtCutoff=30. # TW added - this hasn't changed (y
 # Definition of common objects
 
 default_common = deepcopy(defaultConfig.Common)
-
 default_common.ApplyXCleaning=True
 default_common.Jets.PtCut=50.0
 default_common.Jets.EtaCut=3.0
@@ -148,8 +147,6 @@ default_common.Photons.EtaCut=2.5
 # default_common.Photons.SigmaIetaIetaCut=0.5
 ##default_common.Photons.CaloIsoCut=99999.
 default_common.Photons.IDReq=3
-default_common.AlphaT.CalcWithEt=True
-# default_common.AlphaT.CalcWithEt=True
 # -----------------------------------------------------------------------------
 
 
@@ -357,21 +354,36 @@ DeadEcalCutMC = OP_DeadECALCut(0.3,"./deadRegionList_START38_V12.txt")
 
 # AK5 Calo
 
+# cutTreeData = Tree("Data")
+# cutTreeData.Attach(NoiseFilt)
+# cutTreeData.TAttach(NoiseFilt,selection)
+# cutTreeData.TAttach(selection,JetTrigger)
+# #cutTreeData.TAttach(JetTrigger,LeadingJetEta)
+# cutTreeData.TAttach(selection,LeadingJetEta)
+# cutTreeData.TAttach(LeadingJetEta,LeadingJetCut)
+# cutTreeData.TAttach(LeadingJetCut,numComLeptons)
+# cutTreeData.TAttach(numComLeptons,numComPhotons)
+# cutTreeData.TAttach(numComPhotons,oddJet)
+# cutTreeData.TAttach(oddJet,oddMuon)
+# cutTreeData.TAttach(oddMuon,oddElectron)
+# cutTreeData.TAttach(oddElectron,oddPhoton)
+# cutTreeData.TAttach(oddPhoton,badMuonInJet)
+# cutTreeData.TAttach(badMuonInJet,secondJetET)
+
+
 cutTreeData = Tree("Data")
 cutTreeData.Attach(NoiseFilt)
 cutTreeData.TAttach(NoiseFilt,selection)
-cutTreeData.TAttach(selection,JetTrigger)
-cutTreeData.TAttach(JetTrigger,LeadingJetEta)
-cutTreeData.TAttach(LeadingJetEta,LeadingJetCut)
-cutTreeData.TAttach(LeadingJetCut,numComLeptons)
-cutTreeData.TAttach(numComLeptons,numComPhotons)
-cutTreeData.TAttach(numComPhotons,oddJet)
-cutTreeData.TAttach(oddJet,oddMuon)
+cutTreeData.TAttach(selection,oddMuon)
 cutTreeData.TAttach(oddMuon,oddElectron)
 cutTreeData.TAttach(oddElectron,oddPhoton)
-cutTreeData.TAttach(oddPhoton,badMuonInJet)
-cutTreeData.TAttach(badMuonInJet,secondJetET)
-
+cutTreeData.TAttach(oddPhoton,numComLeptons)
+cutTreeData.TAttach(numComLeptons,numComPhotons)
+cutTreeData.TAttach(numComPhotons,LeadingJetEta)
+cutTreeData.TAttach(LeadingJetEta,badMuonInJet)
+cutTreeData.TAttach(badMuonInJet,oddJet)
+cutTreeData.TAttach(oddJet,LeadingJetCut)
+cutTreeData.TAttach(LeadingJetCut,secondJetET)
 ##########DiJet Studies
 cutTreeData.TAttach(secondJetET,htCut250)
 cutTreeData.TAttach(htCut250,dalitz_plots_Inclusive)
@@ -414,19 +426,19 @@ cutTreeData.TAttach(NJet4,nHadStandard350_after_DeadEcal)
 
 #Second MC!
 
+
 cutTreeMC = Tree("MC")
-cutTreeMC.Attach(LeadingJetEta)
-cutTreeMC.TAttach(LeadingJetEta,selection)
-cutTreeMC.TAttach(selection,LeadingJetCut)
-cutTreeMC.TAttach(LeadingJetCut,numComLeptons)
-cutTreeMC.TAttach(numComLeptons,numComPhotons)
-cutTreeMC.TAttach(numComPhotons,oddJet)
-cutTreeMC.TAttach(oddJet,oddMuon)
+cutTreeMC.Attach(selection)
+cutTreeMC.TAttach(selection,oddMuon)
 cutTreeMC.TAttach(oddMuon,oddElectron)
 cutTreeMC.TAttach(oddElectron,oddPhoton)
-cutTreeMC.TAttach(oddPhoton,badMuonInJet)
-cutTreeMC.TAttach(badMuonInJet,secondJetET)
-
+cutTreeMC.TAttach(oddPhoton,numComLeptons)
+cutTreeMC.TAttach(numComLeptons,numComPhotons)
+cutTreeMC.TAttach(numComPhotons,LeadingJetEta)
+cutTreeMC.TAttach(LeadingJetEta,badMuonInJet)
+cutTreeMC.TAttach(badMuonInJet,oddJet)
+cutTreeMC.TAttach(oddJet,LeadingJetCut)
+cutTreeMC.TAttach(LeadingJetCut,secondJetET)
 ##########DiJet Studies
 cutTreeMC.TAttach(secondJetET,htCut250)
 cutTreeMC.TAttach(htCut250,dalitz_plots_Inclusive)
@@ -460,5 +472,4 @@ cutTreeMC.TAttach(DeadEcalCutMC,DiJet4)
 cutTreeMC.TAttach(DiJet4,HadStandard350_after_DeadEcal)
 cutTreeMC.TAttach(DeadEcalCutMC,NJet4)
 cutTreeMC.TAttach(NJet4,nHadStandard350_after_DeadEcal)
-
 

@@ -1,4 +1,9 @@
 #!/usr/bin/bash
+source /vols/cms/grid/setup.sh
+voms-proxy-init -voms cms -hours 130
+source ../../setup.sh
+
+
 ./Data.py -b -n1
 ./McJESetaPlus.py -b
 ./McJESetaMinus.py -b

@@ -3,7 +3,7 @@ import setupSUSY
 from libFrameworkSUSY import *
 from libbryn import *
 from icf.core import PSet,Analysis
-
+import icf.utils as Utils
 from batchGolden import *
 
 
@@ -53,7 +53,30 @@ addCutFlowMC(anal_ak7_caloMC)
 
 ensure_dir("../results/NoSmear/")
 
-anal_ak5_caloMC.Run("../results/NoSmear/",conf_ak5_caloMC,MC)
+QCD470=PSet(
+Name="QCD470",
+Format=("ICF",2),
+File=(
+"/vols/cms02/gouskos/QCD_Pythia_Pt470_Jun2010/SusyCAF_Tree_10_1_wU8.root",
+#"/vols/cms02/gouskos/QCD_Pythia_Pt470_Jun2010/SusyCAF_Tree_11_1_o9t.root",
+#"/vols/cms02/gouskos/QCD_Pythia_Pt470_Jun2010/SusyCAF_Tree_1_1_9gm.root",
+#"/vols/cms02/gouskos/QCD_Pythia_Pt470_Jun2010/SusyCAF_Tree_12_1_Uuy.root",
+#"/vols/cms02/gouskos/QCD_Pythia_Pt470_Jun2010/SusyCAF_Tree_13_1_A6P.root",
+#"/vols/cms02/gouskos/QCD_Pythia_Pt470_Jun2010/SusyCAF_Tree_14_1_qnz.root",
+#"/vols/cms02/gouskos/QCD_Pythia_Pt470_Jun2010/SusyCAF_Tree_15_1_CvP.root",
+#"/vols/cms02/gouskos/QCD_Pythia_Pt470_Jun2010/SusyCAF_Tree_16_1_R0M.root",
+#"/vols/cms02/gouskos/QCD_Pythia_Pt470_Jun2010/SusyCAF_Tree_17_1_lPJ.root",
+#"/vols/cms02/gouskos/QCD_Pythia_Pt470_Jun2010/SusyCAF_Tree_18_1_Hw6.root",
+#"/vols/cms02/gouskos/QCD_Pythia_Pt470_Jun2010/SusyCAF_Tree_19_1_SK4.root",
+),
+Weights = PSet(
+    CrossSection = [8.762e+08,6.041e+07,9.238e+05,2.547e+04,1.256e+03,8.798e+01,2.186,0.01122],
+    Events=[6095857,5069664,2065792,3171950,2976108,2159497,2181700,1185024],
+    PtBin = [15.,30.,80.,170.,300., 470.,800.,1400.],
+    ),
+)
+Utils.reweight([QCD470],10.9)
+#anal_ak5_caloMC.Run("../results/NoSmear/",conf_ak5_caloMC,MC)
 anal_ak5_caloMC.Run("../results/NoSmear",conf_ak5_caloMC,[QCD_AllPtBins_7TeV_Pythia])
 # anal_ak5_pfMC.Run("../results/NoSmear",conf_ak5_pfMC,MC)
 # anal_ak5_pfMC.Run("../results/NoSmear",conf_ak5_pfMC,[QCD_AllPtBins_7TeV_Pythia])

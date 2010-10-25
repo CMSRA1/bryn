@@ -106,9 +106,10 @@ File=["/vols/cms02/elaird1/12_skims/Jet.Run2010B-PromptReco-v2.RECO.RAW.Burt/Jet
 
 from data.Jet_MultiJet_JetMet_38_JSonUpTo151010 import *
 from data.edward_data_skim_36 import *
-
-
-data38=[Jet_MultiJet_JetMet_38_JSonUpTo151010]
+from data.edward_data_skim_allJetTo_Json151010 import *
+#data38=[AllData38WithTP]
+data38=[All38SkimsUpto151010_Jet_MultiJet]
+#data38=[Jet_MultiJet_JetMet_38_JSonUpTo151010]
 
 
 

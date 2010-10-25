@@ -47,13 +47,13 @@ def ensure_dir(path):
 
 #Please enter the integrated lumi for the plots here:
 algo = "Calo"
-intlumi = 11. #4.433 #inv pico barns
+intlumi = 15.1 #4.433 #inv pico barns
 # intlumi = 2.947
 #intlumi = 7.0
 print "The Integrated Luminosity your plots are being scaled to is: ", intlumi , "pb^{-1}"
 #Set your output file here
 # outputfile = "../pdfs/PlotsForPO38WithTPs/"
-outputfile = "~/public_html/11PB/"
+outputfile = "../pdfs/15PB/"
 ensure_dir(outputfile)
 
 
@@ -130,7 +130,7 @@ time = strftime("%Y_%m_%d")
 print time
 
 #A file to open and scan for histograms inside directories
-RootFileList = ["../results/AK5"+algo+"_Jet_ALL.root"]
+RootFileList = ["../results/AK5"+algo+"_Jet15pb.root"]
 
 CutNumbers = open(outputfile+"CutTable.txt",'w')
 
@@ -189,7 +189,7 @@ for dir in range(0,len(DirKeys)):
     #make your histograms form each file, read in the files you want below
     # GetHist("RootFile",Colour, scale to lumi 0=false anything else = true, Legend entry)
     #NB the order in which you book the histos is the order in which they appear in the legend
-    Data = GetHist("../results/AK5"+algo+"_Jet_ALL.root",1,0,"Data")
+    Data = GetHist("../results/AK5"+algo+"_Jet15pb.root",1,0,"Data")
     QCD = GetHist(resultsDir+"/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kRed-7,1,"QCD")
     Data.SetMarkerStyle(20)
     Data.SetLineWidth(3)
@@ -338,7 +338,7 @@ for dir in range(0,len(DirKeys)):
     # Systematics
     ScaledUp = GetHist("../results/JESplus/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kTeal-7,1,0)
     ScaledDown = GetHist("../results/JESminus/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kTeal-7,1,0)
-    Smear = GetHist("../results/Smear/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia.root",Root.kTeal-7,1,0)
+    Smear = GetHist("../results/Smear/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kTeal-7,1,0)
     Total = SystematicsSmear(Total,Smear)
     # ScaledUpEta = GetHist("../results/JESetaPlus/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kTeal-7,1,0)
     # ScaledDownEta = GetHist("../results/JESetaMinus/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kTeal-7,1,0)
@@ -381,7 +381,7 @@ for dir in range(0,len(DirKeys)):
        MaxY = HistogramMaxY(Data)
     if "Mt2" in hist: MaxX = 500.
     if "AlphaT" in hist: MaxX = MaxXOrig
-
+    if "DPhi" in hist: MinX = -1.1
     herr.GetXaxis().SetRangeUser(MinX,MaxX)
     herr.GetYaxis().SetRangeUser(0.001,MaxY*5.)
     #Draw order is important!
