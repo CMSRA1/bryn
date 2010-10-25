@@ -64,9 +64,6 @@ void HadronicCommonPlots::StandardPlots() {
 
 
 
-AlphaTafterPFMEC_
-
-
   BookHistArray( AlphaTafterPFMEC_,
     "AlphaT_after_Calo_MEC",
     ";#alpha_{T};Events/0.025;",
