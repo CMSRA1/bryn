@@ -68,6 +68,10 @@ namespace Operation {
     std::vector<TH1D*>  DPhi_MHT_MHTbaby_AfterAlphaT_;
     std::vector<TH2D*>  DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_AfterAlphaT_;
     std::vector<TH2D*>  DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_;
+    std::vector<TH1D*>  AlphaTafterPFMEC_;
+    std::vector<TH1D*>  AlphaT_Zoomed_afterPFMEC_;
+    std::vector<TH1D*>  AlphaTafterCaloMEC_;
+    std::vector<TH1D*>  AlphaT_ZoomedafterCaloMEC_;
     void StandardPlots();
     bool StandardPlots( Event::Data& );
 

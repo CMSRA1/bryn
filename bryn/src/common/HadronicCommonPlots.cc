@@ -64,6 +64,36 @@ void HadronicCommonPlots::StandardPlots() {
 
 
 
+AlphaTafterPFMEC_
+
+
+  BookHistArray( AlphaTafterPFMEC_,
+    "AlphaT_after_Calo_MEC",
+    ";#alpha_{T};Events/0.025;",
+    60,0.,1.5,
+    nMax_+1, 0, 1, true );
+
+  BookHistArray( AlphaT_Zoomed_afterPFMEC_,
+    "AlphaT_Zoomed_after_Calo_MEC",
+    ";#alpha_{T}; Events/0.0025;",
+    60,0.45,0.6,
+    nMax_+1, 0, 1, true );
+
+
+
+  BookHistArray( AlphaTafterCaloMEC_,
+    "AlphaT_after_Calo_MEC",
+    ";#alpha_{T};Events/0.025;",
+    60,0.,1.5,
+    nMax_+1, 0, 1, true );
+
+  BookHistArray( AlphaT_ZoomedafterCaloMEC_,
+    "AlphaT_Zoomed_after_Calo_MEC",
+    ";#alpha_{T}; Events/0.0025;",
+    60,0.45,0.6,
+    nMax_+1, 0, 1, true );
+
+
 
   BookHistArray( DPhi_MHT_MHTBaby_,
     "CosDetlaPhi_MHT_MHTBaby_",
@@ -413,6 +443,29 @@ bool HadronicCommonPlots::StandardPlots( Event::Data& ev ) {
   if ( StandardPlots_ ){
 
 
+if( (ev.CommonMHT().Pt()-ev.PFMET().Pt())/(ev.CommonMHT().Pt()+ev.CommonHT()) < 0.15){
+      if( n >= nMin_ && n <= nMax_ && n < AlphaTafterPFMEC_.size() ) {
+      AlphaTafterPFMEC_[0]->Fill(ev.CommonAlphaT(),weight);
+      AlphaTafterPFMEC_[n]->Fill(ev.CommonAlphaT(),weight);
+      AlphaT_Zoomed_afterPFMEC_[0]->Fill(ev.CommonAlphaT(),weight);
+      AlphaT_Zoomed_afterPFMEC_[n]->Fill(ev.CommonAlphaT(),weight);
+    }
+}
+
+if( (ev.CommonMHT().Pt()-LorentzV(*ev.metP4caloTypeII()).Pt())/(ev.CommonMHT().Pt()+ev.CommonHT()) < 0.15){
+      if( n >= nMin_ && n <= nMax_ && n < AlphaTafterCaloMEC_.size() ) {
+      AlphaTafterCaloMEC_[0]->Fill(ev.CommonAlphaT(),weight);
+      AlphaTafterCaloMEC_[n]->Fill(ev.CommonAlphaT(),weight);
+      AlphaT_ZoomedafterCaloMEC_[0]->Fill(ev.CommonAlphaT(),weight);
+      AlphaT_ZoomedafterCaloMEC_[n]->Fill(ev.CommonAlphaT(),weight);
+    }
+}
+
+
+
+
+
+
     if(ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt() < 1.25){
       if ( n >= nMin_ && n <= nMax_ && n < AlphaT_METCut_.size()) {
         AlphaT_METCut_[0]->Fill(ev.CommonAlphaT(),weight);
@@ -426,14 +479,14 @@ bool HadronicCommonPlots::StandardPlots( Event::Data& ev ) {
 
 
     if ( n >= nMin_ && n <= nMax_ && n < DPhi_MHT_MHTBaby_.size()) {
-      DPhi_MHT_MHTBaby_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),weight);
-      DPhi_MHT_MHTBaby_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),weight);
+      DPhi_MHT_MHTBaby_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),weight);
+      DPhi_MHT_MHTBaby_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),weight);
 
     }
 
     if ( n >= nMin_ && n <= nMax_ && n < DPhi_MET_MHTBaby_.size()) {
-      DPhi_MET_MHTBaby_[0]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(ev.PFMET(),ev.JD_CommonJets().killedHT)),weight);
-      DPhi_MET_MHTBaby_[n]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(ev.PFMET(),ev.JD_CommonJets().killedHT)),weight);
+      DPhi_MET_MHTBaby_[0]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(ev.PFMET(),ev.JD_CommonJets().babyHT)),weight);
+      DPhi_MET_MHTBaby_[n]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(ev.PFMET(),ev.JD_CommonJets().babyHT)),weight);
 
     }
 
@@ -450,20 +503,20 @@ bool HadronicCommonPlots::StandardPlots( Event::Data& ev ) {
     }
 
     if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHT_.size()) {
-      BabyJetMHT_[0]->Fill( ev.JD_CommonJets().killedHT.Pt(), weight );
-      BabyJetMHT_[n]->Fill( ev.JD_CommonJets().killedHT.Pt(), weight );
+      BabyJetMHT_[0]->Fill( ev.JD_CommonJets().babyHT.Pt(), weight );
+      BabyJetMHT_[n]->Fill( ev.JD_CommonJets().babyHT.Pt(), weight );
     }
 
     if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHT_StandardMHT_.size()) {
-      BabyJetMHT_StandardMHT_[0]->Fill( ev.CommonMHT().Pt(),ev.JD_CommonJets().killedHT.Pt(), weight );
-      BabyJetMHT_StandardMHT_[n]->Fill( ev.CommonMHT().Pt(),ev.JD_CommonJets().killedHT.Pt(), weight );
+      BabyJetMHT_StandardMHT_[0]->Fill( ev.CommonMHT().Pt(),ev.JD_CommonJets().babyHT.Pt(), weight );
+      BabyJetMHT_StandardMHT_[n]->Fill( ev.CommonMHT().Pt(),ev.JD_CommonJets().babyHT.Pt(), weight );
     }
 
 
 
      if ( n >= nMin_ && n <= nMax_ && n < DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_.size()) {
-        DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),(ev.JD_CommonJets().killedHT).Pt()/ev.CommonMHT().Pt(),weight);
-        DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),(ev.JD_CommonJets().killedHT).Pt()/ev.CommonMHT().Pt(),weight);
+        DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),(ev.JD_CommonJets().babyHT).Pt()/ev.CommonMHT().Pt(),weight);
+        DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),(ev.JD_CommonJets().babyHT).Pt()/ev.CommonMHT().Pt(),weight);
 
       }
 
@@ -471,13 +524,13 @@ bool HadronicCommonPlots::StandardPlots( Event::Data& ev ) {
 
 
     if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHT_StandardAlphaT_.size()) {
-      BabyJetMHT_StandardAlphaT_[0]->Fill( ev.CommonAlphaT(), cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)), weight );
-      BabyJetMHT_StandardAlphaT_[n]->Fill( ev.CommonAlphaT(), cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)), weight );
+      BabyJetMHT_StandardAlphaT_[0]->Fill( ev.CommonAlphaT(), cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)), weight );
+      BabyJetMHT_StandardAlphaT_[n]->Fill( ev.CommonAlphaT(), cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)), weight );
     }
 
     if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHT_StandardAlphaT_.size()) {
-      BabyJetMHT_StandardHT_[0]->Fill( ev.CommonHT(), ev.JD_CommonJets().killedHT.Pt(), weight );
-      BabyJetMHT_StandardHT_[n]->Fill( ev.CommonHT(), ev.JD_CommonJets().killedHT.Pt(), weight );
+      BabyJetMHT_StandardHT_[0]->Fill( ev.CommonHT(), ev.JD_CommonJets().babyHT.Pt(), weight );
+      BabyJetMHT_StandardHT_[n]->Fill( ev.CommonHT(), ev.JD_CommonJets().babyHT.Pt(), weight );
     }
 
 
@@ -503,20 +556,21 @@ bool HadronicCommonPlots::StandardPlots( Event::Data& ev ) {
 
     if(ev.CommonAlphaT() > 0.55){
 
+
+
+
+
+
       if ( n >= nMin_ && n <= nMax_ && n < HT_forRatio_.size() ) {
         HT_forRatio_[0]->Fill(  ev.CommonHT(), weight );
         HT_forRatio_[n]->Fill( ev.CommonHT(), weight );
       }
 
       if ( n >= nMin_ && n <= nMax_ && n < MissedHT_.size() ) {
-        MissedHT_[0]->Fill(  ev.CommonRecoilMET().Pt()/(ev.CommonRecoilMET()+ev.JD_CommonJets().killedHT).Pt(), weight );
-        MissedHT_[n]->Fill( ev.CommonRecoilMET().Pt()/(ev.CommonRecoilMET()+ev.JD_CommonJets().killedHT).Pt(), weight );
+        MissedHT_[0]->Fill(  ev.CommonRecoilMET().Pt()/(ev.CommonRecoilMET()+ev.JD_CommonJets().babyHT).Pt(), weight );
+        MissedHT_[n]->Fill( ev.CommonRecoilMET().Pt()/(ev.CommonRecoilMET()+ev.JD_CommonJets().babyHT).Pt(), weight );
       }
 
-    }
-
-
-    if(ev.CommonAlphaT() > 0.55){
 
       if ( n >= nMin_ && n <= nMax_ && n < MHT_PFMET_AfterCut_.size()) {
         MHT_PFMET_AfterCut_[0]->Fill((ev.CommonMHT().Pt()-ev.PFMET().Pt())/ev.PFMET().Pt(),weight);
@@ -524,19 +578,17 @@ bool HadronicCommonPlots::StandardPlots( Event::Data& ev ) {
 
       }
 
-
-
      if ( n >= nMin_ && n <= nMax_ && n < DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_AfterAlphaT_.size()) {
-        DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_AfterAlphaT_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),ev.JD_CommonJets().killedHT.Pt()/ev.CommonMHT().Pt(),weight);
-        DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_AfterAlphaT_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),ev.JD_CommonJets().killedHT.Pt()/ev.CommonMHT().Pt(),weight);
+        DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_AfterAlphaT_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),ev.JD_CommonJets().babyHT.Pt()/ev.CommonMHT().Pt(),weight);
+        DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_AfterAlphaT_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),ev.JD_CommonJets().babyHT.Pt()/ev.CommonMHT().Pt(),weight);
 
       }
 
 
 
     if ( n >= nMin_ && n <= nMax_ && n < DPhi_MHT_MHTbaby_AfterAlphaT_.size()) {
-      DPhi_MHT_MHTbaby_AfterAlphaT_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),weight);
-      DPhi_MHT_MHTbaby_AfterAlphaT_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().killedHT)),weight);
+      DPhi_MHT_MHTbaby_AfterAlphaT_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),weight);
+      DPhi_MHT_MHTbaby_AfterAlphaT_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),weight);
 
     }
 
