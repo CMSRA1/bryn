@@ -65,6 +65,9 @@ namespace Operation {
     std::vector<TH1D*>  JetEta_;
     std::vector<TH1D*>  AlphaT_Zoomed_METCut_;
     std::vector<TH1D*>  AlphaT_METCut_;
+    std::vector<TH1D*>  DPhi_MHT_MHTbaby_AfterAlphaT_;
+    std::vector<TH2D*>  DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_AfterAlphaT_;
+    std::vector<TH2D*>  DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_;
     void StandardPlots();
     bool StandardPlots( Event::Data& );
 
