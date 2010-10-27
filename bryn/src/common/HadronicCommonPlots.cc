@@ -62,21 +62,17 @@ std::ostream& HadronicCommonPlots::Description( std::ostream& ostrm ) {
 void HadronicCommonPlots::StandardPlots() {
 
 
-
-
   BookHistArray( AlphaTafterPFMEC_,
-    "AlphaT_after_Calo_MEC",
+    "AlphaT_after_PF_MEC",
     ";#alpha_{T};Events/0.025;",
     60,0.,1.5,
     nMax_+1, 0, 1, true );
 
   BookHistArray( AlphaT_Zoomed_afterPFMEC_,
-    "AlphaT_Zoomed_after_Calo_MEC",
+    "AlphaT_Zoomed_after_PF_MEC",
     ";#alpha_{T}; Events/0.0025;",
     60,0.45,0.6,
     nMax_+1, 0, 1, true );
-
-
 
   BookHistArray( AlphaTafterCaloMEC_,
     "AlphaT_after_Calo_MEC",
@@ -89,8 +85,6 @@ void HadronicCommonPlots::StandardPlots() {
     ";#alpha_{T}; Events/0.0025;",
     60,0.45,0.6,
     nMax_+1, 0, 1, true );
-
-
 
   BookHistArray( DPhi_MHT_MHTBaby_,
     "CosDetlaPhi_MHT_MHTBaby_",
@@ -119,25 +113,6 @@ void HadronicCommonPlots::StandardPlots() {
     50, 0., 5.,
     nMax_+1, 0, 1, true );
 
-
-
-  BookHistArray( DPhi_MET_MHTBaby_,
-    "DetlaPhi_MET_MHTBaby_",
-    ";#Delta #phi(MET,MHTbaby); Events/0.65 rad;",
-    40, 0., TMath::Pi(),
-    nMax_+1, 0, 1, true );
-
-
-  BookHistArray( DPhi_MET_MHT_,
-    "DetlaPhi_MET_MHT_",
-    ";#Delta #phi(MET,MHTbaby); Events/0.65 rad;",
-    40, 0., TMath::Pi(),
-    nMax_+1, 0, 1, true );
-
-
-
-
-
   BookHistArray( BabyJetMHT_StandardAlphaT_,
     "BabyJetMHT_vs_AlphaT",
     "Cos(Dphi(MHT,MHTbaby));CommonAlphaT;",
@@ -145,39 +120,10 @@ void HadronicCommonPlots::StandardPlots() {
     20,-1.,1.,
     nMax_+1, 0, 1, true );
 
-
-  BookHistArray( BabyJetMHT_StandardHT_,
-    "BabyJetMHT_vs_HT",
-    "CommonHT;BabyJetMHT;",
-    200,0.,1000.,
-    200,0.,1000.,
-    nMax_+1, 0, 1, true );
-
-  BookHistArray( BabyJetMHT_StandardMHT_,
-    "BabyJetMHT_vs_MHT",
-    "CommonMHT;BabyJetMHT;",
-    200,0.,1000.,
-    200,0.,1000.,
-    nMax_+1, 0, 1, true );
-
-
   BookHistArray( BabyJetMHT_,
     "BabyJetMHT",
     ";BabyJetMHT;Events/5GeV;",
     60, .0, 300.,
-    nMax_+1, 0, 1, true );
-
-
-  BookHistArray( MHT_PFMET_,
-    "MHT_PFMET_",
-    ";MHT_PFMET/PFMET;Events/0.2;",
-    100, -2.0, 20.,
-    nMax_+1, 0, 1, true );
-
-  BookHistArray( MHT_PFMET_AfterCut_,
-    "MHT_PFMET_After_AT_55_",
-    ";MHT_PFMET/PFMET;Events/0.22;",
-    100, -2.0, 20.,
     nMax_+1, 0, 1, true );
 
 
@@ -237,16 +183,6 @@ void HadronicCommonPlots::StandardPlots() {
     60,0.45,0.6,
     nMax_+1, 0, 1, true );
 
-
-
-
-  BookHistArray( AlphaT_Hadronic_,
-    "AlphaT_Hadronic",
-    ";#alpha_{T};Events/0.025;",
-    60,0.,1.5,
-    nMax_+1, 0, 1, true );
-
-
   BookHistArray( AlphatCut_Meff_,
     "EffectiveMass_after_alphaT_55",
     ";M_{eff} (GeV); Events/40 GeV;",
@@ -304,15 +240,6 @@ void HadronicCommonPlots::StandardPlots() {
     ";H_{T} (GeV); Events/25 GeV;",
     80,0.,2000.,
     nMax_+1, 0, 1, true );
-
-
-  BookHistArray( PFmetvsMHT_,
-    "PFMetVsMHT",
-    "",
-    200,0.,1000.,
-    200,0.,1000.,
-    nMax_+1, 0, 1, true );
-
 
   BookHistArray( Multiplicity_,
     "JetMultiplicity",
