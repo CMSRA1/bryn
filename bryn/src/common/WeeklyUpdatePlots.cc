@@ -650,127 +650,13 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
     }
 
   }
-  //plots ported from Tanja.
-  bool  DeadECALPlots_ = true;
-
-  if(DeadECALPlots_){
-
-
-  Double_t TPMHT = 0;
-  Double_t TPHT = 0;
-
-  int idx = 0;
-
-  LorentzV mht;
-  mht.SetPxPyPzE(0.,0.,0.,0.);
-
-    double biasedDPhi = 10;
-    float deadECALDR = 100;
-    std::string deadfile = "";
-
-    //calculate MHT take into account babyJets
-    LorentzV loweredMHT = ev.CommonMHT();
-    for(std::vector<Event::Jet const*>::const_iterator iM = ev.JD_CommonJets().baby.begin();iM != ev.JD_CommonJets().baby.end();++iM){
-      if( (*iM)->Pt() > deadECAL_minJetPTCut_)loweredMHT -= (**iM);
-    }
-
-    //calculate min DR to dead ECAL
-    for( std::vector<Event::Jet const *>::const_iterator i = ev.JD_CommonJets().accepted.begin();
-   i != ev.JD_CommonJets().accepted.end();
-   ++i ){
-
-      float newBiasDPhi = fabs(ROOT::Math::VectorUtil::DeltaPhi(**i,loweredMHT + (**i))) ;
-
-      if(newBiasDPhi < biasedDPhi){
-  biasedDPhi = newBiasDPhi;
-
-  try{deadECALDR = DeadECALDR(ev,(*i)->Phi(),(*i)->Eta(),0);}
-  catch(...){deadECALDR = DeadECALDR_File(deadfile,(*i)->Phi(),(*i)->Eta(),0);}
-      }
-    }
-    for( std::vector<Event::Jet const*>::const_iterator iI = ev.JD_CommonJets().baby.begin(); iI != ev.JD_CommonJets().baby.end();
-   ++iI) {
-      if((*iI)->Pt() > deadECAL_minJetPTCut_){
-  float newBiasDPhi_2 = fabs(ROOT::Math::VectorUtil::DeltaPhi(**iI, loweredMHT + (**iI) )) ;
-  if(newBiasDPhi_2 < biasedDPhi){
-    biasedDPhi = newBiasDPhi_2;
-  try{
-    deadECALDR = DeadECALDR(ev,(*iI)->Phi(),(*iI)->Eta(),0);
-  }
-  catch(...){deadECALDR = DeadECALDR_File(deadfile,(*iI)->Phi(),(*iI)->Eta(),0);}
-  }
-      }
-    }
-
-    if(deadECALDR > 10) deadECALDR = 10;
-    if( biasedDPhi < deadECAL_minBiasCut_){
-      if( n >= nMin_ && n <= nMax_ && n < BadJetECALDR_.size() ){
-  BadJetECALDR_[0]->Fill(deadECALDR,weight);
-  BadJetECALDR_[n]->Fill(deadECALDR,weight);
-      }
-    }
-    else {
-      if( n >= nMin_ && n <= nMax_ && n < allMinECALDR_.size() ){
-
-  allMinECALDR_[0]->Fill(deadECALDR,weight);
-  allMinECALDR_[n]->Fill(deadECALDR,weight);
-      }
-
-    }
-
-
-  //Calculate TP HT and MHT
-  try{
-    // cout << " size " << ev.ecalDeadTowerTrigPrimP4()->size() << endl;
-    for(std::vector<ICF_LorentzV>::const_iterator ii=ev.ecalDeadTowerTrigPrimP4()->begin();ii!=ev.ecalDeadTowerTrigPrimP4()->end();++ii,++idx){
-      // cout << " pt " << (*ii).Pt() << endl;
-      if((*ii).E() != 0){
-  TPHT = TPHT+ (*ii).Et();
-  mht-=(*ii);
-      }
-    }
-    TPMHT = fabs(mht.Et());
-
-  }
-  catch(...){
-    //cout << " dead trigger tower not in sample " << endl;
-  }
-
-
-
-    if ( n >= nMin_ && n <= nMax_ && n < TPMHT_.size()  ) {
-      TPMHT_[0]->Fill( TPMHT, weight );
-      TPMHT_[n]->Fill( TPMHT, weight );
-      //cout << " TPMHT " << TPMHT << " TPHT " << TPHT << " dead ecaldr " << deadECALDR << endl;
-    }
-    if( n >= nMin_ && n <= nMax_ && n < TPHT_.size()  ) {
-      TPHT_[0]->Fill( TPHT, weight );
-      TPHT_[n]->Fill( TPHT, weight );
-    }
-    if( n >= nMin_ && n <= nMax_ && n < TPMHTRatio_.size()  ) {
-      TPMHTRatio_[0]->Fill( ev.CommonMHT().Et()/(ev.CommonMHT()+mht).Et(),weight);
-      TPMHTRatio_[n]->Fill( ev.CommonMHT().Et()/(ev.CommonMHT()+mht).Et(),weight);
-    }
-    if ( n >= nMin_ && n <= nMax_ && n < BiasedDphiDeadEcal__.size()  ) {
-      BiasedDphiDeadEcal__[0]->Fill(biasedDPhi, weight );
-      BiasedDphiDeadEcal__[n]->Fill(biasedDPhi, weight );
-    }
-    if( n >= nMin_ && n <= nMax_ && n < TPHT_vs_BadJetECALDR_.size() ){
-      TPHT_vs_BadJetECALDR_[0]->Fill(TPHT,deadECALDR,weight );
-      TPHT_vs_BadJetECALDR_[n]->Fill(TPHT,deadECALDR,weight );
-
-    }
-
-
-  }
 
 
 
 
 
 
-
-
+}
   return true;
 
 }
