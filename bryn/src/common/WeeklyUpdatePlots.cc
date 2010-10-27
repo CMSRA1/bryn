@@ -656,7 +656,7 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
 
 
 
-}
+
   return true;
 
 }
