@@ -4,7 +4,7 @@
 #include "PlottingBase.hh"
 #include "Utils.hh"
 #include "Types.hh"
-#include "../hadronic/include/DeadECALDR.hh"
+#include "DeadECALDR.hh"
 class TH1D;
 class TH2D;
 
