@@ -666,7 +666,7 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
 
     double biasedDPhi = 10;
     float deadECALDR = 100;
-    std::string deadfile = deadECALFile_;
+    std::string deadfile = "";
 
     //calculate MHT take into account babyJets
     LorentzV loweredMHT = ev.CommonMHT();
