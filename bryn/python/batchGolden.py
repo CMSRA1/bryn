@@ -95,8 +95,7 @@ default_cc.Jets.PtCut=10.0
 default_cc.Jets.EtaCut=10.0
 default_cc.Muons.ModifyJetEnergy=True
 default_cc.Muons.PtCut=10.0
-default_cc.Muons.EtaCut=2.5
-default_cc.Muons.TrkIsoCut=-1.0
+default_cc.Muons.EtaCut=2.1
 default_cc.Muons.CombIsoCut=0.15
 default_cc.Muons.MuonJetDeltaR=0.5      #TW added
 default_cc.Muons.MuonIsoTypePtCutoff=0. #TW added - same effect as trkIso < -1.
@@ -108,8 +107,8 @@ default_cc.Electrons.CombIsoCut=0.2
 default_cc.Electrons.ElectronJetDeltaR=0.5         #TW added
 default_cc.Electrons.ElectronIsoTypePtCutoff=0.    #TW added - same effect as trkIso < -1.
 default_cc.Electrons.ElectronLooseIdRequired=False #TW added
-default_cc.Electrons.ElectronTightIdRequired=False #TW added
-default_cc.Electrons.RequireLooseIdForInitialFilter=True #TW added - default value for consistency
+default_cc.Electrons.ElectronTightIdRequired=True #TW added
+default_cc.Electrons.RequireLooseIdForInitialFilter=False #TW added - default value for consistency
 default_cc.Photons.EtCut=25.0
 default_cc.Photons.EtaCut=2.5
 default_cc.Photons.TrkIsoCut=2.0
@@ -120,7 +119,6 @@ default_cc.Photons.PhotonIsoTypePtCutoff=30. # TW added - this hasn't changed (y
 # -----------------------------------------------------------------------------
 # Definition of common objects
 
-default_common = deepcopy(defaultConfig.Common)
 default_common.ApplyXCleaning=True
 default_common.Jets.PtCut=50.0
 default_common.Jets.EtaCut=3.0
@@ -130,10 +128,14 @@ default_common.Electrons.PtCut=10.0
 default_common.Electrons.EtaCut=2.5
 default_common.Electrons.TrkIsoCut=-1.
 default_common.Electrons.CombIsoCut=0.15
+default_common.Electrons.ApplyID = True
+default_common.Electrons.TightID = True
 default_common.Muons.PtCut=10.0
 default_common.Muons.EtaCut=2.5
 default_common.Muons.TrkIsoCut=-1.
 default_common.Muons.CombIsoCut=0.15
+default_common.Muons.ApplyID = True
+default_common.Muons.TightID = True
 default_common.Photons.EtCut=25.0
 default_common.Photons.EtaCut=2.5
 # the photon cuts are NOT read anyway
@@ -146,6 +148,7 @@ default_common.Photons.EtaCut=2.5
 # default_common.Photons.HadOverEmCut=0.5
 # default_common.Photons.SigmaIetaIetaCut=0.5
 ##default_common.Photons.CaloIsoCut=99999.
+default_common.Photons.IDReq=3t=99999.
 default_common.Photons.IDReq=3
 # -----------------------------------------------------------------------------
 
