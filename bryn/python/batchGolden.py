@@ -290,16 +290,16 @@ Response   = False,
 
 
 
-HadStandard250_300 = HadronicCommonPlots(pset1.ps())
-HadStandard300_350 = HadronicCommonPlots(pset2.ps())
-HadStandard350 = HadronicCommonPlots(pset3.ps())
-HadStandard350_after_DeadEcal = HadronicCommonPlots(pset5.ps())
-HadStandardAll = HadronicCommonPlots(pset4.ps())
-nHadStandard250_300 = HadronicCommonPlots(Npset1.ps())
-nHadStandard300_350 = HadronicCommonPlots(Npset2.ps())
-nHadStandard350 = HadronicCommonPlots(Npset3.ps())
-nHadStandardAll = HadronicCommonPlots(Npset4.ps())
-nHadStandard350_after_DeadEcal = HadronicCommonPlots(Npset5.ps())
+HadStandard250_300 = WeeklyUpdatePlots(pset1.ps())
+HadStandard300_350 = WeeklyUpdatePlots(pset2.ps())
+HadStandard350 = WeeklyUpdatePlots(pset3.ps())
+HadStandard350_after_DeadEcal = WeeklyUpdatePlots(pset5.ps())
+HadStandardAll = WeeklyUpdatePlots(pset4.ps())
+nHadStandard250_300 = WeeklyUpdatePlots(Npset1.ps())
+nHadStandard300_350 = WeeklyUpdatePlots(Npset2.ps())
+nHadStandard350 = WeeklyUpdatePlots(Npset3.ps())
+nHadStandardAll = WeeklyUpdatePlots(Npset4.ps())
+nHadStandard350_after_DeadEcal = WeeklyUpdatePlots(Npset5.ps())
 # Common cut definitions
 #Avaiable criteria for MC and for Data are at current slightly different Hence the making of two trees
 #DataOnly!

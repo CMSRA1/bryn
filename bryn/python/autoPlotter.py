@@ -64,8 +64,8 @@ resultsDir ="../results/NoSmear/" #"/vols/cms02/bm409/SUSYv2/hadronic/results/"+
 print "you are using the " , algo , " Jet collection"
 #close list is a global variable that has the file name appended to it so at the end of each hist loop the open files are closed. It is cleared each time a new hist is called.
 
-def GetHist(DataSetName,col,norm,Legend):
-    a = Root.TFile.Open(DataSetName) #open the file
+def GetHist(DataTestSetName,col,norm,Legend):
+    a = Root.TFile.Open(DataTestSetName) #open the file
     closeList.append(a) # append the file to the close list
     b = a.Get(DirKeys[dir].GetTitle()) #open the directory in the root file
     Hist = b.Get(hist) # get your histogram by name
@@ -78,18 +78,18 @@ def GetHist(DataSetName,col,norm,Legend):
     Hist.SetBinError(Hist.GetNbinsX() ,math.sqrt((Hist.GetBinError(Hist.GetNbinsX()))**2 + (Hist.GetBinError(Hist.GetNbinsX()+1))**2))
     Hist.SetBinContent(Hist.GetNbinsX()+1,0)
     if norm != 0:
-       Hist.Scale(intlumi/100.) #if not data normilse to the data by lumi, MC is by default weighted to 100pb-1, if you have changed this change here!
+       Hist.Scale(intlumi/100.) #if not DataTest normilse to the DataTest by lumi, MC is by default weighted to 100pb-1, if you have changed this change here!
     return Hist
 
 #   /MinBias_TuneD6T_7TeV-pythia6/Spring10-START3X_V26B-v1/GEN-SIM-RECO
 #   /MinBias_TuneD6T_7TeV-pythia6/Fall10-START38_V9_preproduction-v1/GEN-SIM-RECODEBUG
 
 
-def RatioPlot(Data,BackGround):
+def RatioPlot(DataTest,BackGround):
   """docstring for RatioPlot"""
   bottom = BackGround.Clone()
-  top = Data.Clone()
-  top.GetYaxis().SetTitle("data / sim")
+  top = DataTest.Clone()
+  top.GetYaxis().SetTitle("DataTest / sim")
   top.Divide(bottom)
 
   top.SetTitleSize(0.1, "XYZ");
@@ -103,9 +103,9 @@ def RatioPlot(Data,BackGround):
   top.GetYaxis().SetRangeUser(0.,2.0)
   return top
 
-def UnityLine (Data):
+def UnityLine (DataTest):
   """docstring for RatioPlot"""
-  top = Data.Clone()  #Draw a line though the perfectly matching point
+  top = DataTest.Clone()  #Draw a line though the perfectly matching point
   # unity = Root.TBox(top.GetXaxis().GetBinUpEdge(top.GetXaxis().GetFirst()), 0.89,top.GetXaxis().GetBinUpEdge(top.GetNbinsX()), 1.11);
   # top.
   unity = Root.TBox(top.GetBinLowEdge(top.FindBin(MinX)), 0.89,top.GetBinLowEdge(top.FindBin((top.GetXaxis()).GetXmax())), 1.11)
@@ -130,7 +130,7 @@ time = strftime("%Y_%m_%d")
 print time
 
 #A file to open and scan for histograms inside directories
-RootFileList = ["../results/AK5"+algo+"_Jet15pb.root"]
+RootFileList = ["../results/AK5Calo_TenDataTestFiles.root"]
 
 CutNumbers = open(outputfile+"CutTable.txt",'w')
 
@@ -143,8 +143,8 @@ SignalRegonPlots = ""
 ControlRegonPlotsAfterAT1 = ""
 ControlRegonPlotsAfterAT2 = ""
 SignalRegonPlotsAfterAT = ""
-SignalRegonPlotsAfterATandDeadEcal = ""
 SignalRegonPlotsAfterDeadEcal = ""
+
 temp = Root.TFile.Open(RootFileList[0])
 DirKeys = temp.GetListOfKeys()
 
@@ -189,133 +189,89 @@ for dir in range(0,len(DirKeys)):
     #make your histograms form each file, read in the files you want below
     # GetHist("RootFile",Colour, scale to lumi 0=false anything else = true, Legend entry)
     #NB the order in which you book the histos is the order in which they appear in the legend
-    Data = GetHist("../results/AK5"+algo+"_Jet15pb.root",1,0,"Data")
-    QCD = GetHist(resultsDir+"/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kRed-7,1,"QCD")
-    Data.SetMarkerStyle(20)
-    Data.SetLineWidth(3)
-    Data.SetLineColor(1)
-    Data.SetFillColor(1)
-    ZJets  = GetHist(resultsDir+"/AK5"+algo+"_zjets_madgraph_edwardSkim_9.root",Root.kTeal-7,1,"Z+Jets (Madgraph)")
-    Zinv = GetHist(resultsDir+"/AK5"+algo+"_Zinvisible_jets_edwardSkim_10.root",91,1,"Z->#nu#nu + Jets")
-    WJets = GetHist(resultsDir+"/AK5"+algo+"_wjets_madgraph_edwardSkim_8.root",Root.kPink+7,1,"W+Jets")
-    ttbar = GetHist(resultsDir+"/AK5"+algo+"_ttbarTauola_11.root",Root.kBlue+1,1,"TTBar")
-    LM0 = GetHist(resultsDir+"/AK5"+algo+"_LM0_1.root",2,1,"LM0")
-    LM1 = GetHist(resultsDir+"/AK5"+algo+"_LM1_2.root",Root.kRed+3,1,"LM1")
-    QCD.SetLineWidth(5)
+    DataTestTest =GetHist("../results/AK5Calo_TenDataTestFiles.root",1,0,"DataTest")
+    QCDTest = GetHist("../results/AK5Calo_QCD470.root",Root.kRed,0,"DataTest")
+    # DataTest = GetHist("../results/AK5"+algo+"_JetMET_ALL.root",1,0,"DataTest")
+    # QCD = GetHist(resultsDir+"/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kRed-7,1,"QCD")
+    # DataTest.SetMarkerStyle(20)
+    # DataTest.SetLineWidth(3)
+    # DataTest.SetLineColor(1)
+    # DataTest.SetFillColor(1)
+    # ZJets  = GetHist(resultsDir+"/AK5"+algo+"_zjets_madgraph_9.root",Root.kTeal-7,1,"Z+Jets (Madgraph)")
+    # Zinv = GetHist(resultsDir+"/AK5"+algo+"_Zinvisible_jets_10.root",91,1,"Z->#nu#nu + Jets")
+    # WJets = GetHist(resultsDir+"/AK5"+algo+"_wjets_madgraph_8.root",Root.kPink+7,1,"W+Jets")
+    # ttbar = GetHist(resultsDir+"/AK5"+algo+"_ttbarTauola_11.root",Root.kBlue+1,1,"TTBar")
+    # LM0 = GetHist(resultsDir+"/AK5"+algo+"_LM0_1.root",2,1,"LM0")
+    # LM1 = GetHist(resultsDir+"/AK5"+algo+"_LM1_2.root",Root.kRed+3,1,"LM1")
+    # QCD.SetLineWidth(5)
 
-
-    if "BiasedDeltaPhi_all" == hist or "BiasedDeltaPhi_after_alphaT_all" == hist:
-      Data.Rebin(2)
-      QCD.Rebin(2)
-      QCD.SetFillColor(Root.kRed-7)
-      ZJets.Rebin(2)
-      Zinv.Rebin(2)
-      ttbar.Rebin(2)
-      LM0.Rebin(2)
-      LM1.Rebin(2)
-
+    #
+    # if "BiasedDeltaPhi_all" == hist or "BiasedDeltaPhi_after_alphaT_all" == hist:
+    #   DataTest.Rebin(2)
+    #   QCD.Rebin(2)
+    #   QCD.SetFillColor(Root.kRed-7)
+    #   ZJets.Rebin(2)
+    #   Zinv.Rebin(2)
+    #   ttbar.Rebin(2)
+    #   LM0.Rebin(2)
+    #   LM1.Rebin(2)
+    #
 
 
     #Make a histogram of the sum of all the SM backgrounds
-    Total = QCD.Clone()
-    Total.Add(Zinv)
-    Total.Add(ZJets)
-    Total.Add(WJets)
-    Total.Add(ttbar)
-    # if "AlphaT_all" == hist :
-    #   PassingCutNumbers(Data, "Data"               ,0.0)
-    #   PassingCutNumbers(Total, "Sm Backgrounds"    ,0.0)
-    #   PassingCutNumbers(QCD, "QCD"                 ,0.0)
-    # if "AlphaT_all" == hist :
-    #  PassingCutNumbers(Data, "Data"               ,0.51)
-    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,0.51)
-    #  PassingCutNumbers(QCD, "QCD"                 ,0.51)
-    #
-    # if "AlphaT_all" == hist :
-    #  PassingCutNumbers(Data, "Data"               ,0.52)
-    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,0.52)
-    #  PassingCutNumbers(QCD, "QCD"                 ,0.52)
-    #
-    #
-    # if "AlphaT_all" == hist :
-    #  PassingCutNumbers(Data, "Data"               ,0.53)
-    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,0.53)
-    #  PassingCutNumbers(QCD, "QCD"                 ,0.53)
-    #
-    #
-    # if "AlphaT_all" == hist :
-    #  PassingCutNumbers(Data, "Data"               ,0.54)
-    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,0.54)
-    #  PassingCutNumbers(QCD, "QCD"                 ,0.54)
-    #
-    # if "AlphaT_all" == hist :
-    #  PassingCutNumbers(Data, "Data"               ,0.55)
-    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,0.55)
-    #  PassingCutNumbers(QCD, "QCD"                 ,0.55)
-    #  PassingCutNumbers(LM0, "LM0"                 ,0.55)
-    #  PassingCutNumbers(LM1, "LM1"                 ,0.55)
-    #
-    #
-    # if "AlphaT_afterMht_pfmet_all" == hist :
-    #  PassingCutNumbers(Data, "Data"               ,0.55)
-    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,0.55)
-    #  PassingCutNumbers(QCD, "QCD"                 ,0.55)
-    #  PassingCutNumbers(LM0, "LM0"                 ,0.55)
-    #  PassingCutNumbers(LM1, "LM1"                 ,0.55)
-    #
-    #
-    # if "Mt2_all" == hist :
-    #  PassingCutNumbers(Data, "Data"               ,0.)
-    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,0.)
-    #  PassingCutNumbers(QCD, "QCD"                 ,0.)
-    #  PassingCutNumbers(LM0, "LM0"                 ,0.)
-    #
-    # if "Mt2_all" == hist :
-    #  PassingCutNumbers(Data, "Data"               ,300.)
-    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,300.)
-    #  PassingCutNumbers(QCD, "QCD"                 ,300.)
-    #  PassingCutNumbers(LM0, "LM0"                 ,300.)
-    #
-    #
-    # if "Mt2_all" == hist :
-    #  PassingCutNumbers(Data, "Data"               ,400.)
-    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,400.)
-    #  PassingCutNumbers(QCD, "QCD"                 ,400.)
-    #  PassingCutNumbers(LM0, "LM0"                 ,400.)
-    #
-    # if "Mt2_LeadingJets_all" == hist :
-    #  PassingCutNumbers(Data, "Data"               ,0.)
-    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,0.)
-    #  PassingCutNumbers(QCD, "QCD"                 ,0.)
-    #  PassingCutNumbers(LM0, "LM0"                 ,0.)
-    #
-    #
-    # if "Mt2_LeadingJets_all" == hist :
-    #  PassingCutNumbers(Data, "Data"               ,300.)
-    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,300.)
-    #  PassingCutNumbers(QCD, "QCD"                 ,300.)
-    #  PassingCutNumbers(LM0, "LM0"                 ,300.)
-    #
-    # if "Mt2_LeadingJets_all" == hist :
-    #  PassingCutNumbers(Data, "Data"               ,400.)
-    #  PassingCutNumbers(Total, "Sm Backgrounds"    ,400.)
-    #  PassingCutNumbers(QCD, "QCD"                 ,400.)
-    #  PassingCutNumbers(LM0, "LM0"                 ,400.)
+    Total = QCDTest.Clone()
+    # Total.Add(Zinv)
+    # Total.Add(ZJets)
+    # Total.Add(WJets)
+    # Total.Add(ttbar)
+    if "AlphaT_all" == hist :
+      PassingCutNumbers(DataTest, "DataTest"               ,0.0)
+      PassingCutNumbers(Total, "Sm Backgrounds"    ,0.0)
+      # PassingCutNumbers(QCD, "QCD"                 ,0.0)
+    if "AlphaT_all" == hist :
+     PassingCutNumbers(DataTest, "DataTest"               ,0.51)
+     PassingCutNumbers(Total, "Sm Backgrounds"    ,0.51)
+     # PassingCutNumbers(QCD, "QCD"                 ,0.51)
+
+    if "AlphaT_all" == hist :
+     PassingCutNumbers(DataTest, "DataTest"               ,0.52)
+     PassingCutNumbers(Total, "Sm Backgrounds"    ,0.52)
+     # PassingCutNumbers(QCD, "QCD"                 ,0.52)
+
+
+    if "AlphaT_all" == hist :
+     PassingCutNumbers(DataTest, "DataTest"               ,0.53)
+     PassingCutNumbers(Total, "Sm Backgrounds"    ,0.53)
+     # PassingCutNumbers(QCD, "QCD"                 ,0.53)
+
+
+    if "AlphaT_all" == hist :
+     PassingCutNumbers(DataTest, "DataTest"               ,0.54)
+     PassingCutNumbers(Total, "Sm Backgrounds"    ,0.54)
+     # PassingCutNumbers(QCD, "QCD"                 ,0.54)
+
+
+    if "AlphaT_all" == hist :
+     PassingCutNumbers(DataTest, "DataTest"               ,0.55)
+     PassingCutNumbers(Total, "Sm Backgrounds"    ,0.55)
+     # PassingCutNumbers(QCD, "QCD"                 ,0.55)
+
+
 
       # PassingCutNumbers(LM0, "LM0"                 ,0.0)
       # PassingCutNumbers(LM1, "LM1"                 ,0.0)
-      # PassingCutNumbers(Data, "JetMET"             ,0.0)
+      # PassingCutNumbers(DataTest, "JetMET"             ,0.0)
       # PassingCutNumbers(ttbar, "TTBbar"            ,0.0)
       # PassingCutNumbers(ZJets, "ZJets"             ,0.0)
       # PassingCutNumbers(WJets, "WJETS"             ,0.0)
 
       # PassingCutNumbers(Zinv, "Zinv"               ,0.0)
     # if "MHT_all" == hist :
-    #   PassingCutNumbers(Data, "Data"    ,140.)
+    #   PassingCutNumbers(DataTest, "DataTest"    ,140.)
     #   PassingCutNumbers(Total, "Sm Backgrounds",140.)
     #   PassingCutNumbers(LM0, "LM0"      ,140.)
     #   PassingCutNumbers(LM1, "LM1"      ,140.)
-    #   PassingCutNumbers(Data, "JetMET"  ,140.)
+    #   PassingCutNumbers(DataTest, "JetMET"  ,140.)
     #   PassingCutNumbers(ttbar, "TTBbar" ,140.)
     #   PassingCutNumbers(ZJets, "ZJets"  ,140.)
     #   PassingCutNumbers(WJets, "WJETS"  ,140.)
@@ -323,11 +279,11 @@ for dir in range(0,len(DirKeys)):
     #   PassingCutNumbers(Zinv, "Zinv"    ,140.)
 
     # if "HT_all" == hist :
-    #   PassingCutNumbers(Data, "Data"    ,350.)
+    #   PassingCutNumbers(DataTest, "DataTest"    ,350.)
     #   PassingCutNumbers(Total, "sm Backgrounds" ,350.)
     #   PassingCutNumbers(LM0, "LM0"      ,350.)
     #   PassingCutNumbers(LM1, "LM1"      ,350.)
-    #   PassingCutNumbers(Data, "JetMET"  ,350.)
+    #   PassingCutNumbers(DataTest, "JetMET"  ,350.)
     #   PassingCutNumbers(ttbar, "TTBbar" ,350.)
     #   PassingCutNumbers(ZJets, "ZJets"  ,350.)
     #   PassingCutNumbers(WJets, "WJETS"  ,350.)
@@ -336,68 +292,64 @@ for dir in range(0,len(DirKeys)):
 
     #Some funkey stuff from Henning for drawing the total background with some interesting lines around it
     # Systematics
-    ScaledUp = GetHist("../results/JESplus/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kTeal-7,1,0)
-    ScaledDown = GetHist("../results/JESminus/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kTeal-7,1,0)
-    Smear = GetHist("../results/Smear/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kTeal-7,1,0)
-    Total = SystematicsSmear(Total,Smear)
-    # ScaledUpEta = GetHist("../results/JESetaPlus/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kTeal-7,1,0)
-    # ScaledDownEta = GetHist("../results/JESetaMinus/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kTeal-7,1,0)
-    Total = Systematics(Total,ScaledUp,ScaledDown)
-    # Total = Systematics(Total,ScaledUpEta, ScaledDownEta)
-
-    hcen=Total.Clone()
-    herr=Total.Clone()
-    herr.SetLineColor(Root.kTeal+3)
-    herr.SetMarkerColor(Root.kAzure+6)
-    herr.SetFillColor(Root.kAzure+6)
-
-    herr.SetLineWidth(3)
-    Total.SetLineWidth(3)
-
-    Total.SetFillColor(Root.kAzure+2)
-    Total.SetLineColor(Root.kAzure+2)
-    Total.SetFillStyle(3245)
-    hcen.SetFillColor(0)
-    hcen.SetMarkerColor(Root.kTeal+3)
-    hcen.SetLineColor(Root.kTeal+3)
-    hcen.SetLineWidth(3)
-
-    leg.AddEntry(Total,"Standard Model","Lf")
-
-    #Defind the ranges of the histogram for the two highest histograms ie the data and the total
-    if "AlphaT" in hist: MaxXOrig = Data.GetNbinsX()*Data.GetBinWidth(1)
-    if HistogramMinX(Total) < MinX :
-       MinX = HistogramMinX(Total)
-    if HistogramMaxX(Total) > MaxX :
-       MaxX = HistogramMaxX(Total)
-    if HistogramMaxY(Total) > MaxY :
-       MaxY = HistogramMaxY(Total)
-
-    if HistogramMinX(Data) < MinX :
-       MinX = HistogramMinX(Data)
-    if HistogramMaxX(Data) > MaxX :
-       MaxX = HistogramMaxX(Data)
-    if HistogramMaxY(Data) > MaxY :
-       MaxY = HistogramMaxY(Data)
-    if "Mt2" in hist: MaxX = 500.
-    if "AlphaT" in hist: MaxX = MaxXOrig
-    if "DPhi" in hist: MinX = -1.1
-    herr.GetXaxis().SetRangeUser(MinX,MaxX)
-    herr.GetYaxis().SetRangeUser(0.001,MaxY*5.)
-    #Draw order is important!
-    herr.Draw("hist")
-    hcen.Draw("histsame")
-    Total.Draw("9E2same")
-    QCD.Draw("9SAMEhist")
-
-    ZJets.Draw("9Sameh")
-    Zinv.Draw("9SAMEh")
-    WJets.Draw("9SAMEh")
-    ttbar.Draw("9SAMEh")
-    LM0.Draw("9SAMEh")
-    LM1.Draw("9SAMEh")
-    #Draw Data last to get the points above everything else
-    Data.Draw("9SAMEP")
+    # ScaledUp = GetHist("../results/JESplus/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kTeal-7,1,0)
+    #    ScaledDown = GetHist("../results/JESminus/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kTeal-7,1,0)
+    #    # ScaledUpEta = GetHist("../results/JESetaPlus/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kTeal-7,1,0)
+    #    # ScaledDownEta = GetHist("../results/JESetaMinus/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia_1.root",Root.kTeal-7,1,0)
+    #    Total = Systematics(Total,ScaledUp,ScaledDown)
+    #    # Total = Systematics(Total,ScaledUpEta, ScaledDownEta)
+    #    hcen=Total.Clone()
+    #    herr=Total.Clone()
+    #    herr.SetLineColor(Root.kTeal+3)
+    #    herr.SetMarkerColor(Root.kAzure+6)
+    #    herr.SetFillColor(Root.kAzure+6)
+    #
+    #    herr.SetLineWidth(3)
+    #    Total.SetLineWidth(3)
+    #
+    #    Total.SetFillColor(Root.kAzure+2)
+    #    Total.SetLineColor(Root.kAzure+2)
+    #    Total.SetFillStyle(3245)
+    #    hcen.SetFillColor(0)
+    #    hcen.SetMarkerColor(Root.kTeal+3)
+    #    hcen.SetLineColor(Root.kTeal+3)
+    #    hcen.SetLineWidth(3)
+    #
+    #    leg.AddEntry(Total,"Standard Model","Lf")
+    #
+    #    #Defind the ranges of the histogram for the two highest histograms ie the DataTest and the total
+    #    if HistogramMinX(Total) < MinX :
+    #       MinX = HistogramMinX(Total)
+    #    if HistogramMaxX(Total) > MaxX :
+    #       MaxX = HistogramMaxX(Total)
+    #    if HistogramMaxY(Total) > MaxY :
+    #       MaxY = HistogramMaxY(Total)
+    #
+    #    if HistogramMinX(DataTest) < MinX :
+    #       MinX = HistogramMinX(DataTest)
+    #    if HistogramMaxX(DataTest) > MaxX :
+    #       MaxX = HistogramMaxX(DataTest)
+    #    if HistogramMaxY(DataTest) > MaxY :
+    #       MaxY = HistogramMaxY(DataTest)
+    #
+    #
+    #
+    #    herr.GetXaxis().SetRangeUser(MinX,MaxX)
+    #    herr.GetYaxis().SetRangeUser(0.001,MaxY*5.)
+    #    #Draw order is important!
+    #    herr.Draw("hist")
+    #    hcen.Draw("histsame")
+    #    Total.Draw("9E2same")
+    #    QCD.Draw("9SAMEhist")
+    #
+    #    ZJets.Draw("9Sameh")
+    #    Zinv.Draw("9SAMEh")
+    #    #WJets.Draw("9SAMEh")
+    #    ttbar.Draw("9SAMEh")
+    #    LM0.Draw("9SAMEh")
+    #    LM1.Draw("9SAMEh")
+    #    #Draw DataTest last to get the points above everything else
+    #    DataTest.Draw("9SAMEP")
 
     #Draw Text for histogram titile and for lumi
     prelim = Root.TLatex(0.4,0.75,"#scale[0.8]{CMS preliminary 2010}");
@@ -415,8 +367,8 @@ for dir in range(0,len(DirKeys)):
 
     leg.Draw()
     c1.cd(2)
-    line = UnityLine(Data)
-    ratio = RatioPlot(Data,Total)
+    line = UnityLine(DataTest)
+    ratio = RatioPlot(DataTest,Total)
     ratio.SetLabelSize(0.15, "XYZ")
     ratio.SetTitleSize(0.15, "XYZ")
     ratio.SetTitleOffset(1.05, "X")

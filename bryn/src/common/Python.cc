@@ -6,7 +6,7 @@
 #include "BkgdEstPlottingOps.hh"
 #include "EWKbkgClassesPlotOps.hh"
 #include "JetMetPasPlottingOps.hh"
-#include "HadronicCommonPlots.hh"
+#include "WeeklyUpdatePlots.hh"
 
 #include "IDFilters.hh"
 #include "HadronicTools.hh"
@@ -41,7 +41,7 @@ class_<Operation::PlotPhotons, bases<Operation::_Base> >( "OP_PlotPhotons",
                     init<const Utils::ParameterSet&>() );
 
 
-  class_<Operation::HadronicCommonPlots, bases<Operation::_Base> >( "HadronicCommonPlots",
+  class_<Operation::WeeklyUpdatePlots, bases<Operation::_Base> >( "WeeklyUpdatePlots",
                     init<const Utils::ParameterSet&>());
 
 
