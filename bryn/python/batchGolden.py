@@ -11,6 +11,7 @@ import errno
 import os
 import setupSUSY
 from libFrameworkSUSY import *
+from libHadronic import *
 from libbryn import *
 from icf.core import PSet,Analysis
 from icf.config import defaultConfig
@@ -118,6 +119,7 @@ default_cc.Photons.PhotonJetDeltaR=0.5       # TW added
 default_cc.Photons.PhotonIsoTypePtCutoff=30. # TW added - this hasn't changed (yet?)
 # -----------------------------------------------------------------------------
 # Definition of common objects
+default_common = deepcopy(defaultConfig.Common)
 
 default_common.ApplyXCleaning=True
 default_common.Jets.PtCut=50.0
@@ -148,7 +150,7 @@ default_common.Photons.EtaCut=2.5
 # default_common.Photons.HadOverEmCut=0.5
 # default_common.Photons.SigmaIetaIetaCut=0.5
 ##default_common.Photons.CaloIsoCut=99999.
-default_common.Photons.IDReq=3t=99999.
+default_common.Photons.IDReq=99999.
 default_common.Photons.IDReq=3
 # -----------------------------------------------------------------------------
 

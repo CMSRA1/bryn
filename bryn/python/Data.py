@@ -57,8 +57,8 @@ Name="Testsample",
 Format=("ICF",2),
 Weight=1.,
 File="~/Desktop/JetMET.Run2010A-Sep17ReReco_v2.RECO.RAW.Burt_1_skim.root")
-# anal_ak5_caloData.Run("../results/",conf_ak5_caloData,data38)
-anal_ak5_caloData.Run("../results/",conf_ak5_caloData,[TedSample])
+anal_ak5_caloData.Run("../results/",conf_ak5_caloData,data38)
+# anal_ak5_caloData.Run("../results/",conf_ak5_caloData,[TedSample])
 #anal_ak5_caloData.Run("../results/",conf_ak5_caloData,[bryn2])
 #anal_ak5_caloData.Run("../results/",conf_ak5_caloData,data38)
 # anal_ak5_caloData.Run("../results/",conf_ak5_caloData,[LatestSkim101010])
