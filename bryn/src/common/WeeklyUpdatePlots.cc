@@ -751,9 +751,9 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
       TPMHTRatio_[0]->Fill( ev.CommonMHT().Et()/(ev.CommonMHT()+mht).Et(),weight);
       TPMHTRatio_[n]->Fill( ev.CommonMHT().Et()/(ev.CommonMHT()+mht).Et(),weight);
     }
-    if ( n >= nMin_ && n <= nMax_ && n < BiasedDphi_.size()  ) {
-      BiasedDphi_[0]->Fill(biasedDPhi, weight );
-      BiasedDphi_[n]->Fill(biasedDPhi, weight );
+    if ( n >= nMin_ && n <= nMax_ && n < BiasedDphiDeadEcal__.size()  ) {
+      BiasedDphiDeadEcal__[0]->Fill(biasedDPhi, weight );
+      BiasedDphiDeadEcal__[n]->Fill(biasedDPhi, weight );
     }
     if( n >= nMin_ && n <= nMax_ && n < TPHT_vs_BadJetECALDR_.size() ){
       TPHT_vs_BadJetECALDR_[0]->Fill(TPHT,deadECALDR,weight );
