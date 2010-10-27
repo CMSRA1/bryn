@@ -70,6 +70,16 @@ namespace Operation {
     std::vector<TH1D*>  AlphaTafterCaloMEC_;
     std::vector<TH1D*>  AlphaT_ZoomedafterCaloMEC_;
     std::vector<TH2D*>  AlphaT_components_;
+
+    //DeadECAL Plots
+    std::vector<TH1D*>  BiasedDphi_;
+    std::vector<TH1D*> BadJetECALDR_;
+    std::vector<TH1D*> allMinECALDR_;
+    std::vector<TH1D*> TPMHT_;
+    std::vector<TH1D*> TPHT_;
+    std::vector<TH1D*> TPMHTRatio_;
+    std::vector<TH2D*> TPHT_vs_BadJetECALDR_;
+
     void StandardPlots();
     bool StandardPlots( Event::Data& );
 
