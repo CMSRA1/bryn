@@ -492,10 +492,6 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
       BabyJetMHT_StandardAlphaT_[n]->Fill( ev.CommonAlphaT(), cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)), weight );
     }
 
-    // if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHT_StandardAlphaT_.size()) {
-    //   BabyJetMHT_StandardHT_[0]->Fill( ev.CommonHT(), ev.JD_CommonJets().babyHT.Pt(), weight );
-    //   BabyJetMHT_StandardHT_[n]->Fill( ev.CommonHT(), ev.JD_CommonJets().babyHT.Pt(), weight );
-    // }
 
 
     if ( n >= nMin_ && n <= nMax_ && n < Mt2_LeadingJets_.size()) {
