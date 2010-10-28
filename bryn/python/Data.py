@@ -3,6 +3,7 @@
 import setupSUSY
 from libFrameworkSUSY import *
 from libbryn import *
+from libHadronic import *
 from icf.core import PSet,Analysis
 
 from batchGolden import *

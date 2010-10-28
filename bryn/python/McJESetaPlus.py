@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import setupSUSY
+from libHadronic import *
 from libFrameworkSUSY import *
 from libbryn import *
 from icf.core import PSet,Analysis

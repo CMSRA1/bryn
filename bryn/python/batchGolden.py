@@ -351,8 +351,8 @@ alphaT1 = OP_CommonAlphaTCut(0.55)
 spikecleaner = OP_EcalSpikeCleaner()
 event_display = OP_EventDisplay("EventDisplays", "common") #to draw all/common objects
 alphat = OP_CommonAlphaTCut(0.55)
-DeadEcalCutData = OP_DeadECALCut(0.3,"./deadRegionList_GR10_P_V10.txt")
-DeadEcalCutMC = OP_DeadECALCut(0.3,"./deadRegionList_START38_V12.txt")
+DeadEcalCutData = OP_DeadECALCut(0.3,0.5,30,"./deadRegionList_GR10_P_V10.txt")
+DeadEcalCutMC = OP_DeadECALCut(0.3,0.5,30,"./deadRegionList_START38_V12.txt")
 # -----------------------------------------------------------------------------
 # Definition of analyses
 # Analyses
