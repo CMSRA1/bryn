@@ -60,8 +60,9 @@ anal_ak7_caloMC=Analysis("AK7Calo")
 addCutFlowMC(anal_ak7_caloMC)
 
 ensure_dir("../results/JESplus/")
+MC=[WJets_Madgraph_NNLO,TTBarTauola_NNLO,Zinvisible_jets_pset_NNLO,Zjets_madgraph_NNLO]
 
-anal_ak5_caloMC.Run("../results/JESplus/",conf_ak5_caloMC,MC)
+# anal_ak5_caloMC.Run("../results/JESplus/",conf_ak5_caloMC,MC)
 anal_ak5_caloMC.Run("../results/JESplus/",conf_ak5_caloMC,[QCD_AllPtBins_7TeV_Pythia])
 # anal_ak5_pfMC.Run("../results/JESplus/",conf_ak5_pfMC,MC)
 # anal_ak5_pfMC.Run("../results/JESplus/",conf_ak5_pfMC,[QCD_AllPtBins_7TeV_Pythia])

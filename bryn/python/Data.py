@@ -63,16 +63,9 @@ addCutFlowData(anal_ak7_caloData)
 
 ensure_dir("../results/")
 
-TedSample=PSet(
-Name="10SynchTestdeadcells",
-Format=("ICF",2),
-Weight=1.,
-File="~/Desktop/JetMET.Run2010A-Sep17ReReco_v2.RECO.RAW.Burt_1_skim.root")
-# anal_ak5_caloData.Run("../results/",conf_ak5_caloData,data38)
-anal_ak5_caloData.Run("../results/",conf_ak5_caloData,[TedSample])
-#anal_ak5_caloData.Run("../results/",conf_ak5_caloData,[bryn2])
-#anal_ak5_caloData.Run("../results/",conf_ak5_caloData,data38)
-# anal_ak5_caloData.Run("../results/",conf_ak5_caloData,[LatestSkim101010])
+
+anal_ak5_caloData.Run("../results/",conf_ak5_caloData,[Jet_15pb_WithTP_json221010])
+
 
 
 #

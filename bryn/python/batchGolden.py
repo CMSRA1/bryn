@@ -17,8 +17,7 @@ from icf.core import PSet,Analysis
 from icf.config import defaultConfig
 from copy import deepcopy
 from icf.JetCorrections import *
-from BatchGoldenSamples import *
-
+from samples_cff import *
 
 # -----------------------------------------------------------------------------
 # Samples
