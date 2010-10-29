@@ -96,7 +96,7 @@ default_cc.Jets.PtCut=10.0
 default_cc.Jets.EtaCut=10.0
 default_cc.Muons.ModifyJetEnergy=True
 default_cc.Muons.PtCut=10.0
-default_cc.Muons.EtaCut=2.1
+default_cc.Muons.EtaCut=2.5
 default_cc.Muons.TrkIsoCut=-1.
 default_cc.Muons.CombIsoCut=0.15
 default_cc.Muons.MuonJetDeltaR=0.5
@@ -135,7 +135,7 @@ default_common.Electrons.ApplyID = True
 default_common.Electrons.TightID = False
 default_common.Electrons.RequireLooseForOdd = True
 default_common.Muons.PtCut=10.0
-default_common.Muons.EtaCut=2.1
+default_common.Muons.EtaCut=2.5
 default_common.Muons.TrkIsoCut=-1.
 default_common.Muons.CombIsoCut=0.15
 default_common.Muons.ApplyID = True
@@ -368,13 +368,15 @@ alphaT1 = OP_CommonAlphaTCut(0.55)
 spikecleaner = OP_EcalSpikeCleaner()
 event_display = OP_EventDisplay("EventDisplays", "common") #to draw all/common objects
 alphat = OP_CommonAlphaTCut(0.55)
-DeadEcalCutData = OP_DeadECALCut(0.3,0.5,30,10,"./deadRegionList_GR10_P_V10.txt")
-DeadEcalCutMC = OP_DeadECALCut(0.3,0.5,30,10,"./deadRegionList_START38_V12.txt")
+DeadEcalCutData = OP_DeadECALCut(0.3,0.5,30.,10,1,"./deadRegionList_GR10_P_V10.txt")
+DeadEcalCutMC =   OP_DeadECALCut(0.3,0.5,30.,10,1,"./deadRegionList_START38_V12.txt")
+
 MHT_METCut = OP_MHToverMET(1.25)
 NJet5 = OP_NumComJets(">=",3)
 DiJet5 = OP_NumComJets("==",2)
 nHadStandardAllCuts=  WeeklyUpdatePlots(Npset6.ps())
 HadStandardAllCuts=  WeeklyUpdatePlots(pset6.ps())
+
 # -----------------------------------------------------------------------------
 # Definition of analyses
 # Analyses
