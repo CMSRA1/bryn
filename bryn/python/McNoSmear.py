@@ -9,8 +9,11 @@ from batchGolden import *
 
 
 JetSmear = JetSmear(0.1,30)
+vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
+ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 def addCutFlowMC(b) :
-  # b.AddJetFilter("PreCC",JetSmear)
+  b.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
+  b.AddElectronFilter("PreCC",vbtfElectronIdFilter)
   b+=cutTreeMC
 
 #AK5 Calo

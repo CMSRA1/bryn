@@ -105,11 +105,11 @@ default_cc.Muons.RequireLooseIdForInitialFilter=False
 default_cc.Electrons.PtCut=10.0
 default_cc.Electrons.EtaCut=2.5
 default_cc.Electrons.TrkIsoCut=-1.0
-default_cc.Electrons.CombIsoCut=0.2
+default_cc.Electrons.CombIsoCut=0.15
 default_cc.Electrons.ElectronJetDeltaR=0.5
 default_cc.Electrons.ElectronIsoTypePtCutoff=0.
-default_cc.Electrons.ElectronLooseIdRequired=False
-default_cc.Electrons.ElectronTightIdRequired=True
+default_cc.Electrons.ElectronLooseIdRequired=True
+default_cc.Electrons.ElectronTightIdRequired=False
 default_cc.Electrons.RequireLooseIdForInitialFilter=False
 default_cc.Photons.EtCut=25.0
 default_cc.Photons.EtaCut=2.5
@@ -132,13 +132,15 @@ default_common.Electrons.EtaCut=2.5
 default_common.Electrons.TrkIsoCut=-1.
 default_common.Electrons.CombIsoCut=0.15
 default_common.Electrons.ApplyID = True
-default_common.Electrons.TightID = True
+default_common.Electrons.TightID = False
+default_common.Electrons.RequireLooseForOdd = True
 default_common.Muons.PtCut=10.0
-default_common.Muons.EtaCut=2.5
+default_common.Muons.EtaCut=2.1
 default_common.Muons.TrkIsoCut=-1.
 default_common.Muons.CombIsoCut=0.15
 default_common.Muons.ApplyID = True
 default_common.Muons.TightID = True
+default_common.Muons.RequireLooseForOdd = True
 default_common.Photons.EtCut=25.0
 default_common.Photons.EtaCut=2.5
 # the photon cuts are NOT read anyway
@@ -151,8 +153,9 @@ default_common.Photons.EtaCut=2.5
 # default_common.Photons.HadOverEmCut=0.5
 # default_common.Photons.SigmaIetaIetaCut=0.5
 ##default_common.Photons.CaloIsoCut=99999.
-default_common.Photons.IDReq=99999.
-default_common.Photons.IDReq=3
+default_common.Photons.IDReq = 3
+default_common.Photons.RequireLooseForOdd = True
+
 # -----------------------------------------------------------------------------
 
 
@@ -228,6 +231,19 @@ MaxObjects   = 15,
 StandardPlots     = True,
 )
 
+Npset6 = PSet(
+DirName      = "nAllCuts",
+MinObjects   = 3,
+MaxObjects   = 15,
+StandardPlots     = True,
+)
+
+pset6 = PSet(
+DirName      = "AllCuts",
+MinObjects   = 2,
+MaxObjects   = 2,
+StandardPlots     = True,
+)
 
 dalitz_plots_Inclusive = HadronicPlottingOps( PSet(
 DirName    = "Dalitz_Inclusive",
@@ -352,8 +368,13 @@ alphaT1 = OP_CommonAlphaTCut(0.55)
 spikecleaner = OP_EcalSpikeCleaner()
 event_display = OP_EventDisplay("EventDisplays", "common") #to draw all/common objects
 alphat = OP_CommonAlphaTCut(0.55)
-DeadEcalCutData = OP_DeadECALCut(0.3,0.5,30,"./deadRegionList_GR10_P_V10.txt")
-DeadEcalCutMC = OP_DeadECALCut(0.3,0.5,30,"./deadRegionList_START38_V12.txt")
+DeadEcalCutData = OP_DeadECALCut(0.3,0.5,30,10,"./deadRegionList_GR10_P_V10.txt")
+DeadEcalCutMC = OP_DeadECALCut(0.3,0.5,30,10,"./deadRegionList_START38_V12.txt")
+MHT_METCut = OP_MHToverMET(1.25)
+NJet5 = OP_NumComJets(">=",3)
+DiJet5 = OP_NumComJets("==",2)
+nHadStandardAllCuts=  WeeklyUpdatePlots(Npset6.ps())
+HadStandardAllCuts=  WeeklyUpdatePlots(pset6.ps())
 # -----------------------------------------------------------------------------
 # Definition of analyses
 # Analyses
@@ -428,6 +449,11 @@ cutTreeData.TAttach(DeadEcalCutData,DiJet4)
 cutTreeData.TAttach(DiJet4,HadStandard350_after_DeadEcal)
 cutTreeData.TAttach(DeadEcalCutData,NJet4)
 cutTreeData.TAttach(NJet4,nHadStandard350_after_DeadEcal)
+cutTreeData.TAttach(DeadEcalCutData,MHT_METCut)
+cutTreeData.TAttach(MHT_METCut,NJet5)
+cutTreeData.TAttach(MHT_METCut,DiJet5)
+cutTreeData.TAttach(NJet5,nHadStandardAllCuts)
+cutTreeData.TAttach(DiJet5,HadStandardAllCuts)
 
 
 #Second MC!
@@ -478,4 +504,9 @@ cutTreeMC.TAttach(DeadEcalCutMC,DiJet4)
 cutTreeMC.TAttach(DiJet4,HadStandard350_after_DeadEcal)
 cutTreeMC.TAttach(DeadEcalCutMC,NJet4)
 cutTreeMC.TAttach(NJet4,nHadStandard350_after_DeadEcal)
+cutTreeMC.TAttach(DeadEcalCutMC,MHT_METCut)
+cutTreeMC.TAttach(MHT_METCut,NJet5)
+cutTreeMC.TAttach(MHT_METCut,DiJet5)
+cutTreeMC.TAttach(NJet5,nHadStandardAllCuts)
+cutTreeMC.TAttach(DiJet5,HadStandardAllCuts)
 

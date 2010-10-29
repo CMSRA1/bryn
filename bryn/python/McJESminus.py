@@ -11,8 +11,13 @@ from batchGolden import *
 # JESUncert(-0.1,false)   means -10%, independent of eta
 # JESUncert(0.02,true)    means +2% per unit eta
 # JESUncert(-0.02,true)   means -2% per unit eta
+
+vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
+ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 JESUncert = JESUncert(-0.05,False)
 def addCutFlowMC(b) :
+  b.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
+  b.AddElectronFilter("PreCC",vbtfElectronIdFilter)
   b.AddJetFilter("PreCC",JESUncert)
   b+=cutTreeMC
 

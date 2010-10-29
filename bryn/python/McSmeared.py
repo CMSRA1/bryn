@@ -7,9 +7,12 @@ from icf.core import PSet,Analysis
 
 from batchGolden import *
 
-
+vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
+ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 JetSmear = JetSmear(0.1,50)
 def addCutFlowMC(b) :
+  b.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
+  b.AddElectronFilter("PreCC",vbtfElectronIdFilter)
   b.AddJetFilter("PreCC",JetSmear)
   b+=cutTreeMC
 

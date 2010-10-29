@@ -7,9 +7,19 @@ from libHadronic import *
 from icf.core import PSet,Analysis
 
 from batchGolden import *
+from ra1objectid.vbtfElectronId_cff import *
+from ra1objectid.vbtfMuonId_cff import *
+from ra1objectid.ra3PhotonId_cff import *
+
+vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
+#vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP90ps.ps() )
+#vbtMuonIdFilter      = Muon_IDFilter( vbtfmuonidps.ps() )
+ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 
 def addCutFlowData(a) :
   a.AddJetFilter("PreCC",JetCorrections)
+  a.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
+  a.AddElectronFilter("PreCC",vbtfElectronIdFilter)
   a+=cutTreeData
 
 # AK5 Calo
@@ -54,12 +64,12 @@ addCutFlowData(anal_ak7_caloData)
 ensure_dir("../results/")
 
 TedSample=PSet(
-Name="Testsample",
+Name="10SynchTestdeadcells",
 Format=("ICF",2),
 Weight=1.,
 File="~/Desktop/JetMET.Run2010A-Sep17ReReco_v2.RECO.RAW.Burt_1_skim.root")
-anal_ak5_caloData.Run("../results/",conf_ak5_caloData,data38)
-# anal_ak5_caloData.Run("../results/",conf_ak5_caloData,[TedSample])
+# anal_ak5_caloData.Run("../results/",conf_ak5_caloData,data38)
+anal_ak5_caloData.Run("../results/",conf_ak5_caloData,[TedSample])
 #anal_ak5_caloData.Run("../results/",conf_ak5_caloData,[bryn2])
 #anal_ak5_caloData.Run("../results/",conf_ak5_caloData,data38)
 # anal_ak5_caloData.Run("../results/",conf_ak5_caloData,[LatestSkim101010])
