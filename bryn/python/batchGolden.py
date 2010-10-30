@@ -154,7 +154,7 @@ default_common.Photons.EtaCut=2.5
 ##default_common.Photons.CaloIsoCut=99999.
 default_common.Photons.IDReq = 3
 default_common.Photons.RequireLooseForOdd = True
-
+MC=[wjets_madgraph_vols,ttbarTauola,Zinvisible_jets,zjets_madgraph,LM0,LM1,LM5]
 # -----------------------------------------------------------------------------
 
 
@@ -364,6 +364,7 @@ htCut300 = RECO_CommonHTCut(300.)
 htCut350 = RECO_CommonHTCut(350.)
 alphaT0 = OP_CommonAlphaTCut(0.55)
 alphaT1 = OP_CommonAlphaTCut(0.55)
+alphaT2 = OP_CommonAlphaTCut(0.55)
 spikecleaner = OP_EcalSpikeCleaner()
 event_display = OP_EventDisplay("EventDisplays", "common") #to draw all/common objects
 alphat = OP_CommonAlphaTCut(0.55)
@@ -375,6 +376,38 @@ NJet5 = OP_NumComJets(">=",3)
 DiJet5 = OP_NumComJets("==",2)
 nHadStandardAllCuts=  WeeklyUpdatePlots(Npset6.ps())
 HadStandardAllCuts=  WeeklyUpdatePlots(pset6.ps())
+
+
+#Cross check with the allhadronic analysis
+pset1 = PSet(
+    DirName      = "HadronicCommon_1",
+    MinObjects   = 2,
+    MaxObjects   = 15,
+    StandardPlots     = True,
+    DeadECALPlots = True,
+    CleaningControlPlots = True,
+    MECPlots = True,
+    DeadECALFile = "./deadRegionList_START36_V9.txt",
+    DeadECAL_MinJetPtCut = 10.,
+    DeadECAL_MinBiasCut = 0.5,
+    DeadECAL_NBadCellsCut = 10
+)
+
+pset2 = deepcopy(pset1)
+pset2.DirName = "HadronicCommon_2"
+
+pset3 = deepcopy(pset1)
+pset3.DirName = "HadronicCommon_3"
+
+pset4 = deepcopy(pset1)
+pset4.DirName = "HadronicCommon_4"
+
+HadStandard_1 = HadronicCommonPlots(pset1.ps())
+HadStandard_2 = HadronicCommonPlots(pset2.ps())
+HadStandard_3 = HadronicCommonPlots(pset3.ps())
+HadStandard_4 = HadronicCommonPlots(pset4.ps())
+
+
 
 # -----------------------------------------------------------------------------
 # Definition of analyses
@@ -415,6 +448,7 @@ cutTreeData.TAttach(LeadingJetCut,secondJetET)
 ##########DiJet Studies
 cutTreeData.TAttach(secondJetET,htCut250)
 cutTreeData.TAttach(htCut250,dalitz_plots_Inclusive)
+cutTreeData.TAttach(htCut250,HadStandard_4)
 cutTreeData.TAttach(htCut250,DiJet3)
 cutTreeData.TAttach(htCut250,alphat)
 cutTreeData.TAttach(alphat,event_display)
@@ -440,8 +474,8 @@ cutTreeData.TAttach(secondJetET,htCut350)
 cutTreeData.TAttach(htCut350,dalitz_plots_350)
 cutTreeData.TAttach(htCut350,DiJet2)
 cutTreeData.TAttach(htCut350,NJet2)
-cutTreeData.TAttach(DiJet2,alphaT0)
-cutTreeData.TAttach(NJet2,alphaT1)
+cutTreeData.TAttach(htCut350,alphaT0)
+cutTreeData.TAttach(alphaT0,HadStandard_1)
 cutTreeData.TAttach(DiJet2,HadStandard350)
 cutTreeData.TAttach(NJet2,nHadStandard350)
 
@@ -449,8 +483,12 @@ cutTreeData.TAttach(htCut350,DeadEcalCutData)
 cutTreeData.TAttach(DeadEcalCutData,DiJet4)
 cutTreeData.TAttach(DiJet4,HadStandard350_after_DeadEcal)
 cutTreeData.TAttach(DeadEcalCutData,NJet4)
+cutTreeData.TAttach(DeadEcalCutData,alphaT1)
+cutTreeData.TAttach(alphaT1,HadStandard_2)
 cutTreeData.TAttach(NJet4,nHadStandard350_after_DeadEcal)
 cutTreeData.TAttach(DeadEcalCutData,MHT_METCut)
+cutTreeData.TAttach(MHT_METCut,alphaT2)
+cutTreeData.TAttach(alphaT2,HadStandard_3)
 cutTreeData.TAttach(MHT_METCut,NJet5)
 cutTreeData.TAttach(MHT_METCut,DiJet5)
 cutTreeData.TAttach(NJet5,nHadStandardAllCuts)
@@ -475,6 +513,8 @@ cutTreeMC.TAttach(LeadingJetCut,secondJetET)
 ##########DiJet Studies
 cutTreeMC.TAttach(secondJetET,htCut250)
 cutTreeMC.TAttach(htCut250,dalitz_plots_Inclusive)
+cutTreeMC.TAttach(htCut250,HadStandard_4)
+
 cutTreeMC.TAttach(htCut250,DiJet3)
 cutTreeMC.TAttach(DiJet3,HadStandardAll)
 cutTreeMC.TAttach(htCut250,NJet3)
@@ -493,19 +533,24 @@ cutTreeMC.TAttach(LessThan350,NJet1)
 cutTreeMC.TAttach(DiJet1,HadStandard300_350)
 cutTreeMC.TAttach(NJet1,nHadStandard300_350)
 cutTreeMC.TAttach(secondJetET,htCut350)
+cutTreeMC.TAttach(secondJetET,htCut350)
 cutTreeMC.TAttach(htCut350,dalitz_plots_350)
 cutTreeMC.TAttach(htCut350,DiJet2)
 cutTreeMC.TAttach(htCut350,NJet2)
-cutTreeMC.TAttach(DiJet2,alphaT0)
-cutTreeMC.TAttach(NJet2,alphaT1)
+cutTreeMC.TAttach(htCut350,alphaT0)
+cutTreeMC.TAttach(alphaT0,HadStandard_1)
 cutTreeMC.TAttach(DiJet2,HadStandard350)
 cutTreeMC.TAttach(NJet2,nHadStandard350)
 cutTreeMC.TAttach(htCut350,DeadEcalCutMC)
-cutTreeMC.TAttach(DeadEcalCutMC,DiJet4)
+cutTreeMC.TAttach(DeadEcalCutData,DiJet4)
 cutTreeMC.TAttach(DiJet4,HadStandard350_after_DeadEcal)
 cutTreeMC.TAttach(DeadEcalCutMC,NJet4)
+cutTreeMC.TAttach(DeadEcalCutMC,alphaT1)
+cutTreeMC.TAttach(alphaT1,HadStandard_2)
 cutTreeMC.TAttach(NJet4,nHadStandard350_after_DeadEcal)
-cutTreeMC.TAttach(DeadEcalCutMC,MHT_METCut)
+cutTreeMC.TAttach(DeadEcalCutDMC,MHT_METCut)
+cutTreeMC.TAttach(MHT_METCut,alphaT2)
+cutTreeMC.TAttach(alphaT2,HadStandard_3)
 cutTreeMC.TAttach(MHT_METCut,NJet5)
 cutTreeMC.TAttach(MHT_METCut,DiJet5)
 cutTreeMC.TAttach(NJet5,nHadStandardAllCuts)
