@@ -6,6 +6,10 @@ from libHadronic import *
 from icf.core import PSet,Analysis
 import icf.utils as Utils
 from batchGolden import *
+from samples_cff import *
+from ra1objectid.vbtfElectronId_cff import *
+from ra1objectid.vbtfMuonId_cff import *
+from ra1objectid.ra3PhotonId_cff import *
 
 
 JetSmear = JetSmear(0.1,30)
@@ -57,10 +61,9 @@ addCutFlowMC(anal_ak7_caloMC)
 
 ensure_dir("../results/NoSmear/")
 
-MC=[WJets_Madgraph_NNLO,TTBarTauola_NNLO,Zinvisible_jets_pset_NNLO,Zjets_madgraph_NNLO]
 
 #anal_ak5_caloMC.Run("../results/NoSmear/",conf_ak5_caloMC,MC)
-anal_ak5_caloMC.Run("../results/NoSmear",conf_ak5_caloMC,[QCD_Pythia6_ALL])
+anal_ak5_caloMC.Run("../results/NoSmear",conf_ak5_caloMC,[QCD_AllPtBins_7TeV_Pythia])#a,LM0,LM1,LM5])
 # anal_ak5_pfMC.Run("../results/NoSmear",conf_ak5_pfMC,MC)
 # anal_ak5_pfMC.Run("../results/NoSmear",conf_ak5_pfMC,[QCD_AllPtBins_7TeV_Pythia])
 # anal_ak5_jptMC.Run("../results/NoSmear",conf_ak5_jptMC,MC)

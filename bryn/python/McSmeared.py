@@ -4,7 +4,9 @@ from libFrameworkSUSY import *
 from libHadronic import *
 from libbryn import *
 from icf.core import PSet,Analysis
-
+from ra1objectid.vbtfElectronId_cff import *
+from ra1objectid.vbtfMuonId_cff import *
+from ra1objectid.ra3PhotonId_cff import *
 from batchGolden import *
 
 vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
@@ -56,7 +58,7 @@ anal_ak7_caloMC=Analysis("AK7Calo")
 addCutFlowMC(anal_ak7_caloMC)
 
 ensure_dir("../results/Smear/")
-MC=[WJets_Madgraph_NNLO,TTBarTauola_NNLO,Zinvisible_jets_pset_NNLO,Zjets_madgraph_NNLO]
+#MC=[WJets_Madgraph_NNLO,TTBarTauola_NNLO,Zinvisible_jets_pset_NNLO,Zjets_madgraph_NNLO]
 
 #anal_ak5_caloMC.Run("../results/Smear/",conf_ak5_caloMC,MC)
 anal_ak5_caloMC.Run("../results/Smear",conf_ak5_caloMC,[QCD_AllPtBins_7TeV_Pythia])
