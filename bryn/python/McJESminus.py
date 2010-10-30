@@ -66,7 +66,7 @@ ensure_dir("../results/JESminus/")
 #MC=[WJets_Madgraph_NNLO,TTBarTauola_NNLO,Zinvisible_jets_pset_NNLO,Zjets_madgraph_NNLO]
 
 #anal_ak5_caloMC.Run("../results/JESminus/",conf_ak5_caloMC,MC)
-anal_ak5_caloMC.Run("../results/JESminus/",conf_ak5_caloMC,[QCD_AllPtBins_7TeV_Pythia])
+anal_ak5_caloMC.Run("../results/JESminus/",conf_ak5_caloMC,MC+[QCD_AllPtBins_7TeV_Pythia])
 # anal_ak5_pfMC.Run("../results/JESminus/",conf_ak5_pfMC,MC)
 # anal_ak5_pfMC.Run("../results/JESminus/",conf_ak5_pfMC,[QCD_AllPtBins_7TeV_Pythia])
 # anal_ak5_jptMC.Run("../results/JESminus/",conf_ak5_jptMC,MC)

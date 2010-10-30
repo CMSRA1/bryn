@@ -63,7 +63,7 @@ ensure_dir("../results/NoSmear/")
 
 
 #anal_ak5_caloMC.Run("../results/NoSmear/",conf_ak5_caloMC,MC)
-anal_ak5_caloMC.Run("../results/NoSmear",conf_ak5_caloMC,[QCD_AllPtBins_7TeV_Pythia])#a,LM0,LM1,LM5])
+anal_ak5_caloMC.Run("../results/NoSmear",conf_ak5_caloMC,MC+[QCD_AllPtBins_7TeV_Pythia])#a,LM0,LM1,LM5])
 # anal_ak5_pfMC.Run("../results/NoSmear",conf_ak5_pfMC,MC)
 # anal_ak5_pfMC.Run("../results/NoSmear",conf_ak5_pfMC,[QCD_AllPtBins_7TeV_Pythia])
 # anal_ak5_jptMC.Run("../results/NoSmear",conf_ak5_jptMC,MC)
