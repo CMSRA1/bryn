@@ -207,7 +207,7 @@ void WeeklyUpdatePlots::StandardPlots() {
   BookHistArray( HT_,
     "HT",
     ";H_{T} (GeV); Events/25 GeV;",
-    80,0.,2000.,
+    100,0.,2500.,
     nMax_+1, 0, 1, true );
 
   BookHistArray( Meff_,
@@ -239,7 +239,7 @@ void WeeklyUpdatePlots::StandardPlots() {
   BookHistArray( MHT_,
     "MHT",
     ";#slash{H}_{T} (GeV); Events/10 GeV;",
-    40,0.,400.,
+    60,0.,600.,
     nMax_+1, 0, 1, true );
 
 
