@@ -135,11 +135,24 @@ void WeeklyUpdatePlots::StandardPlots() {
     60, .0, 300.,
     nMax_+1, 0, 1, true );
 
+  BookHistArray( BabyJetMHTafterAlphaT_,
+    "BabyJetMHTafterAlphaT",
+    ";BabyJetMHT;Events/5GeV;",
+    60, .0, 300.,
+    nMax_+1, 0, 1, true );
+
 
   BookHistArray( MissedHT_,
     "MHTRatio_after_alphaT_55",
     ";MHT30/MHT10;Events/0.1;",
     100, 0., 10,
+    nMax_+1, 0, 1, true );
+
+
+  BookHistArray( MHTovMET_,
+    "MHTovMET_afterAlphaT",
+    ";MHT/MET;Events/0.1;",
+    1000, 0., 100,
     nMax_+1, 0, 1, true );
 
   BookHistArray( DetlaPhi_LeadingJets_,
@@ -249,6 +262,14 @@ void WeeklyUpdatePlots::StandardPlots() {
     ";H_{T} (GeV); Events/25 GeV;",
     80,0.,2000.,
     nMax_+1, 0, 1, true );
+
+
+  BookHistArray( MultiplicityAfteraT_,
+    "JetMultiplicityAfterAlphaT",
+    ";n",
+    15,0.,15.,
+    nMax_+1, 0, 1, true );
+
 
   BookHistArray( Multiplicity_,
     "JetMultiplicity",
@@ -577,10 +598,28 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
 
     if(ev.CommonAlphaT() > 0.55){
 
+      if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHTafterAlphaT_.size()) {
+      BabyJetMHTafterAlphaT_[0]->Fill( ev.JD_CommonJets().babyHT.Pt(), weight );
+      BabyJetMHTafterAlphaT_[n]->Fill( ev.JD_CommonJets().babyHT.Pt(), weight );
+    }
+
+
+      if ( n >= nMin_ && n <= nMax_ && n < MultiplicityAfteraT_.size()) {
+      MultiplicityAfteraT_[0]->Fill( n, weight );
+      MultiplicityAfteraT_[n]->Fill( n, weight );
+    }
+
       if ( n >= nMin_ && n <= nMax_ && n < HT_forRatio_.size() ) {
         HT_forRatio_[0]->Fill(  ev.CommonHT(), weight );
         HT_forRatio_[n]->Fill( ev.CommonHT(), weight );
       }
+
+      if ( n >= nMin_ && n <= nMax_ && n < MHTovMET_.size() ) {
+        MHTovMET_[0]->Fill(  ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+        MHTovMET_[n]->Fill(  ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+      }
+
+
 
       if ( n >= nMin_ && n <= nMax_ && n < MissedHT_.size() ) {
         MissedHT_[0]->Fill(  ev.CommonRecoilMET().Pt()/(ev.CommonRecoilMET()+ev.JD_CommonJets().babyHT).Pt(), weight );
