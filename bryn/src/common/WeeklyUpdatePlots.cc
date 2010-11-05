@@ -135,8 +135,8 @@ void WeeklyUpdatePlots::StandardPlots() {
     60, .0, 300.,
     nMax_+1, 0, 1, true );
 
-  BookHistArray( BabyJetMHTafterAlphaT_,
-    "BabyJetMHTafterAlphaT",
+  BookHistArray( BabyJetMHTafterMETcut_,
+    "BabyJetMHTafterMetCut",
     ";BabyJetMHT;Events/5GeV;",
     60, .0, 300.,
     nMax_+1, 0, 1, true );
@@ -593,21 +593,25 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
     }
 
 
+    if(LorentzV(*ev.metP4caloTypeII()).Pt() > 20.0){
+
+      if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHTafterMETcut_.size()) {
+        BabyJetMHTafterMETcut_[0]->Fill( ev.JD_CommonJets().babyHT.Pt(), weight );
+        BabyJetMHTafterMETcut_[n]->Fill( ev.JD_CommonJets().babyHT.Pt(), weight );
+      }
+    }
 
 
 
     if(ev.CommonAlphaT() > 0.55){
 
-      if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHTafterAlphaT_.size()) {
-      BabyJetMHTafterAlphaT_[0]->Fill( ev.JD_CommonJets().babyHT.Pt(), weight );
-      BabyJetMHTafterAlphaT_[n]->Fill( ev.JD_CommonJets().babyHT.Pt(), weight );
-    }
+
 
 
       if ( n >= nMin_ && n <= nMax_ && n < MultiplicityAfteraT_.size()) {
-      MultiplicityAfteraT_[0]->Fill( n, weight );
-      MultiplicityAfteraT_[n]->Fill( n, weight );
-    }
+        MultiplicityAfteraT_[0]->Fill( n, weight );
+        MultiplicityAfteraT_[n]->Fill( n, weight );
+      }
 
       if ( n >= nMin_ && n <= nMax_ && n < HT_forRatio_.size() ) {
         HT_forRatio_[0]->Fill(  ev.CommonHT(), weight );

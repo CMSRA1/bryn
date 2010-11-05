@@ -73,6 +73,7 @@ namespace Operation {
     std::vector<TH1D*>  MultiplicityAfteraT_;
     std::vector<TH1D*>  BabyJetMHTafterAlphaT_;
     std::vector<TH1D*>  MHTovMET_;
+    std::vector<TH1D*>  BabyJetMHTafterMETcut_;
     // //DeadECAL Plots
     // std::vector<TH1D*>  BiasedDphi_;
     // std::vector<TH1D*> BadJetECALDR_;
