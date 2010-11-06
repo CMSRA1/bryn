@@ -149,6 +149,27 @@ void WeeklyUpdatePlots::StandardPlots() {
     nMax_+1, 0, 1, true );
 
 
+
+  BookHistArray( CaloMET_,
+    "CaloMET",
+    ";#slash{H}_T (GeV);Events/0.1;",
+    100, 0., 1000,
+    nMax_+1, 0, 1, true );
+
+  BookHistArray( CaloMET_afteraT_,
+    "CaloMET_after_alphaT",
+    ";#slash{H}_T (GeV);Events/0.1;",
+    100, 0., 1000,
+    nMax_+1, 0, 1, true );
+
+  BookHistArray( MHTovMET_raw_,
+    "MHTovMET",
+    ";MHT/MET;Events/0.1;",
+    100, 0., 10,
+    nMax_+1, 0, 1, true );
+
+
+
   BookHistArray( MHTovMET_,
     "MHTovMET_afterAlphaT",
     ";MHT/MET;Events/0.1;",
@@ -593,8 +614,7 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
     }
 
 
-    if(LorentzV(*ev.metP4caloTypeII()).Pt() > 20.0){
-
+    if(LorentzV(*ev.metP4caloTypeII()).Pt() < 20.0){
       if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHTafterMETcut_.size()) {
         BabyJetMHTafterMETcut_[0]->Fill( ev.JD_CommonJets().babyHT.Pt(), weight );
         BabyJetMHTafterMETcut_[n]->Fill( ev.JD_CommonJets().babyHT.Pt(), weight );
@@ -602,9 +622,23 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
     }
 
 
+      if ( n >= nMin_ && n <= nMax_ && n < MHTovMET_raw_.size() ) {
+        MHTovMET_raw_[0]->Fill(  ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+        MHTovMET_raw_[n]->Fill(  ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+      }
+
+      if ( n >= nMin_ && n <= nMax_ && n < CaloMET_.size() ) {
+        CaloMET_[0]->Fill(  LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+        CaloMET_[n]->Fill(  LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+      }
+
+
 
     if(ev.CommonAlphaT() > 0.55){
-
+      if ( n >= nMin_ && n <= nMax_ && n < CaloMET_afteraT_.size() ) {
+        CaloMET_afteraT_[0]->Fill(  LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+        CaloMET_afteraT_[n]->Fill(  LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+      }
 
 
 
