@@ -63,6 +63,28 @@ void WeeklyUpdatePlots::StandardPlots() {
 
 
 
+
+
+  BookHistArray( NumberVerticies_,
+    "Number_Primary_verticies_",
+    ";No.Vertercies;Events;",
+    10,0.,10,
+    nMax_+1, 0, 1, true );
+
+
+  BookHistArray( AlphaTOneVertex_,
+    "AlphaTOneVetex",
+    ";#alpha_{T};Events/0.025;",
+    60,0.,1.5,
+    nMax_+1, 0, 1, true );
+
+
+  BookHistArray( AlphaTgOneVertex_,
+    "AlphaTGreaterOneVetex",
+    ";#alpha_{T};Events/0.025;",
+    60,0.,1.5,
+    nMax_+1, 0, 1, true );
+
   BookHistArray( AlphaT_components_,
     "AlphaT_Components",
     ";#slashed{H}_{T}/H_{T};#Delta)H_{T}/H_{T}",
@@ -453,6 +475,34 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
 
 
   if ( StandardPlots_ ){
+
+
+
+ if ( n >= nMin_ && n <= nMax_ && n < NumberVerticies_.size()) {
+      NumberVerticies_[0]->Fill((ev.vertexPosition())->size(),weight);
+      NumberVerticies_[n]->Fill((ev.vertexPosition())->size(),weight);
+    }
+
+
+if((ev.vertexPosition())->size() == 1){
+
+ if ( n >= nMin_ && n <= nMax_ && n < AlphaTOneVertex_.size()) {
+      AlphaTOneVertex_[0]->Fill(ev.CommonAlphaT(),weight);
+      AlphaTOneVertex_[n]->Fill(ev.CommonAlphaT(),weight);
+    }
+
+}
+
+if((ev.vertexPosition())->size() > 1){
+ if ( n >= nMin_ && n <= nMax_ && n < AlphaTgOneVertex_.size()) {
+      AlphaTgOneVertex_[0]->Fill(ev.CommonAlphaT(),weight);
+      AlphaTgOneVertex_[n]->Fill(ev.CommonAlphaT(),weight);
+    }
+
+
+}
+
+
 
 
     if( (ev.CommonMHT().Pt()-ev.PFMET().Pt())/(ev.CommonMHT().Pt()+ev.CommonHT()) < 0.15){

@@ -77,6 +77,9 @@ namespace Operation {
     std::vector<TH1D*>  MHTovMET_raw_;
     std::vector<TH1D*>  CaloMET_;
     std::vector<TH1D*>  CaloMET_afteraT_;
+    std::vector<TH1D*>  NumberVerticies_;
+    std::vector<TH1D*>  AlphaTOneVertex_;
+    std::vector<TH1D*>  AlphaTgOneVertex_;
 
     // //DeadECAL Plots
     // std::vector<TH1D*>  BiasedDphi_;
