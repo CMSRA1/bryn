@@ -183,14 +183,31 @@ for dir in range(0,len(DirKeys)):
   # print DirKeys[dir].GetTitle()
   for hist in HistNames[dir]:
     Draw = False
-    # if "BiasedDeltaPhi_all" == hist: Draw = True
-    if  "HT_all" in hist: Draw = True
-    if  "AlphaT_all" in hist: Draw = True
-    if  "AlphaT_Zoomed_all" in hist: Draw = True
-    if  "MHTovMET_all" in hist: Draw = True
-    if  "BabyJetMHT_all" in hist: Draw = True
-    if  "EffectiveMass_after_alphaT_55_all" in hist: Draw = True
-    if "_all" in hist: Draw = True
+    if "CaloMET_after_alphaT_all" in hist: Draw = True
+    if "EffectiveMass_after_alphaT_55_all" in hist: Draw = True
+    if "HT_after_alphaT_all" in hist: Draw = True
+    if "BiasedDeltaPhi_after_alphaT_55_all" in hist: Draw = True
+    if "CosDetlaPhi_MHT_MHTBaby__all" in hist: Draw = True
+    if "DPhi_MHT_MHTbaby_AfterAlphaT__all" in hist: Draw = True
+    if "BabyJetMHT_all" in hist: Draw = True
+    if "BabyJetMHTafterMetCut_all" in hist: Draw = True
+    if "CaloMET_all" in hist: Draw = True
+    if "MHTovMET_all" in hist: Draw = True
+    if "MHTovMET_afterAlphaT_all" in hist: Draw = True
+    if "Mt2_LeadingJets_all" in hist: Draw = True
+    if "Mt2_all" in hist: Draw = True
+    if "AlphaT_all" in hist: Draw = True
+    if "AlphaT_Zoomed_all" in hist: Draw = True
+    if "HT_all" in hist: Draw = True
+    if "EffectiveMass_all" in hist: Draw = True
+    if "BiasedDeltaPhi_all" in hist: Draw = True
+    if "MHToverHT_all" in hist: Draw = True
+    if "MHT_all" in hist: Draw = True
+    if "JetMultiplicityAfterAlphaT_all" in hist: Draw = True
+    if "JetMultiplicity_all" in hist: Draw = True
+    if "JetEta_" in hist: Draw = True
+    if "JetPt_" in hist: Draw = True
+    if "fem__all" in hist: Draw = True
     # if DirKeys[dir].GetTitle()[0] != "n" and "_2" in hist: Draw = True
     # if "__1" in hist: Draw = True
     # if "__2" in hist: Draw = True
