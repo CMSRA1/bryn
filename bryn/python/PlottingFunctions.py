@@ -40,24 +40,38 @@ def HistogramMaxX(H):
 
 
 
-def Systematics(H1,H2,H3):
-  Standard = H1.Clone()
+def Systematics(H1,H2,H3,Smeared,outType):
+  if outType == "TGraph":   Standard = Root.TGraphAsymmErrors(H1)
+  if outType == "TH1":  Standard = H1.Clone()
   UpperError = H2.Clone()
-  # LowerError = H3.Clone()
-  for bin in range(1,Standard.GetNbinsX()):
-    # StandardUpper = math.sqrt((Standard.GetBinError(bin))**2 + ((UpperError.GetBinContent(bin) - LowerError.GetBinContent(bin))/2)**2)
-    StandardUpper = math.sqrt((Standard.GetBinError(bin))**2 + ((UpperError.GetBinContent(bin) - (Standard.GetBinContent(bin))))**2)
-
-    Standard.SetBinError(bin, StandardUpper)
+  LowerError = H3.Clone()
+  SmearDown = 0.
+  SmearUp = 0.
+  for bin in range(1,H1.GetNbinsX()+1):
+    if H1.GetBinContent(bin)-Smeared.GetBinContent(bin) < 0.:
+      SmearDown = 0.
+      SmearUp = (H1.GetBinContent(bin)-Smeared.GetBinContent(bin))**2
+      # print H1.GetBinCenter(bin),H1.GetBinContent(bin), SmearUp
+    if H1.GetBinContent(bin)-Smeared.GetBinContent(bin) > 0.:
+      SmearDown =(H1.GetBinContent(bin)-Smeared.GetBinContent(bin))**2# 0.
+      SmearUp = 0.
+      # print H1.GetBinCenter(bin),H1.GetBinContent(bin), SmearDown
+    if outType == "TGraph":
+      Standard.SetPointError(bin-1, H1.GetBinWidth(bin)/2, H1.GetBinWidth(bin)/2,math.sqrt((H1.GetBinError(bin))**2 + (H1.GetBinContent(bin)-LowerError.GetBinContent(bin))**2 + SmearDown), math.sqrt((H1.GetBinError(bin))**2 + (UpperError.GetBinContent(bin)-H1.GetBinContent(bin))**2 + SmearUp))
+      # Standard.SetPointEYlow(bin,math.sqrt((H1.GetBinError(bin))**2 + (H1.GetBinContent(bin)-LowerError.GetBinContent(bin))**2))
+      # print "bin",H1.GetBinCenter(bin), H1.GetBinContent(bin)," Satat error " , H1.GetBinError(bin), "sys Error", (H1.GetBinContent(bin)-LowerError.GetBinContent(bin)), "total", math.sqrt((H1.GetBinError(bin))**2 + (H1.GetBinContent(bin)-LowerError.GetBinContent(bin))**2),"erros in tgraph errors:",  Standard.GetErrorYlow(bin), Standard.GetErrorYhigh(bin)
+    # if outType == "TGraph": Standard.SetPointEYhigh(bin,math.sqrt((H1.GetBinError(bin))**2 + (UpperError.GetBinContent(bin)-H1.GetBinContent(bin))**2))
+    if outType == "TH1": Standard.SetBinError(bin, math.sqrt((Standard.GetBinError(bin))**2 + ((UpperError.GetBinContent(bin) - LowerError.GetBinContent(bin))/2)**2+SmearUp) )
   return Standard
-
+  # return True
 
 def SystematicsSmear(H1,H2):
   """docstring for Systematics"""
   Standard = H1.Clone()
-  UpperError = H2.Clone()
-  for bin in range(1,Standard.GetNbinsX()):
-    StandardUpper = math.sqrt((Standard.GetBinError(bin))**2 + (Standard.GetBinContent(bin)-UpperError.GetBinContent(bin))**2)
+  Smeared = H2.Clone()
+  for bin in range(1,Standard.GetNbinsX()+1):
+    StandardUpper = math.sqrt((Standard.GetBinError(bin))**2 + (Standard.GetBinContent(bin)-Smeared.GetBinContent(bin))**2)
+    # print  "Bin",Standard.GetBinCenter(bin),Standard.GetBinContent(bin),"bin error" ,Standard.GetBinError(bin)
     Standard.SetBinError(bin, StandardUpper)
   return Standard
   pass
