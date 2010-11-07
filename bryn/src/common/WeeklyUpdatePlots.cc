@@ -63,7 +63,11 @@ void WeeklyUpdatePlots::StandardPlots() {
 
 
 
-
+  BookHistArray( NumberVerticiesAfterAlphaT_,
+    "Number_Primary_verticies_after_alphaT",
+    ";No.Vertercies;Events;",
+    10,0.,10,
+    nMax_+1, 0, 1, true );
 
   BookHistArray( NumberVerticies_,
     "Number_Primary_verticies_",
