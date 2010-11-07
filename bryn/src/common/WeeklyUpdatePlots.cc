@@ -691,6 +691,11 @@ if((ev.vertexPosition())->size() > 1){
       }
 
 
+ if ( n >= nMin_ && n <= nMax_ && n < NumberVerticiesAfterAlphaT_.size()) {
+      NumberVerticiesAfterAlphaT_[0]->Fill((ev.vertexPosition())->size(),weight);
+      NumberVerticiesAfterAlphaT_[n]->Fill((ev.vertexPosition())->size(),weight);
+    }
+
 
       if ( n >= nMin_ && n <= nMax_ && n < MultiplicityAfteraT_.size()) {
         MultiplicityAfteraT_[0]->Fill( n, weight );

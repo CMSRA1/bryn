@@ -80,6 +80,7 @@ namespace Operation {
     std::vector<TH1D*>  NumberVerticies_;
     std::vector<TH1D*>  AlphaTOneVertex_;
     std::vector<TH1D*>  AlphaTgOneVertex_;
+    std::vector<TH1D*>  NumberVerticiesAfterAlphaT_;
 
     // //DeadECAL Plots
     // std::vector<TH1D*>  BiasedDphi_;
