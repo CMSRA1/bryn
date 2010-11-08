@@ -489,36 +489,35 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
 
 
 
- if ( n >= nMin_ && n <= nMax_ && n < NumberVerticies_.size()) {
+    if ( n >= nMin_ && n <= nMax_ && n < NumberVerticies_.size()) {
       NumberVerticies_[0]->Fill((ev.vertexPosition())->size(),weight);
       NumberVerticies_[n]->Fill((ev.vertexPosition())->size(),weight);
     }
 
 
- if ( n >= nMin_ && n <= nMax_ && n < AlphaTVsNoVertex_.size()) {
+    if ( n >= nMin_ && n <= nMax_ && n < AlphaTVsNoVertex_.size()) {
       AlphaTVsNoVertex_[0]->Fill(ev.CommonAlphaT(),(ev.vertexPosition())->size(),weight);
       AlphaTVsNoVertex_[n]->Fill(ev.CommonAlphaT(),(ev.vertexPosition())->size(),weight);
     }
 
 
 
-if((ev.vertexPosition())->size() == 1){
+    if((ev.vertexPosition())->size() == 1){
+      if ( n >= nMin_ && n <= nMax_ && n < AlphaTOneVertex_.size()) {
+        AlphaTOneVertex_[0]->Fill(ev.CommonAlphaT(),weight);
+        AlphaTOneVertex_[n]->Fill(ev.CommonAlphaT(),weight);
+      }
 
- if ( n >= nMin_ && n <= nMax_ && n < AlphaTOneVertex_.size()) {
-      AlphaTOneVertex_[0]->Fill(ev.CommonAlphaT(),weight);
-      AlphaTOneVertex_[n]->Fill(ev.CommonAlphaT(),weight);
     }
 
-}
+    if((ev.vertexPosition())->size() > 1){
+      if ( n >= nMin_ && n <= nMax_ && n < AlphaTgOneVertex_.size()) {
+        AlphaTgOneVertex_[0]->Fill(ev.CommonAlphaT(),weight);
+        AlphaTgOneVertex_[n]->Fill(ev.CommonAlphaT(),weight);
+      }
 
-if((ev.vertexPosition())->size() > 1){
- if ( n >= nMin_ && n <= nMax_ && n < AlphaTgOneVertex_.size()) {
-      AlphaTgOneVertex_[0]->Fill(ev.CommonAlphaT(),weight);
-      AlphaTgOneVertex_[n]->Fill(ev.CommonAlphaT(),weight);
+
     }
-
-
-}
 
 
 
@@ -690,15 +689,15 @@ if((ev.vertexPosition())->size() > 1){
     }
 
 
-      if ( n >= nMin_ && n <= nMax_ && n < MHTovMET_raw_.size() ) {
-        MHTovMET_raw_[0]->Fill(  ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
-        MHTovMET_raw_[n]->Fill(  ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
-      }
+    if ( n >= nMin_ && n <= nMax_ && n < MHTovMET_raw_.size() ) {
+      MHTovMET_raw_[0]->Fill(  ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+      MHTovMET_raw_[n]->Fill(  ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+    }
 
-      if ( n >= nMin_ && n <= nMax_ && n < CaloMET_.size() ) {
-        CaloMET_[0]->Fill(  LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
-        CaloMET_[n]->Fill(  LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
-      }
+    if ( n >= nMin_ && n <= nMax_ && n < CaloMET_.size() ) {
+      CaloMET_[0]->Fill(  LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+      CaloMET_[n]->Fill(  LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+    }
 
 
 
@@ -709,10 +708,10 @@ if((ev.vertexPosition())->size() > 1){
       }
 
 
- if ( n >= nMin_ && n <= nMax_ && n < NumberVerticiesAfterAlphaT_.size()) {
-      NumberVerticiesAfterAlphaT_[0]->Fill((ev.vertexPosition())->size(),weight);
-      NumberVerticiesAfterAlphaT_[n]->Fill((ev.vertexPosition())->size(),weight);
-    }
+      if ( n >= nMin_ && n <= nMax_ && n < NumberVerticiesAfterAlphaT_.size()) {
+        NumberVerticiesAfterAlphaT_[0]->Fill((ev.vertexPosition())->size(),weight);
+        NumberVerticiesAfterAlphaT_[n]->Fill((ev.vertexPosition())->size(),weight);
+      }
 
 
       if ( n >= nMin_ && n <= nMax_ && n < MultiplicityAfteraT_.size()) {
