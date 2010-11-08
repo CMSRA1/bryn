@@ -70,6 +70,7 @@ namespace Operation {
     std::vector<TH1D*>  AlphaTafterCaloMEC_;
     std::vector<TH1D*>  AlphaT_ZoomedafterCaloMEC_;
     std::vector<TH2D*>  AlphaT_components_;
+    std::vector<TH2D*>  AlphaTVsNoVertex_;
     std::vector<TH1D*>  MultiplicityAfteraT_;
     std::vector<TH1D*>  BabyJetMHTafterAlphaT_;
     std::vector<TH1D*>  MHTovMET_;

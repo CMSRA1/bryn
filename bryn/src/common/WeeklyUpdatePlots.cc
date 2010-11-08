@@ -63,6 +63,13 @@ void WeeklyUpdatePlots::StandardPlots() {
 
 
 
+  BookHistArray( AlphaTVsNoVertex_,
+    "AlphaTVsNoVertex",
+    ";;#alpha_{T};No.Vertercies;",
+    60,0.,1.5,
+    10,0.,10,
+    nMax_+1, 0, 1, true );
+
   BookHistArray( NumberVerticiesAfterAlphaT_,
     "Number_Primary_verticies_after_alphaT",
     ";No.Vertercies;Events;",
@@ -486,6 +493,13 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
       NumberVerticies_[0]->Fill((ev.vertexPosition())->size(),weight);
       NumberVerticies_[n]->Fill((ev.vertexPosition())->size(),weight);
     }
+
+
+ if ( n >= nMin_ && n <= nMax_ && n < AlphaTVsNoVertex_.size()) {
+      AlphaTVsNoVertex_[0]->Fill(ev.CommonAlphaT(),(ev.vertexPosition())->size(),weight);
+      AlphaTVsNoVertex_[n]->Fill(ev.CommonAlphaT(),(ev.vertexPosition())->size(),weight);
+    }
+
 
 
 if((ev.vertexPosition())->size() == 1){
