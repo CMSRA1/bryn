@@ -233,9 +233,9 @@ template<template <typename> class P = std::less >
 struct sort_LVec_Et
 {
    template<class T1, class T2>
-   bool operator()(const std::pair<T1, T2>& left, const std::pair<T1, T2>& right)
+   bool operator()(const LorentzV & o1, const LorentzV & o2)
    {
-       return P<T2>()(left.first, right.first);
+       return P<T2>()(o1.Et() > o2.Et());
    }
 };
 // -----------------------------------------------------------------------------
