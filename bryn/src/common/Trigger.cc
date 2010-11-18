@@ -224,7 +224,7 @@ void Trigger::StandardPlots() {
 //
 
 bool Trigger::ECompare(const LorentzV & o1, const LorentzV & o2)  {
-  return o1.Et() > o2.Et();
+  return(o1.Et() > o2.Et());
 }
 
 
