@@ -233,9 +233,9 @@ template<template <typename> class P = std::less >
 struct sort_LVec_Et
 {
    template<class T1, class T2>
-   bool operator()(const LorentzV & o1, const LorentzV & o2)
+   bool operator()(const T1 & o1, const T2 & o2)
    {
-       return P<T2>()( o2.Et(), o1.Et());
+       return P<T2>()( o2.Et(), o1.Et() );
    }
 };
 // -----------------------------------------------------------------------------
@@ -255,7 +255,7 @@ bool Trigger::StandardPlots( Event::Data& ev ) {
     Jet /= ev.jetCorrFactor()->at((*ijet).GetIndex());
     if( Jet.Pt() >= 20. ){ ThresholdJets.push_back(Jet); } // to enter collection jets must be above 20GeV uncorrected
   } // makes a collection of jets that are uncorrected, stores them in a vector
-  std::sort(ThresholdJets.begin(),ThresholdJets.end(), sort_LVec_Et<>() ); // sorth the uncorrected jet collection in Et order (as the trigger uses them)
+  std::sort(ThresholdJets.begin(),ThresholdJets.end(), sort_LVec_Et<>() ); // sort the uncorrected jet collection in Et order (as the trigger uses them)
 
   LorentzV mhtAllJets;
   double  htAllJets = 0.;
