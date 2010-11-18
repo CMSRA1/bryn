@@ -29,7 +29,7 @@ namespace Operation {
     std::string dirName_;
     UInt_t nMin_;
     UInt_t nMax_;
-    bool ECompare(const LorentzV * o1, const LorentzV * o2);
+    bool ECompare(const LorentzV & o1, const LorentzV & o2);
     std::vector<TH1D*>  MET70SecondJet50;
     std::vector<TH1D*>  MET50SecondJet70;
     std::vector<TH1D*>  MET50SecondJet50;
