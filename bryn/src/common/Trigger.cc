@@ -236,11 +236,13 @@ bool Trigger::StandardPlots( Event::Data& ev ) {
   std::vector<Event::Jet >::const_iterator ijet = ev.JD_Jets().begin();
   std::vector<Event::Jet >::const_iterator jjet = ev.JD_Jets().end();
   for ( ; ijet != jjet; ++ijet ) {
+
     LorentzV Jet = *ijet;
+
     Jet /= ev.jetCorrFactor()->at((*ijet).GetIndex());
     if( Jet.Pt() >= 20. ){ ThresholdJets.push_back(Jet); } // to enter collection jets must be above 20GeV uncorrected
   } // makes a collection of jets that are uncorrected, stores them in a vector
-  sort(&(*ThresholdJets.begin()), &(*ThresholdJets.end()), &ECompare ); // sorth the uncorrected jet collection in Et order (as the trigger uses them)
+  sort(ThresholdJets.begin(),ThresholdJets.end(), &ECompare ); // sorth the uncorrected jet collection in Et order (as the trigger uses them)
 
   LorentzV mhtAllJets;
   double  htAllJets = 0.;
