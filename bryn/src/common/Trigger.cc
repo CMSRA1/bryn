@@ -235,7 +235,7 @@ struct sort_LVec_Et
    template<class T1, class T2>
    bool operator()(const LorentzV & o1, const LorentzV & o2)
    {
-       return P<T2>()(o1.Et() > o2.Et());
+       return P<T2>()( o2.Et(), o1.Et());
    }
 };
 // -----------------------------------------------------------------------------
