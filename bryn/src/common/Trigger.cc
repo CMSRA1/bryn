@@ -224,10 +224,19 @@ void Trigger::StandardPlots() {
 //
 struct Trigger::EComp_sort
 {
-
   bool operator() (const LorentzV & o1, const LorentzV & o2)  {
     return(o1.Et() > o2.Et());
   }
+};
+
+template<template <typename> class P = std::less >
+struct sort_LVec_Et
+{
+   template<class T1, class T2>
+   bool operator()(const std::pair<T1, T2>& left, const std::pair<T1, T2>& right)
+   {
+       return P<T2>()(left.first, right.first);
+   }
 };
 // -----------------------------------------------------------------------------
 //
@@ -246,7 +255,7 @@ bool Trigger::StandardPlots( Event::Data& ev ) {
     Jet /= ev.jetCorrFactor()->at((*ijet).GetIndex());
     if( Jet.Pt() >= 20. ){ ThresholdJets.push_back(Jet); } // to enter collection jets must be above 20GeV uncorrected
   } // makes a collection of jets that are uncorrected, stores them in a vector
-  std::sort(ThresholdJets.begin(),ThresholdJets.end(), EComp_sort() ); // sorth the uncorrected jet collection in Et order (as the trigger uses them)
+  std::sort(ThresholdJets.begin(),ThresholdJets.end(), sort_LVec_Et<>() ); // sorth the uncorrected jet collection in Et order (as the trigger uses them)
 
   LorentzV mhtAllJets;
   double  htAllJets = 0.;
