@@ -222,12 +222,12 @@ void Trigger::StandardPlots() {
 }
 // -----------------------------------------------------------------------------
 //
-struct Trigger::EComp_sort
-{
-  bool operator() (const LorentzV & o1, const LorentzV & o2)  {
-    return(o1.Et() > o2.Et());
-  }
-};
+// struct Trigger::EComp_sort
+// {
+//   bool operator() (const LorentzV & o1, const LorentzV & o2)  {
+//     return(o1.Et() > o2.Et());
+//   }
+// };
 
 template<template <typename> class P = std::less >
 struct sort_LVec_Et
