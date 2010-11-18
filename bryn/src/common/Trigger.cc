@@ -235,7 +235,7 @@ struct sort_LVec_Et
    template<class T1, class T2>
    bool operator()(const T1 & o1, const T2 & o2)
    {
-       return P<T2>()( o2.Et(), o1.Et() );
+       return P<double>()( o2.Et(), o1.Et() );
    }
 };
 // -----------------------------------------------------------------------------
