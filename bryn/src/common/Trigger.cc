@@ -258,7 +258,7 @@ bool Trigger::StandardPlots( Event::Data& ev ) {
   //   }
   // }
 
-  int n = ThresholdJets.size();
+  unsigned int n = ThresholdJets.size();
 //start Meffective trigger studies
 //first reference collection:
 
