@@ -56,14 +56,14 @@ print "The Integrated Luminosity your plots are being scaled to is: ", intlumi ,
 
 # outputfile = "../pdfs/JESFixedTest/"
 
-outputfile = "../pdfs/21pbTestPlots/"
+outputfile = "../pdfs/35pb38MC/"
 
 ensure_dir(outputfile)
 
 
 print "you are outputting to: " ,outputfile
 #SetWhere your results from your analysis are
-resultsDir = "~/results/" #"/vols/cms02/bm409/SUSYv2/hadronic/results/"+algo
+resultsDir = "~/resultsAsOf17Nov/" #"/vols/cms02/bm409/SUSYv2/hadronic/results/"+algo
 
 print "you are using the " , algo , " Jet collection"
 #close list is a global variable that has the file name appended to it so at the end of each hist loop the open files are closed. It is cleared each time a new hist is called.
@@ -183,31 +183,33 @@ for dir in range(0,len(DirKeys)):
   # print DirKeys[dir].GetTitle()
   for hist in HistNames[dir]:
     Draw = False
-    if "CaloMET_after_alphaT_all" in hist: Draw = True
+    # if "CaloMET_after_alphaT_all" in hist: Draw = True
     if "EffectiveMass_after_alphaT_55_all" in hist: Draw = True
-    if "HT_after_alphaT_all" in hist: Draw = True
+    # if "HT_after_alphaT_all" in hist: Draw = True
     if "BiasedDeltaPhi_after_alphaT_55_all" in hist: Draw = True
-    if "CosDetlaPhi_MHT_MHTBaby__all" in hist: Draw = True
-    if "DPhi_MHT_MHTbaby_AfterAlphaT__all" in hist: Draw = True
+    # if "CosDetlaPhi_MHT_MHTBaby__all" in hist: Draw = True
+    # if "DPhi_MHT_MHTbaby_AfterAlphaT__all" in hist: Draw = True
     if "BabyJetMHT_all" in hist: Draw = True
-    if "BabyJetMHTafterMetCut_all" in hist: Draw = True
-    if "CaloMET_all" in hist: Draw = True
-    if "MHTovMET_all" in hist: Draw = True
-    if "MHTovMET_afterAlphaT_all" in hist: Draw = True
-    if "Mt2_LeadingJets_all" in hist: Draw = True
-    if "Mt2_all" in hist: Draw = True
+    # if "BabyJetMHTafterMetCut_all" in hist: Draw = True
+    # if "CaloMET_all" in hist: Draw = True
+    # if "MHTovMET_all" in hist: Draw = True
+    # if "MHTovMET_afterAlphaT_all" in hist: Draw = True
+    # if "Mt2_LeadingJets_all" in hist: Draw = True
+    # if "Mt2_all" in hist: Draw = True
     if "AlphaT_all" in hist: Draw = True
     if "AlphaT_Zoomed_all" in hist: Draw = True
     if "HT_all" in hist: Draw = True
     if "EffectiveMass_all" in hist: Draw = True
     if "BiasedDeltaPhi_all" in hist: Draw = True
-    if "MHToverHT_all" in hist: Draw = True
+    # if "MHToverHT_all" in hist: Draw = True
     if "MHT_all" in hist: Draw = True
     if "JetMultiplicityAfterAlphaT_all" in hist: Draw = True
     if "JetMultiplicity_all" in hist: Draw = True
-    if "JetEta_" in hist: Draw = True
-    if "JetPt_" in hist: Draw = True
-    if "fem__all" in hist: Draw = True
+    # if "JetEta_" in hist: Draw = True
+    # if "JetPt_" in hist: Draw = True
+    # if "fem__all" in hist: Draw = True
+    if "BabyJetMHTafterMetCut_all" in hist: Draw = True
+
     # if DirKeys[dir].GetTitle()[0] != "n" and "_2" in hist: Draw = True
     # if "__1" in hist: Draw = True
     # if "__2" in hist: Draw = True
@@ -215,7 +217,7 @@ for dir in range(0,len(DirKeys)):
     # if "__15" in hist: Draw = True
     if not Draw : continue
     if "/" in hist : continue
-    leg = Root.TLegend(0.55, 0.4, 0.95, 0.85)
+    leg = Root.TLegend(0.65, 0.45, 0.97, 0.8)
     leg.SetShadowColor(0)
     leg.SetBorderSize(0)
     leg.SetFillStyle(4100)
@@ -263,7 +265,7 @@ for dir in range(0,len(DirKeys)):
 
     WJets = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_wjets_madgraph_vols_1.root",Root.kPink+7,1,"W + Jets")
     # WJets.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_wjets_madgraph_vols_1.root","300_350Gevcombined",Root.kTeal-7,1,0))
-    ttbar = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_ttbarTauola_2.root",Root.kBlue+1,1,"TTBar")
+    ttbar = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_ttbarTauola_2.root",Root.kBlue+1,1,"tt + Jets")
     # ttbar.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_ttbarTauola_2.root","300_350Gevcombined",Root.kTeal-7,1,0))
     LM0 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM0_6.root",2,1,"LM0")
     # LM0.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_LM0_5.root","300_350Gevcombined",Root.kTeal-7,1,0))
@@ -276,10 +278,10 @@ for dir in range(0,len(DirKeys)):
           leg.RecursiveRemove(Ztotal)
           leg.RecursiveRemove(WJets)
           leg.RecursiveRemove(ttbar)
-          # LM2 = GetHist(resultsDir+"/AK5"+algo+"_LM2_10.root",3,1,"LM2")
-          # LM3 = GetHist(resultsDir+"/AK5"+algo+"_LM3_11.root",4,1,"LM3")
-          # LM4 = GetHist(resultsDir+"/AK5"+algo+"_LM4_12.root",5,1,"LM4")
-          # LM5 = GetHist(resultsDir+"/AK5"+algo+"_LM5_13.root",6,1,"LM5")
+          LM2 = GetHist("/Users/bryn/results15pb/NoSmear/AK5"+algo+"_LM2_10.root",3,1,"LM2")
+          LM3 = GetHist("/Users/bryn/results15pb/NoSmear/AK5"+algo+"_LM3_11.root",4,1,"LM3")
+          LM4 = GetHist("/Users/bryn/results15pb/NoSmear/AK5"+algo+"_LM4_12.root",5,1,"LM4")
+          LM5 = GetHist("/Users/bryn/results15pb/NoSmear/AK5"+algo+"_LM5_13.root",6,1,"LM5")
           DrawSM = True
 
     if "BiasedDeltaPhi_all" == hist or "BiasedDeltaPhi_after_alphaT_all" == hist:
@@ -304,7 +306,7 @@ for dir in range(0,len(DirKeys)):
 
     Pythia8 = False
 
-    if hist == "MHTovMET_afterAlphaT_all" or hist == "BabyJetMHT_all" or hist == "BiasedDeltaPhi_after_alphaT_55_all" or hist == "BiasedDeltaPhi_all" :
+    if hist == "MHTovMET_afterAlphaT_all" or hist == "BabyJetMHT_all" or hist == "BabyJetMHTafterMetCut_all" or hist == "BiasedDeltaPhi_after_alphaT_55_all" or hist == "BiasedDeltaPhi_all" :
       Pythia8=GetHist(resultsDir+"/NoSmear/AK5"+algo+"_QCD_Pythia8.root",3,1,"QCD Pythia 8")
       # Pythia8.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_QCD_Pythia8.root","300_350Gevcombined",Root.kTeal-7,1,0))
 
@@ -358,18 +360,18 @@ for dir in range(0,len(DirKeys)):
     if SMBackGrounds.Integral(0,SMBackGrounds.GetNbinsX()) == 0 : Draw = False
 
 
-    # if "AlphaT_all" == hist :
-    #   PassingCutNumbers(Data, "Data"            ,0.55)
-    #   # PassingCutNumbers(SmearedJets, "Data_SMEARED!!!"  ,0.55)
-    #   PassingCutNumbers(Total, "Total Background Stat" ,0.55)
-    #   PassingCutNumbers(SMBackGrounds, "Total Background Systematic" ,0.55)
-    #   PassingCutNumbers(ttbar, "TTBbar"         ,0.55)
-    #   PassingCutNumbers(ZJets, "ZJets"          ,0.55)
-    #   PassingCutNumbers(WJets, "WJETS"          ,0.55)
-    #   PassingCutNumbers(QCD, "QCD"              ,0.55)
-    #   PassingCutNumbers(Zinv, "Zinv"            ,0.55)
-    #   PassingCutNumbers(LM0, "LM0"              ,0.55)
-    #   PassingCutNumbers(LM1, "LM1"              ,0.55)
+    if "AlphaT_all" == hist :
+      PassingCutNumbers(Data, "Data"            ,0.55)
+      # PassingCutNumbers(SmearedJets, "Data_SMEARED!!!"  ,0.55)
+      PassingCutNumbers(Total, "Total Background Stat" ,0.55)
+      PassingCutNumbers(SMBackGrounds, "Total Background Systematic" ,0.55)
+      PassingCutNumbers(ttbar, "TTBbar"         ,0.55)
+      PassingCutNumbers(ZJets, "ZJets"          ,0.55)
+      PassingCutNumbers(WJets, "WJETS"          ,0.55)
+      PassingCutNumbers(QCD, "QCD"              ,0.55)
+      PassingCutNumbers(Zinv, "Zinv"            ,0.55)
+      PassingCutNumbers(LM0, "LM0"              ,0.55)
+      PassingCutNumbers(LM1, "LM1"              ,0.55)
     #
     #
     # if "HT_all" == hist :
@@ -445,7 +447,7 @@ for dir in range(0,len(DirKeys)):
       MinX = 0.
       MaxX = 3.2
       DrawSM = False
-      leg2 = Root.TLegend(0.55, 0.4, 0.95, 0.85)
+      leg2 = Root.TLegend(0.65, 0.45, 0.97, 0.8)
       leg2.SetShadowColor(0)
       leg2.SetBorderSize(0)
       leg2.SetFillStyle(4100)
@@ -477,7 +479,7 @@ for dir in range(0,len(DirKeys)):
       MinX = 0.0
       DrawSM = False
       MaxY = 50.
-      leg2 = Root.TLegend(0.55, 0.4, 0.95, 0.85)
+      leg2 = Root.TLegend(0.65, 0.45, 0.97, 0.8)
       Data.Rebin(2)
       QCD.Rebin(2)
       Pythia8.Rebin(2)
@@ -506,11 +508,11 @@ for dir in range(0,len(DirKeys)):
 
 
 
-    if "BabyJetMHT_all" in hist:
+    if "BabyJetMHT_all" in hist or "BabyJetMHTafterMetCut_all" == hist:
       DrawSM = False
       MaxX= 240.
       MinX = 0.
-      leg2 = Root.TLegend(0.55, 0.4, 0.95, 0.85)
+      leg2 = Root.TLegend(0.65, 0.45, 0.97, 0.8)
       leg2.SetShadowColor(0)
       leg2.SetBorderSize(0)
       leg2.SetFillStyle(4100)
@@ -555,14 +557,16 @@ for dir in range(0,len(DirKeys)):
         Total.Draw("9hist")
 
     drawBackgrounds = True
-    if hist == "MHTovMET_afterAlphaT_all"  or hist == "BabyJetMHT_all" or hist =="BiasedDeltaPhi_after_alphaT_55_all":
+    if hist == "MHTovMET_afterAlphaT_all"  or hist == "BabyJetMHT_all" or hist =="BabyJetMHTafterMetCut_all" or hist =="BiasedDeltaPhi_after_alphaT_55_all":
       Pythia8.Draw("9hist")
       QCD.Draw("9histsame")
     if "EffectiveMass" in hist:
-      # LM2.Draw("9SAMEh")
-      # LM3.Draw("9SAMEh")
-      # LM4.Draw("9SAMEh")
-      # LM5.Draw("9SAMEh")
+      AsymErrors.Draw("2same")
+
+      LM2.Draw("9SAMEh")
+      LM3.Draw("9SAMEh")
+      LM4.Draw("9SAMEh")
+      LM5.Draw("9SAMEh")
       drawBackgrounds = False
     if drawBackgrounds:
 
@@ -580,12 +584,12 @@ for dir in range(0,len(DirKeys)):
     Data.Draw("9SAMEP")
 
     #Draw Text for histogram titile and for lumi
-    prelim = Root.TLatex(0.4,0.75,"#scale[0.8]{CMS preliminary 2010}");
-    lumi = Root.TLatex(0.4,.9,"#scale[0.8]{#int L dt = " + str(intlumi) + "pb^{-1}, #sqrt{s} = 7 TeV}");
+    prelim = Root.TLatex(0.1,0.92,"#scale[0.8]{CMS preliminary 2010}");
     prelim.SetNDC()
+    lumi = Root.TLatex(0.5,.82,"#scale[0.8]{#int L dt = 35 pb^{-1}, #sqrt{s} = 7 TeV}");
     lumi.SetNDC()
 
-    # prelim.Draw()
+    prelim.Draw()
     lumi.Draw()
     title = Root.TLatex(0.05,0.95,(DirKeys[dir].GetTitle())+"_"+hist[0:-4])
     title.SetNDC()
@@ -594,9 +598,9 @@ for dir in range(0,len(DirKeys)):
 
     c1.cd(1).Update()
 
-    if "EffectiveMass" not in hist and "MHTovMET_afterAlphaT_all" not in hist and "BiasedDeltaPhi_after_alphaT_55_all" not in hist and "BabyJetMHT_all" not in hist and "BiasedDeltaPhi_all" not in hist: leg.Draw()
+    if "EffectiveMass" not in hist and "MHTovMET_afterAlphaT_all" not in hist and "BiasedDeltaPhi_after_alphaT_55_all" not in hist and "BabyJetMHT_all" not in hist and "BabyJetMHTafterMetCut_all" not in hist and"BiasedDeltaPhi_all" not in hist: leg.Draw()
     if "EffectiveMass" in hist:
-      leg2 = Root.TLegend(0.55, 0.4, 0.95, 0.85)
+      leg2 = Root.TLegend(0.65, 0.45, 0.97, 0.8)
       leg2.SetShadowColor(0)
       leg2.SetBorderSize(0)
       leg2.SetFillStyle(4100)
@@ -605,15 +609,15 @@ for dir in range(0,len(DirKeys)):
       leg2.AddEntry(Data, "Data", "lp")
       # leg2.AddEntry(QCD, "QCD", "lp")
       leg2.AddEntry(Total , "Standard Model")
-      # leg2.AddEntry(LM0, "LM0", "lp")
-      # leg2.AddEntry(LM1, "LM1", "lp")
-      # leg2.AddEntry(LM2, "LM2", "lp")
-      # leg2.AddEntry(LM3, "LM3", "lp")
-      # leg2.AddEntry(LM4, "LM4", "lp")
-      # leg2.AddEntry(LM5, "LM5", "lp")
+      leg2.AddEntry(LM0, "LM0", "lp")
+      leg2.AddEntry(LM1, "LM1", "lp")
+      leg2.AddEntry(LM2, "LM2", "lp")
+      leg2.AddEntry(LM3, "LM3", "lp")
+      leg2.AddEntry(LM4, "LM4", "lp")
+      leg2.AddEntry(LM5, "LM5", "lp")
       leg2.Draw()
 
-    if "MHTovMET_afterAlphaT_all" in hist or "BiasedDeltaPhi_after_alphaT_55_all" in hist or "BabyJetMHT_all" in hist or "BiasedDeltaPhi_all" in hist:
+    if "MHTovMET_afterAlphaT_all" in hist or "BiasedDeltaPhi_after_alphaT_55_all" in hist or "BabyJetMHT_all" in hist or "BabyJetMHTafterMetCut_all" in hist or "BiasedDeltaPhi_all" in hist:
       leg2.Draw()
 
 
@@ -623,7 +627,7 @@ for dir in range(0,len(DirKeys)):
     ratio.SetLabelSize(0.15, "XYZ")
     ratio.SetTitleSize(0.15, "XYZ")
     ratio.SetTitleOffset(1.05, "X")
-    ratio.SetNdivisions(4, "Y");
+    ratio.SetNdivisions(4, "Y")
 
     ratio.Draw()
     line.Draw()

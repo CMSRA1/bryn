@@ -28,6 +28,9 @@ def Combiner(RootFile):
 
         for hist in HistNames[0]:
           Hnew= (f.Get(file1+"/"+hist)).Clone()
+          if str(type(Hnew)) == "<class 'combiner.TCanvas'>" : continue
+          # print type(Hnew)
+
           # Hnew.Add((f.Get(file1+"/"+hist)),1)
           Hnew.Add(f.Get(file2+"/"+hist),1)
           # print "added histograms ", hist

@@ -393,6 +393,47 @@ pset1 = PSet(
     DeadECAL_NBadCellsCut = 10
 )
 
+
+pset = PSet(
+DirName      = "250_infGev",
+MinObjects   = 1,
+MaxObjects   = 2,
+StandardPlots     = True,
+)
+
+Npset = PSet(
+DirName      = "n250_infGev",
+MinObjects   = 3,
+MaxObjects   = 15,
+StandardPlots     = True,
+)
+
+pset2 = deepcopy(pset)
+pset2.DirName = "250_350Gev"
+
+Npset2 = deepcopy(Npset)
+Npset2.DirName = "n250_350Gev"
+
+pset3 = deepcopy(pset)
+pset3.DirName = "350GeVafterDeadEcal"
+Npset3 = deepcopy(Npset)
+Npset3.DirName = "n350GeVafterDeadEcal"
+
+pset4 = deepcopy(pset)
+pset4.DirName = "allCuts"
+Npset4 = deepcopy(Npset)
+Npset4.DirName = "nAllCuts"
+
+HTplot = WeeklyUpdatePlots(pset.ps())
+nHTplot = WeeklyUpdatePlots(Npset.ps())
+controlRegion = WeeklyUpdatePlots(pset2.ps())
+ncontrolRegion = WeeklyUpdatePlots(Npset2.ps())
+afterDeadEcal = WeeklyUpdatePlots(pset3.ps())
+nafterDeadEcal = WeeklyUpdatePlots(Npset3.ps())
+afterAllCuts = WeeklyUpdatePlots(pset4.ps())
+nafterAllCuts = WeeklyUpdatePlots(Npset4.ps())
+
+
 pset2 = deepcopy(pset1)
 pset2.DirName = "HadronicCommon_2"
 

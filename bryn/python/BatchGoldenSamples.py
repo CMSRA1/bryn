@@ -160,11 +160,6 @@ File=[
 "/vols/cms02/elaird1/12_skims/JetMETTau.Run2010A-Sep17ReReco_v2.RECO.RAW.Henning/JetMETTau.Run2010A-Sep17ReReco_v2.RECO.RAW.Henning_7_skim.root"   ,
 "/vols/cms02/elaird1/12_skims/JetMETTau.Run2010A-Sep17ReReco_v2.RECO.RAW.Henning/JetMETTau.Run2010A-Sep17ReReco_v2.RECO.RAW.Henning_8_skim.root"   ,
 "/vols/cms02/elaird1/12_skims/JetMETTau.Run2010A-Sep17ReReco_v2.RECO.RAW.Henning/JetMETTau.Run2010A-Sep17ReReco_v2.RECO.RAW.Henning_9_skim.root"   ,
-
-
-
-
-
 ]
 )
 

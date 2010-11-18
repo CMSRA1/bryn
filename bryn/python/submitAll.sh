@@ -4,7 +4,7 @@ voms-proxy-init -voms cms -hours 130
 source ../../setup.sh
 
 
-./Data.py -b -n50
+./Data.py -b -n1
 ./McJESminus.py -b -n50
 ./McJESplus.py -b -n50
 ./McNoSmear.py -b -n50
