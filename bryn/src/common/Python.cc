@@ -10,7 +10,7 @@ BOOST_PYTHON_MODULE(libbryn) {
                     init<const Utils::ParameterSet&>());
 
 
-  class_<Operation::Trigger, bases<Operation::_Base> >( "TriggerPlots",
+  class_<Operation::Trigger, bases<Operation::_Base> >( "PL_TriggerPlots",
                     init<const Utils::ParameterSet&>());
 
 }
