@@ -1,6 +1,6 @@
 #include <boost/python.hpp>
 #include "WeeklyUpdatePlots.hh"
-
+#include "Trigger.hh"
 
 using namespace boost::python;
 
