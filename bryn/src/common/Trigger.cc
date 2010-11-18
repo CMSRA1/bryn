@@ -244,7 +244,7 @@ bool Trigger::StandardPlots( Event::Data& ev ) {
 
   LorentzV mhtAllJets;
   double  htAllJets = 0.;
-  for(unsigned int i =0; i < ThresholdJets.end(), i++){
+  for(unsigned int i =0; i < ThresholdJets.end(); i++){
     htAllJets += ThresholdJets[i].Et();
     mhtAllJets -= ThresholdJets[i];
   }
