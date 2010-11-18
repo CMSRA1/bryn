@@ -249,14 +249,14 @@ bool Trigger::StandardPlots( Event::Data& ev ) {
     mhtAllJets -= ThresholdJets[i];
   }
 
-  LorentzV mhtEtaThree;
-  double  htEtaThree = 0.;
-  for(unsigned int i =0; i < ThresholdJets.size(); i++){
-    if(fabs(ThresholdJets[i].Eta) < 3. ){
-      htEtaThree += ThresholdJets[i].Et();
-      mhtEtaThree -= ThresholdJets[i];
-    }
-  }
+  // LorentzV mhtEtaThree;
+  // double  htEtaThree = 0.;
+  // for(unsigned int i =0; i < ThresholdJets.size(); i++){
+  //   if(fabs(ThresholdJets[i].Eta) < 3. ){
+  //     htEtaThree += ThresholdJets[i].Et();
+  //     mhtEtaThree -= ThresholdJets[i];
+  //   }
+  // }
 
   int n = ThresholdJets.size();
 //start Meffective trigger studies
