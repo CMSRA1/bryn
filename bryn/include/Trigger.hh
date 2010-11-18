@@ -55,6 +55,7 @@ namespace Operation {
     std::vector<TH1D*>  Meffective375;
     std::vector<TH1D*>  Meffective350;
     std::vector<TH1D*>  MET70SecondJet70;
+    bool StandardPlots_;
     void StandardPlots();
     bool StandardPlots( Event::Data& );
 

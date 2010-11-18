@@ -230,8 +230,7 @@ bool Trigger::ECompare(const LorentzV * o1, const LorentzV * o2)  {
 
 bool Trigger::StandardPlots( Event::Data& ev ) {
 
-  double weight = ev.GetEventWeightAllJets();
-  double htAllJets = 0;
+  double weight = ev.GetEventWeight();
   std::vector<LorentzV> ThresholdJets;
 
   std::vector<Event::Jet >::const_iterator ijet = ev.JD_Jets().begin();
@@ -241,7 +240,7 @@ bool Trigger::StandardPlots( Event::Data& ev ) {
     Jet /= ev.jetCorrFactor()->at((*ijet).GetIndex());
     if( Jet.Pt() >= 20. ){ ThresholdJets.push_back(Jet); } // to enter collection jets must be above 20GeV uncorrected
   } // makes a collection of jets that are uncorrected, stores them in a vector
-  sort(ThredholdJets.begin(),ThredholdJets.end(),Trigger::ECompare ); // sorth the uncorrected jet collection in Et order (as the trigger uses them)
+  sort(ThresholdJets.begin(),ThresholdJets.end(),Trigger::ECompare ); // sorth the uncorrected jet collection in Et order (as the trigger uses them)
 
   LorentzV mhtAllJets;
   double  htAllJets = 0.;
