@@ -200,6 +200,14 @@ void Trigger::StandardPlots() {
     100, .0, 1000.,
     nMax_+1, 0, 1, true );
 
+
+
+  BookHistArray( Ht200Jet70,
+    "Ht200Jet70",
+    ";H_{T};events/10GeV;",
+    100, .0, 1000.,
+    nMax_+1, 0, 1, true );
+
   BookHistArray( MET70SecondJet50,
     "MET70SecondJet50",
     ";H_{T};events/10GeV;",
