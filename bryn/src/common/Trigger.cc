@@ -146,6 +146,12 @@ void Trigger::StandardPlots() {
     100, .0, 1000.,
     nMax_+1, 0, 1, true );
 
+  BookHistArray( Ht150SecondJet70,
+    "Ht150SecondJet70",
+    ";H_{T};events/10GeV;",
+    100, .0, 1000.,
+    nMax_+1, 0, 1, true );
+
   BookHistArray( Ht200SecondJet50,
     "Ht200SecondJet50",
     ";H_{T};events/10GeV;",
@@ -414,14 +420,14 @@ bool Trigger::StandardPlots( Event::Data& ev ) {
 
 
 
-  if( ev.CommonMET().Et() > 50. && ThresholdJets[1].Et() > 50. ){
+  if( ev.CaloMET().Et() > 50. && ThresholdJets[1].Et() > 50. ){
     if ( n >= nMin_ && n <= nMax_ && n < MET50SecondJet50.size() ) {
       MET50SecondJet50[0]->Fill(ev.CommonHT(), weight);
       MET50SecondJet50[n]->Fill(ev.CommonHT(), weight);
     }
   }
 
-  if( ev.CommonMET().Et() > 50. && ThresholdJets[1].Et() > 70. ){
+  if( ev.CaloMET().Et() > 50. && ThresholdJets[1].Et() > 70. ){
     if ( n >= nMin_ && n <= nMax_ && n < MET50SecondJet70.size() ) {
       MET50SecondJet70[0]->Fill(ev.CommonHT(), weight);
       MET50SecondJet70[n]->Fill(ev.CommonHT(), weight);
@@ -429,14 +435,14 @@ bool Trigger::StandardPlots( Event::Data& ev ) {
   }
 
 
-  if( ev.CommonMET().Et() > 70. && ThresholdJets[1].Et() > 50. ){
+  if( ev.CaloMET().Et() > 70. && ThresholdJets[1].Et() > 50. ){
     if ( n >= nMin_ && n <= nMax_ && n < MET70SecondJet50.size() ) {
       MET70SecondJet50[0]->Fill(ev.CommonHT(), weight);
       MET70SecondJet50[n]->Fill(ev.CommonHT(), weight);
     }
   }
 
-  if( ev.CommonMET().Et() > 70. && ThresholdJets[1].Et() > 70. ){
+  if( ev.CaloMET().Et() > 70. && ThresholdJets[1].Et() > 70. ){
     if ( n >= nMin_ && n <= nMax_ && n < MET70SecondJet70.size() ) {
       MET70SecondJet70[0]->Fill(ev.CommonHT(), weight);
       MET70SecondJet70[n]->Fill(ev.CommonHT(), weight);
