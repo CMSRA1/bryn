@@ -66,6 +66,7 @@ namespace Operation {
     std::vector<TH1D*>  MET50_HT250;
     std::vector<TH1D*>  MET65_HT200;
     std::vector<TH1D*>  MET80_HT180;
+    std::vector<TH1D*>  HT260_MHT60;
     std::vector<TH1D*>  MET70SecondJet70;
     bool StandardPlots_;
     void StandardPlots();

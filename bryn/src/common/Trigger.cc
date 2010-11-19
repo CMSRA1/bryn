@@ -62,6 +62,14 @@ std::ostream& Trigger::Description( std::ostream& ostrm ) {
 void Trigger::StandardPlots() {
 
 
+
+
+  BookHistArray( HT260_MHT60,
+    "HT260_MHT60",
+    ";H_{T};events/10GeV;",
+    100, .0, 1000.,
+    nMax_+1, 0, 1, true );
+
   BookHistArray( MET70SecondJet70,
     "MET70SecondJet70",
     ";H_{T};events/10GeV;",
@@ -328,7 +336,7 @@ bool Trigger::StandardPlots( Event::Data& ev ) {
   LorentzV mhtAllJets;
   double  htAllJets = 0.;
   for(unsigned int i =0; i < ThresholdJets.size(); i++){
-    htAllJets += ThresholdJets[i].Et();
+   if(ThresholdJets[i].Et() > 30.){ htAllJets += ThresholdJets[i].Et();}
     mhtAllJets -= ThresholdJets[i];
   }
 
@@ -347,12 +355,23 @@ bool Trigger::StandardPlots( Event::Data& ev ) {
   // cout << "MHT of Jets is: " << mhtAllJets.Pt() << endl;
   double Meff_allJets = htAllJets + mhtAllJets.Pt();
 
+
+  if(htAllJets > 260. && mhtAllJets.Pt() > 60.0){
+    if ( n >= nMin_ && n <= nMax_ && n < HT260_MHT60.size() ) {
+      HT260_MHT60[0]->Fill(ev.CommonHT(), weight);
+      HT260_MHT60[n]->Fill(ev.CommonHT(), weight);
+    }
+  }
+
+
   if(Meff_allJets > 250.){
     if ( n >= nMin_ && n <= nMax_ && n < Meffective250.size() ) {
       Meffective250[0]->Fill(ev.CommonHT(), weight);
       Meffective250[n]->Fill(ev.CommonHT(), weight);
     }
   }
+
+
 
 
   if(Meff_allJets > 250. && ThresholdJets[1].Et() > 35.){
