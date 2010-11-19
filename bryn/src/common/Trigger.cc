@@ -457,14 +457,14 @@ bool Trigger::StandardPlots( Event::Data& ev ) {
 
 
 
-  if( mhtAllJets.Et() > 50. && ThresholdJets[1].Et() > 50. ){
+  if( mhtAllJets.Pt() > 50. && ThresholdJets[1].Et() > 50. ){
     if ( n >= nMin_ && n <= nMax_ && n < MHT50SecondJet50.size() ) {
       MHT50SecondJet50[0]->Fill(ev.CommonHT(), weight);
       MHT50SecondJet50[n]->Fill(ev.CommonHT(), weight);
     }
   }
 
-  if( mhtAllJets.Et() > 50. && ThresholdJets[1].Et() > 70. ){
+  if( mhtAllJets.Pt() > 50. && ThresholdJets[1].Et() > 70. ){
     if ( n >= nMin_ && n <= nMax_ && n < MHT50SecondJet70.size() ) {
       MHT50SecondJet70[0]->Fill(ev.CommonHT(), weight);
       MHT50SecondJet70[n]->Fill(ev.CommonHT(), weight);
@@ -472,14 +472,14 @@ bool Trigger::StandardPlots( Event::Data& ev ) {
   }
 
 
-  if( mhtAllJets.Et() > 70. && ThresholdJets[1].Et() > 50. ){
+  if( mhtAllJets.Pt() > 70. && ThresholdJets[1].Et() > 50. ){
     if ( n >= nMin_ && n <= nMax_ && n < MHT70SecondJet50.size() ) {
       MHT70SecondJet50[0]->Fill(ev.CommonHT(), weight);
       MHT70SecondJet50[n]->Fill(ev.CommonHT(), weight);
     }
   }
 
-  if( mhtAllJets.Et() > 70. && ThresholdJets[1].Et() > 70. ){
+  if( mhtAllJets.Pt() > 70. && ThresholdJets[1].Et() > 70. ){
     if ( n >= nMin_ && n <= nMax_ && n < MHT70SecondJet70.size() ) {
       MHT70SecondJet70[0]->Fill(ev.CommonHT(), weight);
       MHT70SecondJet70[n]->Fill(ev.CommonHT(), weight);
