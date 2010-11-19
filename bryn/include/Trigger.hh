@@ -62,6 +62,10 @@ namespace Operation {
     std::vector<TH1D*>  Meffective400;
     std::vector<TH1D*>  Meffective375;
     std::vector<TH1D*>  Meffective350;
+    std::vector<TH1D*>  MET45_HT250;
+    std::vector<TH1D*>  MET50_HT250;
+    std::vector<TH1D*>  MET65_HT200;
+    std::vector<TH1D*>  MET80_HT180;
     std::vector<TH1D*>  MET70SecondJet70;
     bool StandardPlots_;
     void StandardPlots();
