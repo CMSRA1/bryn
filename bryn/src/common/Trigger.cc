@@ -304,14 +304,14 @@ bool Trigger::StandardPlots( Event::Data& ev ) {
 
   double Meff_allJets = htAllJets + mhtAllJets.Et();
 
-  if(Meff_allJets > 250..){
+  if(Meff_allJets > 250.){
     if ( n >= nMin_ && n <= nMax_ && n < Meffective250.size() ) {
       Meffective250[0]->Fill(ev.CommonHT(), weight);
       Meffective250[n]->Fill(ev.CommonHT(), weight);
     }
   }
 
-  if(Meff_allJets > 275..){
+  if(Meff_allJets > 275.){
     if ( n >= nMin_ && n <= nMax_ && n < Meffective275.size() ) {
       Meffective275[0]->Fill(ev.CommonHT(), weight);
       Meffective275[n]->Fill(ev.CommonHT(), weight);
