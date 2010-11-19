@@ -68,6 +68,31 @@ void Trigger::StandardPlots() {
     100, .0, 1000.,
     nMax_+1, 0, 1, true );
 
+
+  BookHistArray( Meffective250,
+    "Meffective250",
+    ";H_{T};events/10GeV;",
+    100, .0, 1000.,
+    nMax_+1, 0, 1, true );
+
+  BookHistArray( Meffective275,
+    "Meffective275",
+    ";H_{T};events/10GeV;",
+    100, .0, 1000.,
+    nMax_+1, 0, 1, true );
+
+  BookHistArray( Meffective300,
+    "Meffective300",
+    ";H_{T};events/10GeV;",
+    100, .0, 1000.,
+    nMax_+1, 0, 1, true );
+
+  BookHistArray( Meffective325,
+    "Meffective325",
+    ";H_{T};events/10GeV;",
+    100, .0, 1000.,
+    nMax_+1, 0, 1, true );
+
   BookHistArray( Meffective350,
     "Meffective350",
     ";H_{T};events/10GeV;",
@@ -278,6 +303,35 @@ bool Trigger::StandardPlots( Event::Data& ev ) {
 //first reference collection:
 
   double Meff_allJets = htAllJets + mhtAllJets.Et();
+
+  if(Meff_allJets > 250..){
+    if ( n >= nMin_ && n <= nMax_ && n < Meffective250.size() ) {
+      Meffective250[0]->Fill(ev.CommonHT(), weight);
+      Meffective250[n]->Fill(ev.CommonHT(), weight);
+    }
+  }
+
+  if(Meff_allJets > 275..){
+    if ( n >= nMin_ && n <= nMax_ && n < Meffective275.size() ) {
+      Meffective275[0]->Fill(ev.CommonHT(), weight);
+      Meffective275[n]->Fill(ev.CommonHT(), weight);
+    }
+  }
+
+  if(Meff_allJets > 300.){
+    if ( n >= nMin_ && n <= nMax_ && n < Meffective300.size() ) {
+      Meffective300[0]->Fill(ev.CommonHT(), weight);
+      Meffective300[n]->Fill(ev.CommonHT(), weight);
+    }
+  }
+
+  if(Meff_allJets > 325.){
+    if ( n >= nMin_ && n <= nMax_ && n < Meffective325.size() ) {
+      Meffective325[0]->Fill(ev.CommonHT(), weight);
+      Meffective325[n]->Fill(ev.CommonHT(), weight);
+    }
+  }
+
 
   if(Meff_allJets > 350.){
     if ( n >= nMin_ && n <= nMax_ && n < Meffective350.size() ) {

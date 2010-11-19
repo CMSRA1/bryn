@@ -49,6 +49,10 @@ namespace Operation {
     std::vector<TH1D*>  Ht250;
     std::vector<TH1D*>  Ht200;
     std::vector<TH1D*>  Ht;
+    std::vector<TH1D*>  Meffective325;
+    std::vector<TH1D*>  Meffective300;
+    std::vector<TH1D*>  Meffective275;
+    std::vector<TH1D*>  Meffective250;
     std::vector<TH1D*>  Meffective450;
     std::vector<TH1D*>  Meffective425;
     std::vector<TH1D*>  Meffective400;
