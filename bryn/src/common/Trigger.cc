@@ -301,7 +301,7 @@ bool Trigger::StandardPlots( Event::Data& ev ) {
   unsigned int n = ThresholdJets.size();
 //start Meffective trigger studies
 //first reference collection:
-  cout << "MHT of Jets is: " << mhtAllJets.Et() << endl;
+  cout << "MHT of Jets is: " << mhtAllJets.Pt() << endl;
   double Meff_allJets = htAllJets + mhtAllJets.Et();
 
   if(Meff_allJets > 250.){
