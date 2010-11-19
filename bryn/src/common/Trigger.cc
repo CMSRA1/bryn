@@ -123,6 +123,24 @@ void Trigger::StandardPlots() {
     100, .0, 1000.,
     nMax_+1, 0, 1, true );
 
+  BookHistArray( Meffective250SecondJet45,
+    "Meffective250SecondJet45",
+    ";H_{T};events/10GeV;",
+    100, .0, 1000.,
+    nMax_+1, 0, 1, true );
+  BookHistArray( Meffective250SecondJet40,
+    "Meffective250SecondJet40",
+    ";H_{T};events/10GeV;",
+    100, .0, 1000.,
+    nMax_+1, 0, 1, true );
+  BookHistArray( Meffective250SecondJet35,
+    "Meffective250SecondJet35",
+    ";H_{T};events/10GeV;",
+    100, .0, 1000.,
+    nMax_+1, 0, 1, true );
+
+
+
   BookHistArray( Ht,
     "Ht",
     ";H_{T};events/10GeV;",
@@ -233,6 +251,13 @@ void Trigger::StandardPlots() {
 
 
 
+  BookHistArray( MET60SecondJet35,
+    "MET60SecondJet35",
+    ";H_{T};events/10GeV;",
+    100, .0, 1000.,
+    nMax_+1, 0, 1, true );
+
+
   BookHistArray( Ht200Jet70,
     "Ht200Jet70",
     ";H_{T};events/10GeV;",
@@ -308,6 +333,28 @@ bool Trigger::StandardPlots( Event::Data& ev ) {
     if ( n >= nMin_ && n <= nMax_ && n < Meffective250.size() ) {
       Meffective250[0]->Fill(ev.CommonHT(), weight);
       Meffective250[n]->Fill(ev.CommonHT(), weight);
+    }
+  }
+
+
+  if(Meff_allJets > 250. && ThresholdJets[1].Et() > 35.){
+    if ( n >= nMin_ && n <= nMax_ && n < Meffective250SecondJet35.size() ) {
+      Meffective250SecondJet35[0]->Fill(ev.CommonHT(), weight);
+      Meffective250SecondJet35[n]->Fill(ev.CommonHT(), weight);
+    }
+  }
+
+  if(Meff_allJets > 250. && ThresholdJets[1].Et() > 40.){
+    if ( n >= nMin_ && n <= nMax_ && n < Meffective250SecondJet40.size() ) {
+      Meffective250SecondJet40[0]->Fill(ev.CommonHT(), weight);
+      Meffective250SecondJet40[n]->Fill(ev.CommonHT(), weight);
+    }
+  }
+
+  if(Meff_allJets > 250. && ThresholdJets[1].Et() > 45.){
+    if ( n >= nMin_ && n <= nMax_ && n < Meffective250SecondJet45.size() ) {
+      Meffective250SecondJet45[0]->Fill(ev.CommonHT(), weight);
+      Meffective250SecondJet45[n]->Fill(ev.CommonHT(), weight);
     }
   }
 
@@ -517,6 +564,12 @@ bool Trigger::StandardPlots( Event::Data& ev ) {
     }
   }
 
+  if( ev.CaloMET().Et() > 60. && ThresholdJets[1].Et() > 35. ){
+    if ( n >= nMin_ && n <= nMax_ && n < MET60SecondJet35.size() ) {
+      MET60SecondJet35[0]->Fill(ev.CommonHT(), weight);
+      MET60SecondJet35[n]->Fill(ev.CommonHT(), weight);
+    }
+  }
 
 
 
