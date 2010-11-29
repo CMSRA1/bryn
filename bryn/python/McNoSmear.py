@@ -12,7 +12,7 @@ from ra1objectid.vbtfMuonId_cff import *
 from ra1objectid.ra3PhotonId_cff import *
 
 
-JetSmear = JetSmear(0.1,30)
+#JetSmear = JetSmear(0.1,30)
 vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 def addCutFlowMC(b) :
@@ -61,9 +61,11 @@ addCutFlowMC(anal_ak7_caloMC)
 
 ensure_dir("../results/NoSmear/")
 
-
-#anal_ak5_caloMC.Run("../results/NoSmear/",conf_ak5_caloMC,MC)
-anal_ak5_caloMC.Run("../results/NoSmear",conf_ak5_caloMC,MC+[QCD_AllPtBins_7TeV_Pythia])#a,LM0,LM1,LM5])
+#MC=[WJets_Madgraph_NNLO,TTBarTauola_NNLO,Zinvisible_jets_pset_NNLO,Zjets_madgraph_NNLO]
+from montecarlo.QCD_Pythia6_384patch3_V14_00_02.QCD_Pt_1000to1400_TuneZ2_7TeV_pythia6_Fall10_START38_V12_v1 import *
+anal_ak5_caloMC.Run("../results/Smear",conf_ak5_caloMC,[QCD_Pt_1000to1400_TuneZ2_7TeV_pythia6_Fall10_START38_V12_v1])
+# anal_ak5_caloMC.Run("../results/NoSmear/",conf_ak5_caloMC,[LM0,LM1,LM2,LM3,LM4,LM5])#Pythia8)
+#anal_ak5_caloMC.Run("../results/NoSmear",conf_ak5_caloMC,QCD_Pythia6_384patch3_V14_00_02_ALL+QCD_Pythia8_384patch3_V14_00_02_ALL+MC+[LM0,LM1])
 # anal_ak5_pfMC.Run("../results/NoSmear",conf_ak5_pfMC,MC)
 # anal_ak5_pfMC.Run("../results/NoSmear",conf_ak5_pfMC,[QCD_AllPtBins_7TeV_Pythia])
 # anal_ak5_jptMC.Run("../results/NoSmear",conf_ak5_jptMC,MC)

@@ -11,7 +11,7 @@ from batchGolden import *
 
 vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
-JetSmear = JetSmear(0.1,50)
+JetSmear = JetSmear(0.,0.,0.,0.,0.,0.,True)
 def addCutFlowMC(b) :
   b.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
   b.AddElectronFilter("PreCC",vbtfElectronIdFilter)
@@ -58,10 +58,12 @@ anal_ak7_caloMC=Analysis("AK7Calo")
 addCutFlowMC(anal_ak7_caloMC)
 
 ensure_dir("../results/Smear/")
+from montecarlo.QCD_Pythia6_384patch3_V14_00_02.QCD_Pt_1000to1400_TuneZ2_7TeV_pythia6_Fall10_START38_V12_v1 import *
+#anal_ak5_caloMC.Run("../results/Smear",conf_ak5_caloMC,[QCD_Pt_1000to1400_TuneZ2_7TeV_pythia6_Fall10_START38_V12_v1])
 #MC=[WJets_Madgraph_NNLO,TTBarTauola_NNLO,Zinvisible_jets_pset_NNLO,Zjets_madgraph_NNLO]
 
-#anal_ak5_caloMC.Run("../results/Smear/",conf_ak5_caloMC,MC)
-anal_ak5_caloMC.Run("../results/Smear",conf_ak5_caloMC,MC+[QCD_AllPtBins_7TeV_Pythia])
+anal_ak5_caloMC.Run("../results/Smear/",conf_ak5_caloMC,[LM0])
+
 # anal_ak5_pfMC.Run("../results/Smear",conf_ak5_pfMC,MC)
 # anal_ak5_pfMC.Run("../results/Smear",conf_ak5_pfMC,[QCD_AllPtBins_7TeV_Pythia])
 # anal_ak5_jptMC.Run("../results/Smear",conf_ak5_jptMC,MC)
