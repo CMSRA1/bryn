@@ -573,8 +573,8 @@ cutTreeMC.TAttach(badMuonInJet,oddJet)
 cutTreeMC.TAttach(oddJet,LeadingJetCut)
 cutTreeMC.TAttach(LeadingJetCut,secondJetET)
 ##########DiJet Studies
-cutTreeData.TAttach(secondJetET,VertexPtOverHT)
-cutTreeData.TAttach(VertexPtOverHT,htCut250)
+cutTreeMC.TAttach(secondJetET,VertexPtOverHT)
+cutTreeMC.TAttach(VertexPtOverHT,htCut250)
 #FOR HT > 250Gev Plot
 cutTreeMC.TAttach(htCut250,DiJet3)
 cutTreeMC.TAttach(htCut250,NJet3)
