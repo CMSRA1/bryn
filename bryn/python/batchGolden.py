@@ -154,13 +154,13 @@ default_common.Photons.EtaCut=2.5
 ##default_common.Photons.CaloIsoCut=99999.
 default_common.Photons.IDReq = 3
 default_common.Photons.RequireLooseForOdd = True
-MC=[wjets_madgraph_vols,ttbarTauola,Zinvisible_jets,zjets_madgraph,LM0,LM1,LM5]
+MC=[wjets_madgraph_vols,ttbarTauola,Zinvisible_jets,zjets_madgraph,LM0,LM1,LM2,LM3,LM4,LM5,LM6,LM9,LM12,LM13]
 Pythia8=[QCD_Pt_0to15_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_15to20_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_20to30_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_30to50_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_50to80_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_80to120_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_120to170_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_170to230_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_230to300_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_300to380_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_380to470_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_470to600_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_600to800_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_800to1000_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_1000to1400_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_1400to1800_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_1800to2200_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_2200to2600_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_3000to3500_7TeV_pythia8_Summer10_START36_V10_S09_v2]
 # CMSSW_3_8_4_patch3 V14-00-02 samples
 from montecarlo.QCD_Pythia6_384patch3_V14_00_02_ALL import *
 from montecarlo.QCD_Pythia8_384patch3_V14_00_02_ALL import *
 from data.Jet_15pb_WithTP_json221010 import *
-AllMC = QCD_Pythia6_384patch3_V14_00_02_ALL+QCD_Pythia8_384patch3_V14_00_02_ALL+MC+Pythia8+[LM2,LM3,LM4]
+AllMC = QCD_Pythia6_384patch3_V14_00_02_ALL+QCD_Pythia8_384patch3_V14_00_02_ALL+MC+Pythia8
 
 
 
@@ -461,7 +461,7 @@ HadStandard_1 = HadronicCommonPlots(t1.ps())
 HadStandard_2 = HadronicCommonPlots(t2.ps())
 HadStandard_3 = HadronicCommonPlots(t3.ps())
 HadStandard_4 = HadronicCommonPlots(t4.ps())
-
+VertexPtOverHT = OP_SumVertexPtOverHT(0.1)
 eventDump = OP_EventNoDump("mydump","mydump")
 
 
@@ -502,7 +502,9 @@ cutTreeData.TAttach(badMuonInJet,oddJet)
 cutTreeData.TAttach(oddJet,LeadingJetCut)
 cutTreeData.TAttach(LeadingJetCut,secondJetET)
 ##########DiJet Studies
-cutTreeData.TAttach(secondJetET,htCut250)
+cutTreeData.TAttach(secondJetET,VertexPtOverHT)
+cutTreeData.TAttach(VertexPtOverHT,htCut250)
+
 #FOR HT > 250Gev Plot
 cutTreeData.TAttach(htCut250,DiJet3)
 cutTreeData.TAttach(htCut250,NJet3)
@@ -571,7 +573,8 @@ cutTreeMC.TAttach(badMuonInJet,oddJet)
 cutTreeMC.TAttach(oddJet,LeadingJetCut)
 cutTreeMC.TAttach(LeadingJetCut,secondJetET)
 ##########DiJet Studies
-cutTreeMC.TAttach(secondJetET,htCut250)
+cutTreeData.TAttach(secondJetET,VertexPtOverHT)
+cutTreeData.TAttach(VertexPtOverHT,htCut250)
 #FOR HT > 250Gev Plot
 cutTreeMC.TAttach(htCut250,DiJet3)
 cutTreeMC.TAttach(htCut250,NJet3)
