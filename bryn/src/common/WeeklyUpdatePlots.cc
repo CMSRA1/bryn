@@ -529,7 +529,7 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
 
   if ( StandardPlots_ ){
 
-    PsudoJets = WeeklyUpdatePlots::PsudoJets( ev );
+   std::pair<LorentzV,LorentzV> PsudoJets = WeeklyUpdatePlots::PsudoJets( ev );
 
     if ( n >= nMin_ && n <= nMax_ && n < DeltaPhiPsudoJets_.size()) {
       DeltaPhiPsudoJets_[0]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(PsudoJets.first,PsudoJets.second)),weight);
