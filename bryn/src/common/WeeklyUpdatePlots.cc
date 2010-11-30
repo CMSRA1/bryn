@@ -427,7 +427,7 @@ Double_t WeeklyUpdatePlots::DeltaHT( Event::Data& ev){
 }
 
 std::pair<LorentzV,LorentzV> WeeklyUpdatePlots::PsudoJets( Event::Data & ev ){
-    std::vector<Event::Jet const *> jet = ev.JD_CommonJets().accepted;
+  std::vector<Event::Jet const *> jet = ev.JD_CommonJets().accepted;
   UInt_t n = jet.size();
 
   mt2_bisect::mt2 mt2_event;
@@ -529,7 +529,7 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
 
   if ( StandardPlots_ ){
 
-    PsudoJets = WeeklyUpdatePlots::PsudoJets( ev )
+    PsudoJets = WeeklyUpdatePlots::PsudoJets( ev );
 
     if ( n >= nMin_ && n <= nMax_ && n < DeltaPhiPsudoJets_.size()) {
       DeltaPhiPsudoJets_[0]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(PsudoJets.first,PsudoJets.second)),weight);
