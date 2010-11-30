@@ -28,6 +28,7 @@ namespace Operation {
     Double_t MT2( Event::Data& );
     Double_t MT2_Leading( Event::Data& );
     Double_t DeltaHT( Event::Data& );
+    std::pair PsudoJets(Event::Data&);
     std::string dirName_;
     UInt_t nMin_;
     UInt_t nMax_;
@@ -82,6 +83,7 @@ namespace Operation {
     std::vector<TH1D*>  AlphaTOneVertex_;
     std::vector<TH1D*>  AlphaTgOneVertex_;
     std::vector<TH1D*>  NumberVerticiesAfterAlphaT_;
+    std::vector<TH1D*>  DeltaPhiPsudoJets_;
 
     // //DeadECAL Plots
     // std::vector<TH1D*>  BiasedDphi_;

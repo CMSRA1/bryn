@@ -63,6 +63,13 @@ void WeeklyUpdatePlots::StandardPlots() {
 
 
 
+  BookHistArray( DeltaPhiPsudoJets_,
+    "DeltaPhiPsudoJets_",
+    ";#Delta #phi PsudoJets;Events;",
+    40, 0., TMath::Pi(),
+    nMax_+1, 0, 1, true );
+
+
   BookHistArray( AlphaTVsNoVertex_,
     "AlphaTVsNoVertex",
     ";;#alpha_{T};No.Vertercies;",
@@ -419,7 +426,42 @@ Double_t WeeklyUpdatePlots::DeltaHT( Event::Data& ev){
 
 }
 
+std::pair<LorentzV,LorentzV> WeeklyUpdatePlots::PsudoJets( Event::Data & ev ){
+    std::vector<Event::Jet const *> jet = ev.JD_CommonJets().accepted;
+  UInt_t n = jet.size();
 
+  mt2_bisect::mt2 mt2_event;
+
+  LorentzV lv1(0.,0.,0.,0.);
+  LorentzV lv2(0.,0.,0.,0.);
+
+  // Alpha_t variable
+  std::vector<bool> pseudo;
+  double alpha_t = AlphaT()( jet, pseudo, false );
+  if ( pseudo.size() != jet.size() ) { abort(); }
+    // use this to get the pseudo jets
+
+  if ( n == 2 ) {
+    if ( jet[0] ) lv1 = *jet[0];
+    if ( jet[1] ) lv2 = *jet[1];
+  } else if ( n > 2 ) {
+    for ( unsigned int i = 0; i < jet.size(); ++i ) {
+      if ( jet[i] ) {
+        if ( pseudo[i] ) { lv1 += *jet[i];
+
+        }
+        else             { lv2 += *jet[i];
+
+        }
+      }
+    }
+    if ( lv2.Pt() > lv1.Pt() ) { LorentzV tmp = lv1; lv1 = lv2; lv2 = tmp; }
+
+  }
+
+  return std::pair<lv1,lv2>;
+
+}
 
 Double_t WeeklyUpdatePlots::MT2( Event::Data& ev){
 
@@ -486,6 +528,14 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
 
 
   if ( StandardPlots_ ){
+
+    PsudoJets = WeeklyUpdatePlots::PsudoJets( ev )
+
+    if ( n >= nMin_ && n <= nMax_ && n < DeltaPhiPsudoJets_.size()) {
+      DeltaPhiPsudoJets_[0]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(PsudoJets.first,PsudoJets.second)),weight);
+      DeltaPhiPsudoJets_[n]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(PsudoJets.first,PsudoJets.second)),weight);
+    }
+
 
 
 
