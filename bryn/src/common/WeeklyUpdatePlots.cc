@@ -66,7 +66,7 @@ void WeeklyUpdatePlots::StandardPlots() {
   BookHistArray( DeltaPhiPsudoJets_,
     "DeltaPhiPsudoJets_",
     ";#Delta #phi PsudoJets;Events;",
-    40, 1-., 1.,
+    40, -1., 1.,
     nMax_+1, 0, 1, true );
 
 
