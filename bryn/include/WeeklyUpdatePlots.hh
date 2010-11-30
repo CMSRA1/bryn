@@ -28,7 +28,7 @@ namespace Operation {
     Double_t MT2( Event::Data& );
     Double_t MT2_Leading( Event::Data& );
     Double_t DeltaHT( Event::Data& );
-    std::pair PsudoJets(Event::Data&);
+    std::pair<LorentzV,LorentzV> PsudoJets(Event::Data&);
     std::string dirName_;
     UInt_t nMin_;
     UInt_t nMax_;
