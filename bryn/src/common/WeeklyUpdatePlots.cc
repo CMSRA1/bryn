@@ -429,9 +429,6 @@ Double_t WeeklyUpdatePlots::DeltaHT( Event::Data& ev){
 std::pair<LorentzV,LorentzV> WeeklyUpdatePlots::PsudoJets( Event::Data & ev ){
   std::vector<Event::Jet const *> jet = ev.JD_CommonJets().accepted;
   UInt_t n = jet.size();
-
-  mt2_bisect::mt2 mt2_event;
-
   LorentzV lv1(0.,0.,0.,0.);
   LorentzV lv2(0.,0.,0.,0.);
 
@@ -458,8 +455,8 @@ std::pair<LorentzV,LorentzV> WeeklyUpdatePlots::PsudoJets( Event::Data & ev ){
     if ( lv2.Pt() > lv1.Pt() ) { LorentzV tmp = lv1; lv1 = lv2; lv2 = tmp; }
 
   }
-
-  return std::pair<lv1,lv2>;
+  std::pair<LorentzV,LorentzV> a(lv1,lv2);
+  return a;
 
 }
 
