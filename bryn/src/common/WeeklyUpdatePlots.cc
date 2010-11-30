@@ -66,7 +66,7 @@ void WeeklyUpdatePlots::StandardPlots() {
   BookHistArray( DeltaPhiPsudoJets_,
     "DeltaPhiPsudoJets_",
     ";#Delta #phi PsudoJets;Events;",
-    40, -1., 1.,
+    1000, 0., 10000.,
     nMax_+1, 0, 1, true );
 
 
@@ -529,8 +529,8 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
    std::pair<LorentzV,LorentzV> PsudoJets = WeeklyUpdatePlots::PsudoJets( ev );
 
     if ( n >= nMin_ && n <= nMax_ && n < DeltaPhiPsudoJets_.size()) {
-      DeltaPhiPsudoJets_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(PsudoJets.first,PsudoJets.second)),weight);
-      DeltaPhiPsudoJets_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(PsudoJets.first,PsudoJets.second)),weight);
+      DeltaPhiPsudoJets_[0]->Fill(ev.CommonMHT().Pt()/fabs(cos(ROOT::Math::VectorUtil::DeltaPhi(PsudoJets.first,PsudoJets.second))),weight);
+      DeltaPhiPsudoJets_[n]->Fill(ev.CommonMHT().Pt()/fabs(cos(ROOT::Math::VectorUtil::DeltaPhi(PsudoJets.first,PsudoJets.second))),weight);
     }
 
 
