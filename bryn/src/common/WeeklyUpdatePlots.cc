@@ -524,32 +524,44 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
   Double_t weight = ev.GetEventWeight();
 
 
+	int nVertex = 0
+
+		            for(std::vector<double>::const_iterator vtx =
+            ev.vertexSumPt()->begin();
+            vtx != ev.vertexSumPt()->end();++vtx){
+            if(!ev.vertexIsFake()->at( vtx-ev.vertexSumPt()->begin()) &&
+                fabs((ev.vertexPosition()->at( vtx-ev.vertexSumPt()->begin())).Z()) < 24.0 &&
+                ev.vertexNdof()->at( vtx-ev.vertexSumPt()->begin() ) > 4 &&
+                (ev.vertexPosition()->at( vtx-ev.vertexSumPt()->begin())).Rho() < 2.0 ){  nVertex++; }
+          }
+
+
   if ( StandardPlots_ ){
 
    std::pair<LorentzV,LorentzV> PsudoJets = WeeklyUpdatePlots::PsudoJets( ev );
 
+  if(fabs(cos(ROOT::Math::VectorUtil::DeltaPhi(PsudoJets.first,PsudoJets.second))) < 0.85){
     if ( n >= nMin_ && n <= nMax_ && n < DeltaPhiPsudoJets_.size()) {
       DeltaPhiPsudoJets_[0]->Fill(ev.CommonMHT().Pt()/fabs(cos(ROOT::Math::VectorUtil::DeltaPhi(PsudoJets.first,PsudoJets.second))),weight);
       DeltaPhiPsudoJets_[n]->Fill(ev.CommonMHT().Pt()/fabs(cos(ROOT::Math::VectorUtil::DeltaPhi(PsudoJets.first,PsudoJets.second))),weight);
     }
-
-
+  }
 
 
     if ( n >= nMin_ && n <= nMax_ && n < NumberVerticies_.size()) {
-      NumberVerticies_[0]->Fill((ev.vertexPosition())->size(),weight);
-      NumberVerticies_[n]->Fill((ev.vertexPosition())->size(),weight);
+      NumberVerticies_[0]->Fill(nVertex,weight);
+      NumberVerticies_[n]->Fill(nVertex,weight);
     }
 
 
     if ( n >= nMin_ && n <= nMax_ && n < AlphaTVsNoVertex_.size()) {
-      AlphaTVsNoVertex_[0]->Fill(ev.CommonAlphaT(),(ev.vertexPosition())->size(),weight);
-      AlphaTVsNoVertex_[n]->Fill(ev.CommonAlphaT(),(ev.vertexPosition())->size(),weight);
+      AlphaTVsNoVertex_[0]->Fill(ev.CommonAlphaT(),nVertex,weight);
+      AlphaTVsNoVertex_[n]->Fill(ev.CommonAlphaT(),nVertex,weight);
     }
 
 
 
-    if((ev.vertexPosition())->size() == 1){
+    if(nVertex == 1){
       if ( n >= nMin_ && n <= nMax_ && n < AlphaTOneVertex_.size()) {
         AlphaTOneVertex_[0]->Fill(ev.CommonAlphaT(),weight);
         AlphaTOneVertex_[n]->Fill(ev.CommonAlphaT(),weight);
@@ -557,7 +569,7 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
 
     }
 
-    if((ev.vertexPosition())->size() > 1){
+    if(nVertex > 1){
       if ( n >= nMin_ && n <= nMax_ && n < AlphaTgOneVertex_.size()) {
         AlphaTgOneVertex_[0]->Fill(ev.CommonAlphaT(),weight);
         AlphaTgOneVertex_[n]->Fill(ev.CommonAlphaT(),weight);
@@ -756,8 +768,8 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
 
 
       if ( n >= nMin_ && n <= nMax_ && n < NumberVerticiesAfterAlphaT_.size()) {
-        NumberVerticiesAfterAlphaT_[0]->Fill((ev.vertexPosition())->size(),weight);
-        NumberVerticiesAfterAlphaT_[n]->Fill((ev.vertexPosition())->size(),weight);
+        NumberVerticiesAfterAlphaT_[0]->Fill(nVertex,weight);
+        NumberVerticiesAfterAlphaT_[n]->Fill(nVertex,weight);
       }
 
 
