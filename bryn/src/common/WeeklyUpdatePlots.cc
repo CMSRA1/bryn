@@ -524,9 +524,9 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
   Double_t weight = ev.GetEventWeight();
 
 
-	int nVertex = 0
+  int nVertex = 0;
 
-		            for(std::vector<double>::const_iterator vtx =
+                for(std::vector<double>::const_iterator vtx =
             ev.vertexSumPt()->begin();
             vtx != ev.vertexSumPt()->end();++vtx){
             if(!ev.vertexIsFake()->at( vtx-ev.vertexSumPt()->begin()) &&
