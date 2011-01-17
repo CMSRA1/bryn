@@ -70,10 +70,10 @@ def RatioPlot(Data,BackGround):
   top.GetYaxis().SetTitle("data / sim")
   top.Divide(bottom)
 
-  top.SetTitleSize(0.1, "XYZ");
-  top.SetTitleOffset(0.55, "X");
-  top.SetTitleOffset(0.3, "Y");
-  top.SetLabelSize(0.06,"XY")
+  # top.SetTitleSize(0.1, "XYZ");
+  # top.SetTitleOffset(0.55, "X");
+  # top.SetTitleOffset(0.3, "Y");
+  # top.SetLabelSize(0.06,"XY")
 
   # top.SetTitleXOffset(0.9);
   # top.SetTitleYOffset(0.9);
@@ -255,7 +255,7 @@ def newPlot(hist):
 
 def HyperLink(hist):
   """docstring for HyperLink"""
-  link = "<td><a href=" + hist + '.png><img src=\"'+  hist + '.png\" width=\"400\" height=\"400\" /></a>'+ "</td> \n"
+  link = "<td><a href=" + hist + '.pdf><img src=\"'+  hist + '.pdf\" width=\"400\" height=\"400\" /></a>'+ "</td> \n"
   return link
   pass
 

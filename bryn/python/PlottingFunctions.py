@@ -47,6 +47,8 @@ def Systematics(H1,H2,H3,Smeared,outType):
   LowerError = H3.Clone()
   SmearDown = 0.
   SmearUp = 0.
+  up = 0.
+  down = 0.
   for bin in range(1,H1.GetNbinsX()+1):
     if H1.GetBinContent(bin)-Smeared.GetBinContent(bin) < 0.:
       SmearDown = 0.
@@ -55,9 +57,17 @@ def Systematics(H1,H2,H3,Smeared,outType):
     if H1.GetBinContent(bin)-Smeared.GetBinContent(bin) > 0.:
       SmearDown =(H1.GetBinContent(bin)-Smeared.GetBinContent(bin))**2# 0.
       SmearUp = 0.
+    if H1.GetBinContent(bin) - LowerError.GetBinContent(bin) > 0.:
+      down = (H1.GetBinContent(bin) - LowerError.GetBinContent(bin))**2
+    if H1.GetBinContent(bin) - LowerError.GetBinContent(bin) < 0.:
+      up = (H1.GetBinContent(bin) - LowerError.GetBinContent(bin))**2
+    if UpperError.GetBinContent(bin)-H1.GetBinContent(bin) > 0.:
+      up = (UpperError.GetBinContent(bin)-H1.GetBinContent(bin))**2
+    if UpperError.GetBinContent(bin)-H1.GetBinContent(bin) < 0.:
+      down = (UpperError.GetBinContent(bin)-H1.GetBinContent(bin))**2
       # print H1.GetBinCenter(bin),H1.GetBinContent(bin), SmearDown
     if outType == "TGraph":
-      Standard.SetPointError(bin-1, H1.GetBinWidth(bin)/2, H1.GetBinWidth(bin)/2,math.sqrt((H1.GetBinError(bin))**2 + (H1.GetBinContent(bin)-LowerError.GetBinContent(bin))**2 + SmearDown), math.sqrt((H1.GetBinError(bin))**2 + (UpperError.GetBinContent(bin)-H1.GetBinContent(bin))**2 + SmearUp))
+      Standard.SetPointError(bin-1, H1.GetBinWidth(bin)/2, H1.GetBinWidth(bin)/2,math.sqrt((H1.GetBinError(bin))**2 + down + SmearDown), math.sqrt((H1.GetBinError(bin))**2 + up + SmearUp))
       # Standard.SetPointEYlow(bin,math.sqrt((H1.GetBinError(bin))**2 + (H1.GetBinContent(bin)-LowerError.GetBinContent(bin))**2))
       # print "bin",H1.GetBinCenter(bin), H1.GetBinContent(bin)," Satat error " , H1.GetBinError(bin), "sys Error", (H1.GetBinContent(bin)-LowerError.GetBinContent(bin)), "total", math.sqrt((H1.GetBinError(bin))**2 + (H1.GetBinContent(bin)-LowerError.GetBinContent(bin))**2),"erros in tgraph errors:",  Standard.GetErrorYlow(bin), Standard.GetErrorYhigh(bin)
     # if outType == "TGraph": Standard.SetPointEYhigh(bin,math.sqrt((H1.GetBinError(bin))**2 + (UpperError.GetBinContent(bin)-H1.GetBinContent(bin))**2))
@@ -240,7 +250,7 @@ def newPlot(hist):
 
 def HyperLink(hist):
   """docstring for HyperLink"""
-  link = "<td><a href=" + hist + '.png><img src=\"'+  hist + '.png\" width=\"400\" height=\"400\" /></a>'+ "</td> \n"
+  link = "<td><a href=" + hist + '.pdf><img src=\"'+  hist + '.pdf\" width=\"400\" height=\"400\" /></a>'+ "</td> \n"
   return link
   pass
 

@@ -11,32 +11,37 @@ from time import strftime
 import os, commands
 from PlottingFunctions import *
 Root.gROOT.SetBatch(True) # suppress the creation of canvases on the screen.. much much faster if over a remote connection
-Root.gROOT.SetStyle("Plain") #To set plain bkgds for slides
-Root.gStyle.SetTitleBorderSize(0)
-Root.gStyle.SetCanvasBorderMode(0)
-Root.gStyle.SetCanvasColor(0)#Sets canvas colour white
-Root.gStyle.SetOptStat(1110)#set no title on Stat box
-Root.gStyle.SetLabelOffset(0.001)
-Root.gStyle.SetLabelSize(0.05)
-Root.gStyle.SetLabelSize(0.05,"Y")#Y axis
-Root.gStyle.SetTitleSize(0.06)
-Root.gStyle.SetTitleW(0.7)
-Root.gStyle.SetTitleH(0.07)
-Root.gStyle.SetOptTitle(1)
-Root.gStyle.SetOptStat(0)
-Root.gStyle.SetAxisColor(1, "XYZ");
-Root.gStyle.SetStripDecimals(Root.kTRUE);
-Root.gStyle.SetTickLength(0.03, "XYZ");
-Root.gStyle.SetNdivisions(510, "XYZ");
-Root.gStyle.SetPadTickX(1);
-Root.gStyle.SetPadTickY(1);
-Root.gStyle.SetLabelColor(1, "XYZ");
-Root.gStyle.SetLabelFont(42, "XYZ");
-Root.gStyle.SetLabelOffset(0.007, "XYZ");
-Root.gStyle.SetLabelSize(0.05, "XYZ");
-Root.gStyle.SetHatchesLineWidth(3)
-# Root.gStyle.SetPaperSize(20,20)
+# Root.gROOT.SetStyle("Plain") #To set plain bkgds for slides
+# Root.gStyle.SetTitleBorderSize(0)
+# Root.gStyle.SetCanvasBorderMode(0)
+# Root.gStyle.SetCanvasColor(0)#Sets canvas colour white
+# Root.gStyle.SetOptStat(1110)#set no title on Stat box
+# Root.gStyle.SetLabelOffset(0.001)
+# Root.gStyle.SetLabelSize(0.05)
+# Root.gStyle.SetLabelSize(0.05,"Y")#Y axis
+# Root.gStyle.SetTitleSize(0.06)
+# Root.gStyle.SetTitleW(0.7)
+# Root.gStyle.SetTitleH(0.07)
+# Root.gStyle.SetOptTitle(1)
+# Root.gStyle.SetOptStat(0)
+# Root.gStyle.SetAxisColor(1, "XYZ");
+# Root.gStyle.SetStripDecimals(Root.kTRUE);
+# Root.gStyle.SetTickLength(0.03, "XYZ");
+# Root.gStyle.SetNdivisions(510, "XYZ");
+# Root.gStyle.SetPadTickX(1);
+# Root.gStyle.SetPadTickY(1);
+# Root.gStyle.SetLabelColor(1, "XYZ");
+# Root.gStyle.SetLabelFont(42, "XYZ");
+# Root.gStyle.SetLabelOffset(0.01, "XYZ");
+# Root.gStyle.SetLabelSize(0.05, "XYZ");
+# Root.gStyle.SetHatchesLineWidth(2)
 
+Root.gROOT.ProcessLine(".L ./tdrstyle.C+")
+
+# Root.gStyle.SetPaperSize(20,20)
+# Root.gROOT.ProcessLine(".x /Users/bryn/.root/tdrstyle.C+")
+# setTDRStyle()
+Root.gStyle.SetLineStyleString(11,"50 25")
 def ensure_dir(path):
     try:
       os.makedirs(path)
@@ -56,14 +61,14 @@ print "The Integrated Luminosity your plots are being scaled to is: ", intlumi ,
 
 # outputfile = "../pdfs/JESFixedTest/"
 
-outputfile = "../pdfs/35pb38MC/"
+outputfile = "../OutputsComentsfromCWR/"
 
 ensure_dir(outputfile)
 
 
 print "you are outputting to: " ,outputfile
 #SetWhere your results from your analysis are
-resultsDir = "~/resultsAsOf17Nov/" #"/vols/cms02/bm409/SUSYv2/hadronic/results/"+algo
+resultsDir = "~/Finalresults/" #"/vols/cms02/bm409/SUSYv2/hadronic/results/"+algo
 
 print "you are using the " , algo , " Jet collection"
 #close list is a global variable that has the file name appended to it so at the end of each hist loop the open files are closed. It is cleared each time a new hist is called.
@@ -104,8 +109,7 @@ def GetHistFromFolder(DataSetName,folder,col,norm,Legend):
     return Hist
 
 
-#   /MinBias_TuneD6T_7TeV-pythia6/Spring10-START3X_V26B-v1/GEN-SIM-RECO
-#   /MinBias_TuneD6T_7TeV-pythia6/Fall10-START38_V9_preproduction-v1/GEN-SIM-RECODEBUG
+
 
 
 def RatioPlot(Data,BackGround):
@@ -114,25 +118,22 @@ def RatioPlot(Data,BackGround):
   top = Data.Clone()
   top.GetYaxis().SetTitle("data / sim")
   top.Divide(bottom)
-
-  top.SetTitleSize(0.1, "XYZ");
-  top.SetTitleOffset(0.55, "X");
-  top.SetTitleOffset(0.3, "Y");
-  top.SetLabelSize(0.06,"XY")
-
+  # top.SetTitleSize(0.1, "XYZ");
+  # top.SetTitleOffset(0.55, "X");
+  # top.SetTitleOffset(0.4, "Y");
+  # top.SetLabelSize(0.06,"XY")
   # top.SetTitleXOffset(0.9);
   # top.SetTitleYOffset(0.9);
   top.GetXaxis().SetRangeUser(MinX,MaxX+0.1)
-  top.GetYaxis().SetRangeUser(0.,2.0)
+  top.GetYaxis().SetRangeUser(0.,4.0)
   return top
 
 def UnityLine (Data):
   """docstring for RatioPlot"""
   # top = Data.Clone()  #Draw a line though the perfectly matching point
   # unity = Root.TBox(top.GetXaxis().GetBinUpEdge(top.GetXaxis().GetFirst()), 0.89,top.GetXaxis().GetBinUpEdge(top.GetNbinsX()), 1.11);
-
   unity = Root.TBox(Data.GetBinLowEdge(Data.GetXaxis().GetFirst()), 0.89,Data.GetBinLowEdge(Data.GetXaxis().GetLast())+Data.GetBinWidth(Data.GetXaxis().GetLast()), 1.11)
-  unity.SetLineWidth(2);
+  unity.SetLineWidth(3);
   unity.SetLineColor(2);
   unity.SetFillColor(2);
   unity.SetFillStyle(3002)
@@ -151,7 +152,7 @@ def PassingCutNumbers(Hist, name ,lowerBound):
 
 time = strftime("%Y_%m_%d")
 print time
-
+DrawRatio = False
 #A file to open and scan for histograms inside directories
 RootFileList = [resultsDir+"/AK5"+algo+"_Jets.root"]
 # RootFileList = [resultsDir+"/AK5Calo_ExtraJets.root"]
@@ -183,32 +184,35 @@ for dir in range(0,len(DirKeys)):
   # print DirKeys[dir].GetTitle()
   for hist in HistNames[dir]:
     Draw = False
+    Root.setTDRStyle()
+    # Root.tdrStyle.SetPadRightMargin(0.06)#tweak
     # if "CaloMET_after_alphaT_all" in hist: Draw = True
-    if "EffectiveMass_after_alphaT_55_all" in hist: Draw = True
+    # if "EffectiveMass_after_alphaT_55_all" in hist: Draw = True
     # if "HT_after_alphaT_all" in hist: Draw = True
-    if "BiasedDeltaPhi_after_alphaT_55_all" in hist: Draw = True
+    # if "BiasedDeltaPhi_after_alphaT_55_all" in hist: Draw = True
     # if "CosDetlaPhi_MHT_MHTBaby__all" in hist: Draw = True
     # if "DPhi_MHT_MHTbaby_AfterAlphaT__all" in hist: Draw = True
-    if "BabyJetMHT_all" in hist: Draw = True
+    # if "BabyJetMHT_all" in hist: Draw = True
     # if "BabyJetMHTafterMetCut_all" in hist: Draw = True
     # if "CaloMET_all" in hist: Draw = True
     # if "MHTovMET_all" in hist: Draw = True
     # if "MHTovMET_afterAlphaT_all" in hist: Draw = True
     # if "Mt2_LeadingJets_all" in hist: Draw = True
     # if "Mt2_all" in hist: Draw = True
-    if "AlphaT_all" in hist: Draw = True
-    if "AlphaT_Zoomed_all" in hist: Draw = True
-    if "HT_all" in hist: Draw = True
-    if "EffectiveMass_all" in hist: Draw = True
-    if "BiasedDeltaPhi_all" in hist: Draw = True
+    if "HT_after_alphaT_all" == hist : Draw = True
+    # if "AlphaT_all" == hist: Draw = True
+    # if "AlphaT_Zoomed_all" in hist: Draw = True
+    # if "HT_all" == hist: Draw = True
+    # if "EffectiveMass_all" in hist: Draw = True
+    # if "BiasedDeltaPhi_all" in hist: Draw = True
     # if "MHToverHT_all" in hist: Draw = True
-    if "MHT_all" in hist: Draw = True
-    if "JetMultiplicityAfterAlphaT_all" in hist: Draw = True
-    if "JetMultiplicity_all" in hist: Draw = True
+    # if "MHT_all" == hist: Draw = True
+    # if "JetMultiplicityAfterAlphaT_all" in hist: Draw = True
+    # if "JetMultiplicity_all" in hist: Draw = True
     # if "JetEta_" in hist: Draw = True
     # if "JetPt_" in hist: Draw = True
     # if "fem__all" in hist: Draw = True
-    if "BabyJetMHTafterMetCut_all" in hist: Draw = True
+    # if "BabyJetMHTafterMetCut_all" in hist: Draw = True
 
     # if DirKeys[dir].GetTitle()[0] != "n" and "_2" in hist: Draw = True
     # if "__1" in hist: Draw = True
@@ -230,15 +234,15 @@ for dir in range(0,len(DirKeys)):
     MaxX = 1.0# to see the numbers set by the functions that are defined in the beginning of the program
     MinX = 1000.#
     c1 = Root.TCanvas("canvas"+hist,"canname"+hist,1200,1200)
-    #Make two pads, one small for the ratio plot and one large for the plot its self
-    mainPad = Root.TPad("","",0.01,0.25,0.99,0.99);
-    mainPad.SetNumber(1);
-    mainPad.Draw();
-    ratioPad = Root.TPad("","",0.01,0.05,0.99,0.26);
-    ratioPad.SetBottomMargin(0.32);
-    ratioPad.SetNumber(2);
-
-    ratioPad.Draw();
+    if DrawRatio:
+      #Make two pads, one small for the ratio plot and one large for the plot its self
+      mainPad = Root.TPad("","",0.01,0.25,0.99,0.99);
+      mainPad.SetNumber(1);
+      mainPad.Draw();
+      ratioPad = Root.TPad("","",0.01,0.05,0.99,0.26);
+      ratioPad.SetBottomMargin(0.32);
+      ratioPad.SetNumber(2);
+      ratioPad.Draw();
     c1.cd(1)
     #make your histograms form each file, read in the files you want below
     # GetHist("RootFile",Colour, scale to lumi 0=false anything else = true, Legend entry)
@@ -248,51 +252,52 @@ for dir in range(0,len(DirKeys)):
     # Data.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_Jets.root","300_350Gevcombined",1,0,0))
     # Data.Add(GetHist(resultsDir+"/AK5Calo_ExtraJets.root",1,0,"Data"))
     if str(type(Data)) != "<class '__main__.TH1D'>" : continue
-    QCD = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia.root",Root.kRed-7,1,"QCD")
-    # QCD.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia.root","300_350Gevcombined",1,1,0))
+    QCD = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_QCD_Pythia6_38.root",Root.kGreen+3,1,"QCD")
+
+    # QCD.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_QCD_Pythia6_38.root","300_350Gevcombined",1,1,0))
     Data.SetMarkerStyle(20)
+    Data.SetMarkerSize(1.5)
     Data.SetLineWidth(3)
     Data.SetLineColor(1)
     Data.SetFillColor(1)
-    ZJets  = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_zjets_madgraph_5.root",Root.kTeal-7,1,0)
-    # ZJets.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_zjets_madgraph_4.root","300_350Gevcombined",Root.kTeal-7,1,0))
-    Zinv = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_Zinvisible_jets.root",91,1,0)
-    # Zinv.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_Zinvisible_jets_3.root","300_350Gevcombined",Root.kTeal-7,1,0))
+    ZJets  = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_zjets_madgraph_4.root",Root.kTeal-7,1,0)
+    # ZJets.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_zjets_madgraph_4_4.root","300_350Gevcombined",Root.kTeal-7,1,0))
+    Zinv = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_Zinvisible_jets_3.root",91,1,0)
+    # Zinv.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_Zinvisible_jets_3_31_3.root","300_350Gevcombined",Root.kTeal-7,1,0))
     Ztotal = ZJets.Clone()
     Ztotal.Add(Zinv)
-    Ztotal.SetLineColor(Root.kTeal-7)
+    Ztotal.SetLineColor(91)
     leg.AddEntry(Ztotal,"Z + Jets","L")
 
     WJets = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_wjets_madgraph_vols_1.root",Root.kPink+7,1,"W + Jets")
-    # WJets.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_wjets_madgraph_vols_1.root","300_350Gevcombined",Root.kTeal-7,1,0))
+    # WJets.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_wjets_madgraph_vols_1_29.root","300_350Gevcombined",Root.kTeal-7,1,0))
     ttbar = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_ttbarTauola_2.root",Root.kBlue+1,1,"tt + Jets")
-    # ttbar.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_ttbarTauola_2.root","300_350Gevcombined",Root.kTeal-7,1,0))
-    LM0 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM0_6.root",2,1,"LM0")
-    # LM0.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_LM0_5.root","300_350Gevcombined",Root.kTeal-7,1,0))
-    LM1 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM1_7.root",Root.kRed+3,1,"LM1")
-    # LM1.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_LM1_6.root","300_350Gevcombined",Root.kTeal-7,1,0))
+    # ttbar.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_ttbarTauola_2_30.root","300_350Gevcombined",Root.kTeal-7,1,0))
+    LM0 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM0_5.root",2,1,"LM0")
+    LM0.SetLineStyle(9)
+    # LM0.SetMarkerStyle(21)
 
-    QCD.SetLineWidth(3)
+    LM0.SetMarkerColor(2)
+    # LM0.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_LM0_5_5.root","300_350Gevcombined",Root.kTeal-7,1,0))
+    LM1 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM1_6.root",Root.kPink+7,1,"LM1")
+    # LM1.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_LM1_6_6.root","300_350Gevcombined",Root.kTeal-7,1,0))
+    LM1.SetLineStyle(2)
+    QCD.SetLineWidth(4)
 
-    if "EffectiveMass_all" == hist or "EffectiveMass_after_alphaT_55_all" == hist:
+    EWK = ttbar.Clone()
+    EWK.Add(WJets)
+    EWK.Add(Ztotal)
+    EWK.SetLineWidth(3)
+    EWK.SetLineColor(Root.kBlue+1)
+    if False: #"EffectiveMass_all" == hist or "EffectiveMass_after_alphaT_55_all" == hist :
           leg.RecursiveRemove(Ztotal)
           leg.RecursiveRemove(WJets)
           leg.RecursiveRemove(ttbar)
-          LM2 = GetHist("/Users/bryn/results15pb/NoSmear/AK5"+algo+"_LM2_10.root",3,1,"LM2")
-          LM3 = GetHist("/Users/bryn/results15pb/NoSmear/AK5"+algo+"_LM3_11.root",4,1,"LM3")
-          LM4 = GetHist("/Users/bryn/results15pb/NoSmear/AK5"+algo+"_LM4_12.root",5,1,"LM4")
-          LM5 = GetHist("/Users/bryn/results15pb/NoSmear/AK5"+algo+"_LM5_13.root",6,1,"LM5")
+          LM2 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM2_7.root",3,1,"LM2")
+          LM3 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM3_8.root",4,1,"LM3")
+          LM4 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM4_9.root",5,1,"LM4")
+          LM5 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM5_10.root",6,1,"LM5")
           DrawSM = True
-
-    if "BiasedDeltaPhi_all" == hist or "BiasedDeltaPhi_after_alphaT_all" == hist:
-      Data.Rebin(2)
-      QCD.Rebin(2)
-      QCD.SetFillColor(Root.kRed-7)
-      ZJets.Rebin(2)
-      Zinv.Rebin(2)
-      ttbar.Rebin(2)
-      LM0.Rebin(2)
-      LM1.Rebin(2)
 
 
 
@@ -302,44 +307,104 @@ for dir in range(0,len(DirKeys)):
     Total.Add(ZJets)
     Total.Add(WJets)
     Total.Add(ttbar)
+    leg2 = Root.TLegend(0.55, 0.5, 0.97, 0.8)
+
+    if "BiasedDeltaPhi_after_alphaT_all" == hist:# or "AlphaT" in hist :
+      Data.Rebin(4)
+      QCD.Rebin(4)
+      # QCD.SetFillColor(Root.kRed-7)
+      # ZJets.Rebin(4)
+      # Zinv.Rebin(4)
+      # ttbar.Rebin(4)
+      LM0.Rebin(4)
+      LM1.Rebin(4)
+      Total.Rebin(4)
+
+      EWK.Rebin(4)
+
 
 
     Pythia8 = False
 
     if hist == "MHTovMET_afterAlphaT_all" or hist == "BabyJetMHT_all" or hist == "BabyJetMHTafterMetCut_all" or hist == "BiasedDeltaPhi_after_alphaT_55_all" or hist == "BiasedDeltaPhi_all" :
-      Pythia8=GetHist(resultsDir+"/NoSmear/AK5"+algo+"_QCD_Pythia8.root",3,1,"QCD Pythia 8")
-      # Pythia8.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_QCD_Pythia8.root","300_350Gevcombined",Root.kTeal-7,1,0))
+      Pythia8=GetHist(resultsDir+"/NoSmear/AK5"+algo+"_QCD_Pythia8_38.root",3,1,"QCD Pythia tune 1")
+      # Pythia8.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_QCD_Pythia8_38.root","300_350Gevcombined",Root.kTeal-7,1,0))
+      Pythia8.SetLineWidth(3)
+    DrawErrors = True
+    drawBackgrounds = True
+
+    if hist == "BiasedDeltaPhi_all" or  "EffectiveMass_after_alphaT_55_all" == hist:
+      DrawSM = True
+      DrawErrors = True
+      drawEWK = True
+      drawBackgrounds = False
+      Pythia8 = False
+      leg2 = Root.TLegend(0.7, 0.5, 0.97, 0.8)
+      if "EffectiveMass_after_alphaT_55_all" == hist:
+        leg2 = Root.TLegend(0.9, 0.6, 1., 0.8)
+
+      leg2.SetShadowColor(0)
+      leg2.SetBorderSize(0)
+      leg2.SetFillStyle(4100)
+      leg2.SetFillColor(0)
+      leg2.SetLineColor(0)
+      leg2.AddEntry(Data, "Data", "lp")
+      # leg2.AddEntry(QCD, "QCD Pythia tune Z2", "lp")
+      # leg2.AddEntry(Pythia8 , "QCD Pythia Z1 tune","lp")
+      # leg2.AddEntry(EWK, "t#bar{t}, W, Z + Jets" , "l")
+      leg2.AddEntry(LM0, "LM0", "p")
+      leg2.AddEntry(LM1, "LM1", "lp")
+      if "BiasedDeltaPhi_all" == hist:
+        Data.Rebin(4)
+        Total.Rebin(4)
+        QCD.Rebin(4)
+        EWK.Rebin(4)
+        LM0.Rebin(4)
+        LM1.Rebin(4)
+
+
 
 
     # Systematics
-    ScaledUpQCD = GetHist(resultsDir+"/JESplus/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia.root",Root.kTeal-7,1,0)
+    ScaledUpQCD = GetHist(resultsDir+"/JESplus/AK5"+algo+"_QCD_Pythia6_38.root",Root.kTeal-7,1,0)
     ScaledUpW = GetHist(resultsDir+"/JESplus/AK5"+algo+"_wjets_madgraph_vols_1.root",Root.kTeal-7,1,0)
-    ScaledUpZj = GetHist(resultsDir+"/JESplus/AK5"+algo+"_Zinvisible_jets.root",Root.kTeal-7,1,0)
-    ScaledUpJi = GetHist(resultsDir+"/JESplus/AK5"+algo+"_zjets_madgraph_5.root",Root.kTeal-7,1,0)
+    ScaledUpZj = GetHist(resultsDir+"/JESplus/AK5"+algo+"_Zinvisible_jets_3.root",Root.kTeal-7,1,0)
+    ScaledUpJi = GetHist(resultsDir+"/JESplus/AK5"+algo+"_zjets_madgraph_4.root",Root.kTeal-7,1,0)
     ScaledUptt = GetHist(resultsDir+"/JESplus/AK5"+algo+"_ttbarTauola_2.root",Root.kTeal-7,1,0)
 
     ScaledUp = ScaledUpQCD.Clone()
+    # if "EffectiveMass_after_alphaT_55_all" == hist:
+      # ScaledUp = None
+      # ScaledUp = QCD.Clone()
+
     ScaledUp.Add(ScaledUpW)
     ScaledUp.Add(ScaledUpZj)
     ScaledUp.Add(ScaledUpJi)
     ScaledUp.Add(ScaledUptt)
-    ScaledDownQCD =GetHist(resultsDir+"/JESminus/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia.root",Root.kTeal-7,1,0)
+    ScaledDownQCD =GetHist(resultsDir+"/JESminus/AK5"+algo+"_QCD_Pythia6_38.root",Root.kTeal-7,1,0)
     ScaledDownW =  GetHist(resultsDir+"/JESminus/AK5"+algo+"_wjets_madgraph_vols_1.root",Root.kTeal-7,1,0)
-    ScaledDownZj = GetHist(resultsDir+"/JESminus/AK5"+algo+"_Zinvisible_jets.root",Root.kTeal-7,1,0)
-    ScaledDownJi = GetHist(resultsDir+"/JESminus/AK5"+algo+"_zjets_madgraph_5.root",Root.kTeal-7,1,0)
+    ScaledDownZj = GetHist(resultsDir+"/JESminus/AK5"+algo+"_Zinvisible_jets_3.root",Root.kTeal-7,1,0)
+    ScaledDownJi = GetHist(resultsDir+"/JESminus/AK5"+algo+"_zjets_madgraph_4.root",Root.kTeal-7,1,0)
     ScaledDowntt = GetHist(resultsDir+"/JESminus/AK5"+algo+"_ttbarTauola_2.root",Root.kTeal-7,1,0)
     ScaledDown =   ScaledDownQCD.Clone()
+    # if "EffectiveMass_after_alphaT_55_all" == hist:
+      # ScaledDown = None
+      # ScaledDown =   QCD.Clone()
+
     ScaledDown.Add(ScaledDownW)
     ScaledDown.Add(ScaledDownZj)
     ScaledDown.Add(ScaledDownJi)
     ScaledDown.Add(ScaledDowntt)
 
-    SmearedQCD =GetHist(resultsDir+"/Smear/AK5"+algo+"_QCD_AllPtBins_7TeV_Pythia.root",Root.kTeal-7,1,0)
+    SmearedQCD =GetHist(resultsDir+"/Smear/AK5"+algo+"_QCD_Pythia6_38.root",Root.kTeal-7,1,0)
     SmearedW =  GetHist(resultsDir+"/Smear/AK5"+algo+"_wjets_madgraph_vols_1.root",Root.kTeal-7,1,0)
-    SmearedZj = GetHist(resultsDir+"/Smear/AK5"+algo+"_Zinvisible_jets.root",Root.kTeal-7,1,0)
-    SmearedJi = GetHist(resultsDir+"/Smear/AK5"+algo+"_zjets_madgraph_5.root",Root.kTeal-7,1,0)
+    SmearedZj = GetHist(resultsDir+"/Smear/AK5"+algo+"_Zinvisible_jets_3.root",Root.kTeal-7,1,0)
+    SmearedJi = GetHist(resultsDir+"/Smear/AK5"+algo+"_zjets_madgraph_4.root",Root.kTeal-7,1,0)
     Smearedtt = GetHist(resultsDir+"/Smear/AK5"+algo+"_ttbarTauola_2.root",Root.kTeal-7,1,0)
     Smeared =   SmearedQCD.Clone()
+    # if "EffectiveMass_after_alphaT_55_all" == hist:
+      # Smeared = None
+      # Smeared =   QCD.Clone()
     Smeared.Add(SmearedW)
     Smeared.Add(SmearedZj)
     Smeared.Add(SmearedJi)
@@ -347,23 +412,35 @@ for dir in range(0,len(DirKeys)):
 
     blank1 = Root.TH1D()
     blank2 = Root.TH2D()
-
+    if "BiasedDeltaPhi_after_alphaT_55_all" == hist or "EffectiveMass_after_alphaT_55_all" == hist:
+      if "EffectiveMass_after_alphaT_55_all" == hist:
+        Total.Rebin(3)
+        ScaledUp.Rebin(3)
+        ScaledDown.Rebin(3)
+        Smeared.Rebin(3)
+      if "BiasedDeltaPhi_after_alphaT_55_all" == hist:
+        Total.Rebin(4)
+        ScaledUp.Rebin(4)
+        ScaledDown.Rebin(4)
+        Smeared.Rebin(4)
     # AsymErrors = Systematics(Total,Total,Total,Smeared ,"TGraph")
     AsymErrors = Systematics(Total,ScaledUp,ScaledDown,Smeared ,"TGraph")
     AsymErrors.SetLineColor(Root.kAzure+2)#kTeal+3)
     AsymErrors.SetFillColor(Root.kAzure+2)#kTeal+3)
-    AsymErrors.SetLineWidth(5)
+    AsymErrors.SetLineWidth(3)
 
     AsymErrors.SetFillStyle(3245)#(3245)
 
     SMBackGrounds = Systematics(Total,ScaledUp,ScaledDown,Smeared,"TH1")
     if SMBackGrounds.Integral(0,SMBackGrounds.GetNbinsX()) == 0 : Draw = False
 
-
+    drawEWK = False
     if "AlphaT_all" == hist :
       PassingCutNumbers(Data, "Data"            ,0.55)
       # PassingCutNumbers(SmearedJets, "Data_SMEARED!!!"  ,0.55)
       PassingCutNumbers(Total, "Total Background Stat" ,0.55)
+      PassingCutNumbers(ScaledUp, "Total Background scaled up" ,0.55)
+      PassingCutNumbers(ScaledDown, "Total Background scaled down" ,0.55)
       PassingCutNumbers(SMBackGrounds, "Total Background Systematic" ,0.55)
       PassingCutNumbers(ttbar, "TTBbar"         ,0.55)
       PassingCutNumbers(ZJets, "ZJets"          ,0.55)
@@ -374,8 +451,9 @@ for dir in range(0,len(DirKeys)):
       PassingCutNumbers(LM1, "LM1"              ,0.55)
     #
     #
-    # if "HT_all" == hist :
-    #   PassingCutNumbers(Data, "Data"    ,250.)
+    if "HT_all" == hist :
+      PassingCutNumbers(Data, "Data"    ,350.)
+      # PassingCutNumbers(Data, "Data 250GeV"    ,250.)
     #   PassingCutNumbers(Total, "Total Background Stat" ,250.)
     #   PassingCutNumbers(SMBackGrounds, "Total Background Systematic" ,250.)
     #   PassingCutNumbers(LM0, "LM0"      ,250.)
@@ -407,18 +485,38 @@ for dir in range(0,len(DirKeys)):
     herr.SetLineColor(Root.kTeal+3)
     herr.SetMarkerColor(Root.kAzure+6)
     herr.SetFillColor(Root.kAzure+6)
-    Total.SetFillColor(Root.kAzure+6)
+    # Total.SetFillStyle(3001)
+    # Total.SetFillColor(Root.kAzure+6)
     herr.SetLineWidth(3)
-    Total.SetLineWidth(3)
+    Total.SetLineWidth(5)
 
     # Total.SetFillColor(Root.kAzure+2)
-    Total.SetLineColor(Root.kBlue+2)
+    Total.SetLineColor(Root.kAzure+6)
+    # Total.SetLineColor(Root.kBlue+2)
     # Total.SetFillStyle(3245)
     hcen.SetFillColor(0)
     hcen.SetMarkerColor(Root.kTeal+3)
     hcen.SetLineColor(Root.kTeal+3)
     hcen.SetLineWidth(3)
 
+    leg2 = Root.TLegend(0.52, 0.55, 0.97, 0.78)
+    leg2.SetShadowColor(0)
+    leg2.SetBorderSize(0)
+    leg2.SetFillStyle(4100)
+    leg2.SetFillColor(0)
+    leg2.SetLineColor(0)
+    leg2.AddEntry(Data, "Data", "p")
+    AsymErrorsLeg = AsymErrors
+    AsymErrorsLeg.SetLineColor(Root.kAzure+6)
+    AsymErrorsLeg.SetLineWidth(6)
+
+    leg2.AddEntry(AsymErrors , "Standard Model", "fl")
+    if "EffectiveMass" not in hist:
+      leg2.AddEntry(QCD, "QCD Multijet","lp")# " Pythia tune Z2", "lp")
+      leg2.AddEntry(EWK, "t#bar{t}, W, Z + Jets" , "l")
+    leg2.AddEntry(LM0, "LM0", "pl")
+    leg2.AddEntry(LM1, "LM1", "l")
+    # AsymErrors.SetLineWidth(3)
 
     DrawSM = True
     #Defind the ranges of the histogram for the two highest histograms ie the data and the total
@@ -443,26 +541,52 @@ for dir in range(0,len(DirKeys)):
     if "Multiplicity" in hist:
       MaxX = 12.
       MinX = 1.
-    if hist == "BiasedDeltaPhi_after_alphaT_55_all" or hist == "BiasedDeltaPhi_all":
+    if hist == "BiasedDeltaPhi_after_alphaT_55_all" :
+      leg2.Clear()
+      QCD.SetLineColor(Root.kRed-7)
       MinX = 0.
       MaxX = 3.2
-      DrawSM = False
-      leg2 = Root.TLegend(0.65, 0.45, 0.97, 0.8)
+      DrawSM = True
+      MaxY = 75.
+      MinY = 0.05
+      leg2 = Root.TLegend(0.52, 0.58, 0.97, 0.78)
       leg2.SetShadowColor(0)
       leg2.SetBorderSize(0)
       leg2.SetFillStyle(4100)
       leg2.SetFillColor(0)
       leg2.SetLineColor(0)
-      leg2.AddEntry(Data, "Data", "lp")
-      leg2.AddEntry(QCD, "QCD Pythia 6", "lp")
-      QCD.SetFillStyle(1001)
+      leg2.AddEntry(Data, "Data", "p")
+      # leg2.AddEntry(QCD, "QCD Pythia tune Z2", "lp")
+      QCD.SetFillStyle(3345)
       QCD.SetFillColor(Root.kRed-7)
-      Pythia8.SetFillStyle(1001)
+      Pythia8.SetFillStyle(3354)
       Pythia8.SetFillColor(3)
-      leg2.AddEntry(Pythia8 , "QCD Pythia 8","lp")
-      leg2.AddEntry(Ztotal, "Z + Jets", "lp")
-      leg2.AddEntry(WJets, "W + Jets", "lp")
-      leg2.AddEntry(ttbar, "TTBar", "lp")
+      # QCD.SetFillStyle(1001)
+      QCD.SetFillColor(Root.kRed-7)
+      # Pythia8.SetFillStyle(1001)
+      Pythia8.SetFillColor(3)
+      Data.Rebin(4)
+      Pythia8.Rebin(4)
+      EWK.Rebin(4)
+      QCD.Rebin(4)
+      LM0.Rebin(4)
+      LM1.Rebin(4)
+      # leg2.AddEntry(Pythia8 , "QCD Pythia tune 1","lp")
+      drawEWK = True
+      drawBackgrounds = False
+      print "biased Dphi bin width",str(QCD.GetXaxis().GetBinWidth(2))
+      Pythia8.GetYaxis().SetTitle("Events / 0.2 rad")
+      QCD.GetYaxis().SetTitle(    "Events / 0.2 rad")
+      EWK.GetYaxis().SetTitle(    "Events / 0.2 rad")
+      Total.GetYaxis().SetTitle(  "Events / 0.2 rad")
+      Pythia8.GetXaxis().SetTitle("#Delta #phi* (rad)")
+      QCD.GetXaxis().SetTitle(    "#Delta #phi* (rad)")
+      EWK.GetXaxis().SetTitle(    "#Delta #phi* (rad)")
+      Total.GetXaxis().SetTitle(  "#Delta #phi* (rad)")
+      # leg2.AddEntry(Ztotal, "Z + Jets", "lp")
+      # leg2.AddEntry(WJets, "W + Jets", "lp")
+      # leg2.AddEntry(ttbar, "TTBar", "lp")
+      leg2.AddEntry(AsymErrors, "Standard Model" , "lf")
       leg2.AddEntry(LM0, "LM0", "lp")
       leg2.AddEntry(LM1, "LM1", "lp")
     if  "EffectiveMass" in hist:
@@ -472,63 +596,111 @@ for dir in range(0,len(DirKeys)):
       DrawSM = False
 
 
-      drawBackgrounds = False
 
     if "MHTovMET_afterAlphaT_all" in hist:
+      QCD.SetLineColor(Root.kRed-7)
       MaxX = 5.
       MinX = 0.0
       DrawSM = False
-      MaxY = 50.
-      leg2 = Root.TLegend(0.65, 0.45, 0.97, 0.8)
-      Data.Rebin(2)
-      QCD.Rebin(2)
-      Pythia8.Rebin(2)
-      ZJets.Rebin(2)
-      Zinv.Rebin(2)
-      ttbar.Rebin(2)
-      LM0.Rebin(2)
-      LM1.Rebin(2)
-      QCD.SetFillStyle(1001)
+      MaxY = 500.
+      MinY = .06
+      leg2 = Root.TLegend(0.35, 0.56, 0.9, 0.77)
+      Data.Rebin(4)
+      QCD.Rebin(4)
+      Pythia8.Rebin(4)
+      ZJets.Rebin(4)
+      Zinv.Rebin(4)
+      QCD.SetFillStyle(3345)
       QCD.SetFillColor(Root.kRed-7)
-      Pythia8.SetFillStyle(1001)
+      Pythia8.SetFillStyle(3354)
       Pythia8.SetFillColor(3)
+      ttbar.Rebin(4)
+      EWK.Rebin(4)
+      LM0.Rebin(4)
+      LM1.Rebin(4)
+      QCD.SetFillStyle(3345)
+      QCD.SetFillColor(Root.kRed-7)
+      Pythia8.GetYaxis().SetTitle("Events/0.2")
+      QCD.GetYaxis().SetTitle("Events/0.2")
+      Pythia8.SetFillStyle(3354)
+      Pythia8.SetFillColor(3)
+      # QCD.SetFillStyle(1001)
+      QCD.SetFillColor(Root.kRed-7)
+      # Pythia8.SetFillStyle(1001)
+      # Pythia8.SetFillColor(3)
       leg2.SetShadowColor(0)
       leg2.SetBorderSize(0)
       leg2.SetFillStyle(4100)
       leg2.SetFillColor(0)
       leg2.SetLineColor(0)
-      leg2.AddEntry(Data, "Data", "lp")
-      leg2.AddEntry(QCD, "QCD Pythia 6", "lp")
-      leg2.AddEntry(Pythia8 , "QCD Pythia 8","lp")
-      leg2.AddEntry(Ztotal, "Z + Jets", "lp")
-      leg2.AddEntry(WJets, "W + Jets", "lp")
-      leg2.AddEntry(ttbar, "TTBar", "lp")
+      leg2.AddEntry(Data, "Data", "p")
+      leg2.AddEntry(QCD, "QCD Pythia tune Z2", "lp")
+      leg2.AddEntry(Pythia8 , "QCD Pythia tune 1","lp")
+      leg2.AddEntry(EWK, "ElectroWeak", "lp")
+      # leg2.AddEntry(WJets, "W + Jets", "lp")
+      # leg2.AddEntry(ttbar, "TTBar", "lp")
       leg2.AddEntry(LM0, "LM0", "lp")
       leg2.AddEntry(LM1, "LM1", "lp")
-
+      drawEWK = True
+      drawBackgrounds = False
 
 
     if "BabyJetMHT_all" in hist or "BabyJetMHTafterMetCut_all" == hist:
       DrawSM = False
       MaxX= 240.
       MinX = 0.
-      leg2 = Root.TLegend(0.65, 0.45, 0.97, 0.8)
+      # MaxY = 1.2
+      QCD.SetLineColor(Root.kRed-7)
+      leg2 = Root.TLegend(0.55, 0.46, 0.9, 0.87)
       leg2.SetShadowColor(0)
       leg2.SetBorderSize(0)
       leg2.SetFillStyle(4100)
       leg2.SetFillColor(0)
       leg2.SetLineColor(0)
-      leg2.AddEntry(Data, "Data", "lp")
-      leg2.AddEntry(QCD, "QCD Pythia 6", "lp")
-      leg2.AddEntry(Pythia8 , "QCD Pythia 8","lp")
-      leg2.AddEntry(Ztotal, "Z + Jets", "lp")
-      leg2.AddEntry(WJets, "W + Jets", "lp")
-      leg2.AddEntry(ttbar, "TTBar", "lp")
-      leg2.AddEntry(LM0, "LM0", "lp")
-      leg2.AddEntry(LM1, "LM1", "lp")
+      leg2.AddEntry(Data, "Data", "p")
+      leg2.AddEntry(QCD, "QCD Pythia tune Z2", "lp")
+      leg2.AddEntry(Pythia8 , "QCD Pythia tune 1","lp")
+      # leg2.AddEntry(Ztotal, "Z + Jets", "lp")
+      # leg2.AddEntry(WJets, "W + Jets", "lp")
+      # leg2.AddEntry(ttbar, "TTBar", "lp")
+      # leg2.AddEntry(LM0, "LM0", "lp")
+      # leg2.AddEntry(LM1, "LM1", "lp")
+      Pythia8.GetXaxis().SetTitle("MHT (GeV) [10 < p_{T}< 50 GeV]")
       QCD.GetXaxis().SetTitle("MHT (GeV) [10 < p_{T}< 50 GeV]")
       Total.GetXaxis().SetTitle("MHT (GeV) [10 < p_{T}< 50 GeV]")
       Data.GetXaxis().SetTitle("MHT (GeV) [10 < p_{T}< 50 GeV]")
+
+    if "HT_after_alphaT_all" == hist:
+      MinX = 350.
+    if "HT_all" == hist:
+      MinX = 250.
+      Total.GetYaxis().SetTitle("Events / 25 GeV")
+    if "AlphaT_all" == hist:
+      Total.GetYaxis().SetTitle("Events / 0.025")
+      Root.gStyle.SetPadTickY(0)
+      Total.GetXaxis().SetNdivisions(6,5,0, Root.kFALSE)
+      MinX = 0.0
+      MaxX = 1.5
+      MaxY = 1e6
+      print Total.GetXaxis().GetNdivisions()
+    if "EffectiveMass_after_alphaT_55_all" == hist:
+      Data.Rebin(3)
+      # Pythia8.Rebin(4)
+      EWK.Rebin(3)
+      # Total.Rebin(3)
+      print "EWK binwidth", EWK.GetXaxis().GetBinWidth(2)
+      print "Total binwidth", Total.GetXaxis().GetBinWidth(2)
+      QCD.Rebin(3)
+      LM0.Rebin(3)
+      LM1.Rebin(3)
+      print "Effective mass bin width",
+      # Pythia8.GetYaxis().SetTitle("Events / 0.2 rad")
+      QCD.GetYaxis().SetTitle(    "Events / 120 GeV")
+      EWK.GetYaxis().SetTitle(    "Events / 120 GeV")
+      Total.GetYaxis().SetTitle(  "Events / 120 GeV")
+      MaxY = 75.
+      MinY = 0.05
+      MinX = 500.
 
     Total.GetXaxis().SetRangeUser(MinX,MaxX)
     # print "Range of Total" , MinX , MaxX
@@ -541,52 +713,67 @@ for dir in range(0,len(DirKeys)):
 
     #Draw order is important!
 
-
     if DrawSM:
       leg.AddEntry(Total,"Standard Model","Lf")
+      # leg2.AddEntry(Total,"Standard Model","Lf")
       Total.Draw("9hist")
-      AsymErrors.Draw("2same")
+      Total.SetTitleOffset(1.3, "Y")
+      if DrawErrors : AsymErrors.Draw("2same")
       QCD.Draw("9SAMEhist")
     # Total.Draw("9histsame")
 
     if DrawSM == False:
       if Pythia8:
         Pythia8.Draw("9hist")
+        Pythia8.SetTitleOffset(1.3, "Y")
         QCD.Draw("9histsame")
       else:
         Total.Draw("9hist")
+        Total.SetTitleOffset(1.3, "Y")
 
-    drawBackgrounds = True
+
     if hist == "MHTovMET_afterAlphaT_all"  or hist == "BabyJetMHT_all" or hist =="BabyJetMHTafterMetCut_all" or hist =="BiasedDeltaPhi_after_alphaT_55_all":
       Pythia8.Draw("9hist")
+      Total.Draw("9samehist")
+      AsymErrors.Draw("2same")
+      Pythia8.SetTitleOffset(1.3, "Y")
       QCD.Draw("9histsame")
     if "EffectiveMass" in hist:
       AsymErrors.Draw("2same")
-
-      LM2.Draw("9SAMEh")
-      LM3.Draw("9SAMEh")
-      LM4.Draw("9SAMEh")
-      LM5.Draw("9SAMEh")
+      drawEWK = True
+      # LM2.Draw("9SAMEh")
+      # LM3.Draw("9SAMEh")
+      # LM4.Draw("9SAMEh")
+      # LM5.Draw("9SAMEh")
+      # drawBackgrounds = False
+    if drawEWK:
+      EWK.Draw("9samehist")
       drawBackgrounds = False
     if drawBackgrounds:
-
-      Ztotal.Draw("9Sameh")
+      EWK.Draw("9samehist")
+      # Ztotal.Draw("9Sameh")
       # Zinv.Draw("9SAMEh")
-      WJets.Draw("9SAMEh")
-      ttbar.Draw("9SAMEh")
+      # WJets.Draw("9SAMEh")
+      # ttbar.Draw("9SAMEh")
       if "EffectiveMass" in hist:
           leg.RecursiveRemove(Ztotal)
           leg.RecursiveRemove(WJets)
           leg.RecursiveRemove(ttbar)
-    LM0.Draw("9SAMEh")
-    LM1.Draw("9SAMEh")
+    LM0.Draw("9SAMEhist")
+    LM1.Draw("9SAMEhist")
     #Draw Data last to get the points above everything else
     Data.Draw("9SAMEP")
+    njetsText = "#scale[0.8]{2 Jets}"
+    if (DirKeys[dir].GetTitle())[0] == "n":
+      njetsText = "#scale[0.8]{#geq 3 Jets}"
+    njetsMarker = Root.TLatex(0.62 ,0.89,njetsText)
+    njetsMarker.SetNDC()
 
     #Draw Text for histogram titile and for lumi
-    prelim = Root.TLatex(0.1,0.92,"#scale[0.8]{CMS preliminary 2010}");
+    prelim = Root.TLatex(0.47,0.89,"#scale[0.8]{CMS}")
+
     prelim.SetNDC()
-    lumi = Root.TLatex(0.5,.82,"#scale[0.8]{#int L dt = 35 pb^{-1}, #sqrt{s} = 7 TeV}");
+    lumi = Root.TLatex(0.47,.82,"#scale[0.8]{#int L dt = 35 pb^{-1}, #sqrt{s} = 7 TeV}")
     lumi.SetNDC()
 
     prelim.Draw()
@@ -595,52 +782,62 @@ for dir in range(0,len(DirKeys)):
     title.SetNDC()
     # title.Draw()
     lumi.Draw("Same")
-
+    if "combined" not in (DirKeys[dir].GetTitle()):
+      njetsMarker.Draw("Same")
     c1.cd(1).Update()
 
-    if "EffectiveMass" not in hist and "MHTovMET_afterAlphaT_all" not in hist and "BiasedDeltaPhi_after_alphaT_55_all" not in hist and "BabyJetMHT_all" not in hist and "BabyJetMHTafterMetCut_all" not in hist and"BiasedDeltaPhi_all" not in hist: leg.Draw()
-    if "EffectiveMass" in hist:
-      leg2 = Root.TLegend(0.65, 0.45, 0.97, 0.8)
-      leg2.SetShadowColor(0)
-      leg2.SetBorderSize(0)
-      leg2.SetFillStyle(4100)
-      leg2.SetFillColor(0)
-      leg2.SetLineColor(0)
-      leg2.AddEntry(Data, "Data", "lp")
-      # leg2.AddEntry(QCD, "QCD", "lp")
-      leg2.AddEntry(Total , "Standard Model")
-      leg2.AddEntry(LM0, "LM0", "lp")
-      leg2.AddEntry(LM1, "LM1", "lp")
-      leg2.AddEntry(LM2, "LM2", "lp")
-      leg2.AddEntry(LM3, "LM3", "lp")
-      leg2.AddEntry(LM4, "LM4", "lp")
-      leg2.AddEntry(LM5, "LM5", "lp")
-      leg2.Draw()
+    if  "MHTovMET_afterAlphaT_all" not in hist and "BiasedDeltaPhi_after_alphaT_55_all" not in hist and "BabyJetMHT_all" not in hist and "BabyJetMHTafterMetCut_all" not in hist and"BiasedDeltaPhi_all" not in hist: leg2.Draw()
+    # if "EffectiveMass" in  hist :
+    #   leg2 = Root.TLegend(0.55, 0.5, 0.97, 0.8)
+    #   leg2.SetShadowColor(0)
+    #   leg2.SetBorderSize(0)
+    #   leg2.SetFillStyle(4100)
+    #   leg2.SetFillColor(0)
+    #   leg2.SetLineColor(0)
+    #   leg2.AddEntry(Data, "Data", "lp")
+    #   # leg2.AddEntry(QCD, "QCD", "lp")
+    #   # leg2.AddEntry(Total , "Standard Model")
+    #   # leg2.AddEntry(LM0, "LM0", "lp")
+    #   # leg2.AddEntry(LM1, "LM1", "lp")
+    #   # leg2.AddEntry(LM2, "LM2", "lp")
+    #   # leg2.AddEntry(LM3, "LM3", "lp")
+    #   # leg2.AddEntry(LM4, "LM4", "lp")
+    #   # leg2.AddEntry(LM5, "LM5", "lp")
+    #   leg2.Draw()
 
     if "MHTovMET_afterAlphaT_all" in hist or "BiasedDeltaPhi_after_alphaT_55_all" in hist or "BabyJetMHT_all" in hist or "BabyJetMHTafterMetCut_all" in hist or "BiasedDeltaPhi_all" in hist:
       leg2.Draw()
 
+    if DrawRatio:
+      c1.cd(2)
+      line = UnityLine(Total)
+      ratio = RatioPlot(Data,SMBackGrounds)
+      ratio.SetLabelSize(0.15, "XYZ")
+      ratio.SetTitleSize(0.15, "XYZ")
+      ratio.SetTitleOffset(1.05, "X")
+      ratio.SetNdivisions(4, "Y")
+      ratio.Draw()
+      line.Draw()
+      ratio.Draw("same")
 
-    c1.cd(2)
-    line = UnityLine(Total)
-    ratio = RatioPlot(Data,SMBackGrounds)
-    ratio.SetLabelSize(0.15, "XYZ")
-    ratio.SetTitleSize(0.15, "XYZ")
-    ratio.SetTitleOffset(1.05, "X")
-    ratio.SetNdivisions(4, "Y")
 
-    ratio.Draw()
-    line.Draw()
-    ratio.Draw("same")
     c1.cd(1).SetLogy()
     c1.Update()
+    print "Data Starting Bin", Data.GetBinLowEdge(1), MinX
+    print "Bin Width", EWK.GetBinWidth(2)
+    print "Number of Data events", Data.Integral(-1,Data.GetNbinsX())
+    print "Number of ewk events", EWK.Integral(-1,EWK.GetNbinsX())
+    print "Number of QCD events", QCD.Integral(-1,QCD.GetNbinsX())
+    # print "LM0 bin width", LM0.GetBinWidth(2)
+    # print "ewk bin width", EWK.GetBinWidth(2)
+    # print "data bin width", Data.GetBinWidth(2)
     # print "saving hist:", hist, "from dir:",DirKeys[dir].GetTitle()
     # c1.SaveAs(outputfile+(DirKeys[dir].GetTitle())+hist+".png")
     if Total.GetEntries() == 0: Draw = False
     if Draw :
       c1.cd(1).SetLogy()
       c1.Update()
-      c1.Print(outputfile+(DirKeys[dir].GetTitle())+hist+".png")
+      # c1.Print(outputfile+(DirKeys[dir].GetTitle())+hist+".png")
       c1.Print(outputfile+(DirKeys[dir].GetTitle())+hist+".pdf")
       if "All" == (DirKeys[dir].GetTitle()):
         AllPlots += PlotRow("All"+hist,"nAll"+hist,"Allcombined"+hist)
@@ -670,7 +867,5 @@ for dir in range(0,len(DirKeys)):
       a.Close()
     closeList = []
 site = Header(intlumi)+BegSec("Signal Region after all cuts")+ SignalRegonPlotsAfterAllCuts+ EndSec() + BegSec("Signal Region after all cuts && at > 0.55")+ SignalRegonPlotsAfterAtAllCuts +EndSec() + BegSec("All Plots") + AllPlots + EndSec() + BegSec("Controll Region Plots 250-300GeV") + ControlRegonPlots1 + EndSec()  + BegSec("Controll Region 250-300GeV After AlphaT = 0.55 cut") +ControlRegonPlotsAfterAT1 + EndSec() + BegSec("Controll Region Plots 300-350GeV") + ControlRegonPlots2 + EndSec() + BegSec("Controll Region  300-350GeV After AlphaT = 0.55 cut") +ControlRegonPlotsAfterAT2 + EndSec() +  BegSec("Signal Region Plots") + SignalRegonPlots + EndSec() + BegSec("Signal Region After AlphaT = 0.55 cut") + SignalRegonPlotsAfterAT + EndSec() + BegSec("Signal Region Plots After Dead Ecal Cut") + SignalRegonPlotsAfterDeadEcal + EndSec() + BegSec("Signal Region After AlphaT = 0.55 cut && DeadEcal Cut") + SignalRegonPlotsAfterATandDeadEcal + EndSec() + Footer()
-#
-
 
 Webpage.write(site)
