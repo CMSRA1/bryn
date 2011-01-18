@@ -17,14 +17,14 @@ AlphatTriggerCut::AlphatTriggerCut( float cut, float setScale )
 bool AlphatTriggerCut::Process( Event::Data& ev){
   int nJets = 0;
   for(int i = 0; i <  ev.JD_Jets().size(); i++){
-    if(*(ev.JD_Jets()[i])->Et() > setScale_){
+    if(ev.JD_Jets()[i].Et() > setScale_){
       nJets++;
     }
   }
   if( nJets == 2){
-    double   HT = ev.JD_Jets()[0]->Et() + ev.JD_Jets()[1]->Et();
+    double   HT = ev.JD_Jets()[0].Et() + ev.JD_Jets()[1].Et();
     double  MHT = fabs((*ev.JD_Jets()[0] + *ev.JD_Jets()[1]).Et());
-    double  DHT = ev.JD_Jets()[0]->Et() - ev.JD_Jets()[1]->Et();
+    double  DHT = ev.JD_Jets()[0].Et() - ev.JD_Jets()[1].Et();
     if((HT-DHT)/2.*sqrt(HT*HT - (MHT*MHT)) > cut_ ){ return true;}
     else return false;
   }
