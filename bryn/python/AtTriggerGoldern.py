@@ -335,9 +335,9 @@ nHadStandard350_after_DeadEcal = WeeklyUpdatePlots(Npset5.ps())
 #DataOnly!
 
 from icf.JetCorrections import *
-corPset =  CorrectionPset("ResidualJetEnergyCorrections.txt",True)
+corPset =  CorrectionPset("ResidualJetEnergyCorrections.txt")
 # corPset =  CorrectionPset("Spring10DataV2_L2L3Residual_AK5PF.txt")
-JetCorrections = JESCorrections( corPset.ps() )
+JetCorrections = JESCorrections( corPset.ps() ,True)
 NoiseFilt= OP_HadronicHBHEnoiseFilter()
 selection = OP_GoodEventSelection()
 
