@@ -5,7 +5,6 @@
 #include "Math/VectorUtil.h"
 #include "Operation.hh"
 #include "TH1F.h"
-#include "DeadECALDR.hh"
 
 namespace Operation {
   class AlphatTriggerCut public Operation::_Base {
