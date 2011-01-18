@@ -16,7 +16,7 @@ AlphatTriggerCut::AlphatTriggerCut( float cut, float setScale )
 // ----------------------------------------------------------------
 bool AlphatTriggerCut::Process( Event::Data& ev){
   int nJets = 0;
-  for(int i = 0; i <  ev.JD_Jets().size(); i++){
+  for(unsigned int i = 0; i <  ev.JD_Jets().size(); i++){
     if(ev.JD_Jets()[i].Et() > setScale_){
       nJets++;
     }
