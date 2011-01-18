@@ -6,7 +6,7 @@ from libbryn import *
 from libHadronic import *
 from icf.core import PSet,Analysis
 
-from AlphaTrigger import *
+from AtTriggerGoldern import *
 from ra1objectid.vbtfElectronId_cff import *
 from ra1objectid.vbtfMuonId_cff import *
 from ra1objectid.ra3PhotonId_cff import *
