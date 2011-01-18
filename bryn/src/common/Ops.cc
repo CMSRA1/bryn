@@ -32,8 +32,8 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
     double  HT =0.;
     LorentzV  MHT(0.,0.,0.,0.);
     for(int j = 0; j < nJets; j++){
-      HT += ev.JD_Jets()[j]->Et();
-      MHT -= *ev.JD_Jets()[j];
+      HT += ev.JD_Jets()[j].Et();
+      MHT -= ev.JD_Jets()[j];
     }
     if(fabs(MHT.Et())/HT > sqrt(1 - 1/(4*cut_*cut_))){return true;}
     else return false;
