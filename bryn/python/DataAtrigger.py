@@ -249,7 +249,7 @@ Format=("ICF",2),
 File="/vols/cms02/elaird1/12_skims/JetMETTau.Run2010A-Sep17ReReco_v2.RECO.RAW.Henning/JetMETTau.Run2010A-Sep17ReReco_v2.RECO.RAW.Henning_10_skim.root"
 )
 ensure_dir("../results/aTrigger/")
-anal_ak5_caloData.Run("../results/aTrigger",conf_ak5_caloData,[AllRunsWithTP_Jet])
+anal_ak5_caloData.Run("../results/aTrigger",conf_ak5_caloData,[AllData38WithTP])
 
 
 
