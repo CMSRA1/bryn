@@ -7,7 +7,7 @@
 #include "TH1F.h"
 
 namespace Operation {
-  class AlphatTriggerCut public Operation::_Base {
+  class AlphatTriggerCut : public Operation::_Base {
   public:
     AlphatTriggerCut( float ,float);
     ~AlphatTriggerCut() {;}
