@@ -23,7 +23,7 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
   }
   if( nJets == 2){
     double   HT = ev.JD_Jets()[0].Et() + ev.JD_Jets()[1].Et();
-    double  MHT = fabs((*ev.JD_Jets()[0] + *ev.JD_Jets()[1]).Et());
+    double  MHT = fabs((ev.JD_Jets()[0] + ev.JD_Jets()[1]).Et());
     double  DHT = ev.JD_Jets()[0].Et() - ev.JD_Jets()[1].Et();
     if((HT-DHT)/2.*sqrt(HT*HT - (MHT*MHT)) > cut_ ){ return true;}
     else return false;
