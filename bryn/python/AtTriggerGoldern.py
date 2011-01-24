@@ -169,167 +169,36 @@ AllMC = QCD_Pythia6_384patch3_V14_00_02_ALL+QCD_Pythia8_384patch3_V14_00_02_ALL+
 
 #Plot the common plots!
 pset1 = PSet(
-DirName      = "250_300Gev",
-MinObjects   = 1,
-MaxObjects   = 2,
-StandardPlots     = True,
-)
-
-Npset1 = PSet(
-DirName      = "n250_300Gev",
-MinObjects   = 3,
+DirName      = "AllNoTrigger",
+MinObjects   = 0,
 MaxObjects   = 15,
 StandardPlots     = True,
 )
-
 pset2 = PSet(
-DirName      = "300Gev",
-MinObjects   = 2,
-MaxObjects   = 2,
-StandardPlots     = True,
-)
-
-Npset2 = PSet(
-DirName      = "n300Gev",
-MinObjects   = 3,
+DirName      = "AllWithTrigger",
+MinObjects   = 0,
 MaxObjects   = 15,
 StandardPlots     = True,
 )
-
 pset3 = PSet(
-DirName      = "350Gev",
-MinObjects   = 2,
-MaxObjects   = 2,
-StandardPlots     = True,
-)
-
-Npset3 = PSet(
-DirName      = "n350Gev",
-MinObjects   = 3,
+DirName      = "AllCutsNoTrigger",
+MinObjects   = 0,
 MaxObjects   = 15,
 StandardPlots     = True,
 )
-
-
-pset5 = PSet(
-DirName      = "350Gev_afterDeadEcal",
-MinObjects   = 2,
-MaxObjects   = 2,
-StandardPlots     = True,
-)
-
-Npset5 = PSet(
-DirName      = "n350Gev_afterDeadEcal",
-MinObjects   = 3,
-MaxObjects   = 15,
-StandardPlots     = True,
-)
-
 pset4 = PSet(
-DirName      = "All",
-MinObjects   = 2,
-MaxObjects   = 2,
-StandardPlots     = True,
-)
-
-Npset4 = PSet(
-DirName      = "nAll",
-MinObjects   = 3,
+DirName      = "AllCutsWithTrigger",
+MinObjects   = 0,
 MaxObjects   = 15,
 StandardPlots     = True,
 )
+AllNoTrigger = WeeklyUpdatePlots(pset1.ps())
+AllWithTrigger =WeeklyUpdatePlots(pset2.ps())
+AllCutsNoTrigger = WeeklyUpdatePlots(pset3.ps())
+AllCutsAfterTrigger =WeeklyUpdatePlots( pset4.ps() )
+AtTrigger1 =  AlphatTriggerCut(0.52414,50)
+AtTrigger =  AlphatTriggerCut(0.52414,50)
 
-Npset6 = PSet(
-DirName      = "nAllCuts",
-MinObjects   = 3,
-MaxObjects   = 15,
-StandardPlots     = True,
-)
-
-pset6 = PSet(
-DirName      = "AllCuts",
-MinObjects   = 2,
-MaxObjects   = 2,
-StandardPlots     = True,
-)
-
-dalitz_plots_Inclusive = HadronicPlottingOps( PSet(
-DirName    = "Dalitz_Inclusive",
-MinObjects = 2,
-MaxObjects = 10,
-Verbose    = False,
-Summary    = False,
-CC         = False,
-Dalitz     = True,
-AlphaT     = False,
-PtHat      = False,
-MET        = False,
-Kine       = False,
-Response   = False,
-).ps()
-)
-
-dalitz_plots_250_300 = HadronicPlottingOps( PSet(
-DirName    = "Dalitz_250_300",
-MinObjects = 2,
-MaxObjects = 10,
-Verbose    = False,
-Summary    = False,
-CC         = False,
-Dalitz     = True,
-AlphaT     = False,
-PtHat      = False,
-MET        = False,
-Kine       = False,
-Response   = False,
-).ps()
-)
-
-dalitz_plots_300_350 = HadronicPlottingOps( PSet(
-DirName    = "Dalitz_300_350",
-MinObjects = 2,
-MaxObjects = 10,
-Verbose    = False,
-Summary    = False,
-CC         = False,
-Dalitz     = True,
-AlphaT     = False,
-PtHat      = False,
-MET        = False,
-Kine       = False,
-Response   = False,
-).ps()
-)
-
-dalitz_plots_350 = HadronicPlottingOps( PSet(
-DirName    = "Dalitz_350",
-MinObjects = 2,
-MaxObjects = 10,
-Verbose    = False,
-Summary    = False,
-CC         = False,
-Dalitz     = True,
-AlphaT     = False,
-PtHat      = False,
-MET        = False,
-Kine       = False,
-Response   = False,
-).ps()
-)
-
-
-
-
-HadStandard250_350 = WeeklyUpdatePlots(pset1.ps())
-HadStandard300 = WeeklyUpdatePlots(pset2.ps())
-HadStandard350 = WeeklyUpdatePlots(pset3.ps())
-HadStandard350_after_DeadEcal = WeeklyUpdatePlots(pset5.ps())
-HadStandardAll = WeeklyUpdatePlots(pset4.ps())
-nHadStandard250_350 = WeeklyUpdatePlots(Npset1.ps())
-nHadStandard300 = WeeklyUpdatePlots(Npset2.ps())
-nHadStandard350 = WeeklyUpdatePlots(Npset3.ps())
-nHadStandardAll = WeeklyUpdatePlots(Npset4.ps())
-nHadStandard350_after_DeadEcal = WeeklyUpdatePlots(Npset5.ps())
 # Common cut definitions
 #Avaiable criteria for MC and for Data are at current slightly different Hence the making of two trees
 #DataOnly!
@@ -391,78 +260,8 @@ HadStandardAllCuts=  WeeklyUpdatePlots(pset6.ps())
 
 
 # Cross check with the allhadronic analysis
-t1 = PSet(
-    DirName      = "HadronicCommon_1",
-    MinObjects   = 2,
-    MaxObjects   = 15,
-    StandardPlots     = True,
-    DeadECALPlots = True,
-    CleaningControlPlots = True,
-    MECPlots = True,
-    DeadECALFile = "./deadRegionList_START36_V9.txt",
-    DeadECAL_MinJetPtCut = 30.,
-    DeadECAL_MinBiasCut = 0.5,
-    DeadECAL_NBadCellsCut = 10
-)
 
-t2 = deepcopy(t1)
-t2.DirName = "HadronicCommon_2"
-
-pset = PSet(
-DirName      = "250_infGev",
-MinObjects   = 1,
-MaxObjects   = 2,
-StandardPlots     = True,
-)
-
-Npset = PSet(
-DirName      = "n250_infGev",
-MinObjects   = 3,
-MaxObjects   = 15,
-StandardPlots     = True,
-)
-
-pset2 = deepcopy(pset)
-pset2.DirName = "250_350Gev"
-
-Npset2 = deepcopy(Npset)
-Npset2.DirName = "n250_350Gev"
-
-pset3 = deepcopy(pset)
-pset3.DirName = "350GeVafterDeadEcal"
-Npset3 = deepcopy(Npset)
-Npset3.DirName = "n350GeVafterDeadEcal"
-
-pset4 = deepcopy(pset)
-pset4.DirName = "allCuts"
-Npset4 = deepcopy(Npset)
-Npset4.DirName = "nAllCuts"
-
-HTplot = WeeklyUpdatePlots(pset.ps())
-nHTplot = WeeklyUpdatePlots(Npset.ps())
-controlRegion = WeeklyUpdatePlots(pset2.ps())
-ncontrolRegion = WeeklyUpdatePlots(Npset2.ps())
-afterDeadEcal = WeeklyUpdatePlots(pset3.ps())
-nafterDeadEcal = WeeklyUpdatePlots(Npset3.ps())
-afterAllCuts = WeeklyUpdatePlots(pset4.ps())
-nafterAllCuts = WeeklyUpdatePlots(Npset4.ps())
-
-
-pset2 = deepcopy(pset1)
-pset2.DirName = "HadronicCommon_2"
-
-t3 = deepcopy(t1)
-t3.DirName = "HadronicCommon_3"
-
-t4 = deepcopy(t1)
-t4.DirName = "HadronicCommon_4"
-#
-HadStandard_1 = HadronicCommonPlots(t1.ps())
-HadStandard_2 = HadronicCommonPlots(t2.ps())
-HadStandard_3 = HadronicCommonPlots(t3.ps())
-HadStandard_4 = HadronicCommonPlots(t4.ps())
 VertexPtOverHT = OP_SumVertexPtOverHT(0.1)
-eventDump = OP_EventNoDump("mydump","mydump")
 
 
 # -----------------------------------------------------------------------------
@@ -471,28 +270,10 @@ eventDump = OP_EventNoDump("mydump","mydump")
 
 # AK5 Calo
 
-# cutTreeData = Tree("Data")
-# cutTreeData.Attach(NoiseFilt)
-# cutTreeData.TAttach(NoiseFilt,selection)
-# cutTreeData.TAttach(selection,JetTrigger)
-# #cutTreeData.TAttach(JetTrigger,LeadingJetEta)
-# cutTreeData.TAttach(selection,LeadingJetEta)
-# cutTreeData.TAttach(LeadingJetEta,LeadingJetCut)
-# cutTreeData.TAttach(LeadingJetCut,numComLeptons)
-# cutTreeData.TAttach(numComLeptons,numComPhotons)
-# cutTreeData.TAttach(numComPhotons,oddJet)
-# cutTreeData.TAttach(oddJet,oddMuon)
-# cutTreeData.TAttach(oddMuon,oddElectron)
-# cutTreeData.TAttach(oddElectron,oddPhoton)
-# cutTreeData.TAttach(oddPhoton,badMuonInJet)
-# cutTreeData.TAttach(badMuonInJet,secondJetET)
-
-
 cutTreeData = Tree("Data")
 cutTreeData.Attach(NoiseFilt)
 cutTreeData.TAttach(NoiseFilt,selection)
-cutTreeData.TAttach(selection,JetTrigger)
-cutTreeData.TAttach(JetTrigger,oddMuon)
+cutTreeData.TAttach(selection,oddMuon)
 cutTreeData.TAttach(oddMuon,oddElectron)
 cutTreeData.TAttach(oddElectron,oddPhoton)
 cutTreeData.TAttach(oddPhoton,numComLeptons)
@@ -507,122 +288,85 @@ cutTreeData.TAttach(secondJetET,VertexPtOverHT)
 cutTreeData.TAttach(VertexPtOverHT,htCut250)
 
 #FOR HT > 250Gev Plot
-cutTreeData.TAttach(htCut250,DiJet3)
-cutTreeData.TAttach(htCut250,NJet3)
-cutTreeData.TAttach(DiJet3,HadStandardAll)
-cutTreeData.TAttach(NJet3,nHadStandardAll)
+cutTreeData.TAttach(htCut250,AllNoTrigger)
+cutTreeData.TAttach(htCut250,AtTrigger1)
+cutTreeData.TAttach(AtTrigger1,AllWithTrigger)
+
 #END HT 250GEV Plot
 #Begin MHT/MET plot inthe low region.
 cutTreeData.TAttach(htCut250,DeadEcalCutData)
-# cutTreeData.TAttach(DeadEcalCutData,LessThan350)
-# cutTreeData.TAttach(LessThan350,DiJet0)
-# cutTreeData.TAttach(LessThan350,NJet0)
-# cutTreeData.TAttach(DiJet0,HadStandard250_350)
-# cutTreeData.TAttach(NJet0,nHadStandard250_350)
-
-#for Vertext multiplicity plot at 300geV
-# cutTreeData.TAttach(htCut250,htCut300)
-# cutTreeData.TAttach(htCut300,NVertexJets)
-# cutTreeData.TAttach(htCut300,DiVertexJets)
-# cutTreeData.TAttach(DiVertexJets,HadStandard300)
-# cutTreeData.TAttach(NVertexJets,nHadStandard300)
-
-
 cutTreeData.TAttach(DeadEcalCutData,htCut350)
-# cutTreeData.TAttach(htCut350,dalitz_plots_350)
-# cutTreeData.TAttach(htCut250,htCut350GeV)
-# cutTreeData.TAttach(htCut350GeV,DiJet2)
-# cutTreeData.TAttach(htCut350GeV,NJet2)
-# cutTreeData.TAttach(htCut350,alphaT0)
-# cutTreeData.TAttach(DiJet2,HadStandard350)
-# cutTreeData.TAttach(NJet2,nHadStandard350)
-
-#Here be plots for baby jet MHT and MHT/MET in the signal region after dead ecal cuts
-# cutTreeData.TAttach(htCut350,DiJet4)
-# cutTreeData.TAttach(DiJet4,HadStandard350_after_DeadEcal)
-# cutTreeData.TAttach(htCut350,NJet4)
-# cutTreeData.TAttach(htCut350,alphaT1)
-# cutTreeData.TAttach(alphaT1,HadStandard_2)
-# cutTreeData.TAttach(NJet4,nHadStandard350_after_DeadEcal)
-
-
-#Here be plots after all the cuts!!
 cutTreeData.TAttach(htCut350,MHT_METCut)
-# cutTreeData.TAttach(htCut350GeV,alphaT2)
-# cutTreeData.TAttach(alphaT2,HadStandard_3)
-cutTreeData.TAttach(MHT_METCut,NJet5)
-cutTreeData.TAttach(MHT_METCut,DiJet5)
-# cutTreeData.TAttach(MHT_METCut, alphat)
-# cutTreeData.TAttach(alphat,eventDump)
-cutTreeData.TAttach(NJet5,nHadStandardAllCuts)
-cutTreeData.TAttach(DiJet5,HadStandardAllCuts)
+cutTreeData.TAttach(MHT_METCut,AtTrigger)
+cutTreeData.TAttach(AtTrigger,AllCutsAfterTrigger)
+cutTreeData.TAttach(MHT_METCut,AllCutsNoTrigger)
 
 
 #Second MC!
 
 
-cutTreeMC = Tree("MC")
-cutTreeMC.Attach(selection)
-cutTreeMC.TAttach(selection,JetTrigger)
-cutTreeMC.TAttach(JetTrigger,oddMuon)
-cutTreeMC.TAttach(oddMuon,oddElectron)
-cutTreeMC.TAttach(oddElectron,oddPhoton)
-cutTreeMC.TAttach(oddPhoton,numComLeptons)
-cutTreeMC.TAttach(numComLeptons,numComPhotons)
-cutTreeMC.TAttach(numComPhotons,LeadingJetEta)
-cutTreeMC.TAttach(LeadingJetEta,badMuonInJet)
-cutTreeMC.TAttach(badMuonInJet,oddJet)
-cutTreeMC.TAttach(oddJet,LeadingJetCut)
-cutTreeMC.TAttach(LeadingJetCut,secondJetET)
-##########DiJet Studies
-cutTreeMC.TAttach(secondJetET,VertexPtOverHT)
-cutTreeMC.TAttach(VertexPtOverHT,htCut250)
-#FOR HT > 250Gev Plot
-cutTreeMC.TAttach(htCut250,DiJet3)
-cutTreeMC.TAttach(htCut250,NJet3)
-cutTreeMC.TAttach(DiJet3,HadStandardAll)
-cutTreeMC.TAttach(NJet3,nHadStandardAll)
-#END HT 250GEV Plot
-#Begin MHT/MET plot inthe low region.
-cutTreeMC.TAttach(htCut250,DeadEcalCutMC)
-# cutTreeMC.TAttach(DeadEcalCutMC,LessThan350)
-# cutTreeMC.TAttach(LessThan350,DiJet0)
-# cutTreeMC.TAttach(LessThan350,NJet0)
-# cutTreeMC.TAttach(DiJet0,HadStandard250_350)
-# cutTreeMC.TAttach(NJet0,nHadStandard250_350)
-
-#for Vertext multiplicity plot at 300geV
-# cutTreeMC.TAttach(htCut250,htCut300)
-# cutTreeMC.TAttach(htCut300,NVertexJets)
-# cutTreeMC.TAttach(htCut300,DiVertexJets)
-# cutTreeMC.TAttach(DiVertexJets,HadStandard300)
-# cutTreeMC.TAttach(NVertexJets,nHadStandard300)
-
-
-cutTreeMC.TAttach(DeadEcalCutMC,htCut350)
-# cutTreeMC.TAttach(htCut350,dalitz_plots_350)
-# cutTreeMC.TAttach(htCut250,htCut350GeV)
-# cutTreeMC.TAttach(htCut350GeV,DiJet2)
-# cutTreeMC.TAttach(htCut350GeV,NJet2)
-# cutTreeMC.TAttach(htCut350,alphaT0)
-# cutTreeMC.TAttach(DiJet2,HadStandard350)
-# cutTreeMC.TAttach(NJet2,nHadStandard350)
-
-#Here be plots for baby jet MHT and MHT/MET in the signal region after dead ecal cuts
-# cutTreeMC.TAttach(htCut350,DiJet4)
-# cutTreeMC.TAttach(DiJet4,HadStandard350_after_DeadEcal)
-# cutTreeMC.TAttach(htCut350,NJet4)
-# cutTreeMC.TAttach(htCut350,alphaT1)
-# cutTreeMC.TAttach(alphaT1,HadStandard_2)
-# cutTreeMC.TAttach(NJet4,nHadStandard350_after_DeadEcal)
-
-
-#Here be plots after all the cuts!!
-cutTreeMC.TAttach(htCut350,MHT_METCut)
-# cutTreeMC.TAttach(htCut350GeV,alphaT2)
-# cutTreeMC.TAttach(alphaT2,HadStandard_3)
-cutTreeMC.TAttach(MHT_METCut,NJet5)
-cutTreeMC.TAttach(MHT_METCut,DiJet5)
-cutTreeMC.TAttach(NJet5,nHadStandardAllCuts)
-cutTreeMC.TAttach(DiJet5,HadStandardAllCuts)
+# cutTreeMC = Tree("MC")
+# cutTreeMC.Attach(selection)
+# cutTreeMC.TAttach(selection,JetTrigger)
+# cutTreeMC.TAttach(JetTrigger,oddMuon)
+# cutTreeMC.TAttach(oddMuon,oddElectron)
+# cutTreeMC.TAttach(oddElectron,oddPhoton)
+# cutTreeMC.TAttach(oddPhoton,numComLeptons)
+# cutTreeMC.TAttach(numComLeptons,numComPhotons)
+# cutTreeMC.TAttach(numComPhotons,LeadingJetEta)
+# cutTreeMC.TAttach(LeadingJetEta,badMuonInJet)
+# cutTreeMC.TAttach(badMuonInJet,oddJet)
+# cutTreeMC.TAttach(oddJet,LeadingJetCut)
+# cutTreeMC.TAttach(LeadingJetCut,secondJetET)
+# ##########DiJet Studies
+# cutTreeMC.TAttach(secondJetET,VertexPtOverHT)
+# cutTreeMC.TAttach(VertexPtOverHT,htCut250)
+# #FOR HT > 250Gev Plot
+# cutTreeMC.TAttach(htCut250,DiJet3)
+# cutTreeMC.TAttach(htCut250,NJet3)
+# cutTreeMC.TAttach(DiJet3,HadStandardAll)
+# cutTreeMC.TAttach(NJet3,nHadStandardAll)
+# #END HT 250GEV Plot
+# #Begin MHT/MET plot inthe low region.
+# cutTreeMC.TAttach(htCut250,DeadEcalCutMC)
+# # cutTreeMC.TAttach(DeadEcalCutMC,LessThan350)
+# # cutTreeMC.TAttach(LessThan350,DiJet0)
+# # cutTreeMC.TAttach(LessThan350,NJet0)
+# # cutTreeMC.TAttach(DiJet0,HadStandard250_350)
+# # cutTreeMC.TAttach(NJet0,nHadStandard250_350)
+#
+# #for Vertext multiplicity plot at 300geV
+# # cutTreeMC.TAttach(htCut250,htCut300)
+# # cutTreeMC.TAttach(htCut300,NVertexJets)
+# # cutTreeMC.TAttach(htCut300,DiVertexJets)
+# # cutTreeMC.TAttach(DiVertexJets,HadStandard300)
+# # cutTreeMC.TAttach(NVertexJets,nHadStandard300)
+#
+#
+# cutTreeMC.TAttach(DeadEcalCutMC,htCut350)
+# # cutTreeMC.TAttach(htCut350,dalitz_plots_350)
+# # cutTreeMC.TAttach(htCut250,htCut350GeV)
+# # cutTreeMC.TAttach(htCut350GeV,DiJet2)
+# # cutTreeMC.TAttach(htCut350GeV,NJet2)
+# # cutTreeMC.TAttach(htCut350,alphaT0)
+# # cutTreeMC.TAttach(DiJet2,HadStandard350)
+# # cutTreeMC.TAttach(NJet2,nHadStandard350)
+#
+# #Here be plots for baby jet MHT and MHT/MET in the signal region after dead ecal cuts
+# # cutTreeMC.TAttach(htCut350,DiJet4)
+# # cutTreeMC.TAttach(DiJet4,HadStandard350_after_DeadEcal)
+# # cutTreeMC.TAttach(htCut350,NJet4)
+# # cutTreeMC.TAttach(htCut350,alphaT1)
+# # cutTreeMC.TAttach(alphaT1,HadStandard_2)
+# # cutTreeMC.TAttach(NJet4,nHadStandard350_after_DeadEcal)
+#
+#
+# #Here be plots after all the cuts!!
+# cutTreeMC.TAttach(htCut350,MHT_METCut)
+# # cutTreeMC.TAttach(htCut350GeV,alphaT2)
+# # cutTreeMC.TAttach(alphaT2,HadStandard_3)
+# cutTreeMC.TAttach(MHT_METCut,NJet5)
+# cutTreeMC.TAttach(MHT_METCut,DiJet5)
+# cutTreeMC.TAttach(NJet5,nHadStandardAllCuts)
+# cutTreeMC.TAttach(DiJet5,HadStandardAllCuts)
 
