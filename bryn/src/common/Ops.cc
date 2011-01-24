@@ -17,7 +17,7 @@ AlphatTriggerCut::AlphatTriggerCut( float cut, float setScale )
 bool AlphatTriggerCut::Process( Event::Data& ev){
   int nJets = 0;
   for(unsigned int i = 0; i <  ev.JD_Jets().size(); i++){
-    if(ev.JD_Jets()[i].Et() > setScale_){
+    if(ev.JD_Jets()[i].Pt() > setScale_){
       nJets++;
     }
   }
@@ -31,9 +31,9 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
   if( nJets > 2){
     double  HT =0.;
     LorentzV  MHT(0.,0.,0.,0.);
-    for(int j = 0; j < nJets; j++){
-      HT += ev.JD_Jets()[j].Et();
-      MHT -= ev.JD_Jets()[j];
+    for(int j = 0; j < ev.JD_Jets().size(); j++){
+      if(ev.JD_Jets()[j].Et() >= setScale_){ HT += ev.JD_Jets()[j].Et();}
+      if(ev.JD_Jets()[j].Et() >= 20.){MHT -= ev.JD_Jets()[j];}
     }
     if(fabs(MHT.Et())/HT > sqrt(1 - 1/(4*cut_*cut_))){return true;}
     else return false;
