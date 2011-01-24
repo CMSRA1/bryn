@@ -255,8 +255,6 @@ DeadEcalCutMC =   OP_DeadECALCut(0.3,0.5,30.,10,1,"./deadRegionList_START38_V12.
 MHT_METCut = OP_MHToverMET(1.25)
 NJet5 = OP_NumComJets(">=",3)
 DiJet5 = OP_NumComJets("==",2)
-nHadStandardAllCuts=  WeeklyUpdatePlots(Npset6.ps())
-HadStandardAllCuts=  WeeklyUpdatePlots(pset6.ps())
 
 
 # Cross check with the allhadronic analysis
