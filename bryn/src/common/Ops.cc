@@ -54,7 +54,7 @@ double MHTx = 0.;
       double  MHT = sqrt(MHTx*MHTx + MHTy*MHTy);
       // cout <<"This event has on the fly MHT/HT of: " << fabs(MHT)/HT << " Event MHT/HT of: " << fabs(ev.CommonMHT().Et())/ev.CommonHT() <<" and alphaT of " << ev.CommonAlphaT() << endl;
       if(fabs(MHT)/HT > sqrt(1. - 1./(4.*cut_*cut_))){
-      cout <<"This event has MHT/HT of: " << fabs(MHT.Et())/HT << " and alphaT of " << ev.CommonAlphaT() << endl;
+      cout <<"This event has MHT/HT of: " << MHT/HT << " and alphaT of " << ev.CommonAlphaT() << endl;
         return true;}
         else return false;
       }
