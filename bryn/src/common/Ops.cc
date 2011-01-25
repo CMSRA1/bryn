@@ -29,7 +29,7 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
     }
     double  MHT = fabs(MHTv.Et());
     double  DHT = fabs(ev.JD_Jets()[0].Et() - ev.JD_Jets()[1].Et());
-      cout <<"This event has on the fly alphaT of: " << (HT-DHT)/(2.*sqrt(HT*HT - (MHT*MHT)))  << " and alphaT of " << ev.CommonAlphaT() << endl;
+      cout <<"This event has on the fly alphaT of: " << (HT-DHT)/(2.*sqrt(HT*HT - (MHT*MHT)))  << " HT is: " << HT << " Delta HT is: " << DHT << " MHT is: " << MHT << " and alphaT of " << ev.CommonAlphaT() << endl;
     if((HT-DHT)/(2.*sqrt(HT*HT - (MHT*MHT))) > cut_ ){
       // cout <<"This event has on the fly alphaT of: " << (HT-DHT)/(2.*sqrt(HT*HT - (MHT*MHT)))  << " and alphaT of " << ev.CommonAlphaT() << endl;
       return true;}
