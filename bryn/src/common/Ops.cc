@@ -47,8 +47,8 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
       for(int j = 0; j < ev.JD_Jets().size(); j++){
         if(ev.JD_Jets()[j].Et() >= setScale_){HT += ev.JD_Jets()[j].Et();}
         if(ev.JD_Jets()[j].Et() >= 20.){
-          MHTx-=ev.JD_Jets()[i].Et()*cos(ev.JD_Jets()[i].Phi());
-          MHTy-=ev.JD_Jets()[i].Et()*sin(ev.JD_Jets()[i].Phi());
+          MHTx-=ev.JD_Jets()[j].Et()*cos(ev.JD_Jets()[j].Phi());
+          MHTy-=ev.JD_Jets()[j].Et()*sin(ev.JD_Jets()[j].Phi());
         }
       }
       double  MHT = sqrt(MHTx*MHTx + MHTy*MHTy);
