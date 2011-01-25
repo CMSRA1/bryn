@@ -283,7 +283,8 @@ cutTreeData.TAttach(oddJet,LeadingJetCut)
 cutTreeData.TAttach(LeadingJetCut,secondJetET)
 ##########DiJet Studies
 cutTreeData.TAttach(secondJetET,VertexPtOverHT)
-cutTreeData.TAttach(VertexPtOverHT,htCut250)
+cutTreeData.TAttach(VertexPtOverHT,alphaT0)
+cutTreeData.TAttach(alphaT0,htCut250)
 
 #FOR HT > 250Gev Plot
 cutTreeData.TAttach(htCut250,AllNoTrigger)
