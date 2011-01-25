@@ -17,14 +17,18 @@ AlphatTriggerCut::AlphatTriggerCut( float cut, float setScale )
 bool AlphatTriggerCut::Process( Event::Data& ev){
   int nJets = 0;
   for(unsigned int i = 0; i <  ev.JD_Jets().size(); i++){
-    if(ev.JD_Jets()[i].Pt() > setScale_){
+    if(ev.JD_Jets()[i].Et() > setScale_){
       nJets++;
     }
   }
   if( nJets == 2){
     double   HT = ev.JD_Jets()[0].Et() + ev.JD_Jets()[1].Et();
-    double  MHT = fabs((ev.JD_Jets()[0] + ev.JD_Jets()[1]).Et());
-    double  DHT = ev.JD_Jets()[0].Et() - ev.JD_Jets()[1].Et();
+    LorentzV  MHTv(0.,0.,0.,0.);
+    for(int i = 0 ; i < 2; i++){
+      MHTv -= ev.JD_Jets()[j];
+    }
+    double  MHT = fabs(MHTv.Et());
+    double  DHT = fabs(ev.JD_Jets()[0].Et() - ev.JD_Jets()[1].Et());
     if((HT-DHT)/(2.*sqrt(HT*HT - (MHT*MHT))) > cut_ ){
       cout <<"This event has on the fly alphaT of: " << (HT-DHT)/(2.*sqrt(HT*HT - (MHT*MHT)))  << " and alphaT of " << ev.CommonAlphaT() << endl;
       return true;}
