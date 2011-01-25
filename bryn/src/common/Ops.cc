@@ -27,8 +27,8 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
     double MHTy = 0.;
     for(int i = 0 ; i < 2; i++){
       if(ev.JD_Jets()[i].Et() > 20.){
-        mhtx-=(ev.JD_Jets()[i].Et()*cos(ev.JD_Jets()[i].Phi());
-        mhty-=(ev.JD_Jets()[i].Et()*sin(ev.JD_Jets()[i].Phi());
+        MHTx-=(ev.JD_Jets()[i].Et()*cos(ev.JD_Jets()[i].Phi());
+        MHTy-=(ev.JD_Jets()[i].Et()*sin(ev.JD_Jets()[i].Phi());
       }
 
     }
