@@ -28,7 +28,7 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
       if(ev.JD_Jets()[i].Et() > setScale_){ MHTv -= ev.JD_Jets()[i];}
 
     }
-    double  MHT = fabs(MHTv.Et());
+    double  MHT = fabs(MHTv.Pt());
     double  DHT = fabs(ev.JD_Jets()[0].Et() - ev.JD_Jets()[1].Et());
       cout <<"This event has on the fly alphaT of: " << (HT-DHT)/(2.*sqrt(HT*HT - (MHT*MHT)))  << " HT is: " << HT << " Delta HT is: " << DHT << " MHT is: " << MHT << " and alphaT of " << ev.CommonAlphaT() << endl;
     if((HT-DHT)/(2.*sqrt(HT*HT - (MHT*MHT))) > cut_ ){
@@ -40,11 +40,11 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
     double  HT =0.;
     LorentzV  MHT(0.,0.,0.,0.);
     for(int j = 0; j < ev.JD_Jets().size(); j++){
-      if(ev.JD_Jets()[j].Et() >= setScale_){ HT += ev.JD_Jets()[j].Et();}
+      if(ev.JD_Jets()[j].Et() >= setScale_){HT += ev.JD_Jets()[j].Et();}
       if(ev.JD_Jets()[j].Et() >= setScale_){MHT -= ev.JD_Jets()[j];}
     }
-      cout <<"This event has on the fly MHT/HT of: " << fabs(MHT.Et())/HT << " Event MHT/HT of: " << fabs(ev.CommonMHT().Et())/ev.CommonHT() <<" and alphaT of " << ev.CommonAlphaT() << endl;
-    if(fabs(MHT.Et())/HT > sqrt(1. - 1./(4.*cut_*cut_))){
+      cout <<"This event has on the fly MHT/HT of: " << fabs(MHT.Pt())/HT << " Event MHT/HT of: " << fabs(ev.CommonMHT().Et())/ev.CommonHT() <<" and alphaT of " << ev.CommonAlphaT() << endl;
+    if(fabs(MHT.Pt())/HT > sqrt(1. - 1./(4.*cut_*cut_))){
       // cout <<"This event has MHT/HT of: " << fabs(MHT.Et())/HT << " and alphaT of " << ev.CommonAlphaT() << endl;
       return true;}
     else return false;
