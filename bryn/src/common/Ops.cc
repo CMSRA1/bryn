@@ -25,7 +25,8 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
     double   HT = ev.JD_Jets()[0].Et() + ev.JD_Jets()[1].Et();
     LorentzV  MHTv(0.,0.,0.,0.);
     for(int i = 0 ; i < 2; i++){
-      MHTv -= ev.JD_Jets()[i];
+      if(ev.JD_Jets()[i].Et() > 20.){      MHTv -= ev.JD_Jets()[i];}
+
     }
     double  MHT = fabs(MHTv.Et());
     double  DHT = fabs(ev.JD_Jets()[0].Et() - ev.JD_Jets()[1].Et());
