@@ -25,7 +25,7 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
     double   HT = ev.JD_Jets()[0].Et() + ev.JD_Jets()[1].Et();
     LorentzV  MHTv(0.,0.,0.,0.);
     for(int i = 0 ; i < 2; i++){
-      if(ev.JD_Jets()[i].Et() > 20.){      MHTv -= ev.JD_Jets()[i];}
+      if(ev.JD_Jets()[i].Et() > setScale_){ MHTv -= ev.JD_Jets()[i];}
 
     }
     double  MHT = fabs(MHTv.Et());
@@ -41,7 +41,7 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
     LorentzV  MHT(0.,0.,0.,0.);
     for(int j = 0; j < ev.JD_Jets().size(); j++){
       if(ev.JD_Jets()[j].Et() >= setScale_){ HT += ev.JD_Jets()[j].Et();}
-      if(ev.JD_Jets()[j].Et() >= 20.){MHT -= ev.JD_Jets()[j];}
+      if(ev.JD_Jets()[j].Et() >= setScale_){MHT -= ev.JD_Jets()[j];}
     }
       cout <<"This event has on the fly MHT/HT of: " << fabs(MHT.Et())/HT << " Event MHT/HT of: " << fabs(ev.CommonMHT().Et())/ev.CommonHT() <<" and alphaT of " << ev.CommonAlphaT() << endl;
     if(fabs(MHT.Et())/HT > sqrt(1. - 1./(4.*cut_*cut_))){
