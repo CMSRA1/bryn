@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-
+#include "vector"
 #include "Types.hh"
 
 using namespace Operation;
@@ -20,12 +20,14 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
   double MHTy = 0.;
   double CoMHTx = 0.;
   double CoMHTy = 0.;
+  vector<Event::Jet> newJets;
   for(int i = 0; i < ev.JD_CommonJets().accepted.size(); i++){
         CoMHTx-=ev.JD_CommonJets().accepted[i]->Et()*cos(ev.JD_CommonJets().accepted[i]->Phi());
         CoMHTy-=ev.JD_CommonJets().accepted[i]->Et()*sin(ev.JD_CommonJets().accepted[i]->Phi());
   }
   for(unsigned int i = 0; i <  ev.JD_Jets().size(); i++){
-    if(ev.JD_Jets()[i].Pt() > setScale_){
+    if(ev.JD_Jets()[i].Pt() > setScale_ && fabs(ev.JD_Jets()[i].Eta()) < 3.){
+      newJets.push_back(ev.JD_Jets()[i]);
       nJets++;
     }
   }
