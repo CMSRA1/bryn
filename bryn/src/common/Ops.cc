@@ -21,11 +21,13 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
   double CoMHTx = 0.;
   double CoMHTy = 0.;
   vector<Event::Jet> newJets;
+  newJets.clear();
   for(int i = 0; i < ev.JD_CommonJets().accepted.size(); i++){
         CoMHTx-=ev.JD_CommonJets().accepted[i]->Et()*cos(ev.JD_CommonJets().accepted[i]->Phi());
         CoMHTy-=ev.JD_CommonJets().accepted[i]->Et()*sin(ev.JD_CommonJets().accepted[i]->Phi());
   }
   for(unsigned int i = 0; i <  ev.JD_Jets().size(); i++){
+    cout << ev.JD_Jets()[i].Pt() << "    " <<  fabs(ev.JD_Jets()[i].Eta()) << endl;
     if(ev.JD_Jets()[i].Pt() > setScale_ && fabs(ev.JD_Jets()[i].Eta()) < 3.){
       newJets.push_back(ev.JD_Jets()[i]);
       nJets++;
