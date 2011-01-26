@@ -122,7 +122,7 @@ default_cc.Photons.PhotonIsoTypePtCutoff=30.
 default_common = deepcopy(defaultConfig.Common)
 
 default_common.ApplyXCleaning=True
-default_common.Jets.PtCut=50.0
+default_common.Jets.PtCut=37.0
 default_common.Jets.EtaCut=3.0
 default_common.Jets.ApplyID=True
 default_common.Jets.TightID=False
@@ -192,12 +192,27 @@ MinObjects   = 0,
 MaxObjects   = 15,
 StandardPlots     = True,
 )
+pset5 = PSet(
+DirName      = "AllCutsTriggerFail",
+MinObjects   = 0,
+MaxObjects   = 15,
+StandardPlots     = True,
+)
+pset6 = PSet(
+DirName      = "AllTriggerFail",
+MinObjects   = 0,
+MaxObjects   = 15,
+StandardPlots     = True,
+)
+
 AllNoTrigger = WeeklyUpdatePlots(pset1.ps())
 AllWithTrigger =WeeklyUpdatePlots(pset2.ps())
 AllCutsNoTrigger = WeeklyUpdatePlots(pset3.ps())
 AllCutsAfterTrigger =WeeklyUpdatePlots( pset4.ps() )
-AtTrigger1 =  AlphatTriggerCut(0.5,35.)
-AtTrigger =  AlphatTriggerCut(0.5,35.)
+AllCutsTriggerFail = WeeklyUpdatePlots(pset5.ps())
+AllTriggerFail = WeeklyUpdatePlots(pset6.ps())
+AtTrigger1 =  AlphatTriggerCut(0.524142,35.,30.)
+AtTrigger =  AlphatTriggerCut(0.524142,35.,30.)
 
 # Common cut definitions
 #Avaiable criteria for MC and for Data are at current slightly different Hence the making of two trees
@@ -211,16 +226,16 @@ NoiseFilt= OP_HadronicHBHEnoiseFilter()
 selection = OP_GoodEventSelection()
 
 
-JetTrigger = AlphatTriggerCut(0.52414,50) #OP_TwoTriggerCut("HLT_HT100U","HLT_HT140U")
+# JetTrigger = AlphatTriggerCut(0.52414,35.) #OP_TwoTriggerCut("HLT_HT100U","HLT_HT140U")
 #Standard Event Selection
 LeadingJetEta = OP_FirstJetEta(2.5)
 unCorLeadJetCut = OP_UnCorLeadJetCut(30.)
-LeadingJetCut = OP_FirstJetPtCut(100.)
+LeadingJetCut = OP_FirstJetPtCut(50.)
 oddMuon = OP_OddMuon()
 oddElectron = OP_OddElectron()
 oddPhoton = OP_OddPhoton()
 oddJet = OP_OddJet()
-secondJetET = OP_SecondJetEtCut(100.)
+secondJetET = OP_SecondJetEtCut(50.)
 badMuonInJet = OP_BadMuonInJet()
 numComLeptons = OP_NumComLeptons("<=",0)
 numComPhotons = OP_NumComPhotons("<=",0)
@@ -239,11 +254,11 @@ DiVertexJets = OP_NumComJets("==",2)
 NVertexJets = OP_NumComJets(">=",3)
 
 LessThan350 = RECO_CommonHTLessThanCut(350.)
-htCut250 = RECO_CommonHTCut(250.)
+htCut250 = RECO_CommonHTCut(100.)
 htCut300 = RECO_CommonHTCut(300.)
 htCut350 = RECO_CommonHTCut(350.)
 htCut350GeV = RECO_CommonHTCut(350.)
-alphaT0 = OP_CommonAlphaTCut(0.55)
+alphaT0 = HadronicAlphaT(0.55)
 alphaT1 = OP_CommonAlphaTCut(0.55)
 alphaT2 = OP_CommonAlphaTCut(0.55)
 spikecleaner = OP_EcalSpikeCleaner()
@@ -290,6 +305,7 @@ cutTreeData.TAttach(alphaT0,htCut250)
 cutTreeData.TAttach(htCut250,AllNoTrigger)
 cutTreeData.TAttach(htCut250,AtTrigger1)
 cutTreeData.TAttach(AtTrigger1,AllWithTrigger)
+cutTreeData.FAttach(AtTrigger1,AllTriggerFail)
 
 #END HT 250GEV Plot
 #Begin MHT/MET plot inthe low region.
@@ -297,8 +313,9 @@ cutTreeData.TAttach(htCut250,DeadEcalCutData)
 cutTreeData.TAttach(DeadEcalCutData,htCut350)
 cutTreeData.TAttach(htCut350,MHT_METCut)
 cutTreeData.TAttach(MHT_METCut,AtTrigger)
-cutTreeData.TAttach(AtTrigger,AllCutsAfterTrigger)
 cutTreeData.TAttach(MHT_METCut,AllCutsNoTrigger)
+cutTreeData.TAttach(AtTrigger,AllCutsAfterTrigger)
+cutTreeData.FAttach(AtTrigger,AllCutsTriggerFail)
 
 
 #Second MC!

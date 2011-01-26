@@ -17,7 +17,7 @@ vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 
 def addCutFlowData(a) :
-  a.AddJetFilter("PreCC",JetCorrections)
+  # a.AddJetFilter("PreCC",JetCorrections)
   a.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
   a.AddElectronFilter("PreCC",vbtfElectronIdFilter)
   a+=cutTreeData
