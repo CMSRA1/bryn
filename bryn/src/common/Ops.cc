@@ -28,7 +28,7 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
         CoMHTy-=ev.JD_CommonJets().accepted[i]->Et()*sin(ev.JD_CommonJets().accepted[i]->Phi());
   }
   for(unsigned int i = 0; i <  ev.JD_Jets().size(); i++){
-    // cout << ev.JD_Jets()[i].Pt() << "    " <<  fabs(ev.JD_Jets()[i].Eta()) << endl;
+    cout  << " For Jet " << i << " Pt is "<< ev.JD_Jets()[i].Pt() << "   Eta is:  " <<  fabs(ev.JD_Jets()[i].Eta()) << endl;
     if(ev.JD_Jets()[i].Pt() > setScale_ && fabs(ev.JD_Jets()[i].Eta()) < 3.){
       newJets.push_back(ev.JD_Jets()[i]);
       nJets++;
@@ -50,7 +50,7 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
 
       return true;}
       else{
-      cout <<"This event has on the fly alphaT of: " << (HT-DHT)/(2.*sqrt(HT*HT - (MHT*MHT)))  << " and alphaT of " << ev.CommonAlphaT() << endl;
+      cout <<"This event has on the fly alphaT of: " << (HT-DHT)/(2.*sqrt(HT*HT - (MHT*MHT)))  << " and alphaT of " << ev.CommonAlphaT() << " and MHT/HT of " <<sqrt(CoMHTy*CoMHTy + CoMHTx*CoMHTx)/ev.CommonHT() << "  MHT of (trig:Ana): "<<MHT << ": " << sqrt(CoMHTy*CoMHTy + CoMHTx*CoMHTx)  << " HT of(Trig:Ana): " <<HT << " : " << ev.CommonHT() <<endl;
       cout << "The number of Jets in common jets is:" << ev.JD_CommonJets().accepted.size() << " Number of jets is " << nJets << endl;
       return false;}
     }
@@ -70,7 +70,7 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
         return true;
         }
         else{
-        cout <<"This event has MHT/HT of: " << MHT/HT << " and MHT of " <<sqrt(CoMHTy*CoMHTy + CoMHTx*CoMHTx)/ev.CommonHT() << endl;
+        cout <<"This event has MHT/HT of: " << MHT/HT << " and MHT/HT of " <<sqrt(CoMHTy*CoMHTy + CoMHTx*CoMHTx)/ev.CommonHT() << "  MHT of (trig:Ana): "<<MHT << ": " << sqrt(CoMHTy*CoMHTy + CoMHTx*CoMHTx)  << " HT of(Trig:Ana): " <<HT << " : " << ev.CommonHT() <<endl;
         cout << "The number of Jets in common jets is:" << ev.JD_CommonJets().accepted.size() << " Number of jets is " << nJets << endl;
       return false;}
       }
