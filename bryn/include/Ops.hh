@@ -9,7 +9,7 @@
 namespace Operation {
   class AlphatTriggerCut : public Operation::_Base {
   public:
-    AlphatTriggerCut( float ,float);
+    AlphatTriggerCut( float ,float,float);
     ~AlphatTriggerCut() {;}
     bool Process( Event::Data& );
     std::ostream& Description( std::ostream& );
