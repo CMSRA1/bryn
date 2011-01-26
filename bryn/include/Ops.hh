@@ -16,6 +16,7 @@ namespace Operation {
   private:
     float cut_;
     float setScale_;
+    float mhtScale_;
   };
 
 }
