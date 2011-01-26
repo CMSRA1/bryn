@@ -32,15 +32,15 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
     }
   }
   if( nJets == 2){
-    double   HT = ev.JD_Jets()[0].Et() + ev.JD_Jets()[1].Et();
+    double   HT = newJets[0].Et() + newJets[1].Et();
     for(int i = 0 ; i < 2; i++){
       if(ev.JD_Jets()[i].Pt() > 30.){
-        MHTx-=ev.JD_Jets()[i].Et()*cos(ev.JD_Jets()[i].Phi());
-        MHTy-=ev.JD_Jets()[i].Et()*sin(ev.JD_Jets()[i].Phi());
+        MHTx-=enewJets[i].Et()*cos(newJets[i].Phi());
+        MHTy-=enewJets[i].Et()*sin(newJets[i].Phi());
       }
     }
     double  MHT = sqrt(MHTx*MHTx + MHTy*MHTy);
-    double  DHT = fabs(ev.JD_Jets()[0].Et() - ev.JD_Jets()[1].Et());
+    double  DHT = fabs(newJets[0].Et() - newJets[1].Et());
     // cout <<"This event has on the fly alphaT of: " << (HT-DHT)/(2.*sqrt(HT*HT - (MHT*MHT)))  << " HT is: " << HT << " Delta HT is: " << DHT << " MHT is: " << MHT <<" and alphaT of " << ev.CommonAlphaT() << endl;
     if((HT-DHT)/(2.*sqrt((HT*HT) - (MHT*MHT))) > cut_ ){
 
@@ -52,11 +52,11 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
     }
     if( nJets > 2){
       double  HT =0.;
-      for(int j = 0; j < ev.JD_Jets().size(); j++){
-        if(ev.JD_Jets()[j].Pt() >= setScale_){HT += ev.JD_Jets()[j].Et();}
-        if(ev.JD_Jets()[j].Pt() >= 30.){
-          MHTx-=ev.JD_Jets()[j].Et()*cos(ev.JD_Jets()[j].Phi());
-          MHTy-=ev.JD_Jets()[j].Et()*sin(ev.JD_Jets()[j].Phi());
+      for(int j = 0; j < newJets.size(); j++){
+        if(newJEts[j].Pt() >= setScale_){HT += newJets[j].Et();}
+        if(newJEts[j].Pt() >= 30.){
+          MHTx-newJets[j].Et()*cos(newJets[j].Phi());
+          MHTy-newJets[j].Et()*sin(newJets[j].Phi());
         }
       }
       double  MHT = sqrt(MHTx*MHTx + MHTy*MHTy);
