@@ -34,6 +34,7 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
       nJets++;
     }
   }
+  if(newJets[1].Pt() < 50.){ return false;}
   if( nJets == 2){
     double   HT = newJets[0].Et() + newJets[1].Et();
     for(int i = 0 ; i < 2; i++){
