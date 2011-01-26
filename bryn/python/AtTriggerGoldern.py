@@ -93,7 +93,7 @@ default_cc.PhotonJet=True
 default_cc.ResolveConflicts=True
 default_cc.Jets.PtCut=10.0
 default_cc.Jets.EtaCut=10.0
-default_cc.Muons.ModifyJetEnergy=False
+default_cc.Muons.ModifyJetEnergy=True
 default_cc.Muons.PtCut=10.0
 default_cc.Muons.EtaCut=2.5
 default_cc.Muons.TrkIsoCut=-1.
@@ -122,7 +122,7 @@ default_cc.Photons.PhotonIsoTypePtCutoff=30.
 default_common = deepcopy(defaultConfig.Common)
 
 default_common.ApplyXCleaning=True
-default_common.Jets.PtCut=37.0
+default_common.Jets.PtCut=35.0
 default_common.Jets.EtaCut=3.0
 default_common.Jets.ApplyID=True
 default_common.Jets.TightID=False
