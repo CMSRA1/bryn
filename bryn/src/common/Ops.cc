@@ -53,8 +53,8 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
     if( nJets > 2){
       double  HT =0.;
       for(int j = 0; j < newJets.size(); j++){
-        if(newJEts[j].Pt() >= setScale_){HT += newJets[j].Et();}
-        if(newJEts[j].Pt() >= 30.){
+        if(newJets[j].Pt() >= setScale_){HT += newJets[j].Et();}
+        if(newJets[j].Pt() >= 30.){
           MHTx-newJets[j].Et()*cos(newJets[j].Phi());
           MHTy-newJets[j].Et()*sin(newJets[j].Phi());
         }
