@@ -35,8 +35,8 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
     double   HT = newJets[0].Et() + newJets[1].Et();
     for(int i = 0 ; i < 2; i++){
       if(ev.JD_Jets()[i].Pt() > 30.){
-        MHTx-=enewJets[i].Et()*cos(newJets[i].Phi());
-        MHTy-=enewJets[i].Et()*sin(newJets[i].Phi());
+        MHTx-=newJets[i].Et()*cos(newJets[i].Phi());
+        MHTy-=newJets[i].Et()*sin(newJets[i].Phi());
       }
     }
     double  MHT = sqrt(MHTx*MHTx + MHTy*MHTy);
