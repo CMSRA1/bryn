@@ -11,7 +11,7 @@ using namespace Operation;
 // ----------------------------------------------------------------
 AlphatTriggerCut::AlphatTriggerCut( float cut, float setScale ,float setMHTScale)
   : cut_(cut),
-  setScale_(setScale)
+  setScale_(setScale),
   mhtScale_(setMHTScale)
   {;}
 // ----------------------------------------------------------------
