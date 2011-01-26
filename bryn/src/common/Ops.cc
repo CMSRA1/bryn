@@ -28,12 +28,13 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
         CoMHTy-=ev.JD_CommonJets().accepted[i]->Et()*sin(ev.JD_CommonJets().accepted[i]->Phi());
   }
   for(unsigned int i = 0; i <  ev.JD_Jets().size(); i++){
-    cout  << " For Jet " << i << " Pt is "<< ev.JD_Jets()[i].Pt() << "   Eta is:  " <<  fabs(ev.JD_Jets()[i].Eta()) << endl;
+    // cout  << " For Jet " << i << " Pt is "<< ev.JD_Jets()[i].Pt() << "   Eta is:  " <<  fabs(ev.JD_Jets()[i].Eta()) << endl;
     if(ev.JD_Jets()[i].Pt() > setScale_ && fabs(ev.JD_Jets()[i].Eta()) < 3.){
       newJets.push_back(ev.JD_Jets()[i]);
       nJets++;
     }
   }
+  cout << "----------------------------------------------------------------------------------" << "\n \n" << endl;
   if(newJets[1].Pt() < 50.){ return false;}
   if( nJets == 2){
     double   HT = newJets[0].Et() + newJets[1].Et();
