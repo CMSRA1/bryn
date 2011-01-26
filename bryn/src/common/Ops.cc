@@ -16,37 +16,34 @@ AlphatTriggerCut::AlphatTriggerCut( float cut, float setScale )
 // ----------------------------------------------------------------
 bool AlphatTriggerCut::Process( Event::Data& ev){
   int nJets = 0;
-double MHTx = 0.;
-    double MHTy = 0.;
+  double MHTx = 0.;
+  double MHTy = 0.;
   for(unsigned int i = 0; i <  ev.JD_Jets().size(); i++){
-    if(ev.JD_Jets()[i].Et() > setScale_){
+    if(ev.JD_Jets()[i].Pt() > setScale_){
       nJets++;
     }
   }
   if( nJets == 2){
     double   HT = ev.JD_Jets()[0].Et() + ev.JD_Jets()[1].Et();
-
     for(int i = 0 ; i < 2; i++){
-      if(ev.JD_Jets()[i].Et() > 20.){
+      if(ev.JD_Jets()[i].Pt() > 30.){
         MHTx-=ev.JD_Jets()[i].Et()*cos(ev.JD_Jets()[i].Phi());
         MHTy-=ev.JD_Jets()[i].Et()*sin(ev.JD_Jets()[i].Phi());
       }
-
     }
     double  MHT = sqrt(MHTx*MHTx + MHTy*MHTy);
     double  DHT = fabs(ev.JD_Jets()[0].Et() - ev.JD_Jets()[1].Et());
     // cout <<"This event has on the fly alphaT of: " << (HT-DHT)/(2.*sqrt(HT*HT - (MHT*MHT)))  << " HT is: " << HT << " Delta HT is: " << DHT << " MHT is: " << MHT <<" and alphaT of " << ev.CommonAlphaT() << endl;
-    if((HT-DHT)/(2.*sqrt(HT*HT - (MHT*MHT))) > cut_ ){
+    if((HT-DHT)/(2.*sqrt((HT*HT) - (MHT*MHT))) > cut_ ){
       cout <<"This event has on the fly alphaT of: " << (HT-DHT)/(2.*sqrt(HT*HT - (MHT*MHT)))  << " and alphaT of " << ev.CommonAlphaT() << endl;
       return true;}
       else return false;
     }
     if( nJets > 2){
       double  HT =0.;
-
       for(int j = 0; j < ev.JD_Jets().size(); j++){
-        if(ev.JD_Jets()[j].Et() >= setScale_){HT += ev.JD_Jets()[j].Et();}
-        if(ev.JD_Jets()[j].Et() >= 20.){
+        if(ev.JD_Jets()[j].Pt() >= setScale_){HT += ev.JD_Jets()[j].Et();}
+        if(ev.JD_Jets()[j].Pt() >= 30.){
           MHTx-=ev.JD_Jets()[j].Et()*cos(ev.JD_Jets()[j].Phi());
           MHTy-=ev.JD_Jets()[j].Et()*sin(ev.JD_Jets()[j].Phi());
         }
@@ -54,8 +51,9 @@ double MHTx = 0.;
       double  MHT = sqrt(MHTx*MHTx + MHTy*MHTy);
       // cout <<"This event has on the fly MHT/HT of: " << fabs(MHT)/HT << " Event MHT/HT of: " << fabs(ev.CommonMHT().Et())/ev.CommonHT() <<" and alphaT of " << ev.CommonAlphaT() << endl;
       if(fabs(MHT)/HT > sqrt(1. - 1./(4.*cut_*cut_))){
-      cout <<"This event has MHT/HT of: " << MHT/HT << " and alphaT of " << ev.CommonAlphaT() << endl;
-        return true;}
+        cout <<"This event has MHT/HT of: " << MHT/HT << " and alphaT of " << ev.CommonAlphaT() << endl;
+        return true;
+        }
         else return false;
       }
       return false;
