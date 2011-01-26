@@ -18,6 +18,12 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
   int nJets = 0;
   double MHTx = 0.;
   double MHTy = 0.;
+  double CoMHTx = 0.;
+  double CoMHTy = 0.;
+  for(int i = 0; i < ev.JD_CommonJets().accepted.size(); i++){
+        CoMHTx-=ev.JD_CommonJets().accepted[i].Et()*cos(ev.JD_CommonJets().accepted[i].Phi());
+        CoMHTy-=ev.JD_CommonJets().accepted[i].Et()*sin(ev.JD_CommonJets().accepted[i].Phi());
+  }
   for(unsigned int i = 0; i <  ev.JD_Jets().size(); i++){
     if(ev.JD_Jets()[i].Pt() > setScale_){
       nJets++;
@@ -58,7 +64,7 @@ bool AlphatTriggerCut::Process( Event::Data& ev){
         return true;
         }
         else{
-        cout <<"This event has MHT/HT of: " << MHT/HT << " and MHT of " << fabs(ev.CommonMHT().Pt())/ev.CommonHT() << endl;
+        cout <<"This event has MHT/HT of: " << MHT/HT << " and MHT of " <<sqrt(CoMHTy*CoMHTy + CoMHTx*CoMHTx)/ev.CommonHT() << endl;
         cout << "The number of Jets in common jets is:" << ev.JD_CommonJets().accepted.size() << " Number of jets is " << nJets << endl;
       return false;}
       }
