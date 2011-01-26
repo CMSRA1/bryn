@@ -211,8 +211,8 @@ AllCutsNoTrigger = WeeklyUpdatePlots(pset3.ps())
 AllCutsAfterTrigger =WeeklyUpdatePlots( pset4.ps() )
 AllCutsTriggerFail = WeeklyUpdatePlots(pset5.ps())
 AllTriggerFail = WeeklyUpdatePlots(pset6.ps())
-AtTrigger1 =  AlphatTriggerCut(0.524142,35.,30.)
-AtTrigger =  AlphatTriggerCut(0.524142,35.,30.)
+AtTrigger1 =  AlphatTriggerCut(0.524142,35.,35.)
+AtTrigger =  AlphatTriggerCut(0.524142,35.,35.)
 
 # Common cut definitions
 #Avaiable criteria for MC and for Data are at current slightly different Hence the making of two trees
