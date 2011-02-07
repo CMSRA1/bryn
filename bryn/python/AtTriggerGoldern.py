@@ -13,6 +13,7 @@ import setupSUSY
 from libFrameworkSUSY import *
 from libHadronic import *
 from libbryn import *
+from libTriggerStudies import *
 from icf.core import PSet,Analysis
 from icf.config import defaultConfig
 from copy import deepcopy
