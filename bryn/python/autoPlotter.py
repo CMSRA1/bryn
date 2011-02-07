@@ -61,7 +61,7 @@ print "The Integrated Luminosity your plots are being scaled to is: ", intlumi ,
 
 # outputfile = "../pdfs/JESFixedTest/"
 
-outputfile = "../OutputsComentsfromCWR/"
+outputfile = "../AdditonalMeterial/"
 
 ensure_dir(outputfile)
 
@@ -181,14 +181,14 @@ HistNames = [ [k.GetName() for k in D] for D in HistKeys]
 # print HistNames
 closeList = []
 for dir in range(0,len(DirKeys)):
-  # print DirKeys[dir].GetTitle()
+  # print DirKeys[dir].GetTitle(), dir
   for hist in HistNames[dir]:
     Draw = False
     Root.setTDRStyle()
     # Root.tdrStyle.SetPadRightMargin(0.06)#tweak
     # if "CaloMET_after_alphaT_all" in hist: Draw = True
     # if "EffectiveMass_after_alphaT_55_all" in hist: Draw = True
-    # if "HT_after_alphaT_all" in hist: Draw = True
+    if "HT_after_alphaT_all" == hist: Draw = True
     # if "BiasedDeltaPhi_after_alphaT_55_all" in hist: Draw = True
     # if "CosDetlaPhi_MHT_MHTBaby__all" in hist: Draw = True
     # if "DPhi_MHT_MHTbaby_AfterAlphaT__all" in hist: Draw = True
@@ -197,11 +197,11 @@ for dir in range(0,len(DirKeys)):
     # if "CaloMET_all" in hist: Draw = True
     # if "MHTovMET_all" in hist: Draw = True
     # if "MHTovMET_afterAlphaT_all" in hist: Draw = True
-    if "Mt2_LeadingJets_all" in hist: Draw = True
-    if "Mt2_all" in hist: Draw = True
+    # if "Mt2_LeadingJets_all" in hist: Draw = True
+    # if "Mt2_all" in hist: Draw = True
     # if "HT_after_alphaT_all" == hist : Draw = True
     # if "AlphaT_all" == hist: Draw = True
-    # if "AlphaT_Zoomed_all" in hist: Draw = True
+    # if "AlphaT_Zoomed_all" == hist: Draw = True
     # if "HT_all" == hist: Draw = True
     # if "EffectiveMass_all" in hist: Draw = True
     # if "BiasedDeltaPhi_all" in hist: Draw = True
@@ -221,6 +221,8 @@ for dir in range(0,len(DirKeys)):
     # if "__15" in hist: Draw = True
     if not Draw : continue
     if "/" in hist : continue
+    if (DirKeys[dir].GetTitle()) != "AllCutscombined": continue
+
     leg = Root.TLegend(0.65, 0.45, 0.97, 0.8)
     leg.SetShadowColor(0)
     leg.SetBorderSize(0)
@@ -283,7 +285,7 @@ for dir in range(0,len(DirKeys)):
     # LM1.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_LM1_6_6.root","300_350Gevcombined",Root.kTeal-7,1,0))
     LM1.SetLineStyle(2)
     QCD.SetLineWidth(4)
-
+    DrawSM = True
     EWK = ttbar.Clone()
     EWK.Add(WJets)
     EWK.Add(Ztotal)
@@ -412,6 +414,15 @@ for dir in range(0,len(DirKeys)):
 
     blank1 = Root.TH1D()
     blank2 = Root.TH2D()
+
+    if "MHTovMET_afterAlphaT_all" in hist:
+      Total.Rebin(4)
+      ScaledUp.Rebin(4)
+      ScaledDown.Rebin(4)
+      Smeared.Rebin(4)
+
+
+
     if "BiasedDeltaPhi_after_alphaT_55_all" == hist or "EffectiveMass_after_alphaT_55_all" == hist:
       if "EffectiveMass_after_alphaT_55_all" == hist:
         Total.Rebin(3)
@@ -512,13 +523,13 @@ for dir in range(0,len(DirKeys)):
 
     leg2.AddEntry(AsymErrors , "Standard Model", "fl")
     if "EffectiveMass" not in hist:
-      leg2.AddEntry(QCD, "QCD Multijet","lp")# " Pythia tune Z2", "lp")
+      leg2.AddEntry(QCD, "QCD MultiJet","lp")# " Pythia tune Z2", "lp")
       leg2.AddEntry(EWK, "t#bar{t}, W, Z + Jets" , "l")
     leg2.AddEntry(LM0, "LM0", "pl")
     leg2.AddEntry(LM1, "LM1", "l")
     # AsymErrors.SetLineWidth(3)
 
-    DrawSM = True
+
     #Defind the ranges of the histogram for the two highest histograms ie the data and the total
 
     MinY = 0.05
@@ -583,6 +594,9 @@ for dir in range(0,len(DirKeys)):
       QCD.GetXaxis().SetTitle(    "#Delta #phi* (rad)")
       EWK.GetXaxis().SetTitle(    "#Delta #phi* (rad)")
       Total.GetXaxis().SetTitle(  "#Delta #phi* (rad)")
+      if "AllCut" not in DirKeys[dir].GetTitle():
+        leg2.AddEntry(QCD,"QCD MultiJet Pythia 6 tune Z2",'lf')
+        leg2.AddEntry(Pythia8,"QCD MultiJet Pythia 8 tune 1",'lf')
       # leg2.AddEntry(Ztotal, "Z + Jets", "lp")
       # leg2.AddEntry(WJets, "W + Jets", "lp")
       # leg2.AddEntry(ttbar, "TTBar", "lp")
@@ -597,6 +611,32 @@ for dir in range(0,len(DirKeys)):
 
 
 
+
+
+    if "BabyJetMHT_all" in hist or "BabyJetMHTafterMetCut_all" == hist:
+      DrawSM = False
+      MaxX= 240.
+      MinX = 0.
+      # MaxY = 1.2
+      QCD.SetLineColor(Root.kRed-7)
+      leg2 = Root.TLegend(0.55, 0.6, 0.9, 0.8)
+      leg2.SetShadowColor(0)
+      leg2.SetBorderSize(0)
+      leg2.SetFillStyle(4100)
+      leg2.SetFillColor(0)
+      leg2.SetLineColor(0)
+      leg2.AddEntry(Data, "Data", "p")
+      leg2.AddEntry(QCD, "QCD MultiJet Pythia tune Z2", "lp")
+      leg2.AddEntry(Pythia8 , "QCD MultiJet Pythia tune 1","lp")
+      # leg2.AddEntry(Ztotal, "Z + Jets", "lp")
+      # leg2.AddEntry(WJets, "W + Jets", "lp")
+      # leg2.AddEntry(ttbar, "TTBar", "lp")
+      # leg2.AddEntry(LM0, "LM0", "lp")
+      # leg2.AddEntry(LM1, "LM1", "lp")
+      Pythia8.GetXaxis().SetTitle("MHT (GeV) [10 < p_{T}< 50 GeV]")
+      QCD.GetXaxis().SetTitle("MHT (GeV) [10 < p_{T}< 50 GeV]")
+      Total.GetXaxis().SetTitle("MHT (GeV) [10 < p_{T}< 50 GeV]")
+      Data.GetXaxis().SetTitle("MHT (GeV) [10 < p_{T}< 50 GeV]")
     if "MHTovMET_afterAlphaT_all" in hist:
       QCD.SetLineColor(Root.kRed-7)
       MaxX = 5.
@@ -622,6 +662,8 @@ for dir in range(0,len(DirKeys)):
       QCD.SetFillColor(Root.kRed-7)
       Pythia8.GetYaxis().SetTitle("Events/0.2")
       QCD.GetYaxis().SetTitle("Events/0.2")
+      Pythia8.GetXaxis().SetTitle("R_{Miss}")
+      QCD.GetXaxis().SetTitle("R_{Miss}")
       Pythia8.SetFillStyle(3354)
       Pythia8.SetFillColor(3)
       # QCD.SetFillStyle(1001)
@@ -636,39 +678,16 @@ for dir in range(0,len(DirKeys)):
       leg2.AddEntry(Data, "Data", "p")
       leg2.AddEntry(QCD, "QCD Pythia tune Z2", "lp")
       leg2.AddEntry(Pythia8 , "QCD Pythia tune 1","lp")
-      leg2.AddEntry(EWK, "ElectroWeak", "lp")
+      leg2.AddEntry(EWK, "t#bar{t}, W, Z + Jets", "lp")
       # leg2.AddEntry(WJets, "W + Jets", "lp")
       # leg2.AddEntry(ttbar, "TTBar", "lp")
       leg2.AddEntry(LM0, "LM0", "lp")
       leg2.AddEntry(LM1, "LM1", "lp")
       drawEWK = True
       drawBackgrounds = False
-
-
-    if "BabyJetMHT_all" in hist or "BabyJetMHTafterMetCut_all" == hist:
       DrawSM = False
-      MaxX= 240.
-      MinX = 0.
-      # MaxY = 1.2
-      QCD.SetLineColor(Root.kRed-7)
-      leg2 = Root.TLegend(0.55, 0.46, 0.9, 0.87)
-      leg2.SetShadowColor(0)
-      leg2.SetBorderSize(0)
-      leg2.SetFillStyle(4100)
-      leg2.SetFillColor(0)
-      leg2.SetLineColor(0)
-      leg2.AddEntry(Data, "Data", "p")
-      leg2.AddEntry(QCD, "QCD Pythia tune Z2", "lp")
-      leg2.AddEntry(Pythia8 , "QCD Pythia tune 1","lp")
-      # leg2.AddEntry(Ztotal, "Z + Jets", "lp")
-      # leg2.AddEntry(WJets, "W + Jets", "lp")
-      # leg2.AddEntry(ttbar, "TTBar", "lp")
-      # leg2.AddEntry(LM0, "LM0", "lp")
-      # leg2.AddEntry(LM1, "LM1", "lp")
-      Pythia8.GetXaxis().SetTitle("MHT (GeV) [10 < p_{T}< 50 GeV]")
-      QCD.GetXaxis().SetTitle("MHT (GeV) [10 < p_{T}< 50 GeV]")
-      Total.GetXaxis().SetTitle("MHT (GeV) [10 < p_{T}< 50 GeV]")
-      Data.GetXaxis().SetTitle("MHT (GeV) [10 < p_{T}< 50 GeV]")
+
+
 
     if "HT_after_alphaT_all" == hist:
       MinX = 350.
@@ -702,6 +721,17 @@ for dir in range(0,len(DirKeys)):
       MinY = 0.05
       MinX = 500.
 
+
+
+    if (DirKeys[dir].GetTitle()) == "AllCutscombined":
+      print Data.GetXaxis().GetBinWidth(2)
+      for low in range(13,41):
+        if low%2 != 0:  print "Data  integral from" ,     Data.GetXaxis().GetBinLowEdge(low), "to ",Data.GetXaxis().GetBinUpEdge(Data.GetNbinsX()) , " is" , Data.Integral(low,Data.GetNbinsX())
+        if low%2 != 0:  print "TTbar integral from" ,   ttbar.GetXaxis().GetBinLowEdge(low), "to ",ttbar.GetXaxis().GetBinUpEdge(Data.GetNbinsX()) , " is" ,  ttbar.Integral(low,Data.GetNbinsX())
+        if low%2 != 0:  print "WJets integral from" ,   WJets.GetXaxis().GetBinLowEdge(low), "to ",WJets.GetXaxis().GetBinUpEdge(Data.GetNbinsX()) , " is" ,  WJets.Integral(low,Data.GetNbinsX())
+        if low%2 != 0:  print "ZJets integral from" , Ztotal.GetXaxis().GetBinLowEdge(low), "to ",Ztotal.GetXaxis().GetBinUpEdge(Data.GetNbinsX()) , " is" , Ztotal.Integral(low,Data.GetNbinsX())
+
+
     Total.GetXaxis().SetRangeUser(MinX,MaxX)
     # print "Range of Total" , MinX , MaxX
     AsymErrors.GetYaxis().SetRangeUser(MinY,MaxY*5.)
@@ -734,8 +764,8 @@ for dir in range(0,len(DirKeys)):
 
     if hist == "MHTovMET_afterAlphaT_all"  or hist == "BabyJetMHT_all" or hist =="BabyJetMHTafterMetCut_all" or hist =="BiasedDeltaPhi_after_alphaT_55_all":
       Pythia8.Draw("9hist")
-      Total.Draw("9samehist")
-      AsymErrors.Draw("2same")
+      if "MHTovMET_afterAlphaT_all" not in hist: Total.Draw("9samehist")
+      if "MHTovMET_afterAlphaT_all" not in hist and "BabyJetMHTafterMetCut_all" not in hist: AsymErrors.Draw("2same")
       Pythia8.SetTitleOffset(1.3, "Y")
       QCD.Draw("9histsame")
     if "EffectiveMass" in hist:
@@ -837,7 +867,7 @@ for dir in range(0,len(DirKeys)):
     if Draw :
       c1.cd(1).SetLogy()
       c1.Update()
-      # c1.Print(outputfile+(DirKeys[dir].GetTitle())+hist+".png")
+      c1.Print(outputfile+(DirKeys[dir].GetTitle())+hist+".png")
       c1.Print(outputfile+(DirKeys[dir].GetTitle())+hist+".pdf")
       if "All" == (DirKeys[dir].GetTitle()):
         AllPlots += PlotRow("All"+hist,"nAll"+hist,"Allcombined"+hist)

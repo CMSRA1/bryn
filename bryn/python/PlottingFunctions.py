@@ -250,7 +250,7 @@ def newPlot(hist):
 
 def HyperLink(hist):
   """docstring for HyperLink"""
-  link = "<td><a href=" + hist + '.pdf><img src=\"'+  hist + '.pdf\" width=\"400\" height=\"400\" /></a>'+ "</td> \n"
+  link = "<td><a href=" + hist + '.png><img src=\"'+  hist + '.png\" width=\"400\" height=\"400\" /></a>'+ "</td> \n"
   return link
   pass
 

@@ -183,6 +183,16 @@ MaxObjects   = 15,
 StandardPlots     = True,
 )
 
+pset2 = PSet(
+DirName = "Standard Plots",
+MinObjects = 0,
+MaxObjects = 15,
+StandardPlots     = True,
+)
+
+
+StandardPlots = WeeklyUpdatePlots(pset2.ps())
+
 TriggerPlots = PL_TriggerPlots( pset1.ps() )
 
 cutTreeMC = Tree("MC")
