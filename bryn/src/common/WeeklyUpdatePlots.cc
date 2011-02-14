@@ -522,9 +522,10 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
 
   UInt_t n = ev.CommonObjects().size();
   Double_t weight = ev.GetEventWeight();
-
-
   int nVertex = 0;
+
+if(ev.vertexSumPt.enabled){
+
 
                 for(std::vector<double>::const_iterator vtx =
             ev.vertexSumPt()->begin();
@@ -534,7 +535,7 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
                 ev.vertexNdof()->at( vtx-ev.vertexSumPt()->begin() ) > 4 &&
                 (ev.vertexPosition()->at( vtx-ev.vertexSumPt()->begin())).Rho() < 2.0 ){  nVertex++; }
           }
-
+}
 
   if ( StandardPlots_ ){
 
