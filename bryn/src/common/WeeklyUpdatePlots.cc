@@ -524,7 +524,7 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
   Double_t weight = ev.GetEventWeight();
   int nVertex = 0;
 
-if(ev.vertexSumPt.enabled){
+if(ev.vertexSumPt.enabled()){
 
 
                 for(std::vector<double>::const_iterator vtx =
