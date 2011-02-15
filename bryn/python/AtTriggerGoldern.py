@@ -215,11 +215,11 @@ AllTriggerFail = WeeklyUpdatePlots(pset6.ps())
 AtTrigger1 =  OP_AlphaTriggerCut(0.524142,200.,35.,35.)
 AtTrigger =  OP_AlphaTriggerCut(0.524142,200.,35.,35.)
 
-alphaTnumbers150 =   TriggerEffPlots( (DirName = "alphaTnumbers150",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
-alphaTnumbers200 =   TriggerEffPlots( (DirName = "alphaTnumbers200",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
-alphaTnumbers250 =   TriggerEffPlots( (DirName = "alphaTnumbers250",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
-alphaTnumbers300 =   TriggerEffPlots( (DirName = "alphaTnumbers300",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
-alphaTnumbers350 =   TriggerEffPlots( (DirName = "alphaTnumbers350",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
+alphaTnumbers150 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers150",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
+alphaTnumbers200 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers200",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
+alphaTnumbers250 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers250",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
+alphaTnumbers300 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers300",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
+alphaTnumbers350 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers350",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
 
 # Common cut definitions
 #Avaiable criteria for MC and for Data are at current slightly different Hence the making of two trees
