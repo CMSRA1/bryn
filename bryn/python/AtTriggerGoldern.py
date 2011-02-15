@@ -215,6 +215,12 @@ AllTriggerFail = WeeklyUpdatePlots(pset6.ps())
 AtTrigger1 =  OP_AlphaTriggerCut(0.524142,200.,35.,35.)
 AtTrigger =  OP_AlphaTriggerCut(0.524142,200.,35.,35.)
 
+alphaTnumbers150 =   TriggerEffPlots( (DirName="alphaTnumbers150",MinObjects=0,MaxObjects = 15,EffPlots = True).ps())
+alphaTnumbers200 =   TriggerEffPlots( (DirName="alphaTnumbers200",MinObjects=0,MaxObjects = 15,EffPlots = True).ps())
+alphaTnumbers250 =   TriggerEffPlots( (DirName="alphaTnumbers250",MinObjects=0,MaxObjects = 15,EffPlots = True).ps())
+alphaTnumbers300 =   TriggerEffPlots( (DirName="alphaTnumbers300",MinObjects=0,MaxObjects = 15,EffPlots = True).ps())
+alphaTnumbers350 =   TriggerEffPlots( (DirName="alphaTnumbers350",MinObjects=0,MaxObjects = 15,EffPlots = True).ps())
+
 # Common cut definitions
 #Avaiable criteria for MC and for Data are at current slightly different Hence the making of two trees
 #DataOnly!
@@ -255,10 +261,16 @@ DiVertexJets = OP_NumComJets("==",2)
 NVertexJets = OP_NumComJets(">=",3)
 
 LessThan350 = RECO_CommonHTLessThanCut(350.)
-htCut250 = RECO_CommonHTCut(100.)
+# htCut250 = RECO_CommonHTCut(100.)
+
+htCut150 = RECO_CommonHTCut(150.)
+htCut200 = RECO_CommonHTCut(200.)
+htCut250 = RECO_CommonHTCut(250.)
 htCut300 = RECO_CommonHTCut(300.)
 htCut350 = RECO_CommonHTCut(350.)
-htCut350GeV = RECO_CommonHTCut(350.)
+
+
+
 alphaT0 = HadronicAlphaT(0.55)
 alphaT1 = OP_CommonAlphaTCut(0.55)
 alphaT2 = OP_CommonAlphaTCut(0.55)
@@ -300,24 +312,37 @@ cutTreeData.TAttach(LeadingJetCut,secondJetET)
 ##########DiJet Studies
 cutTreeData.TAttach(secondJetET,VertexPtOverHT)
 cutTreeData.TAttach(VertexPtOverHT,alphaT0)
-cutTreeData.TAttach(alphaT0,htCut250)
+cutTreeData.TAttach(alphaT0,DeadEcalCutData)
+cutTreeData.TAttach(DeadEcalCutData,MHT_METCut)
+cutTreeData.TAttach(MHT_METCut,htCut150)
+cutTreeData.TAttach(MHT_METCut,htCut200)
+cutTreeData.TAttach(MHT_METCut,htCut250)
+cutTreeData.TAttach(MHT_METCut,htCut300)
+cutTreeData.TAttach(MHT_METCut,htCut350)
 
-#FOR HT > 250Gev Plot
-cutTreeData.TAttach(htCut250,AllNoTrigger)
-cutTreeData.TAttach(htCut250,AtTrigger1)
-cutTreeData.TAttach(AtTrigger1,AllWithTrigger)
-cutTreeData.FAttach(AtTrigger1,AllTriggerFail)
+cutTreeData.TAttach(htCut150,alphaTnumbers150)
+cutTreeData.TAttach(htCut200,alphaTnumbers200)
+cutTreeData.TAttach(htCut250,alphaTnumbers250)
+cutTreeData.TAttach(htCut300,alphaTnumbers300)
+cutTreeData.TAttach(htCut350,alphaTnumbers350)
 
-#END HT 250GEV Plot
-#Begin MHT/MET plot inthe low region.
-cutTreeData.TAttach(htCut250,DeadEcalCutData)
-cutTreeData.TAttach(DeadEcalCutData,htCut350)
-cutTreeData.TAttach(htCut350,MHT_METCut)
-cutTreeData.TAttach(MHT_METCut,AtTrigger)
-cutTreeData.TAttach(MHT_METCut,AllCutsNoTrigger)
-cutTreeData.TAttach(AtTrigger,AllCutsAfterTrigger)
-cutTreeData.FAttach(AtTrigger,AllCutsTriggerFail)
-
+#
+# #FOR HT > 250Gev Plot
+# cutTreeData.TAttach(htCut250,AllNoTrigger)
+# cutTreeData.TAttach(htCut250,AtTrigger1)
+# cutTreeData.TAttach(AtTrigger1,AllWithTrigger)
+# cutTreeData.FAttach(AtTrigger1,AllTriggerFail)
+#
+# #END HT 250GEV Plot
+# #Begin MHT/MET plot inthe low region.
+# cutTreeData.TAttach(htCut250,DeadEcalCutData)
+# cutTreeData.TAttach(DeadEcalCutData,htCut350)
+# cutTreeData.TAttach(htCut350,MHT_METCut)
+# cutTreeData.TAttach(MHT_METCut,AtTrigger)
+# cutTreeData.TAttach(MHT_METCut,AllCutsNoTrigger)
+# cutTreeData.TAttach(AtTrigger,AllCutsAfterTrigger)
+# cutTreeData.FAttach(AtTrigger,AllCutsTriggerFail)
+#
 
 #Second MC!
 
