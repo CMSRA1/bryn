@@ -220,7 +220,15 @@ alphaTnumbers200 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers200",MinObjec
 alphaTnumbers250 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers250",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
 alphaTnumbers300 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers300",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
 alphaTnumbers350 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers350",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
-
+alphaTnumbers400 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers400",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
+alphaTnumbers450 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers450",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
+alphaTnumbers500 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers500",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
+alphaTnumbers550 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers550",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
+alphaTnumbers600 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers600",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
+alphaTnumbers650 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers650",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
+alphaTnumbers700 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers700",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
+alphaTnumbers750 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers750",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
+alphaTnumbers800 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers800",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
 # Common cut definitions
 #Avaiable criteria for MC and for Data are at current slightly different Hence the making of two trees
 #DataOnly!
@@ -268,7 +276,15 @@ htCut200 = RECO_CommonHTCut(200.)
 htCut250 = RECO_CommonHTCut(250.)
 htCut300 = RECO_CommonHTCut(300.)
 htCut350 = RECO_CommonHTCut(350.)
-
+htCut400 = RECO_CommonHTCut(400.)
+htCut450 = RECO_CommonHTCut(450.)
+htCut500 = RECO_CommonHTCut(500.)
+htCut550 = RECO_CommonHTCut(550.)
+htCut600 = RECO_CommonHTCut(600.)
+htCut650 = RECO_CommonHTCut(650.)
+htCut700 = RECO_CommonHTCut(700.)
+htCut750 = RECO_CommonHTCut(750.)
+htCut800 = RECO_CommonHTCut(800.)
 
 
 alphaT0 = HadronicAlphaT(0.55)
@@ -318,12 +334,31 @@ cutTreeData.TAttach(MHT_METCut,htCut200)
 cutTreeData.TAttach(MHT_METCut,htCut250)
 cutTreeData.TAttach(MHT_METCut,htCut300)
 cutTreeData.TAttach(MHT_METCut,htCut350)
+cutTreeData.TAttach(MHT_METCut,htCut400)
+cutTreeData.TAttach(MHT_METCut,htCut450)
+cutTreeData.TAttach(MHT_METCut,htCut500)
+cutTreeData.TAttach(MHT_METCut,htCut550)
+cutTreeData.TAttach(MHT_METCut,htCut600)
+cutTreeData.TAttach(MHT_METCut,htCut650)
+cutTreeData.TAttach(MHT_METCut,htCut700)
+cutTreeData.TAttach(MHT_METCut,htCut750)
+cutTreeData.TAttach(MHT_METCut,htCut800)
 
 cutTreeData.TAttach(htCut150,alphaTnumbers150)
 cutTreeData.TAttach(htCut200,alphaTnumbers200)
 cutTreeData.TAttach(htCut250,alphaTnumbers250)
 cutTreeData.TAttach(htCut300,alphaTnumbers300)
 cutTreeData.TAttach(htCut350,alphaTnumbers350)
+cutTreeData.TAttach(htCut400,alphaTnumbers400)
+cutTreeData.TAttach(htCut450,alphaTnumbers450)
+cutTreeData.TAttach(htCut500,alphaTnumbers500)
+cutTreeData.TAttach(htCut550,alphaTnumbers550)
+cutTreeData.TAttach(htCut600,alphaTnumbers600)
+cutTreeData.TAttach(htCut650,alphaTnumbers650)
+cutTreeData.TAttach(htCut700,alphaTnumbers700)
+cutTreeData.TAttach(htCut750,alphaTnumbers750)
+cutTreeData.TAttach(htCut800,alphaTnumbers800)
+
 
 #
 # #FOR HT > 250Gev Plot
