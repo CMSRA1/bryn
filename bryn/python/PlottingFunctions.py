@@ -87,102 +87,231 @@ def SystematicsSmear(H1,H2):
   pass
 
 
-
+# <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+#         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+# <html xmlns="http://www.w3.org/1999/xhtml">
 
 def Header(intLumi):
   """docstring for Header"""
   header = '''
-  <html>
+
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <?xml version="1.0"?>
   <head>
-    <title> ''' "RA1 Plots using " +str(intLumi) + "pb of data" + '''
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title> ''' "RA1 Plots using " +str(intLumi) + "pb of data" + ''' </title>
+  </head>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+
+    <style type="text/css" >
+
+/* css Zen Garden default style v1.02 */
+/* css released under Creative Commons License - http://creativecommons.org/licenses/by-nc-sa/1.0/  */
+
+/* This file based on 'Tranquille' by Dave Shea */
+/* You may use this file as a foundation for any new work, but you may find it easier to start from scratch. */
+/* Not all elements are defined in this file, so you'll most likely want to refer to the xhtml as well. */
+
+/* Your images should be linked as if the CSS file sits in the same folder as the images. ie. no paths. */
 
 
-  <style type =\"text/css">
-  body {
-      margin:0;
-      padding:0;
-      border:0;
-      outline:0;
-      font-size:100%;
-      vertical-align:baseline;
-      background:#FFFFCC;
+/* basic elements */
+html {
+  margin: 0;
+  padding: 0;
+  }
+body {
+  font: 75% georgia, sans-serif;
+  line-height: 1.88889;
+  color: #555753;
+  background: #fff url(blossoms.jpg) no-repeat bottom right;
+  margin: 0;
+  padding: 0;
+  }
+p {
+  margin-top: 0;
+  text-align: justify;
+  }
+h3 {
+  font: italic normal 1.4em georgia, sans-serif;
+  letter-spacing: 1px;
+  margin-bottom: 0;
+  color: #7D775C;
+  }
+a:link {
+  font-weight: bold;
+  text-decoration: none;
+  color: #B7A5DF;
+  }
+a:visited {
+  font-weight: bold;
+  text-decoration: none;
+  color: #D4CDDC;
+  }
+a:hover, a:active {
+  text-decoration: underline;
+  color: #9685BA;
+  }
+acronym {
+  border-bottom: none;
   }
 
-  body {
-      line-height:1;
+
+/* specific divs */
+#container {
+  background: url(zen-bg.jpg) no-repeat top left;
+  padding: 0 10px 0 10px;
+  margin: 0;
+  position: relative;
   }
 
-  article,aside,details,figcaption,figure,
-  footer,header,hgroup,menu,nav,section {
-    display:block;
+#intro {
+  min-width: 470px;
   }
 
-  nav ul {
-      list-style:none;
+/* using an image to replace text in an h1. This trick courtesy Douglas Bowman, http://www.stopdesign.com/articles/css/replace-text/ */
+#pageHeader h1 {
+  background: transparent url(h1.gif) no-repeat top left;
+  margin-top: 10px;
+  width: 219px;
+  height: 87px;
+  float: left;
+  }
+#pageHeader h1 span {
+  display:none
+  }
+#pageHeader h2 {
+  background: transparent url(h2.gif) no-repeat top left;
+  margin-top: 58px;
+  margin-bottom: 40px;
+  width: 200px;
+  height: 18px;
+  float: right;
+  }
+#pageHeader h2 span {
+  display:none
+  }
+#pageHeader {
+  padding-top: 20px;
+}
+
+#quickSummary {
+  clear:both;
+  margin: 20px 20px 20px 10px;
+  width: 160px;
+  float: left;
+  }
+#quickSummary p {
+  font: italic 10pt/22pt georgia;
+  text-align:center;
   }
 
-  blockquote, q {
-      quotes:none;
+#table{
+border-collapse:collapse;
+ }
+#table,th, td {
+ border: 1px solid black;
+ }
+#preamble {
+  clear: right;
+  padding: 0px 10px 0 10px;
+  }
+#supportingText {
+  padding-left: 10px;
+  margin-bottom: 40px;
   }
 
-  blockquote:before, blockquote:after,
-  q:before, q:after {
-      content:'';
-      content:none;
+#footer {
+  text-align: center;
+  }
+#footer a:link, #footer a:visited {
+  margin-right: 20px;
   }
 
-  a {
-      margin:0;
-      padding:0;
-      font-size:100%;
-      vertical-align:baseline;
-      background:transparent;
+#linkList {
+  margin-left: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  }
+#linkList2 {
+  font: 10px verdana, sans-serif;
+  background: transparent url(paper-bg.jpg) top left repeat-y;
+  padding: 10px;
+  margin-top: 150px;
+  width: 130px;
+  }
+#linkList h3.select {
+  background: transparent url(h3.gif) no-repeat top left;
+  margin: 10px 0 5px 0;
+  width: 97px;
+  height: 16px;
+  }
+#linkList h3.select span {
+  display:none
+  }
+#linkList h3.favorites {
+  background: transparent url(h4.gif) no-repeat top left;
+  margin: 25px 0 5px 0;
+  width: 60px;
+  height: 18px;
+  }
+#linkList h3.favorites span {
+  display:none
+  }
+#linkList h3.archives {
+  background: transparent url(h5.gif) no-repeat top left;
+  margin: 25px 0 5px 0;
+  width:57px;
+  height: 14px;
+  }
+#linkList h3.archives span {
+  display:none
+  }
+#linkList h3.resources {
+  background: transparent url(h6.gif) no-repeat top left;
+  margin: 25px 0 5px 0;
+  width:63px;
+  height: 10px;
+  }
+#linkList h3.resources span {
+  display:none
   }
 
-  /* change colours to suit your needs */
-  ins {
-      background-color:#ff9;
-      color:#000;
-      text-decoration:none;
+
+#linkList ul {
+  margin: 0;
+  padding: 0;
+  }
+#linkList li {
+  line-height: 2.5ex;
+  background: transparent url(cr1.gif) no-repeat top center;
+  display: block;
+  padding-top: 5px;
+  margin-bottom: 5px;
+  list-style-type: none;
+  }
+#linkList li a:link {
+  color: #988F5E;
+  }
+#linkList li a:visited {
+  color: #B3AE94;
   }
 
-  /* change colours to suit your needs */
-  mark {
-      background-color:#ff9;
-      color:#000;
-      font-style:italic;
-      font-weight:bold;
-  }
 
-  del {
-      text-decoration: line-through;
+#extraDiv1 {
+  background: transparent url(cr2.gif) top left no-repeat;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  width: 148px;
+  height: 110px;
   }
-
-  abbr[title], dfn[title] {
-      border-bottom:1px dotted;
-      cursor:help;
+.accesskey {
+  text-decoration: underline;
   }
-
-   table {
-   display: table;
-   border-collapse: separate;
-   border-spacing: 2px;
-   border-color: gray; }
-
-  /* change border colour to suit your needs */
-  hr {
-      display:block;
-      height:1px;
-      border:0;
-      border-top:1px solid #cccccc;
-      margin:1em 0;
-      padding:0;
-  }
-
-  input, select {
-      vertical-align:middle;
-  }
-  </style>
+ </style>
 
   <script type="text/JavaScript">
   <!-- Chief...
@@ -194,12 +323,14 @@ def Header(intLumi):
   -->
   </script>
 
-    </head>
   <!-- Page navigation menu -->
   <body>
   <CENTER>
-  <h1>Comparison of Basic quantities for N=2, N>=3 & N>=2 Jets</h1>
-  <P>Data = JetMetTau ''' + str(intLumi) + ''', contact email bryn.mathias AT cern DOT ch</P>'''
+
+
+  <h1>Comparison of Basic quantities for N=2, N>=3 &amp; N>=2 Jets </h1>
+  <h2>Data = JetMetTau ''' + str(intLumi) + ''', contact email bryn.mathias AT cern DOT ch </h2>
+'''
   return header
 
   pass
@@ -209,27 +340,16 @@ def Header(intLumi):
 def BegSec(SectionTitle):
   """docstring for table"""
   start = '''
-
-  <h1> '''+SectionTitle+''' <a href="javascript:;" onClick="toggle(\''''+SectionTitle+ '''\');">Collapse/Expand</a>
-  <div id="'''+SectionTitle+'''">\n
-<table border="1" bordercolor="#000000" style="background-color:#FFFFCC" width="1200" cellpadding="3" cellspacing="3"> \n
-  <p> \n
-
-  </a>
-    <tr>
-    <td>DiJet</td>
-    <td> >=3 Jet</td>
-    <td> >=2 Jet </td>
-    </tr>'''
+  <h2> '''+SectionTitle+''' </h2> \n
+  '''+ \
+  "<div id=\"container\">  \n"
   return start
   pass
 
 def EndSec():
   """docstring for EndTable"""
-  end = ''' </p>
-
-  </table>
-</div>'''
+  end = '''
+  </div>'''
   return end
   pass
 
@@ -238,19 +358,26 @@ def Footer():
   footer = '''
     </CENTER>
     </body>
-    </html>'''
+    </hmtl>
+'''
   return footer
   pass
 
 def newPlot(hist):
   """docstring for newColumn"""
-  Column = "<td>" + hist + "</td>"
-  return Column
+  # Column = "<td>" + hist + "</td>"
+  # return Column
+  text = '\n <a class="gallery slidea" href="'+hist+'.pdf" alt= \"' + hist +'\" /> \n' + \
+          '<span> \n' + \
+        '<img src= "./'+hist+'.png" alt="'+hist+'" title="'+hist+'" width=\"30%\"  /> \n'   + \
+        ''' </span> \n'''
+  return text
   pass
 
 def HyperLink(hist):
   """docstring for HyperLink"""
-  link = "<td><a href=" + hist + '.png><img src=\"'+  hist + '.png\" width=\"400\" height=\"400\" /></a>'+ "</td> \n"
+  # link = "<td><a href=" + hist + '.png><img src=\"'+  hist + '.png\" width=\"400\" height=\"400\" /></a>'+ "</td> \n"
+  link = ""
   return link
   pass
 
@@ -260,8 +387,8 @@ def HyperLink(hist):
 
 def PlotRow(a,b,c):
   """docstring for PlotRow"""
-
-  row ="<tr>"  + newPlot(a) + newPlot(b) + newPlot(c) + "</tr>" + '\n' + "<tr>" + HyperLink(a) + HyperLink(b) + HyperLink(c) + "</tr> </div> \n"
+  # row =   newPlot(a) + newPlot(b) + newPlot(c) + "</tr>" + '\n'
+  row = newPlot(a) + newPlot(b) + newPlot(c)
   return row
   pass
 
