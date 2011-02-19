@@ -305,7 +305,7 @@ DiJet5 = OP_NumComJets("==",2)
 
 VertexPtOverHT = OP_SumVertexPtOverHT(0.1)
 MeffTrigger = OP_MeffTriggerCut(520., 40.,40.)
-HtTrigger = OP_MeffTriggerCut(150., 40.)
+HtTrigger = OP_HtTriggerCut(150., 40.)
 NoTriggerPlots =   TriggerEffPlots( PSet(DirName = "NoTrigger",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
 AlphatTriggerPlots =   TriggerEffPlots( PSet(DirName = "AlphatTrigger",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
 MeffTriggerPlots =   TriggerEffPlots( PSet(DirName = "MeffTrigger",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
