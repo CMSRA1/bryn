@@ -123,7 +123,7 @@ default_cc.Photons.PhotonIsoTypePtCutoff=30.
 default_common = deepcopy(defaultConfig.Common)
 
 default_common.ApplyXCleaning=True
-default_common.Jets.PtCut=50.0
+default_common.Jets.PtCut=30.0
 default_common.Jets.EtaCut=3.0
 default_common.Jets.ApplyID=True
 default_common.Jets.TightID=False
