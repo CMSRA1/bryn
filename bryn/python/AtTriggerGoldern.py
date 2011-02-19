@@ -212,8 +212,8 @@ AllCutsNoTrigger = WeeklyUpdatePlots(pset3.ps())
 AllCutsAfterTrigger =WeeklyUpdatePlots( pset4.ps() )
 AllCutsTriggerFail = WeeklyUpdatePlots(pset5.ps())
 AllTriggerFail = WeeklyUpdatePlots(pset6.ps())
-AtTrigger1 =  OP_AlphaTriggerCut(0.524142,200.,35.,35.)
-AtTrigger =  OP_AlphaTriggerCut(0.524142,200.,35.,35.)
+AtTrigger1 =  OP_AlphaTriggerCut(0.524142,200.,40.,40.)
+AtTrigger =  OP_AlphaTriggerCut(0.524142,200.,40.,40.)
 
 alphaTnumbers150 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers150",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
 alphaTnumbers200 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers200",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
@@ -304,8 +304,12 @@ DiJet5 = OP_NumComJets("==",2)
 # Cross check with the allhadronic analysis
 
 VertexPtOverHT = OP_SumVertexPtOverHT(0.1)
-
-
+MeffTrigger = OP_MeffTriggerCut(520., 40.,40.)
+HtTrigger = OP_MeffTriggerCut(150., 40.)
+NoTriggerPlots =   TriggerEffPlots( PSet(DirName = "NoTrigger",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
+AlphatTriggerPlots =   TriggerEffPlots( PSet(DirName = "AlphatTrigger",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
+MeffTriggerPlots =   TriggerEffPlots( PSet(DirName = "MeffTrigger",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
+HtTriggerPlots =   TriggerEffPlots( PSet(DirName = "HtTrigger",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
 # -----------------------------------------------------------------------------
 # Definition of analyses
 # Analyses
@@ -329,35 +333,17 @@ cutTreeData.TAttach(LeadingJetCut,secondJetET)
 cutTreeData.TAttach(secondJetET,VertexPtOverHT)
 cutTreeData.TAttach(VertexPtOverHT,DeadEcalCutData)
 cutTreeData.TAttach(DeadEcalCutData,MHT_METCut)
-cutTreeData.TAttach(MHT_METCut,htCut150)
-cutTreeData.TAttach(MHT_METCut,htCut200)
-cutTreeData.TAttach(MHT_METCut,htCut250)
-cutTreeData.TAttach(MHT_METCut,htCut300)
-cutTreeData.TAttach(MHT_METCut,htCut350)
-cutTreeData.TAttach(MHT_METCut,htCut400)
-cutTreeData.TAttach(MHT_METCut,htCut450)
-cutTreeData.TAttach(MHT_METCut,htCut500)
-cutTreeData.TAttach(MHT_METCut,htCut550)
-cutTreeData.TAttach(MHT_METCut,htCut600)
-cutTreeData.TAttach(MHT_METCut,htCut650)
-cutTreeData.TAttach(MHT_METCut,htCut700)
-cutTreeData.TAttach(MHT_METCut,htCut750)
-cutTreeData.TAttach(MHT_METCut,htCut800)
+cutTreeData.TAttach(MHT_METCut,NoTriggerPlots)
+cutTreeData.TAttach(MHT_METCut,AtTrigger)
+cutTreeData.TAttach(MHT_METCut,MeffTrigger)
+cutTreeData.TAttach(MHT_METCut,HtTrigger)
+cutTreeData.TAttach(AtTrigger,AlphatTriggerPlots)
+cutTreeData.TAttach(MeffTrigger,MeffTriggerPlots)
+cutTreeData.TAttach(HtTrigger,HtTriggerPlots)
 
-cutTreeData.TAttach(htCut150,alphaTnumbers150)
-cutTreeData.TAttach(htCut200,alphaTnumbers200)
-cutTreeData.TAttach(htCut250,alphaTnumbers250)
-cutTreeData.TAttach(htCut300,alphaTnumbers300)
-cutTreeData.TAttach(htCut350,alphaTnumbers350)
-cutTreeData.TAttach(htCut400,alphaTnumbers400)
-cutTreeData.TAttach(htCut450,alphaTnumbers450)
-cutTreeData.TAttach(htCut500,alphaTnumbers500)
-cutTreeData.TAttach(htCut550,alphaTnumbers550)
-cutTreeData.TAttach(htCut600,alphaTnumbers600)
-cutTreeData.TAttach(htCut650,alphaTnumbers650)
-cutTreeData.TAttach(htCut700,alphaTnumbers700)
-cutTreeData.TAttach(htCut750,alphaTnumbers750)
-cutTreeData.TAttach(htCut800,alphaTnumbers800)
+
+
+
 
 
 #
