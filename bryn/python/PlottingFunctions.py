@@ -115,6 +115,26 @@ def Header(intLumi):
 
 /* Your images should be linked as if the CSS file sits in the same folder as the images. ie. no paths. */
 
+    .black_overlay{
+      display: none;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      -moz-opacity: 0.8;
+      opacity:.80;
+      filter: alpha(opacity=80);
+    }
+    .white_content {
+      display: none;
+      position: relative;
+      height: 75%;
+      padding: 16px;
+      border: 16px solid orange;
+      background-color: white;
+      overflow: auto;
+    }
+
 
 /* basic elements */
 html {
@@ -340,7 +360,7 @@ border-collapse:collapse;
 def BegSec(SectionTitle):
   """docstring for table"""
   start = '''
-  <h2> '''+SectionTitle+''' </h2> \n
+  <h1> '''+SectionTitle+''' </h1> \n
   '''+ \
   "<div id=\"container\">  \n"
   return start
@@ -367,6 +387,8 @@ def newPlot(hist):
   """docstring for newColumn"""
   # Column = "<td>" + hist + "</td>"
   # return Column
+
+
   text = '\n <a class="gallery slidea" href="'+hist+'.pdf" alt= \"' + hist +'\" /> \n' + \
           '<span> \n' + \
         '<img src= "./'+hist+'.png" alt="'+hist+'" title="'+hist+'" width=\"30%\"  /> \n'   + \
