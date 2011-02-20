@@ -123,7 +123,7 @@ default_cc.Photons.PhotonIsoTypePtCutoff=30.
 default_common = deepcopy(defaultConfig.Common)
 
 default_common.ApplyXCleaning=True
-default_common.Jets.PtCut=30.0
+default_common.Jets.PtCut=50.0
 default_common.Jets.EtaCut=3.0
 default_common.Jets.ApplyID=True
 default_common.Jets.TightID=False
@@ -344,11 +344,11 @@ cutTreeData.TAttach(AtTrigger1,alphaTnumbers200)
 AtTrigger2 =  OP_AlphaTriggerCut(0.3,250.,40.,40.)
 cutTreeData.TAttach(MHT_METCut,htCut250)
 cutTreeData.TAttach(htCut250,AtTrigger2)
-cutTreeData.TAttach(AtTrigger1,alphaTnumbers250)
+cutTreeData.TAttach(AtTrigger2,alphaTnumbers250)
 AtTrigger3 =  OP_AlphaTriggerCut(0.25,300.,40.,40.)
 cutTreeData.TAttach(MHT_METCut,htCut300)
 cutTreeData.TAttach(htCut300,AtTrigger3)
-cutTreeData.TAttach(AtTrigger1,alphaTnumbers300)
+cutTreeData.TAttach(AtTrigger3,alphaTnumbers300)
 
 
 
