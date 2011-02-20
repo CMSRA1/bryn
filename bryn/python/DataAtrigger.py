@@ -3067,8 +3067,8 @@ from montecarlo.QCD_Pythia8_384patch3_V14_00_02_ALL import *
 from data.Jet_15pb_WithTP_json221010 import *
 #AllMC = QCD_Pythia6_384patch3_V14_00_02_ALL+QCD_Pythia8_384patch3_V14_00_02_ALL+
 AllMC =  MC+QCD_Pythia6_384patch3_V14_00_02_ALL+QCD_Pythia8_384patch3_V14_00_02_ALL
-ensure_dir("../results/TriggerTurnOns/")
-anal_ak5_caloData.Run("../results/TriggerTurnOns/",conf_ak5_caloData,[RA1_Full35pb_Data])
+ensure_dir("../results/TriggerTurnOns_Proposal/")
+anal_ak5_caloData.Run("../results/TriggerTurnOns_Proposal/",conf_ak5_caloData,[RA1_Full35pb_Data])
 
 
 

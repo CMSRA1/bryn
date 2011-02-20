@@ -212,7 +212,6 @@ AllCutsNoTrigger = WeeklyUpdatePlots(pset3.ps())
 AllCutsAfterTrigger =WeeklyUpdatePlots( pset4.ps() )
 AllCutsTriggerFail = WeeklyUpdatePlots(pset5.ps())
 AllTriggerFail = WeeklyUpdatePlots(pset6.ps())
-AtTrigger1 =  OP_AlphaTriggerCut(0.524142,200.,40.,40.)
 AtTrigger =  OP_AlphaTriggerCut(0.524142,200.,40.,40.)
 
 alphaTnumbers150 =   TriggerEffPlots( PSet(DirName = "alphaTnumbers150",MinObjects =0 ,MaxObjects = 15,EffPlots = True).ps() )
@@ -334,12 +333,20 @@ cutTreeData.TAttach(secondJetET,VertexPtOverHT)
 cutTreeData.TAttach(VertexPtOverHT,DeadEcalCutData)
 cutTreeData.TAttach(DeadEcalCutData,MHT_METCut)
 cutTreeData.TAttach(MHT_METCut,NoTriggerPlots)
+AtTrigger =  OP_AlphaTriggerCut(0.4,150.,40.,40.)
 cutTreeData.TAttach(MHT_METCut,AtTrigger)
-cutTreeData.TAttach(MHT_METCut,MeffTrigger)
-cutTreeData.TAttach(MHT_METCut,HtTrigger)
-cutTreeData.TAttach(AtTrigger,AlphatTriggerPlots)
-cutTreeData.TAttach(MeffTrigger,MeffTriggerPlots)
-cutTreeData.TAttach(HtTrigger,HtTriggerPlots)
+cutTreeData.TAttach(AtTrigger,alphaTnumbers150)
+AtTrigger1 =  OP_AlphaTriggerCut(0.35,200.,40.,40.)
+cutTreeData.TAttach(MHT_METCut,AtTrigger1)
+cutTreeData.TAttach(AtTrigger1,alphaTnumbers200)
+AtTrigger2 =  OP_AlphaTriggerCut(0.3,250.,40.,40.)
+cutTreeData.TAttach(MHT_METCut,AtTrigger2)
+cutTreeData.TAttach(AtTrigger1,alphaTnumbers250)
+AtTrigger3 =  OP_AlphaTriggerCut(0.25,300.,40.,40.)
+cutTreeData.TAttach(MHT_METCut,AtTrigger3)
+cutTreeData.TAttach(AtTrigger1,alphaTnumbers300)
+
+
 
 
 
