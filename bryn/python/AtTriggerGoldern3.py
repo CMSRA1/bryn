@@ -317,7 +317,7 @@ alphaTnumbers150F =   TriggerEffPlots( PSet(DirName = "alphaTnumbers150F",MinObj
 # -----------------------------------------------------------------------------
 # Definition of analyses
 # Analyses
-MHT_METCut = OP_MHToverMET(1.1)
+MHT_METCut = OP_MHToverMET(1.5)
 # AK5 Calo
 
 cutTreeData = Tree("Data")
