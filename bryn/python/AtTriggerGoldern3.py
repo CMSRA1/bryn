@@ -123,7 +123,7 @@ default_cc.Photons.PhotonIsoTypePtCutoff=30.
 default_common = deepcopy(defaultConfig.Common)
 
 default_common.ApplyXCleaning=True
-default_common.Jets.PtCut=50.0
+default_common.Jets.PtCut=70.0
 default_common.Jets.EtaCut=3.0
 default_common.Jets.ApplyID=True
 default_common.Jets.TightID=False
@@ -317,7 +317,7 @@ alphaTnumbers150F =   TriggerEffPlots( PSet(DirName = "alphaTnumbers150F",MinObj
 # -----------------------------------------------------------------------------
 # Definition of analyses
 # Analyses
-MHT_METCut = OP_MHToverMET(1.5)
+MHT_METCut = OP_MHToverMET(1.25)
 # AK5 Calo
 
 cutTreeData = Tree("Data")
@@ -338,23 +338,23 @@ cutTreeData.TAttach(secondJetET,VertexPtOverHT)
 cutTreeData.TAttach(VertexPtOverHT,DeadEcalCutData)
 cutTreeData.TAttach(DeadEcalCutData,MHT_METCut)
 # cutTreeData.TAttach(MHT_METCut,NoTriggerPlots)
-AtTrigger =  OP_AlphaTriggerCut(0.4,150.,40.,40.)
+AtTrigger =  OP_AlphaTriggerCut(0.4,150.,70.,70.)
 cutTreeData.TAttach(MHT_METCut,htCut150)
 cutTreeData.TAttach(htCut150,NoTriggerPlots150)
 cutTreeData.TAttach(htCut150,AtTrigger)
 cutTreeData.TAttach(AtTrigger,alphaTnumbers150)
 cutTreeData.FAttach(AtTrigger,alphaTnumbers150F)
-AtTrigger1 =  OP_AlphaTriggerCut(0.35,200.,40.,40.)
+AtTrigger1 =  OP_AlphaTriggerCut(0.35,200.,70.,70.)
 cutTreeData.TAttach(MHT_METCut,htCut200)
 cutTreeData.TAttach(htCut200,NoTriggerPlots200)
 cutTreeData.TAttach(htCut200,AtTrigger1)
 cutTreeData.TAttach(AtTrigger1,alphaTnumbers200)
-AtTrigger2 =  OP_AlphaTriggerCut(0.3,250.,40.,40.)
+AtTrigger2 =  OP_AlphaTriggerCut(0.3,250.,70.,70.)
 cutTreeData.TAttach(MHT_METCut,htCut250)
 cutTreeData.TAttach(htCut250,NoTriggerPlots250)
 cutTreeData.TAttach(htCut250,AtTrigger2)
 cutTreeData.TAttach(AtTrigger2,alphaTnumbers250)
-AtTrigger3 =  OP_AlphaTriggerCut(0.25,300.,40.,40.)
+AtTrigger3 =  OP_AlphaTriggerCut(0.25,300.,70.,70.)
 cutTreeData.TAttach(MHT_METCut,htCut300)
 cutTreeData.TAttach(htCut300,NoTriggerPlots300)
 cutTreeData.TAttach(htCut300,AtTrigger3)
