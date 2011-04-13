@@ -343,8 +343,6 @@ JetCorrections = JESCorrections( corPset.ps(),True )
 NoiseFilt= OP_HadronicHBHEnoiseFilter()
 selection = OP_GoodEventSelection()
 
-
-JetTrigger = OP_TwoTriggerCut("HLT_HT100U","HLT_HT140U")
 #Standard Event Selection
 LeadingJetEta = OP_FirstJetEta(2.5)
 unCorLeadJetCut = OP_UnCorLeadJetCut(30.)
@@ -464,17 +462,12 @@ HadStandard_2 = HadronicCommonPlots(t2.ps())
 HadStandard_3 = HadronicCommonPlots(t3.ps())
 HadStandard_4 = HadronicCommonPlots(t4.ps())
 VertexPtOverHT = OP_SumVertexPtOverHT(0.1)
-eventDump = OP_EventNoDump("mydump","mydump")
+# eventDump = OP_EventNoDump("mydump","mydump")
 
 datatriggerps = PSet(
     Verbose = False,
     Triggers = [
-        "HLT_HT100U",
-        "HLT_HT120U",
-        "HLT_HT140U",
-        "HLT_HT150U_v3",
-        "HLT_HT160U_v1",
-        "HLT_HT160U_v3",
+        "HLT_HT300_v2",
         ]
     )
 DataTrigger = OP_HadronicDataTrigger( datatriggerps.ps() )
@@ -545,7 +538,7 @@ cutTreeData.TAttach(htCut350,MHT_METCut)
 cutTreeData.TAttach(MHT_METCut,NJet5)
 cutTreeData.TAttach(MHT_METCut,DiJet5)
 cutTreeData.TAttach(MHT_METCut, alphat)
-cutTreeData.TAttach(alphat,eventDump)
+# cutTreeData.TAttach(alphat,eventDump)
 cutTreeData.TAttach(NJet5,nHadStandardAllCuts)
 cutTreeData.TAttach(DiJet5,HadStandardAllCuts)
 
