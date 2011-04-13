@@ -527,7 +527,7 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
 if(ev.vertexSumPt.enabled()){
 
 
-                for(std::vector<double>::const_iterator vtx =
+                for(std::vector<float>::const_iterator vtx =
             ev.vertexSumPt()->begin();
             vtx != ev.vertexSumPt()->end();++vtx){
             if(!ev.vertexIsFake()->at( vtx-ev.vertexSumPt()->begin()) &&
