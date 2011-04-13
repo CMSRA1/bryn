@@ -457,7 +457,7 @@ VertexPtOverHT = OP_SumVertexPtOverHT(0.1)
 datatriggerps = PSet(
     Verbose = False,
     Triggers = [
-        "HLT_HT300_v2",
+        "HLT_HT350_v2",
         ]
     )
 DataTrigger = OP_HadronicDataTrigger( datatriggerps.ps() )
