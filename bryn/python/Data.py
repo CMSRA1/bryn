@@ -62,7 +62,7 @@ anal_ak7_caloData=Analysis("AK7Calo")
 addCutFlowData(anal_ak7_caloData)
 
 from data.HT_Run2011A_PromptReco_v1_georgia import *
-outDir = "../results/2011TestRun"
+outDir = "../results/blah"
 ensure_dir(outDir)
 from data.RA1_Complete_Run2010_Nov4ReReco_v1 import *
 anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT_Run2011A_PromptReco_v1])

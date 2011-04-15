@@ -455,7 +455,7 @@ VertexPtOverHT = OP_SumVertexPtOverHT(0.1)
 # eventDump = OP_EventNoDump("mydump","mydump")
 
 datatriggerps = PSet(
-    Verbose = False,
+    Verbose = True,
     Triggers = [
         "HT360_v2",
         "HT350_v2",
