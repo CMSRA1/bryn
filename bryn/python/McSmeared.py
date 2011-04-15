@@ -58,11 +58,8 @@ anal_ak7_caloMC=Analysis("AK7Calo")
 addCutFlowMC(anal_ak7_caloMC)
 
 ensure_dir("../results/Smear/")
-from montecarlo.QCD_Pythia6_384patch3_V14_00_02.QCD_Pt_1000to1400_TuneZ2_7TeV_pythia6_Fall10_START38_V12_v1 import *
-#anal_ak5_caloMC.Run("../results/Smear",conf_ak5_caloMC,[QCD_Pt_1000to1400_TuneZ2_7TeV_pythia6_Fall10_START38_V12_v1])
-#MC=[WJets_Madgraph_NNLO,TTBarTauola_NNLO,Zinvisible_jets_pset_NNLO,Zjets_madgraph_NNLO]
 
-anal_ak5_caloMC.Run("../results/Smear/",conf_ak5_caloMC,[LM0])
+anal_ak5_caloMC.Run("../results/Smear/",conf_ak5_caloMC,MC)
 
 # anal_ak5_pfMC.Run("../results/Smear",conf_ak5_pfMC,MC)
 # anal_ak5_pfMC.Run("../results/Smear",conf_ak5_pfMC,[QCD_AllPtBins_7TeV_Pythia])
