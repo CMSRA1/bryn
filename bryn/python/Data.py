@@ -61,7 +61,7 @@ conf_ak7_caloData.Common = deepcopy(default_common)
 anal_ak7_caloData=Analysis("AK7Calo")
 addCutFlowData(anal_ak7_caloData)
 
-from data.HT_Run2011A_PromptReco_v1_georgia import *
+from data.HT_Run2011A_PromptReco_v1 import *
 outDir = "../results/blah"
 ensure_dir(outDir)
 from data.RA1_Complete_Run2010_Nov4ReReco_v1 import *
