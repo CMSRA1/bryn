@@ -6,7 +6,6 @@ from libHadronic import *
 from icf.core import PSet,Analysis
 import icf.utils as Utils
 from batchGolden import *
-from samples_cff import *
 from ra1objectid.vbtfElectronId_cff import *
 from ra1objectid.vbtfMuonId_cff import *
 from ra1objectid.ra3PhotonId_cff import *
