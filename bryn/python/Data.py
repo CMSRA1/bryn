@@ -12,8 +12,6 @@ from ra1objectid.vbtfMuonId_cff import *
 from ra1objectid.ra3PhotonId_cff import *
 
 vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
-#vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP90ps.ps() )
-vbtMuonIdFilter      = Muon_IDFilter( vbtfmuonidps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 
 def addCutFlowData(a) :
