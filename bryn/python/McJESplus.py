@@ -60,11 +60,11 @@ conf_ak7_caloMC.Common = deepcopy(default_common)
 # conf_ak5_calo.Common.print_out()
 anal_ak7_caloMC=Analysis("AK7Calo")
 addCutFlowMC(anal_ak7_caloMC)
+outdir = "../results/JESplus/"
+ensure_dir(outdir)
 
-ensure_dir("../results/JESplus/")
 
-
-anal_ak5_caloMC.Run("../results/Smear",conf_ak5_caloMC,MC)
+anal_ak5_caloMC.Run(outdir,conf_ak5_caloMC,MC)
 #anal_ak5_caloMC.Run("../results/JESplus/",conf_ak5_caloMC,Pythia8)
 # anal_ak5_caloMC.Run("../results/JESplus/",conf_ak5_caloMC,[QCD_AllPtBins_7TeV_Pythia])
 # anal_ak5_caloMC.Run("../results/JESplus/",conf_ak5_caloMC,AllMC)#MC+[QCD_AllPtBins_7TeV_Pythia,LM0,LM1,LM5])
