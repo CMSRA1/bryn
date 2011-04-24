@@ -33,7 +33,7 @@ for a in aa:
   for b in fileList:
     print a.rpartition("/")[2],b
     if a.rpartition("/")[2] == b:
-      print a
+      Combiner(a)
 
 
 
