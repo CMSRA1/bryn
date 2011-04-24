@@ -30,7 +30,7 @@ fileList = [
 resultsDir = sys.argv[1]
 aa = glob.glob(resultsDir)
 print aa
-for a in a:
+for a in aa:
   for b in fileList:
     print b.rpartition("/")[2]
     if a in b.rpartition("/")[2]:
