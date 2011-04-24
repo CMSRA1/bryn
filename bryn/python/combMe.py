@@ -32,7 +32,7 @@ a = glob.glob(resultsDir)
 
 for flist in a:
   for b in fileList:
-    if flist == b
+    if flist == b:
       print flist
 
 
