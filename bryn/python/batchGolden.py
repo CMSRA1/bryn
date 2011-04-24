@@ -476,7 +476,7 @@ datatriggerps = PSet(
         "HLT_HT260_v2",
         "HLT_HT240_v2",
         "HLT_HT160_v2",
-        "HLT_HLT_HT250_MHT60_v2",
+        "HLT_HT250_MHT60_v2",
         "HLT_HT200_AlphaT0p60_v1",
         ]
     )
