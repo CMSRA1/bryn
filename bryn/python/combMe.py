@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import ROOT as r
 import glob
 import sys
