@@ -12,6 +12,7 @@ from combiner import *
 #
 
 fileList = [
+"AK5Calo_Jets.root",
 "AK5Calo_QCD_All.root",
 "AK5Calo_Zinv.root",
 "AK5Calo_Wjets.root",
@@ -30,8 +31,9 @@ resultsDir = sys.argv[1]
 a = glob.glob(resultsDir)
 
 for flist in a:
-  if flist in fileList:
-    print flist
+  for b in fileList:
+    if flist == b
+      print flist
 
 
 
