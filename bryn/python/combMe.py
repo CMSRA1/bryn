@@ -32,6 +32,7 @@ a = glob.glob(resultsDir)
 print a
 for flist in a:
   for b in fileList:
+  print b.rpartition("/")[2]
     if flist == b.rpartition("/")[2]:
       print flist
 
