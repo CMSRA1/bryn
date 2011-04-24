@@ -9,7 +9,7 @@ from combiner import *
 #     self.arg = arg
 #     self.RootFile = RF
 #
-resultsDir = sys.argv(1)
+resultsDir = sys.argv[1]
 flist = glob.glob(resultsDir)
 print flist
 
