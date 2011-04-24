@@ -10,12 +10,27 @@ from combiner import *
 #     self.RootFile = RF
 #
 
-a = []
+fileList = [
+"AK5Calo_QCD_All.root",
+"AK5Calo_Zinv.root",
+"AK5Calo_Wjets.root",
+"AK5Calo_TTbar.root",
+"AK5Calo_LM0.root",
+"AK5Calo_LM1.root",
+"AK5Calo_LM2.root",
+"AK5Calo_LM3.root",
+"AK5Calo_LM4.root",
+"AK5Calo_LM5.root",
+"AK5Calo_LM6.root",
+"AK5Calo_LM7.root",
+]
+
 resultsDir = sys.argv[1]
-a = glob.glob(str(resultsDir))
+a = glob.glob(resultsDir)
 
 for flist in a:
-  print flist
+  if flist in fileList:
+    print flist
 
 
 
