@@ -28,13 +28,13 @@ fileList = [
 ]
 
 resultsDir = sys.argv[1]
-a = glob.glob(resultsDir)
-print a
-for flist in a:
+aa = glob.glob(resultsDir)
+print aa
+for a in a:
   for b in fileList:
-  print b.rpartition("/")[2]
-    if flist == b.rpartition("/")[2]:
-      print flist
+    print b.rpartition("/")[2]
+    if a in b.rpartition("/")[2]:
+      print a
 
 
 
