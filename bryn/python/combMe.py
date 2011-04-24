@@ -9,9 +9,13 @@ from combiner import *
 #     self.arg = arg
 #     self.RootFile = RF
 #
+
+a = []
 resultsDir = sys.argv[1]
-flist = glob.glob(resultsDir)
-print flist
+a = glob.glob(resultsDir)
+
+for flist in a:
+  print flist
 
 
 
