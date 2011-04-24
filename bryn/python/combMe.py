@@ -29,7 +29,7 @@ fileList = [
 
 resultsDir = sys.argv[1]
 a = glob.glob(resultsDir)
-
+print a
 for flist in a:
   for b in fileList:
     if flist == b:
