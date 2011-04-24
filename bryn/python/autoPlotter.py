@@ -52,7 +52,7 @@ def ensure_dir(path):
 
 #Please enter the integrated lumi for the plots here:
 algo = "Calo"
-intlumi =12.1#4.433 #inv pico barns
+intlumi =17.#4.433 #inv pico barns
 # intlumi = 2.947
 #intlumi = 7.0
 print "The Integrated Luminosity your plots are being scaled to is: ", intlumi , "pb^{-1}"
@@ -61,7 +61,7 @@ print "The Integrated Luminosity your plots are being scaled to is: ", intlumi ,
 
 # outputfile = "../pdfs/JESFixedTest/"
 
-outputfile = "../2011Test/"
+outputfile = "../2011_17pb/"
 
 ensure_dir(outputfile)
 
@@ -155,7 +155,7 @@ def PassingCutNumbers(Hist, name ,lowerBound):
 
 time = strftime("%Y_%m_%d")
 print time
-DrawRatio = False
+DrawRatio = True
 #A file to open and scan for histograms inside directories
 RootFileList = ["/Users/bryn/Desktop/AK5"+algo+"_Jets.root"]
 # RootFileList = [resultsDir+"/AK5Calo_ExtraJets.root"]
@@ -838,10 +838,10 @@ for dir in range(0,len(DirKeys)):
     njetsMarker.SetNDC()
 
     #Draw Text for histogram titile and for lumi
-    prelim = Root.TLatex(0.47,0.89,"#scale[0.8]{CMS}")
+    prelim = Root.TLatex(0.47,0.89,"#scale[0.8]{CMS 2011}")
 
     prelim.SetNDC()
-    lumi = Root.TLatex(0.47,.82,"#scale[0.8]{#int L dt = 35 pb^{-1}, #sqrt{s} = 7 TeV}")
+    lumi = Root.TLatex(0.47,.82,"#scale[0.8]{#int L dt = "+str(intlumi)+" pb^{-1}, #sqrt{s} = 7 TeV}")
     lumi.SetNDC()
 
     prelim.Draw()
@@ -885,8 +885,8 @@ for dir in range(0,len(DirKeys)):
       ratio.SetTitleOffset(1.05, "X")
       ratio.SetNdivisions(4, "Y")
       ratio.Draw()
-      line.Draw()
-      ratio.Draw("same")
+      line.Draw("same")
+
 
     Data.Draw("9SAMEP")
     c1.cd(1).SetLogy()
