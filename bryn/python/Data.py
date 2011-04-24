@@ -59,10 +59,10 @@ conf_ak7_caloData.Common = deepcopy(default_common)
 anal_ak7_caloData=Analysis("AK7Calo")
 addCutFlowData(anal_ak7_caloData)
 
-from data.Run2011.HT_Run2011A_PromptReco_v1 import *
+from data.Run2011.HT_Run2011_promptReco import *
 outDir = "../results/Data/"
 ensure_dir(outDir)
-anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT_Run2011A_PromptReco_v1])
+anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT_Run2011_promptReco])
 
 # from data.MultiJet_Run2010B_Nov4ReReco_v1 import *
 
