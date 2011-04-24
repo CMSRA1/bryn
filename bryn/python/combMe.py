@@ -12,7 +12,7 @@ from combiner import *
 
 a = []
 resultsDir = sys.argv[1]
-a = glob.glob(resultsDir)
+a = glob.glob(str(resultsDir))
 
 for flist in a:
   print flist
