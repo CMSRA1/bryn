@@ -484,7 +484,7 @@ datatriggerps = PSet(
         "HLT_HT200_AlphaT0p60_v1",
         ]
     )
-DataTrigger = OP_HadronicDataTrigger( datatriggerps.ps() )
+DataTrigger = OP_MultiTrigger( datatriggerps.ps() )
 # AlphatTriggerCut(0.52414,50)#
 
 
