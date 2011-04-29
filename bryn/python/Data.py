@@ -13,8 +13,9 @@ from ra1objectid.ra3PhotonId_cff import *
 
 vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
-
+PreScaleWeights = PreScaleReweighting(datatriggerps.ps())
 def addCutFlowData(a) :
+  a.AddWeightFilter("Weight",PreScaleWeights)
   # a.AddJetFilter("PreCC",JetCorrections)
   a.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
   a.AddElectronFilter("PreCC",vbtfElectronIdFilter)

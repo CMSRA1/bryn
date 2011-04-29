@@ -382,7 +382,7 @@ spikecleaner = OP_EcalSpikeCleaner()
 event_display = OP_EventDisplay("EventDisplays", "common") #to draw all/common objects
 alphat = OP_CommonAlphaTCut(0.55)
 DeadEcalCutData = OP_DeadECALCut(0.3,0.5,30.,10,0,"./deadRegionList_GR10_P_V10.txt")
-DeadEcalCutMC =   OP_DeadECALCut(0.3,0.5,30.,10,1,"./deadRegionList_START38_V12.txt")
+DeadEcalCutMC =   OP_DeadECALCut(0.3,0.5,30.,10,0,"./deadRegionList_START38_V12.txt")
 
 MHT_METCut = OP_MHToverMET(1.25)
 NJet5 = OP_NumComJets(">=",3)
@@ -469,18 +469,22 @@ datatriggerps = PSet(
     Verbose = False,
     Triggers = [
         "HLT_HT360_v2",
-        "HLT_HT350_v2",
         "HLT_HT350_v3",
         "HLT_HT350_v2",
         "HLT_HT350_v1",
         "HLT_HT260_v2",
         "HLT_HT240_v2",
         "HLT_HT160_v2",
+        "HLT_HT150_v2",
+        "HLT_HT200_v2",
+        "HLT_HT250_v2",
         "HLT_HT250_MHT60_v2",
+        "HLT_HT250_MHT50_v2",
+        "HLT_HT250_MHT60_v3",
         "HLT_HT200_AlphaT0p60_v1",
         ]
     )
-DataTrigger = OP_HadronicDataTrigger(datatriggerps.ps())
+DataTrigger = OP_HadronicDataTrigger( datatriggerps.ps() )
 # AlphatTriggerCut(0.52414,50)#
 
 
