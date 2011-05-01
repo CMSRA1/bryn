@@ -841,10 +841,10 @@ if(ev.vertexSumPt.enabled()){
         lv1 += *(ev.JD_CommonJets().accepted[0]);
         lv2 += *(ev.JD_CommonJets().accepted[1]);
         // cout << " This event passes offline cuts!!! " <<endl;
-        cout << "Alpha T is " << ev.CommonAlphaT() << " HT is "<< ev.CommonHT() <<" MHT is  " << ev.CommonMHT().Pt() << " and MT2 is " << WeeklyUpdatePlots::MT2_Leading(ev) << " Bised delta phi is " << ev.CommonMinBiasDPhi()<< " Meff is " << ev.CommonMHT().Pt()+ev.CommonHT()<<endl;
+        cout << "Alpha T is " << ev.CommonAlphaT() << " HT is "<< ev.CommonHT() <<" MHT is  " << ev.CommonMHT().Pt() << " and MT2 is " << WeeklyUpdatePlots::MT2_Leading(ev) << " Bised delta phi is " << ev.CommonMinBiasDPhi()<< " Meff is " << ev.CommonMHT().Pt()+ev.CommonHT()<< " run : " <<  ev.RunNumber() << "lumi Section "<< ev.LumiSection() <<  " event : "<<  ev.EventNumber() << endl;
         // if(WeeklyUpdatePlots::MT2_Leading(ev) > 300.){ cout << "MT2 Variables are: px,py, Leading Jet " <<
           // ev.JD_CommonJets().accepted[0]->Px() << "," << ev.JD_CommonJets().accepted[0]->Py() << "," <<" px,py, Second Jet " << ev.JD_CommonJets().accepted[1]->Px()  <<"," <<  ev.JD_CommonJets().accepted[1]->Py() << "," << endl;}
-        // cout << "run : " <<  ev.RunNumber() << "lumi Section "<< ev.LumiSection() <<  " event : "<<  ev.EventNumber() << " Alpha T is" << ev.CommonAlphaT() << " Effective mass is : " << ev.CommonMHT().Pt()+ev.CommonHT() << " Dijet Mass is " << (lv1+lv2).M() << endl;
+        // cout << " run : " <<  ev.RunNumber() << "lumi Section "<< ev.LumiSection() <<  " event : "<<  ev.EventNumber() << " Alpha T is" << ev.CommonAlphaT() << " Effective mass is : " << ev.CommonMHT().Pt()+ev.CommonHT() << " Dijet Mass is " << (lv1+lv2).M() << endl;
         // cout << "x-cleaned"<<endl;
         // ev.PrintStableVisRec();
         // cout << "all"<<endl;
