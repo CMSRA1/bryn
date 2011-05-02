@@ -154,6 +154,14 @@ void WeeklyUpdatePlots::StandardPlots() {
     nMax_+1, 0, 1, true );
 
 
+  BookHistArray( MinBiasDphi_EtaPhiMap_,
+    "MinBiasDphi_EtaPhiMap_",
+    ";#phi;#eta",
+    64, 0., 6.4.,
+    60, -3., 3.,
+    nMax_+1, 0, 1, true );
+
+
   BookHistArray( DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_,
     "DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_",
     ";Cos #Delta #phi(MHT,MHTbaby);MHTBaby Over MHT",
@@ -523,14 +531,63 @@ Double_t WeeklyUpdatePlots::MT2( Event::Data& ev){
 }
 
 
-
 bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
 
   UInt_t n = ev.CommonObjects().size();
   Double_t weight = ev.GetEventWeight();
+
+  int count_ = 0;
+  double biasedDPhi = 100.;
+  double biasedDPhi_baby = 100.;
+  int counter_ = 0;
+  int counterBaby_ = 0;
+  int countBaby_ = 0;
+  for( std::vector<Event::Jet const *>::const_iterator i = ev.JD_CommonJets().accepted.begin();
+  i != ev.JD_CommonJets().accepted.end();
+  ++i ){
+    double newBiasDPhi = fabs(ROOT::Math::VectorUtil::DeltaPhi(**i,loweredMHT + (**i))) ;
+    if(newMinDeltaEta < minDeltaEta){ minDeltaEta = newMinDeltaEta; }
+
+    if(newBiasDPhi < biasedDPhi){
+      biasedDPhi = newBiasDPhi;
+      count_ = counter_;
+    }
+    counter_++;
+  }
+  for( std::vector<Event::Jet const*>::const_iterator iI = ev.JD_CommonJets().baby.begin(); iI != ev.JD_CommonJets().baby.end();
+  ++iI) {
+    if((*iI)->Pt() > 30.){
+      double newBiasDPhi_2 = fabs( ROOT::Math::VectorUtil::DeltaPhi(**iI, loweredMHT + (**iI) ) );
+      if(newBiasDPhi_2 < biasedDPhi_baby){
+        biasedDPhi_baby = newBiasDPhi_2;
+        countBaby_ = counterBaby_;
+      }
+    }
+    counterBaby_++;
+  }
+
+if( biasedDPhi < biasedDPhi_baby){
+      if ( n >= nMin_ && n <= nMax_ && n < MinBiasDphi_EtaPhiMap_.size()) {
+        MinBiasDphi_EtaPhiMap_[0]->Fill( ev.JD_CommonJets().accepted[count_]->Phi(),ev.JD_CommonJets().accepted[count_]->Eta(),weight);
+        MinBiasDphi_EtaPhiMap_[n]->Fill( ev.JD_CommonJets().accepted[count_]->Phi(),ev.JD_CommonJets().accepted[count_]->Eta(),weight);
+      }
+}
+if( biasedDPhi > biasedDPhi_baby){
+      if ( n >= nMin_ && n <= nMax_ && n < MinBiasDphi_EtaPhiMap_.size()) {
+        MinBiasDphi_EtaPhiMap_[0]->Fill( ev.JD_CommonJets().baby[countBaby_]->Phi(),ev.JD_CommonJets().baby[countBaby_]->Eta(),weight);
+        MinBiasDphi_EtaPhiMap_[n]->Fill( ev.JD_CommonJets().baby[countBaby_]->Phi(),ev.JD_CommonJets().baby[countBaby_]->Eta(),weight);
+      }
+}
+
+
+
+
+
+
+
+
+
   int nVertex = 0;
-
-
   //Make the vertex sum PT for later plots
   double  VertexPt = 0.;
   for(std::vector<floatle>::const_iterator vtx =
@@ -538,6 +595,7 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
   vtx != ev.vertexSumPt()->end();++vtx){
     if(!ev.vertexIsFake()->at( vtx-ev.vertexSumPt()->begin()) && fabs((ev.vertexPosition()->at( vtx-ev.vertexSumPt()->begin())).Z()) < 24.0 && ev.vertexNdof()->at( vtx-ev.vertexSumPt()->begin() ) > 4&& (ev.vertexPosition()->at( vtx-ev.vertexSumPt()->begin())).Rho() < 2.0 ){  VertexPt += *vtx;}
 }
+
 
 
 
@@ -561,6 +619,10 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
           DeltaPhiPsudoJets_[n]->Fill(ev.CommonMHT().Pt()/fabs(cos(ROOT::Math::VectorUtil::DeltaPhi(PsudoJets.first,PsudoJets.second))),weight);
         }
       }
+
+
+
+
 
 
 
