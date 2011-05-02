@@ -542,12 +542,19 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
   int counter_ = 0;
   int counterBaby_ = 0;
   int countBaby_ = 0;
+
+  LorentzV loweredMHT = ev.CommonRecoilMET();
+  for(std::vector<Event::Jet const*>::const_iterator iM = ev.JD_CommonJets().baby.begin();iM != ev.JD_CommonJets().baby.end();++iM){
+    if( (*iM)->Pt() > minJetPtCut_)
+      loweredMHT -= (**iM);
+  }
+
+
+
   for( std::vector<Event::Jet const *>::const_iterator i = ev.JD_CommonJets().accepted.begin();
   i != ev.JD_CommonJets().accepted.end();
   ++i ){
     double newBiasDPhi = fabs(ROOT::Math::VectorUtil::DeltaPhi(**i,loweredMHT + (**i))) ;
-    if(newMinDeltaEta < minDeltaEta){ minDeltaEta = newMinDeltaEta; }
-
     if(newBiasDPhi < biasedDPhi){
       biasedDPhi = newBiasDPhi;
       count_ = counter_;
