@@ -157,7 +157,7 @@ void WeeklyUpdatePlots::StandardPlots() {
   BookHistArray( MinBiasDphi_EtaPhiMap_,
     "MinBiasDphi_EtaPhiMap_",
     ";#phi;#eta",
-    64, 0., 6.4.,
+    64, 0., 6.4,
     60, -3., 3.,
     nMax_+1, 0, 1, true );
 
