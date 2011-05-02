@@ -545,7 +545,7 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
 
   LorentzV loweredMHT = ev.CommonRecoilMET();
   for(std::vector<Event::Jet const*>::const_iterator iM = ev.JD_CommonJets().baby.begin();iM != ev.JD_CommonJets().baby.end();++iM){
-    if( (*iM)->Pt() > minJetPtCut_)
+    if( (*iM)->Pt() > 30.)
       loweredMHT -= (**iM);
   }
 
