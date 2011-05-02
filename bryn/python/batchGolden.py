@@ -476,8 +476,12 @@ datatriggerps = PSet(
         "HLT_HT240_v2",
         "HLT_HT160_v2",
         "HLT_HT150_v2",
+        "HLT_HT150_v3",
         "HLT_HT200_v2",
         "HLT_HT250_v2",
+        "HLT_HT260_MHT60_v1",
+        "HLT_HT260_MHT60_v2",
+        "HLT_HT250_MHT60_v1",
         "HLT_HT250_MHT60_v2",
         "HLT_HT250_MHT50_v2",
         "HLT_HT250_MHT60_v3",
@@ -486,7 +490,10 @@ datatriggerps = PSet(
     )
 DataTrigger = OP_MultiTrigger( datatriggerps.ps() )
 # AlphatTriggerCut(0.52414,50)#
-
+vertex_reweight = VertexReweighting(
+PSet(
+VertexWeights = [0.0, 0.027442995662725636, 0.12682983875287387, 0.28326829632076572, 0.40618954180036759, 0.41605144586432974, 0.33147399297403923, 0.21562021576661147, 0.1140047132529971]
+).ps())
 
 cutTreeData = Tree("Data")
 cutTreeData.Attach(DataTrigger)

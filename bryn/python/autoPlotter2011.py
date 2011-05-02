@@ -11,36 +11,8 @@ from time import strftime
 import os, commands
 from PlottingFunctions import *
 Root.gROOT.SetBatch(True) # suppress the creation of canvases on the screen.. much much faster if over a remote connection
-# Root.gROOT.SetStyle("Plain") #To set plain bkgds for slides
-# Root.gStyle.SetTitleBorderSize(0)
-# Root.gStyle.SetCanvasBorderMode(0)
-# Root.gStyle.SetCanvasColor(0)#Sets canvas colour white
-# Root.gStyle.SetOptStat(1110)#set no title on Stat box
-# Root.gStyle.SetLabelOffset(0.001)
-# Root.gStyle.SetLabelSize(0.05)
-# Root.gStyle.SetLabelSize(0.05,"Y")#Y axis
-# Root.gStyle.SetTitleSize(0.06)
-# Root.gStyle.SetTitleW(0.7)
-# Root.gStyle.SetTitleH(0.07)
-# Root.gStyle.SetOptTitle(1)
-# Root.gStyle.SetOptStat(0)
-# Root.gStyle.SetAxisColor(1, "XYZ");
-# Root.gStyle.SetStripDecimals(Root.kTRUE);
-# Root.gStyle.SetTickLength(0.03, "XYZ");
-# Root.gStyle.SetNdivisions(510, "XYZ");
-# Root.gStyle.SetPadTickX(1);
-# Root.gStyle.SetPadTickY(1);
-# Root.gStyle.SetLabelColor(1, "XYZ");
-# Root.gStyle.SetLabelFont(42, "XYZ");
-# Root.gStyle.SetLabelOffset(0.01, "XYZ");
-# Root.gStyle.SetLabelSize(0.05, "XYZ");
-# Root.gStyle.SetHatchesLineWidth(2)
 
 Root.gROOT.ProcessLine(".L ./tdrstyle.C+")
-
-# Root.gStyle.SetPaperSize(20,20)
-# Root.gROOT.ProcessLine(".x /Users/bryn/.root/tdrstyle.C+")
-# setTDRStyle()
 Root.gStyle.SetLineStyleString(11,"50 25")
 def ensure_dir(path):
     try:
@@ -52,23 +24,16 @@ def ensure_dir(path):
 
 #Please enter the integrated lumi for the plots here:
 algo = "Calo"
-intlumi =17.#4.433 #inv pico barns
-# intlumi = 2.947
-#intlumi = 7.0
+intlumi =32.6
 print "The Integrated Luminosity your plots are being scaled to is: ", intlumi , "pb^{-1}"
-#Set your output file here
-# outputfile = "../pdfs/PlotsForPO38WithTPs/"
-
-# outputfile = "../pdfs/JESFixedTest/"
-
-outputfile = "../2011_17pb/"
+outputfile = "../2011_32pb_RA1BURN/"
 
 ensure_dir(outputfile)
 
 
 print "you are outputting to: " ,outputfile
 #SetWhere your results from your analysis are
-resultsDir = "~/Finalresults/" #"/vols/cms02/bm409/SUSYv2/hadronic/results/"+algo
+resultsDir = "~/Run201136pb/"
 
 print "you are using the " , algo , " Jet collection"
 #close list is a global variable that has the file name appended to it so at the end of each hist loop the open files are closed. It is cleared each time a new hist is called.
@@ -81,7 +46,9 @@ def GetHist(DataSetName,col,norm,Legend):
     else:
       b = a.Get(DirKeys[dir].GetTitle()) #open the directory in the root file
     Hist = b.Get(hist) # get your histogram by name
-    if Hist == None : Hist = Root.TH1D()
+    if Hist == None :
+      Hist = Root.TH1D()
+      print "Passing this histogram" , DataSetName, DirKeys[dir].GetTitle()
     if Legend != 0:
       leg.AddEntry(Hist,Legend,"LP") # add a legend entry
     Hist.SetLineWidth(3)
@@ -157,8 +124,8 @@ time = strftime("%Y_%m_%d")
 print time
 DrawRatio = True
 #A file to open and scan for histograms inside directories
-RootFileList = ["/Users/bryn/Desktop/AK5"+algo+"_Jets.root"]
-# RootFileList = [resultsDir+"/AK5Calo_ExtraJets.root"]
+RootFileList = [resultsDir+"Data/AK5"+algo+"_Jets2.root"]
+# RootFileList = [resultsDir+"/AK5Calo_ExtraJets2.root"]
 
 CutNumbers = open(outputfile+"CutTable.txt",'w')
 
@@ -200,18 +167,21 @@ for dir in range(0,len(DirKeys)):
     # if "DPhi_MHT_MHTbaby_AfterAlphaT__all" in hist: Draw = True
     if "BabyJetMHT_all" in hist: Draw = True
     if "BabyJetMHTafterMetCut_all" in hist: Draw = True
+    if "Number_Primary_verticies__all" in hist:
+      Draw = True
+      DrawNorm = True
     # if "CaloMET_all" in hist: Draw = True
     if "MHTovMET_all" in hist: Draw = True
     if "MHTovMET_afterAlphaT_all" in hist: Draw = True
-    # if "Mt2_LeadingJets_all" in hist: Draw = True
-    # if "Mt2_all" in hist: Draw = True
+    if "Mt2_LeadingJets_all" in hist: Draw = True
+    if "Mt2_all" in hist: Draw = True
     if "HT_after_alphaT_all" == hist : Draw = True
     if "AlphaT_all" == hist: Draw = True
     if "AlphaT_Zoomed_all" == hist: Draw = True
     if "HT_all" == hist: Draw = True
-    # if "EffectiveMass_all" in hist: Draw = True
+    if "EffectiveMass_all" in hist: Draw = True
     # if "BiasedDeltaPhi_all" in hist: Draw = True
-    # if "MHToverHT_all" in hist: Draw = True
+    if "MHToverHT_all" in hist: Draw = True
     # if "MHT_all" == hist: Draw = True
     if "JetMultiplicityAfterAlphaT_all" in hist: Draw = True
     if "JetMultiplicity_all" in hist: Draw = True
@@ -244,53 +214,37 @@ for dir in range(0,len(DirKeys)):
     c1 = Root.TCanvas("canvas"+hist,"canname"+hist,1200,1200)
     if DrawRatio:
       #Make two pads, one small for the ratio plot and one large for the plot its self
-      mainPad = Root.TPad("","",0.01,0.25,0.99,0.99);
-      mainPad.SetNumber(1);
-      mainPad.Draw();
-      ratioPad = Root.TPad("","",0.01,0.05,0.99,0.26);
-      ratioPad.SetBottomMargin(0.32);
-      ratioPad.SetNumber(2);
-      ratioPad.Draw();
+      mainPad = Root.TPad("","",0.01,0.25,0.99,0.99)
+      mainPad.SetNumber(1)
+      mainPad.Draw()
+      ratioPad = Root.TPad("","",0.01,0.05,0.99,0.26)
+      ratioPad.SetBottomMargin(0.32)
+      ratioPad.SetNumber(2)
+      ratioPad.Draw()
+      ratioPad.Clear()
     c1.cd(1)
     #make your histograms form each file, read in the files you want below
     # GetHist("RootFile",Colour, scale to lumi 0=false anything else = true, Legend entry)
     #NB the order in which you book the histos is the order in which they appear in the legend
-    # temp = dir
-    # dir = "350Gevcombined"
-    Data = GetHist("/Users/bryn/Desktop/AK5"+algo+"_Jets.root",1,0,"Data")
-    # dir = temp
-    # Data.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_Jets.root","300_350Gevcombined",1,0,0))
-    # Data.Add(GetHist(resultsDir+"/AK5Calo_ExtraJets.root",1,0,"Data"))
+    Data = GetHist(resultsDir+"/Data/AK5"+algo+"_Jets2.root",1,0,"Data")
     if str(type(Data)) != "<class '__main__.TH1D'>" : continue
-    QCD = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_QCD_Pythia6_38.root",Root.kGreen+3,1,"QCD")
+    QCD = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_QCD_All.root",Root.kGreen+3,1,"QCD")
 
-    # QCD.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_QCD_Pythia6_38.root","300_350Gevcombined",1,1,0))
     Data.SetMarkerStyle(20)
     Data.SetMarkerSize(1.5)
     Data.SetLineWidth(3)
     Data.SetLineColor(1)
     Data.SetFillColor(1)
-    ZJets  = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_zjets_madgraph_4.root",Root.kTeal-7,1,0)
-    # ZJets.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_zjets_madgraph_4_4.root","300_350Gevcombined",Root.kTeal-7,1,0))
-    Zinv = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_Zinvisible_jets_3.root",91,1,0)
-    # Zinv.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_Zinvisible_jets_3_31_3.root","300_350Gevcombined",Root.kTeal-7,1,0))
-    Ztotal = ZJets.Clone()
-    Ztotal.Add(Zinv)
+    Ztotal  = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_Zinv.root",Root.kTeal-7,1,0)
     Ztotal.SetLineColor(91)
     leg.AddEntry(Ztotal,"Z + Jets","L")
-
-    WJets = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_wjets_madgraph_vols_1.root",Root.kPink+7,1,"W + Jets")
-    # WJets.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_wjets_madgraph_vols_1_29.root","300_350Gevcombined",Root.kTeal-7,1,0))
-    ttbar = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_ttbarTauola_2.root",Root.kBlue+1,1,"tt + Jets")
-    # ttbar.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_ttbarTauola_2_30.root","300_350Gevcombined",Root.kTeal-7,1,0))
-    LM0 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM0_5.root",2,1,"LM0")
+    WJets = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_WJets.root",Root.kPink+7,1,"W + Jets")
+    ttbar = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_TTbar.root",Root.kBlue+1,1,"tt + Jets")
+    LM0 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM0.root",2,1,"LM0")
     LM0.SetLineStyle(9)
-    # LM0.SetMarkerStyle(21)
-
     LM0.SetMarkerColor(2)
-    # LM0.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_LM0_5_5.root","300_350Gevcombined",Root.kTeal-7,1,0))
-    LM1 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM1_6.root",Root.kPink+7,1,"LM1")
-    # LM1.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_LM1_6_6.root","300_350Gevcombined",Root.kTeal-7,1,0))
+    LM1 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM1.root",Root.kPink+7,1,"LM1")
+
     LM1.SetLineStyle(2)
     QCD.SetLineWidth(4)
     DrawSM = True
@@ -303,18 +257,18 @@ for dir in range(0,len(DirKeys)):
           leg.RecursiveRemove(Ztotal)
           leg.RecursiveRemove(WJets)
           leg.RecursiveRemove(ttbar)
-          LM2 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM2_7.root",3,1,"LM2")
-          LM3 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM3_8.root",4,1,"LM3")
-          LM4 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM4_9.root",5,1,"LM4")
-          LM5 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM5_10.root",6,1,"LM5")
+          LM2 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM2.root",3,1,"LM2")
+          LM3 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM3.root",4,1,"LM3")
+          LM4 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM4.root",5,1,"LM4")
+          LM5 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM5.root",6,1,"LM5")
           DrawSM = True
 
 
 
     #Make a histogram of the sum of all the SM backgrounds
     Total = QCD.Clone()
-    Total.Add(Zinv)
-    Total.Add(ZJets)
+    # Total.Add(Zinv)
+    Total.Add(Ztotal)
     Total.Add(WJets)
     Total.Add(ttbar)
     leg2 = Root.TLegend(0.55, 0.5, 0.97, 0.8)
@@ -337,7 +291,7 @@ for dir in range(0,len(DirKeys)):
     Pythia8 = False
 
     if hist == "MHTovMET_afterAlphaT_all" or hist == "BabyJetMHT_all" or hist == "BabyJetMHTafterMetCut_all" or hist == "BiasedDeltaPhi_after_alphaT_55_all" or hist == "BiasedDeltaPhi_all" :
-      Pythia8=GetHist(resultsDir+"/NoSmear/AK5"+algo+"_QCD_Pythia8_38.root",3,1,"QCD Pythia tune 1")
+      Pythia8=GetHist("~/Finalresults/NoSmear/AK5"+algo+"_QCD_Pythia8_38.root",3,1,"QCD Pythia tune 1")
       # Pythia8.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_QCD_Pythia8_38.root","300_350Gevcombined",Root.kTeal-7,1,0))
       Pythia8.SetLineWidth(3)
     DrawErrors = True
@@ -376,11 +330,11 @@ for dir in range(0,len(DirKeys)):
 
 
     # Systematics
-    ScaledUpQCD = GetHist(resultsDir+"/JESplus/AK5"+algo+"_QCD_Pythia6_38.root",Root.kTeal-7,1,0)
-    ScaledUpW = GetHist(resultsDir+"/JESplus/AK5"+algo+"_wjets_madgraph_vols_1.root",Root.kTeal-7,1,0)
-    ScaledUpZj = GetHist(resultsDir+"/JESplus/AK5"+algo+"_Zinvisible_jets_3.root",Root.kTeal-7,1,0)
-    ScaledUpJi = GetHist(resultsDir+"/JESplus/AK5"+algo+"_zjets_madgraph_4.root",Root.kTeal-7,1,0)
-    ScaledUptt = GetHist(resultsDir+"/JESplus/AK5"+algo+"_ttbarTauola_2.root",Root.kTeal-7,1,0)
+    ScaledUpQCD = GetHist(resultsDir+"/JESplus/AK5"+algo+"_QCD_All.root",Root.kTeal-7,1,0)
+    ScaledUpW = GetHist(resultsDir+"/JESplus/AK5"+algo+"_WJets.root",Root.kTeal-7,1,0)
+    ScaledUpZj = GetHist(resultsDir+"/JESplus/AK5"+algo+"_Zinv.root",Root.kTeal-7,1,0)
+    # ScaledUpJi = GetHist(resultsDir+"/JESplus/AK5"+algo+"_zjets_madgraph_4.root",Root.kTeal-7,1,0)
+    ScaledUptt = GetHist(resultsDir+"/JESplus/AK5"+algo+"_TTbar.root",Root.kTeal-7,1,0)
 
     ScaledUp = ScaledUpQCD.Clone()
     # if "EffectiveMass_after_alphaT_55_all" == hist:
@@ -389,13 +343,13 @@ for dir in range(0,len(DirKeys)):
 
     ScaledUp.Add(ScaledUpW)
     ScaledUp.Add(ScaledUpZj)
-    ScaledUp.Add(ScaledUpJi)
+    # ScaledUp.Add(ScaledUpJi)
     ScaledUp.Add(ScaledUptt)
-    ScaledDownQCD =GetHist(resultsDir+"/JESminus/AK5"+algo+"_QCD_Pythia6_38.root",Root.kTeal-7,1,0)
-    ScaledDownW =  GetHist(resultsDir+"/JESminus/AK5"+algo+"_wjets_madgraph_vols_1.root",Root.kTeal-7,1,0)
-    ScaledDownZj = GetHist(resultsDir+"/JESminus/AK5"+algo+"_Zinvisible_jets_3.root",Root.kTeal-7,1,0)
-    ScaledDownJi = GetHist(resultsDir+"/JESminus/AK5"+algo+"_zjets_madgraph_4.root",Root.kTeal-7,1,0)
-    ScaledDowntt = GetHist(resultsDir+"/JESminus/AK5"+algo+"_ttbarTauola_2.root",Root.kTeal-7,1,0)
+    ScaledDownQCD =GetHist(resultsDir+"/JESminus/AK5"+algo+"_QCD_All.root",Root.kTeal-7,1,0)
+    ScaledDownW =  GetHist(resultsDir+"/JESminus/AK5"+algo+"_WJets.root",Root.kTeal-7,1,0)
+    ScaledDownZj = GetHist(resultsDir+"/JESminus/AK5"+algo+"_Zinv.root",Root.kTeal-7,1,0)
+    # ScaledDownJi = GetHist(resultsDir+"/JESminus/AK5"+algo+"_zjets_madgraph_4.root",Root.kTeal-7,1,0)
+    ScaledDowntt = GetHist(resultsDir+"/JESminus/AK5"+algo+"_TTbar.root",Root.kTeal-7,1,0)
     ScaledDown =   ScaledDownQCD.Clone()
     # if "EffectiveMass_after_alphaT_55_all" == hist:
       # ScaledDown = None
@@ -403,21 +357,21 @@ for dir in range(0,len(DirKeys)):
 
     ScaledDown.Add(ScaledDownW)
     ScaledDown.Add(ScaledDownZj)
-    ScaledDown.Add(ScaledDownJi)
+    # ScaledDown.Add(ScaledDownJi)
     ScaledDown.Add(ScaledDowntt)
 
-    SmearedQCD =GetHist(resultsDir+"/Smear/AK5"+algo+"_QCD_Pythia6_38.root",Root.kTeal-7,1,0)
-    SmearedW =  GetHist(resultsDir+"/Smear/AK5"+algo+"_wjets_madgraph_vols_1.root",Root.kTeal-7,1,0)
-    SmearedZj = GetHist(resultsDir+"/Smear/AK5"+algo+"_Zinvisible_jets_3.root",Root.kTeal-7,1,0)
-    SmearedJi = GetHist(resultsDir+"/Smear/AK5"+algo+"_zjets_madgraph_4.root",Root.kTeal-7,1,0)
-    Smearedtt = GetHist(resultsDir+"/Smear/AK5"+algo+"_ttbarTauola_2.root",Root.kTeal-7,1,0)
+    SmearedQCD =GetHist(resultsDir+"/Smear/AK5"+algo+"_QCD_All.root",Root.kTeal-7,1,0)
+    SmearedW =  GetHist(resultsDir+"/Smear/AK5"+algo+"_WJets.root",Root.kTeal-7,1,0)
+    SmearedZj = GetHist(resultsDir+"/Smear/AK5"+algo+"_Zinv.root",Root.kTeal-7,1,0)
+    # SmearedJi = GetHist(resultsDir+"/Smear/AK5"+algo+"_zjets_madgraph_4.root",Root.kTeal-7,1,0)
+    Smearedtt = GetHist(resultsDir+"/Smear/AK5"+algo+"_TTbar.root",Root.kTeal-7,1,0)
     Smeared =   SmearedQCD.Clone()
     # if "EffectiveMass_after_alphaT_55_all" == hist:
       # Smeared = None
       # Smeared =   QCD.Clone()
     Smeared.Add(SmearedW)
     Smeared.Add(SmearedZj)
-    Smeared.Add(SmearedJi)
+    # Smeared.Add(SmearedJi)
     Smeared.Add(Smearedtt)
 
     blank1 = Root.TH1D()
@@ -462,10 +416,10 @@ for dir in range(0,len(DirKeys)):
       PassingCutNumbers(ScaledDown, "Total Background scaled down" ,0.55)
       PassingCutNumbers(SMBackGrounds, "Total Background Systematic" ,0.55)
       PassingCutNumbers(ttbar, "TTBbar"         ,0.55)
-      PassingCutNumbers(ZJets, "ZJets"          ,0.55)
+      PassingCutNumbers(Ztotal, "ZJets"          ,0.55)
       PassingCutNumbers(WJets, "WJETS"          ,0.55)
       PassingCutNumbers(QCD, "QCD"              ,0.55)
-      PassingCutNumbers(Zinv, "Zinv"            ,0.55)
+      # PassingCutNumbers(Zinv, "Zinv"            ,0.55)
       PassingCutNumbers(LM0, "LM0"              ,0.55)
       PassingCutNumbers(LM1, "LM1"              ,0.55)
     #
@@ -678,8 +632,8 @@ for dir in range(0,len(DirKeys)):
       Data.Rebin(4)
       QCD.Rebin(4)
       Pythia8.Rebin(4)
-      ZJets.Rebin(4)
-      Zinv.Rebin(4)
+      Ztotal.Rebin(4)
+      # Zinv.Rebin(4)
       QCD.SetFillStyle(3345)
       QCD.SetFillColor(Root.kRed-7)
       Pythia8.SetFillStyle(3354)
@@ -771,9 +725,9 @@ for dir in range(0,len(DirKeys)):
     QCD.GetXaxis().SetRangeUser(MinX,MaxX)
 
     if DrawNorm == True:
-      Pythia8.SetTitleOffset(1.3, "Y")
-      Pythia8.DrawNormalized("9hist")
-      QCD.DrawNormalized("9histsame")
+      # Pythia8.SetTitleOffset(1.3, "Y")
+      # Pythia8.DrawNormalized("9hist")
+      QCD.DrawNormalized("9hist")
       Data.DrawNormalized("9SAMEP")
       Data.DrawNormalized("AXISSAME")
 
@@ -885,9 +839,18 @@ for dir in range(0,len(DirKeys)):
       ratio.SetTitleOffset(1.05, "X")
       ratio.SetNdivisions(4, "Y")
       ratio.Draw()
-      line.Draw("same")
-
-
+      # line.Draw("same")
+    if hist == "Number_Primary_verticies__all" and (DirKeys[dir].GetTitle()) == "Allcombined":
+      vertTot = Data.Integral(0,-1)
+      vertDist =[]
+      vertDistNorm =[]
+      print "Total number of events",Data.Integral(0,-1)
+      for bin in range(1,Data.GetNbinsX()):
+        vertDist.append(Data.Integral(bin-1,bin))
+      print vertDist
+      for i in vertDist:
+        vertDistNorm.append(i/vertTot)
+      print vertDistNorm
     Data.Draw("9SAMEP")
     c1.cd(1).SetLogy()
     c1.Update()
@@ -908,6 +871,7 @@ for dir in range(0,len(DirKeys)):
       c1.Update()
       c1.Print(outputfile+(DirKeys[dir].GetTitle())+hist+".png")
       c1.Print(outputfile+(DirKeys[dir].GetTitle())+hist+".pdf")
+      # print "Saving histogram now!!!"
       if "All" == (DirKeys[dir].GetTitle()):
         AllPlots += PlotRow("All"+hist,"nAll"+hist,"Allcombined"+hist)
 

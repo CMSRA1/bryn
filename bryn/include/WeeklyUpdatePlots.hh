@@ -51,6 +51,7 @@ namespace Operation {
     std::vector<TH1D*>  Meff_;
     std::vector<TH1D*>  AlphaT_;
     std::vector<TH1D*>  AlphaT_Zoomed_;
+    std::vectpr<TH1D*>  vertexPtovHT_;
     std::vector<TH1D*>  MHT_;
     std::vector<TH1D*>  Mt2_;
     std::vector<TH1D*>  HT_;
