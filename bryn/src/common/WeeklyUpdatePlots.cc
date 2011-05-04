@@ -156,9 +156,9 @@ void WeeklyUpdatePlots::StandardPlots() {
 
   BookHistArray( MinBiasDphi_EtaPhiMap_,
     "MinBiasDphi_EtaPhiMap_",
-    ";#phi;#eta",
-    64, 0., 6.4,
+    ";#eta;#phi",
     60, -3., 3.,
+    64, -3.2., 3.2,
     nMax_+1, 0, 1, true );
 
 
@@ -575,14 +575,14 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
 
 if( biasedDPhi < biasedDPhi_baby){
       if ( n >= nMin_ && n <= nMax_ && n < MinBiasDphi_EtaPhiMap_.size()) {
-        MinBiasDphi_EtaPhiMap_[0]->Fill( ev.JD_CommonJets().accepted[count_]->Phi(),ev.JD_CommonJets().accepted[count_]->Eta(),weight);
-        MinBiasDphi_EtaPhiMap_[n]->Fill( ev.JD_CommonJets().accepted[count_]->Phi(),ev.JD_CommonJets().accepted[count_]->Eta(),weight);
+        MinBiasDphi_EtaPhiMap_[0]->Fill(ev.JD_CommonJets().accepted[count_]->Eta(), ev.JD_CommonJets().accepted[count_]->Phi(),weight);
+        MinBiasDphi_EtaPhiMap_[n]->Fill(ev.JD_CommonJets().accepted[count_]->Eta(), ev.JD_CommonJets().accepted[count_]->Phi(),weight);
       }
 }
 if( biasedDPhi > biasedDPhi_baby){
       if ( n >= nMin_ && n <= nMax_ && n < MinBiasDphi_EtaPhiMap_.size()) {
-        MinBiasDphi_EtaPhiMap_[0]->Fill( ev.JD_CommonJets().baby[countBaby_]->Phi(),ev.JD_CommonJets().baby[countBaby_]->Eta(),weight);
-        MinBiasDphi_EtaPhiMap_[n]->Fill( ev.JD_CommonJets().baby[countBaby_]->Phi(),ev.JD_CommonJets().baby[countBaby_]->Eta(),weight);
+        MinBiasDphi_EtaPhiMap_[0]->Fill(ev.JD_CommonJets().baby[countBaby_]->Eta(), ev.JD_CommonJets().baby[countBaby_]->Phi(),weight);
+        MinBiasDphi_EtaPhiMap_[n]->Fill(ev.JD_CommonJets().baby[countBaby_]->Eta(), ev.JD_CommonJets().baby[countBaby_]->Phi(),weight);
       }
 }
 
