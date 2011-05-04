@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-
-#!/usr/bin/env python
 """
 Created by Bryn Mathias on 2010-05-07.
 """
@@ -17,7 +15,8 @@ from icf.core import PSet,Analysis
 from icf.config import defaultConfig
 from copy import deepcopy
 from icf.JetCorrections import *
-from samples_cff import *
+from libPhotons import *
+# from samples_cff import *
 
 # -----------------------------------------------------------------------------
 # Samples
@@ -154,11 +153,11 @@ default_common.Photons.EtaCut=2.5
 ##default_common.Photons.CaloIsoCut=99999.
 default_common.Photons.IDReq = 3
 default_common.Photons.RequireLooseForOdd = True
-MC=[wjets_madgraph_vols,ttbarTauola,Zinvisible_jets,zjets_madgraph,LM0,LM1,LM5]
-Pythia8=[QCD_Pt_0to15_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_15to20_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_20to30_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_30to50_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_50to80_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_80to120_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_120to170_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_170to230_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_230to300_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_300to380_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_380to470_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_470to600_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_600to800_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_800to1000_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_1000to1400_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_1400to1800_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_1800to2200_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_2200to2600_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_3000to3500_7TeV_pythia8_Summer10_START36_V10_S09_v2]
+# MC=[wjets_madgraph_vols,ttbarTauola,Zinvisible_jets,zjets_madgraph,LM0,LM1,LM5]
+# Pythia8=[QCD_Pt_0to15_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_15to20_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_20to30_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_30to50_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_50to80_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_80to120_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_120to170_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_170to230_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_230to300_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_300to380_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_380to470_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_470to600_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_600to800_7TeV_pythia8_Summer10_START36_V10_S09_v1,QCD_Pt_800to1000_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_1000to1400_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_1400to1800_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_1800to2200_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_2200to2600_7TeV_pythia8_Summer10_START36_V10_S09_v2,QCD_Pt_3000to3500_7TeV_pythia8_Summer10_START36_V10_S09_v2]
 # CMSSW_3_8_4_patch3 V14-00-02 samples
-from montecarlo.QCD_Pythia6_384patch3_V14_00_02_ALL import *
-from montecarlo.QCD_Pythia8_384patch3_V14_00_02_ALL import *
+# from montecarlo.QCD_Pythia6_384patch3_V14_00_02_ALL import *
+# from montecarlo.QCD_Pythia8_384patch3_V14_00_02_ALL import *
 
 
 LeadingJetEta = OP_FirstJetEta(2.5)
@@ -191,9 +190,48 @@ StandardPlots     = True,
 )
 
 
+pseta = PSet(
+DirName      = "FirTrig",
+MinObjects   = 0,
+MaxObjects   = 15,
+StandardPlots     = True,
+)
+
+psetb = PSet(
+DirName      = "SecTrig",
+MinObjects   = 0,
+MaxObjects   = 15,
+StandardPlots     = True,
+)
+
+TriggerOnePlots = WeeklyUpdatePlots(pseta.ps())
+TriggerTwoPlots = WeeklyUpdatePlots(psetb.ps())
+
 StandardPlots = WeeklyUpdatePlots(pset2.ps())
 
+        # "HLT_HT360_v2",
+        # "HLT_HT350_v2",
+        # "HLT_HT350_v3",
+        # "HLT_HT350_v2",
+        # "HLT_HT350_v1",
+        # "HLT_HT260_v2",
+        # "HLT_HT240_v2",
+        # "HLT_HT160_v2",
+        # "HLT_HT250_MHT60_v2",
+        # "HLT_HT200_AlphaT0p60_v1",
+
+
 TriggerPlots = PL_TriggerPlots( pset1.ps() )
+TriggerOne =OP_MultiTrigger(PSet(Triggers = ["HLT_HT250_MHT60_v2","HLT_HT260_MHT60_v2"]).ps()) # OP_MultiTrigger(PSet(Triggers = ["HLT_HT200_v2","HLT_HT200_v3","HLT_HT200_v1"]).ps())
+TriggerTwo = OP_MultiTrigger(PSet(Triggers = ["HLT_HT250_AlphaT0p55_v1","HLT_HT250_AlphaT0p55_v2"]).ps())
+dump = OP_Dump()
+cutTreeData= Tree("Data")
+# cutTreeData.Attach(dump)
+cutTreeData.Attach(TriggerOnePlots)
+# cutTreeData.TAttach(TriggerOne,TriggerOnePlots)
+cutTreeData.TAttach(TriggerOnePlots,TriggerTwo)
+cutTreeData.TAttach(TriggerTwo,TriggerTwoPlots)
+
 
 cutTreeMC = Tree("MC")
 cutTreeMC.Attach(selection)
@@ -225,17 +263,44 @@ def addCutFlowMC(b) :
   b+=cutTreeMC
 
 
+def addCutFlowData(a):
+  a.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
+  a.AddElectronFilter("PreCC",vbtfElectronIdFilter)
+  a+=cutTreeData
+
+
 #AK5 Calo
 conf_ak5_caloMC = deepcopy(defaultConfig)
 conf_ak5_caloMC.Ntuple = deepcopy(ak5_calo)
 conf_ak5_caloMC.XCleaning = deepcopy(default_cc)
 conf_ak5_caloMC.Common = deepcopy(default_common)
-conf_ak5_caloMC.Common.print_out()
+# conf_ak5_caloMC.Common.print_out()
 anal_ak5_caloMC=Analysis("AK5Calo")
 addCutFlowMC(anal_ak5_caloMC)
 
-Triggersamples =[LM0,LM1,LM2,LM3,LM4]
+#AK5 Calo
+conf_ak5_caloData = deepcopy(defaultConfig)
+conf_ak5_caloData.Ntuple = deepcopy(ak5_calo)
+conf_ak5_caloData.XCleaning = deepcopy(default_cc)
+conf_ak5_caloData.Common = deepcopy(default_common)
+# conf_ak5_caloMC.Common.print_out()
+anal_ak5_caloData=Analysis("AK5Calo")
+addCutFlowData(anal_ak5_caloData)
 
-ensure_dir("../results/Triggers/")
-anal_ak5_caloMC.Run("../results/Triggers/",conf_ak5_caloMC,Triggersamples)
+
+
+testFile = PSet(
+Name = "TestFile",
+Format = ("ICF",3),
+Weight = 1.0,
+File = ["dcap://gfe02.grid.hep.ph.ic.ac.uk:22128//pnfs/hep.ph.ic.ac.uk/data/cms/store/user/arlogb//ICF/automated/2011_04_19_23_17_45///SusyCAF_Tree_10_1_izY.root"]
+)
+
+# Triggersamples =[LM0,LM1,LM2,LM3,LM4]
+from data.Run2011.HT_Run2011_promptReco import *
+outDir = "../results/DataTrigger/"
+ensure_dir(outDir)
+anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT_Run2011_promptReco])
+
+# anal_ak5_caloMC.Run("../results/Triggers/",conf_ak5_caloMC,Triggersamples)
 
