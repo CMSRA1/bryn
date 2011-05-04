@@ -8,7 +8,7 @@ import errno
 import ROOT as Root
 import math
 from time import strftime
-import os, commands
+import os, commands, sys
 from PlottingFunctions import *
 Root.gROOT.SetBatch(True) # suppress the creation of canvases on the screen.. much much faster if over a remote connection
 
@@ -24,16 +24,17 @@ def ensure_dir(path):
 
 #Please enter the integrated lumi for the plots here:
 algo = "Calo"
-intlumi =32.6
+intlumi =43.2
 print "The Integrated Luminosity your plots are being scaled to is: ", intlumi , "pb^{-1}"
-outputfile = "../2011_32pb_RA1BURN/"
 
+
+
+resultsDir = sys.argv[1]
+outputfile = sys.argv[2]
 ensure_dir(outputfile)
-
-
 print "you are outputting to: " ,outputfile
 #SetWhere your results from your analysis are
-resultsDir = "~/Run201136pb/"
+
 
 print "you are using the " , algo , " Jet collection"
 #close list is a global variable that has the file name appended to it so at the end of each hist loop the open files are closed. It is cleared each time a new hist is called.
@@ -124,8 +125,8 @@ time = strftime("%Y_%m_%d")
 print time
 DrawRatio = True
 #A file to open and scan for histograms inside directories
-RootFileList = [resultsDir+"Data/AK5"+algo+"_Jets2.root"]
-# RootFileList = [resultsDir+"/AK5Calo_ExtraJets2.root"]
+RootFileList = [resultsDir+"Data/AK5"+algo+"_Jets.root"]
+# RootFileList = [resultsDir+"/AK5Calo_ExtraJets.root"]
 
 CutNumbers = open(outputfile+"CutTable.txt",'w')
 
@@ -226,7 +227,7 @@ for dir in range(0,len(DirKeys)):
     #make your histograms form each file, read in the files you want below
     # GetHist("RootFile",Colour, scale to lumi 0=false anything else = true, Legend entry)
     #NB the order in which you book the histos is the order in which they appear in the legend
-    Data = GetHist(resultsDir+"/Data/AK5"+algo+"_Jets2.root",1,0,"Data")
+    Data = GetHist(resultsDir+"/Data/AK5"+algo+"_Jets.root",1,0,"Data")
     if str(type(Data)) != "<class '__main__.TH1D'>" : continue
     QCD = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_QCD_All.root",Root.kGreen+3,1,"QCD")
 
@@ -830,16 +831,17 @@ for dir in range(0,len(DirKeys)):
     if "MHTovMET_afterAlphaT_all" in hist or "BiasedDeltaPhi_after_alphaT_55_all" in hist or "BabyJetMHT_all" in hist or "BabyJetMHTafterMetCut_all" in hist or "BiasedDeltaPhi_all" in hist:
       leg2.Draw()
 
-    if DrawRatio:
-      c1.cd(2)
-      line = UnityLine(Total)
-      ratio = RatioPlot(Data,SMBackGrounds)
-      ratio.SetLabelSize(0.15, "XYZ")
-      ratio.SetTitleSize(0.15, "XYZ")
-      ratio.SetTitleOffset(1.05, "X")
-      ratio.SetNdivisions(4, "Y")
-      ratio.Draw()
-      # line.Draw("same")
+    # if DrawRatio:
+    c1.cd(2)
+    ratioPad.Clear()
+    line = UnityLine(Total)
+    ratio = RatioPlot(Data,SMBackGrounds)
+    # ratio.SetLabelSize(0.15, "XYZ")
+    # ratio.SetTitleSize(0.15, "XYZ")
+    # ratio.SetTitleOffset(1.05, "X")
+    # ratio.SetNdivisions(4, "Y")
+    ratio.Draw()
+    line.Draw("same")
     if hist == "Number_Primary_verticies__all" and (DirKeys[dir].GetTitle()) == "Allcombined":
       vertTot = Data.Integral(0,-1)
       vertDist =[]
