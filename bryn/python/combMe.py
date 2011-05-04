@@ -31,7 +31,7 @@ resultsDir = sys.argv[1]
 aa = glob.glob(resultsDir)
 for a in aa:
   for b in fileList:
-    print a.rpartition("/")[2],b
+    # print a.rpartition("/")[2],b
     if a.rpartition("/")[2] == b:
       Combiner(a)
 
