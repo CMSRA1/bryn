@@ -70,7 +70,7 @@ File="~/cms03/SUSYv2Test/SUSYv2/bryn/results/DataSkimOpBatchNjobs/AK5Calo_TedSki
 
 from data.Run2011.HT_Run2011_promptReco_DCS import *
 from data.Run2011.RA1ToBurn import *
-outDir = "../results/DataSkimOpBatchNjobs/"
+outDir = "../results/Data/"
 ensure_dir(outDir)
 anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT_Run2011_promptReco_DCS])
 
