@@ -86,6 +86,8 @@ namespace Operation {
     std::vector<TH1D*>  NumberVerticiesAfterAlphaT_;
     std::vector<TH1D*>  DeltaPhiPsudoJets_;
     std::vector<TH2D*> MinBiasDphi_EtaPhiMap_;
+    std::vector<TH2D*> HT_vs_SecondJetPt_after_alphaT_;
+    std::vector<TH2D*> HT_vs_SecondJetPt_;
     // //DeadECAL Plots
     // std::vector<TH1D*>  BiasedDphi_;
     // std::vector<TH1D*> BadJetECALDR_;

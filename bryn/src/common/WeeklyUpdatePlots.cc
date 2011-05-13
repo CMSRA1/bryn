@@ -62,6 +62,21 @@ std::ostream& WeeklyUpdatePlots::Description( std::ostream& ostrm ) {
 void WeeklyUpdatePlots::StandardPlots() {
 
 
+  BookHistArray( HT_vs_SecondJetPt_,
+    "HT_vs_secondJetPt",
+    ";H_{T} (GeV);# p_{T}^{j2} (GeV)",
+    120, 0., 3000.,
+    240, 0., 1600.,
+    nMax_+1, 0, 1, true );
+
+
+  BookHistArray( HT_vs_SecondJetPt_after_alphaT_,
+    "HT_vs_SecondJetPt_after_alphaT",
+    ";H_{T} (GeV);# p_{T}^{j2} (GeV)",
+    120, 0., 3000.,
+    240, 0., 1600.,
+    nMax_+1, 0, 1, true );
+
 
   BookHistArray( vertexPtovHT_,
     "vertexPtovHT",
@@ -74,7 +89,6 @@ void WeeklyUpdatePlots::StandardPlots() {
     ";#Delta #phi PsudoJets;Events;",
     1000, 0., 10000.,
     nMax_+1, 0, 1, true );
-
 
   BookHistArray( AlphaTVsNoVertex_,
     "AlphaTVsNoVertex",
@@ -95,13 +109,11 @@ void WeeklyUpdatePlots::StandardPlots() {
     10,0.,10,
     nMax_+1, 0, 1, true );
 
-
   BookHistArray( AlphaTOneVertex_,
     "AlphaTOneVetex",
     ";#alpha_{T};Events/0.025;",
     60,0.,1.5,
     nMax_+1, 0, 1, true );
-
 
   BookHistArray( AlphaTgOneVertex_,
     "AlphaTGreaterOneVetex",
@@ -115,7 +127,6 @@ void WeeklyUpdatePlots::StandardPlots() {
     20, 0., 1.,
     20, 0., 1.,
     nMax_+1, 0, 1, true );
-
 
   BookHistArray( AlphaTafterPFMEC_,
     "AlphaT_after_PF_MEC",
@@ -153,14 +164,12 @@ void WeeklyUpdatePlots::StandardPlots() {
     40, -1., 1.,
     nMax_+1, 0, 1, true );
 
-
   BookHistArray( MinBiasDphi_EtaPhiMap_,
     "MinBiasDphi_EtaPhiMap_",
     ";#eta;#phi",
     60, -3., 3.,
     64, -3.2., 3.2,
     nMax_+1, 0, 1, true );
-
 
   BookHistArray( DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_,
     "DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_",
@@ -195,14 +204,11 @@ void WeeklyUpdatePlots::StandardPlots() {
     60, .0, 300.,
     nMax_+1, 0, 1, true );
 
-
   BookHistArray( MissedHT_,
     "MHTRatio_after_alphaT_55",
     ";MHT30/MHT10;Events/0.1;",
     100, 0., 10,
     nMax_+1, 0, 1, true );
-
-
 
   BookHistArray( CaloMET_,
     "CaloMET",
@@ -222,8 +228,6 @@ void WeeklyUpdatePlots::StandardPlots() {
     100, 0., 10,
     nMax_+1, 0, 1, true );
 
-
-
   BookHistArray( MHTovMET_,
     "MHTovMET_afterAlphaT",
     ";MHT/MET;Events/0.1;",
@@ -236,7 +240,6 @@ void WeeklyUpdatePlots::StandardPlots() {
     40, 0., TMath::Pi(),
     nMax_+1, 0, 1, true );
 
-
   BookHistArray( DetlaPhi_NextToLeadingJets_,
     "DetlaPhi_NextToLeadingJets_",
     ";#Delta #phi(j_{2},j_{3}); Events/0.65 rad;",
@@ -248,7 +251,6 @@ void WeeklyUpdatePlots::StandardPlots() {
     ";M_{T2} (GeV); Events/20 GeV;",
     100, 0., 2000.,
     nMax_+1, 0, 1, true );
-
 
   BookHistArray( Mt2_,
     "Mt2",
@@ -304,8 +306,6 @@ void WeeklyUpdatePlots::StandardPlots() {
     75, 0., 3000.,
     nMax_+1, 0, 1, true );
 
-
-
   BookHistArray( AlphatCut_BiasedDphi_,
     "BiasedDeltaPhi_after_alphaT_55",
     ";#Delta #phi^{*} (rad); Events/0.05 rad;",
@@ -330,21 +330,17 @@ void WeeklyUpdatePlots::StandardPlots() {
     60,0.,600.,
     nMax_+1, 0, 1, true );
 
-
-
   BookHistArray( HT_forRatio_,
     "HT_forRatioPlots",
     ";H_{T} (GeV); Events/25 GeV;",
     80,0.,2000.,
     nMax_+1, 0, 1, true );
 
-
   BookHistArray( MultiplicityAfteraT_,
     "JetMultiplicityAfterAlphaT",
     ";n",
     15,0.,15.,
     nMax_+1, 0, 1, true );
-
 
   BookHistArray( Multiplicity_,
     "JetMultiplicity",
@@ -573,24 +569,18 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
     counterBaby_++;
   }
 
-if( biasedDPhi < biasedDPhi_baby){
-      if ( n >= nMin_ && n <= nMax_ && n < MinBiasDphi_EtaPhiMap_.size()) {
-        MinBiasDphi_EtaPhiMap_[0]->Fill(ev.JD_CommonJets().accepted[count_]->Eta(), ev.JD_CommonJets().accepted[count_]->Phi(),weight);
-        MinBiasDphi_EtaPhiMap_[n]->Fill(ev.JD_CommonJets().accepted[count_]->Eta(), ev.JD_CommonJets().accepted[count_]->Phi(),weight);
-      }
-}
-if( biasedDPhi > biasedDPhi_baby){
-      if ( n >= nMin_ && n <= nMax_ && n < MinBiasDphi_EtaPhiMap_.size()) {
-        MinBiasDphi_EtaPhiMap_[0]->Fill(ev.JD_CommonJets().baby[countBaby_]->Eta(), ev.JD_CommonJets().baby[countBaby_]->Phi(),weight);
-        MinBiasDphi_EtaPhiMap_[n]->Fill(ev.JD_CommonJets().baby[countBaby_]->Eta(), ev.JD_CommonJets().baby[countBaby_]->Phi(),weight);
-      }
-}
-
-
-
-
-
-
+  if( biasedDPhi < biasedDPhi_baby){
+    if ( n >= nMin_ && n <= nMax_ && n < MinBiasDphi_EtaPhiMap_.size()) {
+      MinBiasDphi_EtaPhiMap_[0]->Fill(ev.JD_CommonJets().accepted[count_]->Eta(), ev.JD_CommonJets().accepted[count_]->Phi(),weight);
+      MinBiasDphi_EtaPhiMap_[n]->Fill(ev.JD_CommonJets().accepted[count_]->Eta(), ev.JD_CommonJets().accepted[count_]->Phi(),weight);
+    }
+  }
+  if( biasedDPhi > biasedDPhi_baby){
+    if ( n >= nMin_ && n <= nMax_ && n < MinBiasDphi_EtaPhiMap_.size()) {
+      MinBiasDphi_EtaPhiMap_[0]->Fill(ev.JD_CommonJets().baby[countBaby_]->Eta(), ev.JD_CommonJets().baby[countBaby_]->Phi(),weight);
+      MinBiasDphi_EtaPhiMap_[n]->Fill(ev.JD_CommonJets().baby[countBaby_]->Eta(), ev.JD_CommonJets().baby[countBaby_]->Phi(),weight);
+    }
+  }
 
 
 
@@ -601,338 +591,340 @@ if( biasedDPhi > biasedDPhi_baby){
     ev.vertexSumPt()->begin();
   vtx != ev.vertexSumPt()->end();++vtx){
     if(!ev.vertexIsFake()->at( vtx-ev.vertexSumPt()->begin()) && fabs((ev.vertexPosition()->at( vtx-ev.vertexSumPt()->begin())).Z()) < 24.0 && ev.vertexNdof()->at( vtx-ev.vertexSumPt()->begin() ) > 4&& (ev.vertexPosition()->at( vtx-ev.vertexSumPt()->begin())).Rho() < 2.0 ){  VertexPt += *vtx;}
-}
+  }
+
+
+  for(std::vector<float>::const_iterator vtx =
+    ev.vertexSumPt()->begin();
+  vtx != ev.vertexSumPt()->end();++vtx){
+    if(!ev.vertexIsFake()->at( vtx-ev.vertexSumPt()->begin()) &&
+      fabs((ev.vertexPosition()->at( vtx-ev.vertexSumPt()->begin())).Z()) < 24.0 &&
+      ev.vertexNdof()->at( vtx-ev.vertexSumPt()->begin() ) > 4 &&
+      (ev.vertexPosition()->at( vtx-ev.vertexSumPt()->begin())).Rho() < 2.0 ){  nVertex++; }
+  }
+
+  if ( StandardPlots_ ){
+
+    std::pair<LorentzV,LorentzV> PsudoJets = WeeklyUpdatePlots::PsudoJets( ev );
+
+    if(fabs(cos(ROOT::Math::VectorUtil::DeltaPhi(PsudoJets.first,PsudoJets.second))) < 0.85){
+      if ( n >= nMin_ && n <= nMax_ && n < DeltaPhiPsudoJets_.size()) {
+        DeltaPhiPsudoJets_[0]->Fill(ev.CommonMHT().Pt()/fabs(cos(ROOT::Math::VectorUtil::DeltaPhi(PsudoJets.first,PsudoJets.second))),weight);
+        DeltaPhiPsudoJets_[n]->Fill(ev.CommonMHT().Pt()/fabs(cos(ROOT::Math::VectorUtil::DeltaPhi(PsudoJets.first,PsudoJets.second))),weight);
+      }
+    }
+
+
+
+    if ( n >= nMin_ && n <= nMax_ && n < HT_vs_SecondJetPt_.size()) {
+      HT_vs_SecondJetPt_[0]->Fill(ev.CommonHT(),.ev.JD_CommonJets().accepted[1]->Pt(),weight);
+      HT_vs_SecondJetPt_[n]->Fill(ev.CommonHT(),.ev.JD_CommonJets().accepted[1]->Pt(),weight);
+    }
 
 
 
 
 
-      for(std::vector<float>::const_iterator vtx =
-        ev.vertexSumPt()->begin();
-      vtx != ev.vertexSumPt()->end();++vtx){
-        if(!ev.vertexIsFake()->at( vtx-ev.vertexSumPt()->begin()) &&
-          fabs((ev.vertexPosition()->at( vtx-ev.vertexSumPt()->begin())).Z()) < 24.0 &&
-          ev.vertexNdof()->at( vtx-ev.vertexSumPt()->begin() ) > 4 &&
-          (ev.vertexPosition()->at( vtx-ev.vertexSumPt()->begin())).Rho() < 2.0 ){  nVertex++; }
+    if ( n >= nMin_ && n <= nMax_ && n < vertexPtovHT_.size()) {
+      vertexPtovHT_[0]->Fill(VertexPt/ev.CommonHT(),weight);
+      vertexPtovHT_[n]->Fill(VertexPt/ev.CommonHT(),weight);
+    }
+
+
+
+    if ( n >= nMin_ && n <= nMax_ && n < NumberVerticies_.size()) {
+      NumberVerticies_[0]->Fill(nVertex,weight);
+      NumberVerticies_[n]->Fill(nVertex,weight);
+    }
+
+
+    if ( n >= nMin_ && n <= nMax_ && n < AlphaTVsNoVertex_.size()) {
+      AlphaTVsNoVertex_[0]->Fill(ev.CommonAlphaT(),nVertex,weight);
+      AlphaTVsNoVertex_[n]->Fill(ev.CommonAlphaT(),nVertex,weight);
+    }
+
+
+
+    if(nVertex == 1){
+      if ( n >= nMin_ && n <= nMax_ && n < AlphaTOneVertex_.size()) {
+        AlphaTOneVertex_[0]->Fill(ev.CommonAlphaT(),weight);
+        AlphaTOneVertex_[n]->Fill(ev.CommonAlphaT(),weight);
       }
 
-    if ( StandardPlots_ ){
+    }
 
-      std::pair<LorentzV,LorentzV> PsudoJets = WeeklyUpdatePlots::PsudoJets( ev );
-
-      if(fabs(cos(ROOT::Math::VectorUtil::DeltaPhi(PsudoJets.first,PsudoJets.second))) < 0.85){
-        if ( n >= nMin_ && n <= nMax_ && n < DeltaPhiPsudoJets_.size()) {
-          DeltaPhiPsudoJets_[0]->Fill(ev.CommonMHT().Pt()/fabs(cos(ROOT::Math::VectorUtil::DeltaPhi(PsudoJets.first,PsudoJets.second))),weight);
-          DeltaPhiPsudoJets_[n]->Fill(ev.CommonMHT().Pt()/fabs(cos(ROOT::Math::VectorUtil::DeltaPhi(PsudoJets.first,PsudoJets.second))),weight);
-        }
-      }
-
-
-
-
-
-
-
-      if ( n >= nMin_ && n <= nMax_ && n < vertexPtovHT_.size()) {
-        vertexPtovHT_[0]->Fill(VertexPt/ev.CommonHT(),weight);
-        vertexPtovHT_[n]->Fill(VertexPt/ev.CommonHT(),weight);
-      }
-
-
-
-      if ( n >= nMin_ && n <= nMax_ && n < NumberVerticies_.size()) {
-        NumberVerticies_[0]->Fill(nVertex,weight);
-        NumberVerticies_[n]->Fill(nVertex,weight);
-      }
-
-
-      if ( n >= nMin_ && n <= nMax_ && n < AlphaTVsNoVertex_.size()) {
-        AlphaTVsNoVertex_[0]->Fill(ev.CommonAlphaT(),nVertex,weight);
-        AlphaTVsNoVertex_[n]->Fill(ev.CommonAlphaT(),nVertex,weight);
-      }
-
-
-
-      if(nVertex == 1){
-        if ( n >= nMin_ && n <= nMax_ && n < AlphaTOneVertex_.size()) {
-          AlphaTOneVertex_[0]->Fill(ev.CommonAlphaT(),weight);
-          AlphaTOneVertex_[n]->Fill(ev.CommonAlphaT(),weight);
-        }
-
-      }
-
-      if(nVertex > 1){
-        if ( n >= nMin_ && n <= nMax_ && n < AlphaTgOneVertex_.size()) {
-          AlphaTgOneVertex_[0]->Fill(ev.CommonAlphaT(),weight);
-          AlphaTgOneVertex_[n]->Fill(ev.CommonAlphaT(),weight);
-        }
-
-
-      }
-
-
-
-
-      if( (ev.CommonMHT().Pt()-ev.PFMET().Pt())/(ev.CommonMHT().Pt()+ev.CommonHT()) < 0.15){
-        if( n >= nMin_ && n <= nMax_ && n < AlphaTafterPFMEC_.size() ) {
-          AlphaTafterPFMEC_[0]->Fill(ev.CommonAlphaT(),weight);
-          AlphaTafterPFMEC_[n]->Fill(ev.CommonAlphaT(),weight);
-          AlphaT_Zoomed_afterPFMEC_[0]->Fill(ev.CommonAlphaT(),weight);
-          AlphaT_Zoomed_afterPFMEC_[n]->Fill(ev.CommonAlphaT(),weight);
-        }
-      }
-
-      if( (ev.CommonMHT().Pt()-LorentzV(*ev.metP4caloTypeII()).Pt())/(ev.CommonMHT().Pt()+ev.CommonHT()) < 0.15){
-        if( n >= nMin_ && n <= nMax_ && n < AlphaTafterCaloMEC_.size() ) {
-          AlphaTafterCaloMEC_[0]->Fill(ev.CommonAlphaT(),weight);
-          AlphaTafterCaloMEC_[n]->Fill(ev.CommonAlphaT(),weight);
-          AlphaT_ZoomedafterCaloMEC_[0]->Fill(ev.CommonAlphaT(),weight);
-          AlphaT_ZoomedafterCaloMEC_[n]->Fill(ev.CommonAlphaT(),weight);
-        }
+    if(nVertex > 1){
+      if ( n >= nMin_ && n <= nMax_ && n < AlphaTgOneVertex_.size()) {
+        AlphaTgOneVertex_[0]->Fill(ev.CommonAlphaT(),weight);
+        AlphaTgOneVertex_[n]->Fill(ev.CommonAlphaT(),weight);
       }
 
 
-      if(ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt() < 1.25){
-        if ( n >= nMin_ && n <= nMax_ && n < AlphaT_METCut_.size()) {
-          AlphaT_METCut_[0]->Fill(ev.CommonAlphaT(),weight);
-          AlphaT_METCut_[n]->Fill(ev.CommonAlphaT(),weight);
-          AlphaT_Zoomed_METCut_[0]->Fill(ev.CommonAlphaT(),weight);
-          AlphaT_Zoomed_METCut_[n]->Fill(ev.CommonAlphaT(),weight);
-        }
+    }
+
+
+
+
+    if( (ev.CommonMHT().Pt()-ev.PFMET().Pt())/(ev.CommonMHT().Pt()+ev.CommonHT()) < 0.15){
+      if( n >= nMin_ && n <= nMax_ && n < AlphaTafterPFMEC_.size() ) {
+        AlphaTafterPFMEC_[0]->Fill(ev.CommonAlphaT(),weight);
+        AlphaTafterPFMEC_[n]->Fill(ev.CommonAlphaT(),weight);
+        AlphaT_Zoomed_afterPFMEC_[0]->Fill(ev.CommonAlphaT(),weight);
+        AlphaT_Zoomed_afterPFMEC_[n]->Fill(ev.CommonAlphaT(),weight);
+      }
+    }
+
+    if( (ev.CommonMHT().Pt()-LorentzV(*ev.metP4caloTypeII()).Pt())/(ev.CommonMHT().Pt()+ev.CommonHT()) < 0.15){
+      if( n >= nMin_ && n <= nMax_ && n < AlphaTafterCaloMEC_.size() ) {
+        AlphaTafterCaloMEC_[0]->Fill(ev.CommonAlphaT(),weight);
+        AlphaTafterCaloMEC_[n]->Fill(ev.CommonAlphaT(),weight);
+        AlphaT_ZoomedafterCaloMEC_[0]->Fill(ev.CommonAlphaT(),weight);
+        AlphaT_ZoomedafterCaloMEC_[n]->Fill(ev.CommonAlphaT(),weight);
+      }
+    }
+
+
+    if(ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt() < 1.25){
+      if ( n >= nMin_ && n <= nMax_ && n < AlphaT_METCut_.size()) {
+        AlphaT_METCut_[0]->Fill(ev.CommonAlphaT(),weight);
+        AlphaT_METCut_[n]->Fill(ev.CommonAlphaT(),weight);
+        AlphaT_Zoomed_METCut_[0]->Fill(ev.CommonAlphaT(),weight);
+        AlphaT_Zoomed_METCut_[n]->Fill(ev.CommonAlphaT(),weight);
+      }
+
+    }
+
+
+
+    if ( n >= nMin_ && n <= nMax_ && n < DPhi_MHT_MHTBaby_.size()) {
+      DPhi_MHT_MHTBaby_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),weight);
+      DPhi_MHT_MHTBaby_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),weight);
+
+    }
+
+    if ( n >= nMin_ && n <= nMax_ && n < DPhi_MET_MHTBaby_.size()) {
+      DPhi_MET_MHTBaby_[0]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(ev.PFMET(),ev.JD_CommonJets().babyHT)),weight);
+      DPhi_MET_MHTBaby_[n]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(ev.PFMET(),ev.JD_CommonJets().babyHT)),weight);
+
+    }
+
+    if ( n >= nMin_ && n <= nMax_ && n < DPhi_MET_MHT_.size()) {
+      DPhi_MET_MHT_[0]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(ev.PFMET(),ev.CommonMHT())),weight);
+      DPhi_MET_MHT_[n]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(ev.PFMET(),ev.CommonMHT())),weight);
+
+    }
+
+
+
+    if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHT_.size()) {
+      BabyJetMHT_[0]->Fill( ev.JD_CommonJets().babyHT.Pt(), weight );
+      BabyJetMHT_[n]->Fill( ev.JD_CommonJets().babyHT.Pt(), weight );
+    }
+
+    if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHT_StandardMHT_.size()) {
+      BabyJetMHT_StandardMHT_[0]->Fill( ev.CommonMHT().Pt(),ev.JD_CommonJets().babyHT.Pt(), weight );
+      BabyJetMHT_StandardMHT_[n]->Fill( ev.CommonMHT().Pt(),ev.JD_CommonJets().babyHT.Pt(), weight );
+    }
+
+
+
+    if ( n >= nMin_ && n <= nMax_ && n < DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_.size()) {
+      DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),
+        (ev.JD_CommonJets().babyHT).Pt()/ev.CommonMHT().Pt(),weight);
+      DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),
+        (ev.JD_CommonJets().babyHT).Pt()/ev.CommonMHT().Pt(),weight);
+
+    }
+
+
+
+
+    if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHT_StandardAlphaT_.size()) {
+      BabyJetMHT_StandardAlphaT_[0]->Fill( ev.CommonAlphaT(), cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)), weight );
+      BabyJetMHT_StandardAlphaT_[n]->Fill( ev.CommonAlphaT(), cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)), weight );
+    }
+
+
+
+    if ( n >= nMin_ && n <= nMax_ && n < Mt2_LeadingJets_.size()) {
+      Mt2_LeadingJets_[0]->Fill( WeeklyUpdatePlots::MT2_Leading(ev), weight );
+      Mt2_LeadingJets_[n]->Fill( WeeklyUpdatePlots::MT2_Leading(ev), weight );
+    }
+
+    if ( n >= nMin_ && n <= nMax_ && n < Multiplicity_.size()) {
+      Multiplicity_[0]->Fill( n, weight );
+      Multiplicity_[n]->Fill( n, weight );
+    }
+
+    if ( n >= nMin_ && n <= nMax_ && n < MHT_.size()) {
+      MHT_[0]->Fill( ev.CommonMHT().Pt(), weight );
+      MHT_[n]->Fill( ev.CommonMHT().Pt(), weight );
+    }
+
+    if ( n >= nMin_ && n <= nMax_ && n < HT_.size() ) {
+      HT_[0]->Fill( ev.CommonHT(), weight );
+      HT_[n]->Fill( ev.CommonHT(), weight );
+    }
+
+
+    if ( n >= nMin_ && n <= nMax_ && n < MHToverHT_.size() ) {
+      MHToverHT_[0]->Fill( ev.CommonMHT().Pt()/ev.CommonHT(), weight );
+      MHToverHT_[n]->Fill( ev.CommonMHT().Pt()/ev.CommonHT(), weight );
+    }
+
+    if ( n >= nMin_ && n <= nMax_ && n < Meff_.size()) {
+      Meff_[0]->Fill( ev.CommonMHT().Pt()+ev.CommonHT(), weight );
+      Meff_[n]->Fill( ev.CommonMHT().Pt()+ev.CommonHT(), weight );
+    }
+
+
+    if ( n >= nMin_ && n <= nMax_ && n < AlphaT_Zoomed_.size()  ) {
+      AlphaT_Zoomed_[0]->Fill( ev.CommonAlphaT(), weight );
+      AlphaT_Zoomed_[n]->Fill( ev.CommonAlphaT(), weight );
+    }
+
+    if ( n >= nMin_ && n <= nMax_ && n < AlphaT_.size()  ) {
+      AlphaT_[0]->Fill( ev.CommonAlphaT(), weight );
+      AlphaT_[n]->Fill( ev.CommonAlphaT(), weight );
+    }
+
+    if ( n >= nMin_ && n <= nMax_ && n < Mt2_.size() ) {
+      Mt2_[0]->Fill( WeeklyUpdatePlots::MT2(ev), weight );
+      Mt2_[n]->Fill( WeeklyUpdatePlots::MT2(ev), weight );
+    }
+
+    if ( n >= nMin_ && n <= nMax_ && n < BiasedDphi_.size()  ) {
+      BiasedDphi_[0]->Fill( ev.CommonMinBiasDPhi(), weight );
+      BiasedDphi_[n]->Fill( ev.CommonMinBiasDPhi(), weight );
+    }
+
+    if( n >= nMin_ && n <= nMax_ && n < DetlaPhi_LeadingJets_.size() ){
+      DetlaPhi_LeadingJets_[1]->Fill( fabs( ROOT::Math::VectorUtil::DeltaPhi(*ev.JD_CommonJets().accepted[0],*ev.JD_CommonJets().accepted[1])),weight);
+      if(n <2){
+        DetlaPhi_NextToLeadingJets_[2]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(*ev.JD_CommonJets().accepted[1],*ev.JD_CommonJets().accepted[2])),weight);
+
+      }
+    }
+
+
+    for(unsigned int i = 0; i < ev.JD_CommonJets().accepted.size() && i < 3; i++){
+      fem_[0]->Fill(ev.JD_CommonJets().accepted[i]->GetEmFrac(),weight);
+      JetPt_[0]->Fill(ev.JD_CommonJets().accepted[i]->Pt(),weight);
+      JetEta_[0]->Fill(ev.JD_CommonJets().accepted[i]->Eta(),weight);
+      fem_[i+1]->Fill(ev.JD_CommonJets().accepted[i]->GetEmFrac(),weight);
+      JetPt_[i+1]->Fill(ev.JD_CommonJets().accepted[i]->Pt(),weight);
+      JetEta_[i+1]->Fill(ev.JD_CommonJets().accepted[i]->Eta(),weight);
+    }
+
+
+
+    if( n >= nMin_ && n <= nMax_ && n < AlphaT_components_.size() ){
+      AlphaT_components_[0]->Fill(ev.CommonMHT().Pt()/ev.CommonHT(),WeeklyUpdatePlots::DeltaHT(ev)/ev.CommonHT(),weight);
+      AlphaT_components_[n]->Fill(ev.CommonMHT().Pt()/ev.CommonHT(),WeeklyUpdatePlots::DeltaHT(ev)/ev.CommonHT(),weight);
+    }
+
+
+    if(LorentzV(*ev.metP4caloTypeII()).Pt() < 20.0){
+      if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHTafterMETcut_.size()) {
+        BabyJetMHTafterMETcut_[0]->Fill( ev.JD_CommonJets().babyHT.Pt(), weight );
+        BabyJetMHTafterMETcut_[n]->Fill( ev.JD_CommonJets().babyHT.Pt(), weight );
+      }
+    }
+
+
+    if ( n >= nMin_ && n <= nMax_ && n < MHTovMET_raw_.size() ) {
+      MHTovMET_raw_[0]->Fill(  ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+      MHTovMET_raw_[n]->Fill(  ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+    }
+
+    if ( n >= nMin_ && n <= nMax_ && n < CaloMET_.size() ) {
+      CaloMET_[0]->Fill(  LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+      CaloMET_[n]->Fill(  LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+    }
+
+
+    if(ev.CommonAlphaT() > 0.55){
+
+
+      if ( n >= nMin_ && n <= nMax_ && n < HT_vs_SecondJetPt_after_alphaT.size()) {
+      HT_vs_SecondJetPt_after_alphaT[0]->Fill(ev.CommonHT(),.ev.JD_CommonJets().accepted[1]->Pt(),weight);
+      HT_vs_SecondJetPt_after_alphaT[n]->Fill(ev.CommonHT(),.ev.JD_CommonJets().accepted[1]->Pt(),weight);
+    }
+
+
+      if ( n >= nMin_ && n <= nMax_ && n < CaloMET_afteraT_.size() ) {
+        CaloMET_afteraT_[0]->Fill(  LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+        CaloMET_afteraT_[n]->Fill(  LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+      }
+
+      if ( n >= nMin_ && n <= nMax_ && n < NumberVerticiesAfterAlphaT_.size()) {
+        NumberVerticiesAfterAlphaT_[0]->Fill(nVertex,weight);
+        NumberVerticiesAfterAlphaT_[n]->Fill(nVertex,weight);
+      }
+
+      if ( n >= nMin_ && n <= nMax_ && n < MultiplicityAfteraT_.size()) {
+        MultiplicityAfteraT_[0]->Fill( n, weight );
+        MultiplicityAfteraT_[n]->Fill( n, weight );
+      }
+
+      if ( n >= nMin_ && n <= nMax_ && n < HT_forRatio_.size() ) {
+        HT_forRatio_[0]->Fill(  ev.CommonHT(), weight );
+        HT_forRatio_[n]->Fill( ev.CommonHT(), weight );
+      }
+
+      if ( n >= nMin_ && n <= nMax_ && n < MHTovMET_.size() ) {
+        MHTovMET_[0]->Fill(  ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+        MHTovMET_[n]->Fill(  ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
+      }
+
+      if ( n >= nMin_ && n <= nMax_ && n < MissedHT_.size() ) {
+        MissedHT_[0]->Fill(  ev.CommonRecoilMET().Pt()/(ev.CommonRecoilMET()+ev.JD_CommonJets().babyHT).Pt(), weight );
+        MissedHT_[n]->Fill( ev.CommonRecoilMET().Pt()/(ev.CommonRecoilMET()+ev.JD_CommonJets().babyHT).Pt(), weight );
+      }
+
+      if ( n >= nMin_ && n <= nMax_ && n < DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_AfterAlphaT_.size()) {
+        DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_AfterAlphaT_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),
+          ev.JD_CommonJets().babyHT.Pt()/ev.CommonMHT().Pt(),weight);
+        DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_AfterAlphaT_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),
+          ev.JD_CommonJets().babyHT.Pt()/ev.CommonMHT().Pt(),weight);
 
       }
 
 
-
-      if ( n >= nMin_ && n <= nMax_ && n < DPhi_MHT_MHTBaby_.size()) {
-        DPhi_MHT_MHTBaby_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),weight);
-        DPhi_MHT_MHTBaby_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),weight);
-
-      }
-
-      if ( n >= nMin_ && n <= nMax_ && n < DPhi_MET_MHTBaby_.size()) {
-        DPhi_MET_MHTBaby_[0]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(ev.PFMET(),ev.JD_CommonJets().babyHT)),weight);
-        DPhi_MET_MHTBaby_[n]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(ev.PFMET(),ev.JD_CommonJets().babyHT)),weight);
+      if ( n >= nMin_ && n <= nMax_ && n < DPhi_MHT_MHTbaby_AfterAlphaT_.size()) {
+        DPhi_MHT_MHTbaby_AfterAlphaT_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),weight);
+        DPhi_MHT_MHTbaby_AfterAlphaT_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),weight);
 
       }
 
-      if ( n >= nMin_ && n <= nMax_ && n < DPhi_MET_MHT_.size()) {
-        DPhi_MET_MHT_[0]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(ev.PFMET(),ev.CommonMHT())),weight);
-        DPhi_MET_MHT_[n]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(ev.PFMET(),ev.CommonMHT())),weight);
-
+      if ( n >= nMin_ && n <= nMax_ && n < AlphatCut_HT_.size() ) {
+        AlphatCut_HT_[0]->Fill( ev.CommonHT(), weight );
+        AlphatCut_HT_[n]->Fill( ev.CommonHT(), weight );
       }
 
-
-
-      if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHT_.size()) {
-        BabyJetMHT_[0]->Fill( ev.JD_CommonJets().babyHT.Pt(), weight );
-        BabyJetMHT_[n]->Fill( ev.JD_CommonJets().babyHT.Pt(), weight );
+      if ( n >= nMin_ && n <= nMax_ && n < AlphatCut_Meff_.size()) {
+        AlphatCut_Meff_[0]->Fill( ev.CommonMHT().Pt()+ev.CommonHT(), weight );
+        AlphatCut_Meff_[n]->Fill( ev.CommonMHT().Pt()+ev.CommonHT(), weight );
       }
 
-      if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHT_StandardMHT_.size()) {
-        BabyJetMHT_StandardMHT_[0]->Fill( ev.CommonMHT().Pt(),ev.JD_CommonJets().babyHT.Pt(), weight );
-        BabyJetMHT_StandardMHT_[n]->Fill( ev.CommonMHT().Pt(),ev.JD_CommonJets().babyHT.Pt(), weight );
+      if ( n >= nMin_ && n <= nMax_ && n < AlphatCut_BiasedDphi_.size()  ) {
+        AlphatCut_BiasedDphi_[0]->Fill( ev.CommonMinBiasDPhi(), weight );
+        AlphatCut_BiasedDphi_[n]->Fill( ev.CommonMinBiasDPhi(), weight );
       }
-
-
-
-      if ( n >= nMin_ && n <= nMax_ && n < DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_.size()) {
-        DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),
-          (ev.JD_CommonJets().babyHT).Pt()/ev.CommonMHT().Pt(),weight);
-        DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),
-          (ev.JD_CommonJets().babyHT).Pt()/ev.CommonMHT().Pt(),weight);
-
-      }
+    }
 
 
 
 
-      if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHT_StandardAlphaT_.size()) {
-        BabyJetMHT_StandardAlphaT_[0]->Fill( ev.CommonAlphaT(), cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)), weight );
-        BabyJetMHT_StandardAlphaT_[n]->Fill( ev.CommonAlphaT(), cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)), weight );
-      }
-
-
-
-      if ( n >= nMin_ && n <= nMax_ && n < Mt2_LeadingJets_.size()) {
-        Mt2_LeadingJets_[0]->Fill( WeeklyUpdatePlots::MT2_Leading(ev), weight );
-        Mt2_LeadingJets_[n]->Fill( WeeklyUpdatePlots::MT2_Leading(ev), weight );
-      }
-
-      if ( n >= nMin_ && n <= nMax_ && n < Multiplicity_.size()) {
-        Multiplicity_[0]->Fill( n, weight );
-        Multiplicity_[n]->Fill( n, weight );
-      }
-
-      if ( n >= nMin_ && n <= nMax_ && n < MHT_.size()) {
-        MHT_[0]->Fill( ev.CommonMHT().Pt(), weight );
-        MHT_[n]->Fill( ev.CommonMHT().Pt(), weight );
-      }
-
-      if ( n >= nMin_ && n <= nMax_ && n < HT_.size() ) {
-        HT_[0]->Fill( ev.CommonHT(), weight );
-        HT_[n]->Fill( ev.CommonHT(), weight );
-      }
-
-
-      if ( n >= nMin_ && n <= nMax_ && n < MHToverHT_.size() ) {
-        MHToverHT_[0]->Fill( ev.CommonMHT().Pt()/ev.CommonHT(), weight );
-        MHToverHT_[n]->Fill( ev.CommonMHT().Pt()/ev.CommonHT(), weight );
-      }
-
-      if ( n >= nMin_ && n <= nMax_ && n < Meff_.size()) {
-        Meff_[0]->Fill( ev.CommonMHT().Pt()+ev.CommonHT(), weight );
-        Meff_[n]->Fill( ev.CommonMHT().Pt()+ev.CommonHT(), weight );
-      }
-
-
-      if ( n >= nMin_ && n <= nMax_ && n < AlphaT_Zoomed_.size()  ) {
-        AlphaT_Zoomed_[0]->Fill( ev.CommonAlphaT(), weight );
-        AlphaT_Zoomed_[n]->Fill( ev.CommonAlphaT(), weight );
-      }
-
-      if ( n >= nMin_ && n <= nMax_ && n < AlphaT_.size()  ) {
-        AlphaT_[0]->Fill( ev.CommonAlphaT(), weight );
-        AlphaT_[n]->Fill( ev.CommonAlphaT(), weight );
-      }
-
-      if ( n >= nMin_ && n <= nMax_ && n < Mt2_.size() ) {
-        Mt2_[0]->Fill( WeeklyUpdatePlots::MT2(ev), weight );
-        Mt2_[n]->Fill( WeeklyUpdatePlots::MT2(ev), weight );
-      }
-
-      if ( n >= nMin_ && n <= nMax_ && n < BiasedDphi_.size()  ) {
-        BiasedDphi_[0]->Fill( ev.CommonMinBiasDPhi(), weight );
-        BiasedDphi_[n]->Fill( ev.CommonMinBiasDPhi(), weight );
-      }
-
-      if( n >= nMin_ && n <= nMax_ && n < DetlaPhi_LeadingJets_.size() ){
-        DetlaPhi_LeadingJets_[1]->Fill( fabs( ROOT::Math::VectorUtil::DeltaPhi(*ev.JD_CommonJets().accepted[0],*ev.JD_CommonJets().accepted[1])),weight);
-        if(n <2){
-          DetlaPhi_NextToLeadingJets_[2]->Fill(fabs(ROOT::Math::VectorUtil::DeltaPhi(*ev.JD_CommonJets().accepted[1],*ev.JD_CommonJets().accepted[2])),weight);
-
-        }
-      }
-
-
-      for(unsigned int i = 0; i < ev.JD_CommonJets().accepted.size() && i < 3; i++){
-        fem_[0]->Fill(ev.JD_CommonJets().accepted[i]->GetEmFrac(),weight);
-        JetPt_[0]->Fill(ev.JD_CommonJets().accepted[i]->Pt(),weight);
-        JetEta_[0]->Fill(ev.JD_CommonJets().accepted[i]->Eta(),weight);
-        fem_[i+1]->Fill(ev.JD_CommonJets().accepted[i]->GetEmFrac(),weight);
-        JetPt_[i+1]->Fill(ev.JD_CommonJets().accepted[i]->Pt(),weight);
-        JetEta_[i+1]->Fill(ev.JD_CommonJets().accepted[i]->Eta(),weight);
-      }
-
-
-
-      if( n >= nMin_ && n <= nMax_ && n < AlphaT_components_.size() ){
-        AlphaT_components_[0]->Fill(ev.CommonMHT().Pt()/ev.CommonHT(),WeeklyUpdatePlots::DeltaHT(ev)/ev.CommonHT(),weight);
-        AlphaT_components_[n]->Fill(ev.CommonMHT().Pt()/ev.CommonHT(),WeeklyUpdatePlots::DeltaHT(ev)/ev.CommonHT(),weight);
-      }
-
-
-      if(LorentzV(*ev.metP4caloTypeII()).Pt() < 20.0){
-        if ( n >= nMin_ && n <= nMax_ && n < BabyJetMHTafterMETcut_.size()) {
-          BabyJetMHTafterMETcut_[0]->Fill( ev.JD_CommonJets().babyHT.Pt(), weight );
-          BabyJetMHTafterMETcut_[n]->Fill( ev.JD_CommonJets().babyHT.Pt(), weight );
-        }
-      }
-
-
-      if ( n >= nMin_ && n <= nMax_ && n < MHTovMET_raw_.size() ) {
-        MHTovMET_raw_[0]->Fill(  ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
-        MHTovMET_raw_[n]->Fill(  ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
-      }
-
-      if ( n >= nMin_ && n <= nMax_ && n < CaloMET_.size() ) {
-        CaloMET_[0]->Fill(  LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
-        CaloMET_[n]->Fill(  LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
-      }
-
-
-
-      if(ev.CommonAlphaT() > 0.55){
-        if ( n >= nMin_ && n <= nMax_ && n < CaloMET_afteraT_.size() ) {
-          CaloMET_afteraT_[0]->Fill(  LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
-          CaloMET_afteraT_[n]->Fill(  LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
-        }
-
-
-        if ( n >= nMin_ && n <= nMax_ && n < NumberVerticiesAfterAlphaT_.size()) {
-          NumberVerticiesAfterAlphaT_[0]->Fill(nVertex,weight);
-          NumberVerticiesAfterAlphaT_[n]->Fill(nVertex,weight);
-        }
-
-
-        if ( n >= nMin_ && n <= nMax_ && n < MultiplicityAfteraT_.size()) {
-          MultiplicityAfteraT_[0]->Fill( n, weight );
-          MultiplicityAfteraT_[n]->Fill( n, weight );
-        }
-
-        if ( n >= nMin_ && n <= nMax_ && n < HT_forRatio_.size() ) {
-          HT_forRatio_[0]->Fill(  ev.CommonHT(), weight );
-          HT_forRatio_[n]->Fill( ev.CommonHT(), weight );
-        }
-
-        if ( n >= nMin_ && n <= nMax_ && n < MHTovMET_.size() ) {
-          MHTovMET_[0]->Fill(  ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
-          MHTovMET_[n]->Fill(  ev.CommonMHT().Pt()/LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
-        }
-
-
-
-        if ( n >= nMin_ && n <= nMax_ && n < MissedHT_.size() ) {
-          MissedHT_[0]->Fill(  ev.CommonRecoilMET().Pt()/(ev.CommonRecoilMET()+ev.JD_CommonJets().babyHT).Pt(), weight );
-          MissedHT_[n]->Fill( ev.CommonRecoilMET().Pt()/(ev.CommonRecoilMET()+ev.JD_CommonJets().babyHT).Pt(), weight );
-        }
-
-        if ( n >= nMin_ && n <= nMax_ && n < DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_AfterAlphaT_.size()) {
-          DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_AfterAlphaT_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),
-            ev.JD_CommonJets().babyHT.Pt()/ev.CommonMHT().Pt(),weight);
-          DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_AfterAlphaT_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),
-            ev.JD_CommonJets().babyHT.Pt()/ev.CommonMHT().Pt(),weight);
-
-        }
-
-
-
-        if ( n >= nMin_ && n <= nMax_ && n < DPhi_MHT_MHTbaby_AfterAlphaT_.size()) {
-          DPhi_MHT_MHTbaby_AfterAlphaT_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),weight);
-          DPhi_MHT_MHTbaby_AfterAlphaT_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),weight);
-
-        }
-
-
-
-        if ( n >= nMin_ && n <= nMax_ && n < AlphatCut_HT_.size() ) {
-          AlphatCut_HT_[0]->Fill( ev.CommonHT(), weight );
-          AlphatCut_HT_[n]->Fill( ev.CommonHT(), weight );
-        }
-
-        if ( n >= nMin_ && n <= nMax_ && n < AlphatCut_Meff_.size()) {
-          AlphatCut_Meff_[0]->Fill( ev.CommonMHT().Pt()+ev.CommonHT(), weight );
-          AlphatCut_Meff_[n]->Fill( ev.CommonMHT().Pt()+ev.CommonHT(), weight );
-        }
-
-        if ( n >= nMin_ && n <= nMax_ && n < AlphatCut_BiasedDphi_.size()  ) {
-          AlphatCut_BiasedDphi_[0]->Fill( ev.CommonMinBiasDPhi(), weight );
-          AlphatCut_BiasedDphi_[n]->Fill( ev.CommonMinBiasDPhi(), weight );
-        }
-      }
-
-
-
-
-      if(!ev.pthat.enabled()){
+    if(!ev.pthat.enabled()){
       // if(ev.CommonAlphaT() > 0.55 || WeeklyUpdatePlots::MT2_Leading(ev) > 200. || WeeklyUpdatePlots::MT2(ev) > 200. || ev.CommonMHT().Pt() > 250.){
-        if(ev.CommonAlphaT() > 0.55 && ev.CommonHT() > 350.){
-          LorentzV lv1(0.,0.,0.,0.);
-          LorentzV lv2(0.,0.,0.,0.);
-          lv1 += *(ev.JD_CommonJets().accepted[0]);
-          lv2 += *(ev.JD_CommonJets().accepted[1]);
+      if(ev.CommonAlphaT() > 0.55 && ev.CommonHT() > 350.){
+        LorentzV lv1(0.,0.,0.,0.);
+        LorentzV lv2(0.,0.,0.,0.);
+        lv1 += *(ev.JD_CommonJets().accepted[0]);
+        lv2 += *(ev.JD_CommonJets().accepted[1]);
         // cout << " This event passes offline cuts!!! " <<endl;
-          cout << "Alpha T is " << ev.CommonAlphaT() << " HT is "<< ev.CommonHT() <<" MHT is  " << ev.CommonMHT().Pt() << " and MT2 is " << WeeklyUpdatePlots::MT2_Leading(ev) << " Bised delta phi is " << ev.CommonMinBiasDPhi()<< " Meff is " << ev.CommonMHT().Pt()+ev.CommonHT()<< " run : " <<  ev.RunNumber() << ":"<< ev.LumiSection() <<  ":"<<  ev.EventNumber() << endl;
+        cout << "Alpha T is " << ev.CommonAlphaT() << " HT is "<< ev.CommonHT() <<" MHT is  " << ev.CommonMHT().Pt() << " and MT2 is " << WeeklyUpdatePlots::MT2_Leading(ev) << " Bised delta phi is " << ev.CommonMinBiasDPhi()<< " Meff is " << ev.CommonMHT().Pt()+ev.CommonHT()<< " run : " <<  ev.RunNumber() << ":"<< ev.LumiSection() <<  ":"<<  ev.EventNumber() << endl;
         // if(WeeklyUpdatePlots::MT2_Leading(ev) > 300.){ cout << "MT2 Variables are: px,py, Leading Jet " <<
           // ev.JD_CommonJets().accepted[0]->Px() << "," << ev.JD_CommonJets().accepted[0]->Py() << "," <<" px,py, Second Jet " << ev.JD_CommonJets().accepted[1]->Px()  <<"," <<  ev.JD_CommonJets().accepted[1]->Py() << "," << endl;}
         // cout << " run : " <<  ev.RunNumber() << "lumi Section "<< ev.LumiSection() <<  " event : "<<  ev.EventNumber() << " Alpha T is" << ev.CommonAlphaT() << " Effective mass is : " << ev.CommonMHT().Pt()+ev.CommonHT() << " Dijet Mass is " << (lv1+lv2).M() << endl;
@@ -941,18 +933,18 @@ if( biasedDPhi > biasedDPhi_baby){
         // cout << "all"<<endl;
         // ev.PrintStableVisAllRec();
 
-        }
-
       }
 
     }
 
-
-
-
-
-
-
-    return true;
-
   }
+
+
+
+
+
+
+
+  return true;
+
+}
