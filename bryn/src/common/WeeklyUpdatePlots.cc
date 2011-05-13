@@ -168,7 +168,7 @@ void WeeklyUpdatePlots::StandardPlots() {
     "MinBiasDphi_EtaPhiMap_",
     ";#eta;#phi",
     60, -3., 3.,
-    64, -3.2., 3.2,
+    64, -3.2, 3.2,
     nMax_+1, 0, 1, true );
 
   BookHistArray( DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_,
@@ -846,9 +846,9 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
     if(ev.CommonAlphaT() > 0.55){
 
 
-      if ( n >= nMin_ && n <= nMax_ && n < HT_vs_SecondJetPt_after_alphaT.size()) {
-      HT_vs_SecondJetPt_after_alphaT[0]->Fill(ev.CommonHT(),.ev.JD_CommonJets().accepted[1]->Pt(),weight);
-      HT_vs_SecondJetPt_after_alphaT[n]->Fill(ev.CommonHT(),.ev.JD_CommonJets().accepted[1]->Pt(),weight);
+      if ( n >= nMin_ && n <= nMax_ && n < HT_vs_SecondJetPt_after_alphaT_.size()) {
+      HT_vs_SecondJetPt_after_alphaT_[0]->Fill(ev.CommonHT(),.ev.JD_CommonJets().accepted[1]->Pt(),weight);
+      HT_vs_SecondJetPt_after_alphaT_[n]->Fill(ev.CommonHT(),.ev.JD_CommonJets().accepted[1]->Pt(),weight);
     }
 
 
