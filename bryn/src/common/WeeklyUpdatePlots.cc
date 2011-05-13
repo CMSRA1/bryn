@@ -617,8 +617,8 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
 
 
     if ( n >= nMin_ && n <= nMax_ && n < HT_vs_SecondJetPt_.size()) {
-      HT_vs_SecondJetPt_[0]->Fill(ev.CommonHT(),.ev.JD_CommonJets().accepted[1]->Pt(),weight);
-      HT_vs_SecondJetPt_[n]->Fill(ev.CommonHT(),.ev.JD_CommonJets().accepted[1]->Pt(),weight);
+      HT_vs_SecondJetPt_[0]->Fill(ev.CommonHT(),ev.JD_CommonJets().accepted[1]->Pt(),weight);
+      HT_vs_SecondJetPt_[n]->Fill(ev.CommonHT(),ev.JD_CommonJets().accepted[1]->Pt(),weight);
     }
 
 
@@ -847,8 +847,8 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
 
 
       if ( n >= nMin_ && n <= nMax_ && n < HT_vs_SecondJetPt_after_alphaT_.size()) {
-      HT_vs_SecondJetPt_after_alphaT_[0]->Fill(ev.CommonHT(),.ev.JD_CommonJets().accepted[1]->Pt(),weight);
-      HT_vs_SecondJetPt_after_alphaT_[n]->Fill(ev.CommonHT(),.ev.JD_CommonJets().accepted[1]->Pt(),weight);
+      HT_vs_SecondJetPt_after_alphaT_[0]->Fill(ev.CommonHT(),ev.JD_CommonJets().accepted[1]->Pt(),weight);
+      HT_vs_SecondJetPt_after_alphaT_[n]->Fill(ev.CommonHT(),ev.JD_CommonJets().accepted[1]->Pt(),weight);
     }
 
 
