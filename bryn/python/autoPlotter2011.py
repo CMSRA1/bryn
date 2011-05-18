@@ -10,7 +10,7 @@ import math
 from time import strftime
 import os, commands, sys
 from PlottingFunctions import *
-Root.gROOT.SetBatch(True) # suppress the creation of canvases on the screen.. much much faster if over a remote connection
+Root.gROOT.SetBatch(True) # suppress the creation of canvases on the screen... much much faster if over a remote connection
 
 Root.gROOT.ProcessLine(".L ./tdrstyle.C+")
 Root.gStyle.SetLineStyleString(11,"50 25")
@@ -24,7 +24,7 @@ def ensure_dir(path):
 
 #Please enter the integrated lumi for the plots here:
 algo = "Calo"
-intlumi =43.2
+intlumi =188.92
 print "The Integrated Luminosity your plots are being scaled to is: ", intlumi , "pb^{-1}"
 
 
@@ -42,10 +42,10 @@ print "you are using the " , algo , " Jet collection"
 def GetHist(DataSetName,col,norm,Legend):
     a = Root.TFile.Open(DataSetName) #open the file
     closeList.append(a) # append the file to the close list
-    if type(dir) != int:
-      b= a.Get(dir)
-    else:
-      b = a.Get(DirKeys[dir].GetTitle()) #open the directory in the root file
+    # if type(dir) != int:
+      # b= a.Get(dir)
+    # else:
+    b = a.Get(DirKeys[dir].GetTitle()) #open the directory in the root file
     Hist = b.Get(hist) # get your histogram by name
     if Hist == None :
       Hist = Root.TH1D()
@@ -113,11 +113,16 @@ def UnityLine (Data):
   pass
 
 
-def PassingCutNumbers(Hist, name ,lowerBound):
+def PassingCutNumbers(Hist, name ,lowerBound, Upperbound):
   lowbin = Hist.FindBin(lowerBound)
+  highbin = Hist.GetNbinsX()
+  # print Hist.GetBinWidth(10) , "THIS IS THE BIN WIDTH"
+  if Upperbound != None:
+    highbin = Hist.FindBin(Upperbound)
+  # print "looking in bin", highbin, "This has a low edge of " , Hist.GetBinLowEdge(highbin), "Lower bin is" , lowbin, "THis has a low bin edge of" , Hist.GetBinLowEdge(lowbin)
   errorVal = Root.Double(0)
-  passingCut = Hist.IntegralAndError(lowbin, Hist.GetNbinsX(), errorVal)
-  textLine = "Sample = " + DirKeys[dir].GetTitle()  + "   " + str(Hist.GetName()) + "     " + name +  " , Number passing cut of   " + str(lowerBound) + " is " + "       " + str(passingCut)+ " +/- " + str(errorVal) + "\n"
+  passingCut = Hist.IntegralAndError(lowbin,highbin, errorVal)
+  textLine = "Sample = " + DirKeys[dir].GetTitle()  + "   " + str(Hist.GetName()) + "     " + name +  " , Number bewteen cut of   " + str(lowerBound) + " and " + str(Upperbound) +" is " + "       " + str(passingCut)+ " +/- " + str(errorVal) + "\n"
   CutNumbers.write(textLine)
 
 
@@ -161,31 +166,31 @@ for dir in range(0,len(DirKeys)):
     # if "AllCuts" not in DirKeys[dir].GetTitle() : continue
     # Root.tdrStyle.SetPadRightMargin(0.06)#tweak
     # if "CaloMET_after_alphaT_all" in hist: Draw = True
-    if "EffectiveMass_after_alphaT_55_all" in hist: Draw = True
+    # if "EffectiveMass_after_alphaT_55_all" in hist: Draw = True
     # if "HT_after_alphaT_all" == hist: Draw = True
-    if "BiasedDeltaPhi_after_alphaT_55_all" in hist: Draw = True
+    # if "BiasedDeltaPhi_after_alphaT_55_all" in hist: Draw = True
     # if "CosDetlaPhi_MHT_MHTBaby__all" in hist: Draw = True
     # if "DPhi_MHT_MHTbaby_AfterAlphaT__all" in hist: Draw = True
-    if "BabyJetMHT_all" in hist: Draw = True
-    if "BabyJetMHTafterMetCut_all" in hist: Draw = True
-    if "Number_Primary_verticies__all" in hist:
-      Draw = True
-      DrawNorm = True
+    # if "BabyJetMHT_all" in hist: Draw = True
+    # if "BabyJetMHTafterMetCut_all" in hist: Draw = True
+    # if "Number_Primary_verticies__all" in hist:
+      # Draw = True
+      # DrawNorm = True
     # if "CaloMET_all" in hist: Draw = True
     if "MHTovMET_all" in hist: Draw = True
     if "MHTovMET_afterAlphaT_all" in hist: Draw = True
-    if "Mt2_LeadingJets_all" in hist: Draw = True
-    if "Mt2_all" in hist: Draw = True
-    if "HT_after_alphaT_all" == hist : Draw = True
-    if "AlphaT_all" == hist: Draw = True
-    if "AlphaT_Zoomed_all" == hist: Draw = True
-    if "HT_all" == hist: Draw = True
-    if "EffectiveMass_all" in hist: Draw = True
+    # if "Mt2_LeadingJets_all" in hist: D/raw = True
+    # if "Mt2_all" in hist: Draw = True
+    # if "HT_after_alphaT_all" == hist : Draw = True
+    # if "AlphaT_all" == hist: Draw = True
+    # if "AlphaT_Zoomed_all" == hist: Draw = True
+    # if "HT_all" == hist: Draw = True
+    # if "EffectiveMass_all" in hist: Draw = True
     # if "BiasedDeltaPhi_all" in hist: Draw = True
-    if "MHToverHT_all" in hist: Draw = True
+    # if "MHToverHT_all" in hist: Draw = True
     # if "MHT_all" == hist: Draw = True
-    if "JetMultiplicityAfterAlphaT_all" in hist: Draw = True
-    if "JetMultiplicity_all" in hist: Draw = True
+    # if "JetMultiplicityAfterAlphaT_all" in hist: Draw = True
+    # if "JetMultiplicity_all" in hist: Draw = True
     # if "JetEta_" in hist: Draw = True
     # if "JetPt_" in hist: Draw = True
     # if "fem__all" in hist: Draw = True
@@ -197,6 +202,7 @@ for dir in range(0,len(DirKeys)):
     # if "__15" in hist: Draw = True
     if not Draw : continue
     if "/" in hist : continue
+    # print hist , hist , hist , hist , hist , DirKeys[dir].GetTitle() ,DirKeys[dir].GetTitle() ,DirKeys[dir].GetTitle() ,DirKeys[dir].GetTitle() ,DirKeys[dir].GetTitle()
 
     leg = Root.TLegend(0.65, 0.45, 0.97, 0.8)
     if "JetMultiplicity_all" == hist: leg2 = Root.TLegend(0.62, 0.55, 0.97, 0.85)
@@ -292,7 +298,8 @@ for dir in range(0,len(DirKeys)):
     Pythia8 = False
 
     if hist == "MHTovMET_afterAlphaT_all" or hist == "BabyJetMHT_all" or hist == "BabyJetMHTafterMetCut_all" or hist == "BiasedDeltaPhi_after_alphaT_55_all" or hist == "BiasedDeltaPhi_all" :
-      Pythia8=GetHist("~/Finalresults/NoSmear/AK5"+algo+"_QCD_Pythia8_38.root",3,1,"QCD Pythia tune 1")
+      Pythia8=Root.TH1D()
+      # Pythia8=GetHist("~/Finalresults/NoSmear/AK5"+algo+"_QCD_Pythia8_38.root",3,1,"QCD Pythia tune 1")
       # Pythia8.Add(GetHistFromFolder(resultsDir+"/AK5"+algo+"_QCD_Pythia8_38.root","300_350Gevcombined",Root.kTeal-7,1,0))
       Pythia8.SetLineWidth(3)
     DrawErrors = True
@@ -378,11 +385,11 @@ for dir in range(0,len(DirKeys)):
     blank1 = Root.TH1D()
     blank2 = Root.TH2D()
 
-    if "MHTovMET_afterAlphaT_all" in hist:
-      Total.Rebin(4)
-      ScaledUp.Rebin(4)
-      ScaledDown.Rebin(4)
-      Smeared.Rebin(4)
+    # if "MHTovMET_afterAlphaT_all" in hist:
+    #   Total.Rebin(4)
+    #   ScaledUp.Rebin(4)
+    #   ScaledDown.Rebin(4)
+    #   Smeared.Rebin(4)
 
 
 
@@ -392,11 +399,11 @@ for dir in range(0,len(DirKeys)):
         ScaledUp.Rebin(3)
         ScaledDown.Rebin(3)
         Smeared.Rebin(3)
-      if "BiasedDeltaPhi_after_alphaT_55_all" == hist:
-        Total.Rebin(4)
-        ScaledUp.Rebin(4)
-        ScaledDown.Rebin(4)
-        Smeared.Rebin(4)
+      # if "BiasedDeltaPhi_after_alphaT_55_all" == hist:
+        # Total.Rebin(4)
+        # ScaledUp.Rebin(4)
+        # ScaledDown.Rebin(4)
+        # Smeared.Rebin(4)
     # AsymErrors = Systematics(Total,Total,Total,Smeared ,"TGraph")
     AsymErrors = Systematics(Total,ScaledUp,ScaledDown,Smeared ,"TGraph")
     AsymErrors.SetLineColor(Root.kAzure+2)#kTeal+3)
@@ -409,35 +416,51 @@ for dir in range(0,len(DirKeys)):
     if SMBackGrounds.Integral(0,SMBackGrounds.GetNbinsX()) == 0 : Draw = False
 
     drawEWK = False
-    if "AlphaT_all" == hist :
-      PassingCutNumbers(Data, "Data"            ,0.55)
-      # PassingCutNumbers(SmearedJets, "Data_SMEARED!!!"  ,0.55)
-      PassingCutNumbers(Total, "Total Background Stat" ,0.55)
-      PassingCutNumbers(ScaledUp, "Total Background scaled up" ,0.55)
-      PassingCutNumbers(ScaledDown, "Total Background scaled down" ,0.55)
-      PassingCutNumbers(SMBackGrounds, "Total Background Systematic" ,0.55)
-      PassingCutNumbers(ttbar, "TTBbar"         ,0.55)
-      PassingCutNumbers(Ztotal, "ZJets"          ,0.55)
-      PassingCutNumbers(WJets, "WJETS"          ,0.55)
-      PassingCutNumbers(QCD, "QCD"              ,0.55)
-      # PassingCutNumbers(Zinv, "Zinv"            ,0.55)
-      PassingCutNumbers(LM0, "LM0"              ,0.55)
-      PassingCutNumbers(LM1, "LM1"              ,0.55)
+    # if "AlphaT_all" == hist :
+    #   PassingCutNumbers(Data, "Data"            ,0.55)
+    #   # PassingCutNumbers(SmearedJets, "Data_SMEARED!!!"  ,0.55)
+    #   PassingCutNumbers(Total, "Total Background Stat" ,0.55)
+    #   PassingCutNumbers(ScaledUp, "Total Background scaled up" ,0.55)
+    #   PassingCutNumbers(ScaledDown, "Total Background scaled down" ,0.55)
+    #   PassingCutNumbers(SMBackGrounds, "Total Background Systematic" ,0.55)
+    #   PassingCutNumbers(ttbar, "TTBbar"         ,0.55)
+    #   PassingCutNumbers(Ztotal, "ZJets"          ,0.55)
+    #   PassingCutNumbers(WJets, "WJETS"          ,0.55)
+    #   PassingCutNumbers(QCD, "QCD"              ,0.55)
+    #   # PassingCutNumbers(Zinv, "Zinv"            ,0.55)
+    #   PassingCutNumbers(LM0, "LM0"              ,0.55)
+    #   PassingCutNumbers(LM1, "LM1"              ,0.55)
     #
     #
-    if "HT_all" == hist :
-      PassingCutNumbers(Data, "Data"    ,350.)
-      # PassingCutNumbers(Data, "Data 250GeV"    ,250.)
-    #   PassingCutNumbers(Total, "Total Background Stat" ,250.)
-    #   PassingCutNumbers(SMBackGrounds, "Total Background Systematic" ,250.)
-    #   PassingCutNumbers(LM0, "LM0"      ,250.)
-    #   PassingCutNumbers(LM1, "LM1"      ,250.)
-    #   PassingCutNumbers(Data, "JetMET"  ,250.)
-    #   PassingCutNumbers(ttbar, "TTBbar" ,250.)
-    #   PassingCutNumbers(ZJets, "ZJets"  ,250.)
-    #   PassingCutNumbers(WJets, "WJETS"  ,250.)
-    #   PassingCutNumbers(QCD, "QCD"      ,250.)
-    #   PassingCutNumbers(Zinv, "Zinv"    ,250.)
+    uplist = [325,375,475,575,675,775,875,3000]
+    lowlist = [275,325,375,475,575,675,775,875]
+    if "HT_after_alphaT_all" == hist :
+      for up, low in zip(uplist , lowlist):
+        PassingCutNumbers(Data, "Data"    ,low,up)
+    if "HT_after_alphaT_all" == hist :
+      for up, low in zip(uplist , lowlist):
+        PassingCutNumbers(Total, "Total Background Stat"  ,low,up)
+    if "HT_after_alphaT_all" == hist :
+      for up, low in zip(uplist , lowlist):
+        PassingCutNumbers(LM0, "LM0"       ,low,up)
+    if "HT_after_alphaT_all" == hist :
+      for up, low in zip(uplist , lowlist):
+        PassingCutNumbers(LM1, "LM1"       ,low,up)
+    if "HT_after_alphaT_all" == hist :
+      for up, low in zip(uplist , lowlist):
+        PassingCutNumbers(Data, "JetMET"   ,low,up)
+    if "HT_after_alphaT_all" == hist :
+      for up, low in zip(uplist , lowlist):
+        PassingCutNumbers(ttbar, "TTBbar"  ,low,up)
+    if "HT_after_alphaT_all" == hist :
+      for up, low in zip(uplist , lowlist):
+        PassingCutNumbers(WJets, "WJETS"   ,low,up)
+    if "HT_after_alphaT_all" == hist :
+      for up, low in zip(uplist , lowlist):
+        PassingCutNumbers(QCD, "QCD"       ,low,up)
+    if "HT_after_alphaT_all" == hist :
+      for up, low in zip(uplist , lowlist):
+        PassingCutNumbers(Ztotal, "Ztotal"     ,low,up)
     #
     # if "MHT_all" == hist :
     #   PassingCutNumbers(Data, "Data"                                 ,140.)
@@ -493,7 +516,7 @@ for dir in range(0,len(DirKeys)):
        MaxX = HistogramMaxX(Data)
     if HistogramMaxY(Data) > MaxY :
        MaxY = HistogramMaxY(Data)
-    if "Mt2" in hist: MaxX = 500.
+    if "Mt2" in hist: MaxX = 1000.
     if "AlphaT" in hist: MaxX = MaxXOrig
     if "Multiplicity" in hist:
       MaxX = 12.
@@ -541,12 +564,12 @@ for dir in range(0,len(DirKeys)):
       QCD.SetFillColor(Root.kRed-7)
       # Pythia8.SetFillStyle(1001)
       Pythia8.SetFillColor(3)
-      Data.Rebin(4)
-      Pythia8.Rebin(4)
-      EWK.Rebin(4)
-      QCD.Rebin(4)
-      LM0.Rebin(4)
-      LM1.Rebin(4)
+      # Data.Rebin(4)
+      # Pythia8.Rebin(4)
+      # EWK.Rebin(4)
+      # QCD.Rebin(4)
+      # LM0.Rebin(4)
+      # LM1.Rebin(4)
       # leg2.AddEntry(Pythia8 , "QCD Pythia tune 1","lp")
       drawEWK = True
       drawBackgrounds = False
@@ -630,19 +653,19 @@ for dir in range(0,len(DirKeys)):
       MinY = .06
       leg2 = Root.TLegend(0.35, 0.56, 0.9, 0.77)
       if (DirKeys[dir].GetTitle()) == "250_300Gevcombined": leg2 = Root.TLegend(0.15, 0.56, 0.9, 0.77)
-      Data.Rebin(4)
-      QCD.Rebin(4)
-      Pythia8.Rebin(4)
-      Ztotal.Rebin(4)
+      # Data.Rebin(4)
+      # QCD.Rebin(4)
+      # Pythia8.Rebin(4)
+      # Ztotal.Rebin(4)
       # Zinv.Rebin(4)
       QCD.SetFillStyle(3345)
       QCD.SetFillColor(Root.kRed-7)
       Pythia8.SetFillStyle(3354)
       Pythia8.SetFillColor(3)
-      ttbar.Rebin(4)
-      EWK.Rebin(4)
-      LM0.Rebin(4)
-      LM1.Rebin(4)
+      # ttbar.Rebin(4)
+      # EWK.Rebin(4)
+      # LM0.Rebin(4)
+      # LM1.Rebin(4)
       QCD.SetFillStyle(3345)
       QCD.SetFillColor(Root.kRed-7)
       Pythia8.GetYaxis().SetTitle("Events/0.2")
@@ -725,6 +748,12 @@ for dir in range(0,len(DirKeys)):
     QCD.GetYaxis().SetRangeUser(MinY,MaxY*5.)
     QCD.GetXaxis().SetRangeUser(MinX,MaxX)
 
+    if "MHTovMET_afterAlphaT_all" == hist:
+      Pythia8.GetXaxis().SetRangeUser(MinX,MaxX)
+      QCD.GetXaxis().SetRangeUser(MinX,MaxX)
+      Data.GetXaxis().SetRangeUser(MinX,MaxX)
+      Pythia8.GetXaxis().SetRangeUser(MinX,MaxX)
+
     if DrawNorm == True:
       # Pythia8.SetTitleOffset(1.3, "Y")
       # Pythia8.DrawNormalized("9hist")
@@ -747,9 +776,11 @@ for dir in range(0,len(DirKeys)):
 
       if DrawSM == False:
         if Pythia8:
-          Pythia8.Draw("9hist")
-          Pythia8.SetTitleOffset(1.3, "Y")
-          QCD.Draw("9histsame")
+          QCD.Draw("9hist")
+          QCD.SetTitleOffset(1.3, "Y")
+          Pythia8.Draw("9histsame")
+
+          # QCD.SetTitleOffset(1.3, "Y")
         else:
           Total.Draw("9hist")
           Total.SetTitleOffset(1.3, "Y")
@@ -877,19 +908,19 @@ for dir in range(0,len(DirKeys)):
       if "All" == (DirKeys[dir].GetTitle()):
         AllPlots += PlotRow("All"+hist,"nAll"+hist,"Allcombined"+hist)
 
-      if "250_300Gev" == (DirKeys[dir].GetTitle()):
+      if "275_325Gev" == (DirKeys[dir].GetTitle()):
         # if "_after_alphaT" in hist : ControlRegonPlotsAfterAT1 += PlotRow("250_300Gev"+hist,"n250_300Gev"+hist,"250_300Gevcombined"+hist)
         ControlRegonPlots1 += PlotRow("250_300Gev"+hist,"n250_300Gev"+hist,"250_300Gevcombined"+hist)
 
-      if "300_350Gev" == (DirKeys[dir].GetTitle()):
+      if "325_375Gev" == (DirKeys[dir].GetTitle()):
         # if "_after_alphaT" in hist : ControlRegonPlotsAfterAT2 += PlotRow("300_350Gev"+hist,"n300_350Gev"+hist, "300_350Gevcombined"+hist)
         ControlRegonPlots2 += PlotRow("300_350Gev"+hist,"n300_350Gev"+hist,"300_350Gevcombined"+hist)
 
-      if "350Gev" == (DirKeys[dir].GetTitle()):
+      if "375Gev" == (DirKeys[dir].GetTitle()):
         # if "_after_alphaT" in hist : SignalRegonPlotsAfterAT += PlotRow("350Gev"+hist,"n350Gev"+hist,"350Gevcombined"+hist)
         SignalRegonPlots += PlotRow("350Gev"+hist,"n350Gev"+hist,"350Gevcombined"+hist)
 
-      if "350Gev_afterDeadEcal" == (DirKeys[dir].GetTitle()):
+      if "375Gev_afterDeadEcal" == (DirKeys[dir].GetTitle()):
         # if "_after_alphaT" in hist : SignalRegonPlotsAfterATandDeadEcal += PlotRow("350Gev_afterDeadEcal"+hist,"n350Gev_afterDeadEcal"+hist,"350Gev_afterDeadEcalcombined"+hist)
         SignalRegonPlotsAfterDeadEcal += PlotRow("350Gev_afterDeadEcal"+hist,"n350Gev_afterDeadEcal"+hist,"350Gev_afterDeadEcalcombined"+hist)
 
@@ -901,7 +932,17 @@ for dir in range(0,len(DirKeys)):
     for a in closeList :
       a.Close()
     closeList = []
-site = Header(intlumi)+BegSec("Signal Region after all cuts")+ SignalRegonPlotsAfterAllCuts+ EndSec()  + BegSec("All Plots") + AllPlots + EndSec() + BegSec("Signal Region Plots") + SignalRegonPlots + EndSec()  + BegSec("Signal Region Plots After Dead Ecal Cut") + SignalRegonPlotsAfterDeadEcal + EndSec() + Footer()
+# print SignalRegonPlotsAfterAllCuts
+# site0 =
+site1 = Header(intlumi)+ BegSec("All Plots") + AllPlots + EndSec() + Footer()
+site2 = Header(intlumi)+ BegSec("Signal Region Plots") + SignalRegonPlots + EndSec()  + Footer()
+site3 = Header(intlumi)+ BegSec("Signal Region Plots After Dead Ecal Cut") + SignalRegonPlotsAfterDeadEcal + EndSec()  + Footer()
 print " Making Web Page now!"
-Webpage = open(outputfile+"/StandardPlots.html",'w')
-Webpage.write(site)
+Webpage0 = open(outputfile+"/AllCuts.html",'w')
+Webpage1 = open(outputfile+"/Inclusive.html",'w')
+Webpage2 = open(outputfile+"/HTG350GeV.html",'w')
+Webpage3 = open(outputfile+"/DeadEcalCut350GeV.html",'w')
+Webpage0.write(Header(intlumi)+BegSec("Signal Region after all cuts")+ SignalRegonPlotsAfterAllCuts+ EndSec()  + Footer())
+Webpage1.write(site1)
+Webpage2.write(site2)
+Webpage3.write(site3)
