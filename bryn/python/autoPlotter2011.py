@@ -118,7 +118,7 @@ def PassingCutNumbers(Hist, name ,lowerBound, Upperbound):
   highbin = Hist.GetNbinsX()
   # print Hist.GetBinWidth(10) , "THIS IS THE BIN WIDTH"
   if Upperbound != None:
-    highbin = Hist.FindBin(Upperbound)
+    highbin = Hist.FindBin(Upperbound) - 1
   # print "looking in bin", highbin, "This has a low edge of " , Hist.GetBinLowEdge(highbin), "Lower bin is" , lowbin, "THis has a low bin edge of" , Hist.GetBinLowEdge(lowbin)
   errorVal = Root.Double(0)
   passingCut = Hist.IntegralAndError(lowbin,highbin, errorVal)
@@ -160,39 +160,50 @@ for dir in range(0,len(DirKeys)):
   # print DirKeys[dir].GetTitle(), dir
   for hist in HistNames[dir]:
     Draw = False
+    DrawLog = True
     Root.setTDRStyle()
     DrawNorm = False
     # print DirKeys[dir].GetTitle()
     # if "AllCuts" not in DirKeys[dir].GetTitle() : continue
     # Root.tdrStyle.SetPadRightMargin(0.06)#tweak
-    # if "CaloMET_after_alphaT_all" in hist: Draw = True
-    # if "EffectiveMass_after_alphaT_55_all" in hist: Draw = True
-    # if "HT_after_alphaT_all" == hist: Draw = True
-    # if "BiasedDeltaPhi_after_alphaT_55_all" in hist: Draw = True
-    # if "CosDetlaPhi_MHT_MHTBaby__all" in hist: Draw = True
-    # if "DPhi_MHT_MHTbaby_AfterAlphaT__all" in hist: Draw = True
-    # if "BabyJetMHT_all" in hist: Draw = True
-    # if "BabyJetMHTafterMetCut_all" in hist: Draw = True
-    # if "Number_Primary_verticies__all" in hist:
-      # Draw = True
-      # DrawNorm = True
-    # if "CaloMET_all" in hist: Draw = True
+    if "CaloMET_after_alphaT_all" in hist: Draw = True
+    if "EffectiveMass_after_alphaT_55_all" in hist: 
+	Draw = True
+	DrawLog = False
+    if "HT_after_alphaT_all" == hist: 
+	Draw = True
+	DrawLog = False
+    if "BiasedDeltaPhi_after_alphaT_55_all" in hist: 
+	Draw = True
+    	DrawLog = False
+    if "CosDetlaPhi_MHT_MHTBaby__all" in hist: Draw = True
+    if "DPhi_MHT_MHTbaby_AfterAlphaT__all" in hist: Draw = True
+    if "BabyJetMHT_all" in hist: Draw = True
+    if "BabyJetMHTafterMetCut_all" in hist: Draw = True
+    if "Number_Primary_verticies__all" in hist:
+      Draw = True
+      DrawNorm = True
+    if "CaloMET_all" in hist: Draw = True
     if "MHTovMET_all" in hist: Draw = True
     if "MHTovMET_afterAlphaT_all" in hist: Draw = True
-    # if "Mt2_LeadingJets_all" in hist: D/raw = True
-    # if "Mt2_all" in hist: Draw = True
-    # if "HT_after_alphaT_all" == hist : Draw = True
-    # if "AlphaT_all" == hist: Draw = True
-    # if "AlphaT_Zoomed_all" == hist: Draw = True
-    # if "HT_all" == hist: Draw = True
-    # if "EffectiveMass_all" in hist: Draw = True
-    # if "BiasedDeltaPhi_all" in hist: Draw = True
-    # if "MHToverHT_all" in hist: Draw = True
-    # if "MHT_all" == hist: Draw = True
-    # if "JetMultiplicityAfterAlphaT_all" in hist: Draw = True
-    # if "JetMultiplicity_all" in hist: Draw = True
+    if "Mt2_LeadingJets_all" in hist: Draw = True
+    if "Mt2_all" in hist: Draw = True
+    if "HT_after_alphaT_all" == hist : 
+	Draw = True
+	DrawLog = False
+    if "AlphaT_all" == hist: Draw = True
+    if "AlphaT_Zoomed_all" == hist: Draw = True
+    if "HT_all" == hist: Draw = True
+    if "EffectiveMass_all" in hist: Draw = True
+    if "BiasedDeltaPhi_all" in hist: Draw = True
+    if "MHToverHT_all" in hist: Draw = True
+    if "MHT_all" == hist: Draw = True
+    if "JetMultiplicityAfterAlphaT_all" in hist: 
+	Draw = True
+    	DrawLog = False
+    if "JetMultiplicity_all" in hist: Draw = True
     # if "JetEta_" in hist: Draw = True
-    # if "JetPt_" in hist: Draw = True
+    if "JetPt_" in hist: Draw = True
     # if "fem__all" in hist: Draw = True
     # if "BabyJetMHTafterMetCut_all" in hist: Draw = True
 
@@ -432,8 +443,8 @@ for dir in range(0,len(DirKeys)):
     #   PassingCutNumbers(LM1, "LM1"              ,0.55)
     #
     #
-    uplist = [325,375,475,575,675,775,875,3000]
-    lowlist = [275,325,375,475,575,675,775,875]
+    uplist = [325,375,425,475,575,675,775,875,3000]
+    lowlist = [275,325,375,425,475,575,675,775,875]
     if "HT_after_alphaT_all" == hist :
       for up, low in zip(uplist , lowlist):
         PassingCutNumbers(Data, "Data"    ,low,up)
@@ -699,6 +710,7 @@ for dir in range(0,len(DirKeys)):
 
     if "HT_after_alphaT_all" == hist:
       MinX = 350.
+      MaxX = 1000.
     if "HT_all" == hist:
       MinX = 250.
       Total.GetYaxis().SetTitle("Events / 25 GeV")
@@ -885,7 +897,7 @@ for dir in range(0,len(DirKeys)):
         vertDistNorm.append(i/vertTot)
       print vertDistNorm
     Data.Draw("9SAMEP")
-    c1.cd(1).SetLogy()
+    if DrawLog : c1.cd(1).SetLogy()
     c1.Update()
     # print "Data Starting Bin", Data.GetBinLowEdge(1), MinX
     # print "Bin Width", EWK.GetBinWidth(2)
@@ -900,7 +912,7 @@ for dir in range(0,len(DirKeys)):
     # c1.SaveAs(outputfile+(DirKeys[dir].GetTitle())+hist+".png")
     if Total.GetEntries() == 0: Draw = False
     if Draw :
-      c1.cd(1).SetLogy()
+      if DrawLog : c1.cd(1).SetLogy()
       c1.Update()
       c1.Print(outputfile+(DirKeys[dir].GetTitle())+hist+".png")
       c1.Print(outputfile+(DirKeys[dir].GetTitle())+hist+".pdf")
