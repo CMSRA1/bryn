@@ -18,9 +18,11 @@ def GetHist(DataSetName,folder,hist):
 histList = glob.glob(sys.argv[1])
 
 for hist in histList:
+  if "Z2" in hist: continue
+  if "PU" in hist: continue
   a = GetHist(hist,"AllCuts","HT_after_alphaT_all")
   b = GetHist(hist,"nAllCuts","HT_after_alphaT_all")
-  # c = GetHist(hist,"AllCutscombined","HT_after_alphaT_all")
+  #c = GetHist(hist,"AllCutscombined","HT_after_alphaT_all")
 
   # tot = a.Integral(1,a.GetNbinsX()) + b.Integral(1,b.GetNbinsX())
   print "Number of events passing cuts for" , hist , "is", a.Integral(1,a.GetNbinsX()) + b.Integral(1,b.GetNbinsX()), "DiJets" ,a.Integral(0,a.GetNbinsX()) ,"NJets", b.Integral(0,b.GetNbinsX())#,"from combiner",c.Integral(0,c.GetNbinsX())

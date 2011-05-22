@@ -23,7 +23,7 @@ def ensure_dir(path):
       else: raise
 
 #Please enter the integrated lumi for the plots here:
-algo = "Calo"
+algo = "PF"
 intlumi =188.92
 print "The Integrated Luminosity your plots are being scaled to is: ", intlumi , "pb^{-1}"
 
@@ -167,15 +167,15 @@ for dir in range(0,len(DirKeys)):
     # if "AllCuts" not in DirKeys[dir].GetTitle() : continue
     # Root.tdrStyle.SetPadRightMargin(0.06)#tweak
     if "CaloMET_after_alphaT_all" in hist: Draw = True
-    if "EffectiveMass_after_alphaT_55_all" in hist: 
-	Draw = True
-	DrawLog = False
-    if "HT_after_alphaT_all" == hist: 
-	Draw = True
-	DrawLog = False
-    if "BiasedDeltaPhi_after_alphaT_55_all" in hist: 
-	Draw = True
-    	DrawLog = False
+    if "EffectiveMass_after_alphaT_55_all" in hist:
+      Draw = True
+      DrawLog = False
+    if "HT_after_alphaT_all" == hist:
+      Draw = True
+      DrawLog = False
+    if "BiasedDeltaPhi_after_alphaT_55_all" in hist:
+      Draw = True
+      DrawLog = False
     if "CosDetlaPhi_MHT_MHTBaby__all" in hist: Draw = True
     if "DPhi_MHT_MHTbaby_AfterAlphaT__all" in hist: Draw = True
     if "BabyJetMHT_all" in hist: Draw = True
@@ -188,19 +188,19 @@ for dir in range(0,len(DirKeys)):
     if "MHTovMET_afterAlphaT_all" in hist: Draw = True
     if "Mt2_LeadingJets_all" in hist: Draw = True
     if "Mt2_all" in hist: Draw = True
-    if "HT_after_alphaT_all" == hist : 
-	Draw = True
-	DrawLog = False
-    if "AlphaT_all" == hist: Draw = True
-    if "AlphaT_Zoomed_all" == hist: Draw = True
+    if "HT_after_alphaT_all" in hist :
+      Draw = True
+      DrawLog = False
+    if "AlphaT_all" in  hist: Draw = True
+    if "AlphaT_Zoomed_all" in hist: Draw = True
     if "HT_all" == hist: Draw = True
     if "EffectiveMass_all" in hist: Draw = True
     if "BiasedDeltaPhi_all" in hist: Draw = True
     if "MHToverHT_all" in hist: Draw = True
     if "MHT_all" == hist: Draw = True
-    if "JetMultiplicityAfterAlphaT_all" in hist: 
-	Draw = True
-    	DrawLog = False
+    if "JetMultiplicityAfterAlphaT_all" in hist:
+      Draw = True
+      DrawLog = False
     if "JetMultiplicity_all" in hist: Draw = True
     # if "JetEta_" in hist: Draw = True
     if "JetPt_" in hist: Draw = True
@@ -262,6 +262,12 @@ for dir in range(0,len(DirKeys)):
     LM0.SetLineStyle(9)
     LM0.SetMarkerColor(2)
     LM1 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM1.root",Root.kPink+7,1,"LM1")
+    LM2 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM2.root",Root.kPink+7,1,"")
+    LM3 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM3.root",Root.kPink+7,1,"")
+    LM4 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM4.root",Root.kPink+7,1,"")
+    LM5 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM5.root",Root.kPink+7,1,"")
+    LM6 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM6.root",Root.kPink+7,1,"")
+    LM7 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM7.root",Root.kPink+7,1,"")
 
     LM1.SetLineStyle(2)
     QCD.SetLineWidth(4)
@@ -451,12 +457,7 @@ for dir in range(0,len(DirKeys)):
     if "HT_after_alphaT_all" == hist :
       for up, low in zip(uplist , lowlist):
         PassingCutNumbers(Total, "Total Background Stat"  ,low,up)
-    if "HT_after_alphaT_all" == hist :
-      for up, low in zip(uplist , lowlist):
-        PassingCutNumbers(LM0, "LM0"       ,low,up)
-    if "HT_after_alphaT_all" == hist :
-      for up, low in zip(uplist , lowlist):
-        PassingCutNumbers(LM1, "LM1"       ,low,up)
+
     if "HT_after_alphaT_all" == hist :
       for up, low in zip(uplist , lowlist):
         PassingCutNumbers(Data, "JetMET"   ,low,up)
@@ -471,7 +472,33 @@ for dir in range(0,len(DirKeys)):
         PassingCutNumbers(QCD, "QCD"       ,low,up)
     if "HT_after_alphaT_all" == hist :
       for up, low in zip(uplist , lowlist):
-        PassingCutNumbers(Ztotal, "Ztotal"     ,low,up)
+        PassingCutNumbers(Ztotal, "Ztotal" ,low,up)
+    if "HT_after_alphaT_all" == hist :
+      for up, low in zip(uplist , lowlist):
+        PassingCutNumbers(LM0, "LM0"       ,low,up)
+    if "HT_after_alphaT_all" == hist :
+      for up, low in zip(uplist , lowlist):
+        PassingCutNumbers(LM1, "LM1"       ,low,up)
+    if "HT_after_alphaT_all" == hist :
+      for up, low in zip(uplist , lowlist):
+        PassingCutNumbers(LM2, "LM2"       ,low,up)
+    if "HT_after_alphaT_all" == hist :
+      for up, low in zip(uplist , lowlist):
+        PassingCutNumbers(LM3, "LM3"       ,low,up)
+    if "HT_after_alphaT_all" == hist :
+      for up, low in zip(uplist , lowlist):
+        PassingCutNumbers(LM4, "LM4"       ,low,up)
+    if "HT_after_alphaT_all" == hist :
+      for up, low in zip(uplist , lowlist):
+        PassingCutNumbers(LM5, "LM5"       ,low,up)
+    if "HT_after_alphaT_all" == hist :
+      for up, low in zip(uplist , lowlist):
+        PassingCutNumbers(LM6, "LM6"       ,low,up)
+    if "HT_after_alphaT_all" == hist :
+      for up, low in zip(uplist , lowlist):
+        PassingCutNumbers(LM7, "LM7"       ,low,up)
+
+
     #
     # if "MHT_all" == hist :
     #   PassingCutNumbers(Data, "Data"                                 ,140.)
@@ -557,7 +584,7 @@ for dir in range(0,len(DirKeys)):
       MinX = 0.
       MaxX = 3.2
       DrawSM = False
-      MaxY = 75.
+      # MaxY = .
       MinY = 0.05
       leg2 = Root.TLegend(0.47, 0.58, 0.89, 0.78)
       leg2.SetShadowColor(0)
@@ -660,7 +687,7 @@ for dir in range(0,len(DirKeys)):
       MaxX = 5.
       MinX = 0.0
       DrawSM = False
-      MaxY = 500.
+      # MaxY = 500.
       MinY = .06
       leg2 = Root.TLegend(0.35, 0.56, 0.9, 0.77)
       if (DirKeys[dir].GetTitle()) == "250_300Gevcombined": leg2 = Root.TLegend(0.15, 0.56, 0.9, 0.77)
@@ -720,7 +747,7 @@ for dir in range(0,len(DirKeys)):
       Total.GetXaxis().SetNdivisions(6,5,0, Root.kFALSE)
       MinX = 0.0
       MaxX = 1.5
-      MaxY = 1e6
+      # MaxY = 1e6
       print Total.GetXaxis().GetNdivisions()
     if "EffectiveMass_after_alphaT_55_all" == hist:
       Data.Rebin(3)
@@ -737,7 +764,7 @@ for dir in range(0,len(DirKeys)):
       QCD.GetYaxis().SetTitle(    "Events / 120 GeV")
       EWK.GetYaxis().SetTitle(    "Events / 120 GeV")
       Total.GetYaxis().SetTitle(  "Events / 120 GeV")
-      MaxY = 75.
+      # MaxY = 75.
       MinY = 0.05
       MinX = 500.
 
@@ -753,11 +780,11 @@ for dir in range(0,len(DirKeys)):
 
     Total.GetXaxis().SetRangeUser(MinX,MaxX)
     # print "Range of Total" , MinX , MaxX
-    AsymErrors.GetYaxis().SetRangeUser(MinY,MaxY*5.)
-    Total.GetYaxis().SetRangeUser(MinY,MaxY*5.)
+    AsymErrors.GetYaxis().SetRangeUser(MinY,MaxY*2.)
+    Total.GetYaxis().SetRangeUser(MinY,MaxY*2.0)
     if Pythia8: Pythia8.GetXaxis().SetRangeUser(MinX,MaxX)
-    if Pythia8: Pythia8.GetYaxis().SetRangeUser(MinY,MaxY*5.)
-    QCD.GetYaxis().SetRangeUser(MinY,MaxY*5.)
+    if Pythia8: Pythia8.GetYaxis().SetRangeUser(MinY,MaxY*2.0)
+    QCD.GetYaxis().SetRangeUser(MinY,MaxY*2.0)
     QCD.GetXaxis().SetRangeUser(MinX,MaxX)
 
     if "MHTovMET_afterAlphaT_all" == hist:

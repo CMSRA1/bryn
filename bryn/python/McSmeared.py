@@ -8,12 +8,13 @@ from ra1objectid.vbtfElectronId_cff import *
 from ra1objectid.vbtfMuonId_cff import *
 from ra1objectid.ra3PhotonId_cff import *
 from batchGolden import *
-
+vbtfMuonId_cff = Muon_IDFilter( vbtfmuonidps.ps()  )
 vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 JetSmear = JetSmear(0.,0.,0.,0.,0.,0.,True)
 def addCutFlowMC(b) :
-  # b.AddWeightFilter("Weight", vertex_reweight)
+  b.AddWeightFilter("Weight", vertex_reweight)
+  b.AddMuonFilter("PreCC",vbtfMuonId_cff)
   b.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
   b.AddElectronFilter("PreCC",vbtfElectronIdFilter)
   b.AddJetFilter("PreCC",JetSmear)
@@ -57,10 +58,10 @@ conf_ak7_caloMC.Common = deepcopy(default_common)
 # conf_ak5_calo.Common.print_out()
 anal_ak7_caloMC=Analysis("AK7Calo")
 addCutFlowMC(anal_ak7_caloMC)
+outdir = "../results/Smear/"
+ensure_dir(outdir)
 
-ensure_dir("../results/Smear/")
-
-anal_ak5_caloMC.Run("../results/Smear/",conf_ak5_caloMC,MC)
+anal_ak5_caloMC.Run(outdir,conf_ak5_caloMC,MC)
 
 # anal_ak5_pfMC.Run("../results/Smear",conf_ak5_pfMC,MC)
 # anal_ak5_pfMC.Run("../results/Smear",conf_ak5_pfMC,[QCD_AllPtBins_7TeV_Pythia])

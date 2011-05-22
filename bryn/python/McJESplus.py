@@ -17,10 +17,13 @@ from batchGolden import *
 
 
 JESUncert = JESUncert("+ve")
+vbtfMuonId_cff = Muon_IDFilter( vbtfmuonidps.ps()  )
+
 vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 def addCutFlowMC(b) :
-  # b.AddWeightFilter("Weight", vertex_reweight)
+  b.AddWeightFilter("Weight", vertex_reweight)
+  b.AddMuonFilter("PreCC",vbtfMuonId_cff)
   b.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
   b.AddElectronFilter("PreCC",vbtfElectronIdFilter)
   b.AddJetFilter("PreCC",JESUncert)
@@ -72,7 +75,7 @@ anal_ak5_caloMC.Run(outdir,conf_ak5_caloMC,MC)
 #anal_ak5_caloMC.Run("../results/JESplus/",conf_ak5_caloMC,Pythia8)
 # anal_ak5_caloMC.Run("../results/JESplus/",conf_ak5_caloMC,[QCD_AllPtBins_7TeV_Pythia])
 # anal_ak5_caloMC.Run("../results/JESplus/",conf_ak5_caloMC,AllMC)#MC+[QCD_AllPtBins_7TeV_Pythia,LM0,LM1,LM5])
-# anal_ak5_pfMC.Run("../results/JESplus/",conf_ak5_pfMC,MC)
+# anal_ak5_pfMC.Run("../PFresults/JESplus/",conf_ak5_pfMC,MC)
 # anal_ak5_pfMC.Run("../results/JESplus/",conf_ak5_pfMC,[QCD_AllPtBins_7TeV_Pythia])
 # anal_ak5_jptMC.Run("../results/JESplus/",conf_ak5_jptMC,MC)
 # anal_ak5_jptMC.Run("../results/JESplus/",conf_ak5_jptMC,[QCD_AllPtBins_7TeV_Pythia])
