@@ -23,7 +23,7 @@ def ensure_dir(path):
       else: raise
 
 #Please enter the integrated lumi for the plots here:
-algo = "PF"
+algo = "Calo"
 intlumi =188.92
 print "The Integrated Luminosity your plots are being scaled to is: ", intlumi , "pb^{-1}"
 
@@ -258,6 +258,8 @@ for dir in range(0,len(DirKeys)):
     leg.AddEntry(Ztotal,"Z + Jets","L")
     WJets = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_WJets.root",Root.kPink+7,1,"W + Jets")
     ttbar = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_TTbar.root",Root.kBlue+1,1,"tt + Jets")
+    singleTop = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_SingleTop.root",Root.kBlue+1,1,"tt + Jets")
+    ttbar.Add(singleTop)
     LM0 = GetHist(resultsDir+"/NoSmear/AK5"+algo+"_LM0.root",2,1,"LM0")
     LM0.SetLineStyle(9)
     LM0.SetMarkerColor(2)
@@ -360,7 +362,8 @@ for dir in range(0,len(DirKeys)):
     ScaledUpZj = GetHist(resultsDir+"/JESplus/AK5"+algo+"_Zinv.root",Root.kTeal-7,1,0)
     # ScaledUpJi = GetHist(resultsDir+"/JESplus/AK5"+algo+"_zjets_madgraph_4.root",Root.kTeal-7,1,0)
     ScaledUptt = GetHist(resultsDir+"/JESplus/AK5"+algo+"_TTbar.root",Root.kTeal-7,1,0)
-
+    ScaledUpSingleTop = GetHist(resultsDir+"/JESplus/AK5"+algo+"_SingleTop.root",Root.kTeal-7,1,0)
+    ScaledUptt.Add(ScaledUpSingleTop)
     ScaledUp = ScaledUpQCD.Clone()
     # if "EffectiveMass_after_alphaT_55_all" == hist:
       # ScaledUp = None
@@ -375,6 +378,8 @@ for dir in range(0,len(DirKeys)):
     ScaledDownZj = GetHist(resultsDir+"/JESminus/AK5"+algo+"_Zinv.root",Root.kTeal-7,1,0)
     # ScaledDownJi = GetHist(resultsDir+"/JESminus/AK5"+algo+"_zjets_madgraph_4.root",Root.kTeal-7,1,0)
     ScaledDowntt = GetHist(resultsDir+"/JESminus/AK5"+algo+"_TTbar.root",Root.kTeal-7,1,0)
+    ScaledDownSingleTop = GetHist(resultsDir+"/JESminus/AK5"+algo+"_SingleTop.root",Root.kTeal-7,1,0)
+    ScaledDowntt.Add(ScaledDownSingleTop)
     ScaledDown =   ScaledDownQCD.Clone()
     # if "EffectiveMass_after_alphaT_55_all" == hist:
       # ScaledDown = None
@@ -390,6 +395,8 @@ for dir in range(0,len(DirKeys)):
     SmearedZj = GetHist(resultsDir+"/Smear/AK5"+algo+"_Zinv.root",Root.kTeal-7,1,0)
     # SmearedJi = GetHist(resultsDir+"/Smear/AK5"+algo+"_zjets_madgraph_4.root",Root.kTeal-7,1,0)
     Smearedtt = GetHist(resultsDir+"/Smear/AK5"+algo+"_TTbar.root",Root.kTeal-7,1,0)
+    SmearedSingleTop = GetHist(resultsDir+"/Smear/AK5"+algo+"_SingleTop.root",Root.kTeal-7,1,0)
+    Smearedtt.Add(SmearedSingleTop)
     Smeared =   SmearedQCD.Clone()
     # if "EffectiveMass_after_alphaT_55_all" == hist:
       # Smeared = None
@@ -463,7 +470,10 @@ for dir in range(0,len(DirKeys)):
         PassingCutNumbers(Data, "JetMET"   ,low,up)
     if "HT_after_alphaT_all" == hist :
       for up, low in zip(uplist , lowlist):
-        PassingCutNumbers(ttbar, "TTBbar"  ,low,up)
+        PassingCutNumbers(singleTop, "SingleTop"  ,low,up)
+    if "HT_after_alphaT_all" == hist :
+      for up, low in zip(uplist , lowlist):
+        PassingCutNumbers(ttbar, "Top"  ,low,up)
     if "HT_after_alphaT_all" == hist :
       for up, low in zip(uplist , lowlist):
         PassingCutNumbers(WJets, "WJETS"   ,low,up)
@@ -949,19 +959,19 @@ for dir in range(0,len(DirKeys)):
 
       if "275_325Gev" == (DirKeys[dir].GetTitle()):
         # if "_after_alphaT" in hist : ControlRegonPlotsAfterAT1 += PlotRow("250_300Gev"+hist,"n250_300Gev"+hist,"250_300Gevcombined"+hist)
-        ControlRegonPlots1 += PlotRow("250_300Gev"+hist,"n250_300Gev"+hist,"250_300Gevcombined"+hist)
+        ControlRegonPlots1 += PlotRow("275_325Gev"+hist,"n275_325Gev"+hist,"275_325Gevcombined"+hist)
 
       if "325_375Gev" == (DirKeys[dir].GetTitle()):
         # if "_after_alphaT" in hist : ControlRegonPlotsAfterAT2 += PlotRow("300_350Gev"+hist,"n300_350Gev"+hist, "300_350Gevcombined"+hist)
-        ControlRegonPlots2 += PlotRow("300_350Gev"+hist,"n300_350Gev"+hist,"300_350Gevcombined"+hist)
+        ControlRegonPlots2 += PlotRow("325_375Gev"+hist,"n325_375Gev"+hist,"325_375Gevcombined"+hist)
 
       if "375Gev" == (DirKeys[dir].GetTitle()):
         # if "_after_alphaT" in hist : SignalRegonPlotsAfterAT += PlotRow("350Gev"+hist,"n350Gev"+hist,"350Gevcombined"+hist)
-        SignalRegonPlots += PlotRow("350Gev"+hist,"n350Gev"+hist,"350Gevcombined"+hist)
+        SignalRegonPlots += PlotRow("375Gev"+hist,"n375Gev"+hist,"375Gevcombined"+hist)
 
       if "375Gev_afterDeadEcal" == (DirKeys[dir].GetTitle()):
         # if "_after_alphaT" in hist : SignalRegonPlotsAfterATandDeadEcal += PlotRow("350Gev_afterDeadEcal"+hist,"n350Gev_afterDeadEcal"+hist,"350Gev_afterDeadEcalcombined"+hist)
-        SignalRegonPlotsAfterDeadEcal += PlotRow("350Gev_afterDeadEcal"+hist,"n350Gev_afterDeadEcal"+hist,"350Gev_afterDeadEcalcombined"+hist)
+        SignalRegonPlotsAfterDeadEcal += PlotRow("375Gev_afterDeadEcal"+hist,"n375Gev_afterDeadEcal"+hist,"375Gev_afterDeadEcalcombined"+hist)
 
       if "AllCuts" == (DirKeys[dir].GetTitle()):
         # if "_after_alphaT" in hist : SignalRegonPlotsAfterAllCuts += PlotRow("AllCuts"+hist,"nAllCuts"+hist,"AllCutscombined"+hist)
@@ -979,8 +989,8 @@ site3 = Header(intlumi)+ BegSec("Signal Region Plots After Dead Ecal Cut") + Sig
 print " Making Web Page now!"
 Webpage0 = open(outputfile+"/AllCuts.html",'w')
 Webpage1 = open(outputfile+"/Inclusive.html",'w')
-Webpage2 = open(outputfile+"/HTG350GeV.html",'w')
-Webpage3 = open(outputfile+"/DeadEcalCut350GeV.html",'w')
+Webpage2 = open(outputfile+"/HTG375GeV.html",'w')
+Webpage3 = open(outputfile+"/DeadEcalCut375GeV.html",'w')
 Webpage0.write(Header(intlumi)+BegSec("Signal Region after all cuts")+ SignalRegonPlotsAfterAllCuts+ EndSec()  + Footer())
 Webpage1.write(site1)
 Webpage2.write(site2)

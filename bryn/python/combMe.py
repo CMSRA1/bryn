@@ -25,6 +25,7 @@ fileList = [
 "AK5Calo_LM5.root",
 "AK5Calo_LM6.root",
 "AK5Calo_LM7.root",
+"AK5Calo_SingleTop.root",
 "AK5PF_Jets.root",
 "AK5PF_QCD_All.root",
 "AK5PF_Zinv.root",
@@ -38,7 +39,7 @@ fileList = [
 "AK5PF_LM5.root",
 "AK5PF_LM6.root",
 "AK5PF_LM7.root",
-
+"AK5PF_SingleTop.root",
 ]
 
 resultsDir = sys.argv[1]
