@@ -15,9 +15,11 @@ vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 PreScaleWeights = PreScaleReweighting(datatriggerps.ps())
 
+
 def addCutFlowData(a) :
   # a.AddWeightFilter("Weight",PreScaleWeights)
   # a.AddJetFilter("PreCC",JetCorrections)
+
   a.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
   a.AddElectronFilter("PreCC",vbtfElectronIdFilter)
   a.AddMuonFilter("PreCC",vbtfMuonId_cff)
@@ -47,8 +49,7 @@ tedSkim = PSet(
 Name="TedSkim",
 Format=("ICF",3),
 Weight= 1.0,
-#LastEntry = 10000,
-File="~zph04/public_html/hadAlphaT_noJS_13mayGOLDEN_HT_Run2011_promptReco_DCS.root")
+File="~/PO_Plots_4May2011_WithMHTCut/Data/AK5Calo_Jets.root")
 #"~elaird1/public_html/73_candidates/v3/350_bin/calo.root")
 
 
@@ -56,7 +57,7 @@ from data.Run2011.HT_Run2011_promptReco_DCS import *
 from data.Run2011.RA1ToBurn import *
 outDir = "../results/Data"#"../results/Data_SmallalphaT_forEtaPhiMap/"
 ensure_dir(outDir)
-anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT_Run2011_promptReco_DCS])
+anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[tedSkim])#HT_Run2011_promptReco_DCS])
 
 # from data.MultiJet_Run2010B_Nov4ReReco_v1 import *
 

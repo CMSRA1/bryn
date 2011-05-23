@@ -142,7 +142,7 @@ default_cc.Photons.PhotonIsoTypePtCutoff=30.
 # Definition of common objects
 default_common = deepcopy(defaultConfig.Common)
 default_common.ApplyXCleaning=True
-default_common.Jets.PtCut=80.0
+default_common.Jets.PtCut=50.0
 default_common.Jets.EtaCut=3.0
 default_common.Jets.ApplyID=True
 default_common.Jets.TightID=False
@@ -404,7 +404,7 @@ event_display = OP_EventDisplay("EventDisplays", "common") #to draw all/common o
 alphat = OP_CommonAlphaTCut(0.55)
 DeadEcalCutData = OP_DeadECALCut(0.3,0.3,0.5,30.,10,0,"./deadRegionList_GR10_P_V10.txt")
 DeadEcalCutMC =   OP_DeadECALCut(0.3,0.3,0.5,30.,10,0,"./deadRegionList_START38_V12.txt")
-MHTCut = OP_TriggerMHT_Emu(60.,30.)
+MHTCut = OP_CommonMHTCut(80.)
 MHT_METCut = OP_MHToverMET(1.25)
 NJet5 = OP_NumComJets(">=",3)
 DiJet5 = OP_NumComJets("==",2)
@@ -511,8 +511,8 @@ datatriggerps = PSet(
     )
 DataTrigger = OP_MultiTrigger( datatriggerps.ps() )
 
-
-json = JSONFilter("Json Mask", json_to_pset("./goldenJSON_13May2011.txt"))
+JetAdd = JetAddition(5.)
+# json = JSONFilter("Json Mask", json_to_pset("./currentJson_29apr2011.json"))
 
 # AlphatTriggerCut(0.52414,50)#
 vertex_reweight = VertexReweighting(
@@ -526,10 +526,9 @@ json_ouput = JSONOutput("filtered")
 
 
 cutTreeData = Tree("Data")
-cutTreeData.Attach(json)
-cutTreeData.TAttach(json, json_ouput)
-cutTreeData.TAttach(json,DataTrigger)
-# cutTreeData.Attach(DataTrigger)
+# cutTreeData.Attach(json)
+# cutTreeData.TAttach(json,DataTrigger)
+cutTreeData.Attach(DataTrigger)
 cutTreeData.TAttach(DataTrigger,NoiseFilt)
 cutTreeData.TAttach(NoiseFilt,GoodVertexMonster)
 cutTreeData.TAttach(GoodVertexMonster,VertexPtOverHT)
