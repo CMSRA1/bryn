@@ -404,7 +404,7 @@ event_display = OP_EventDisplay("EventDisplays", "common") #to draw all/common o
 alphat = OP_CommonAlphaTCut(0.55)
 DeadEcalCutData = OP_DeadECALCut(0.3,0.3,0.5,30.,10,0,"./deadRegionList_GR10_P_V10.txt")
 DeadEcalCutMC =   OP_DeadECALCut(0.3,0.3,0.5,30.,10,0,"./deadRegionList_START38_V12.txt")
-MHTCut = OP_CommonMHTCut(80.)
+MHTCut = OP_TriggerMHT_Emu(60.,30.)
 MHT_METCut = OP_MHToverMET(1.25)
 NJet5 = OP_NumComJets(">=",3)
 DiJet5 = OP_NumComJets("==",2)
@@ -512,7 +512,7 @@ datatriggerps = PSet(
 DataTrigger = OP_MultiTrigger( datatriggerps.ps() )
 
 JetAdd = JetAddition(5.)
-# json = JSONFilter("Json Mask", json_to_pset("./currentJson_29apr2011.json"))
+json = JSONFilter("Json Mask", json_to_pset("goldenJSON_13May2011.txt"))
 
 # AlphatTriggerCut(0.52414,50)#
 vertex_reweight = VertexReweighting(
@@ -526,9 +526,9 @@ json_ouput = JSONOutput("filtered")
 
 
 cutTreeData = Tree("Data")
-# cutTreeData.Attach(json)
-# cutTreeData.TAttach(json,DataTrigger)
-cutTreeData.Attach(DataTrigger)
+cutTreeData.Attach(json)
+cutTreeData.TAttach(json,DataTrigger)
+#cutTreeData.Attach(DataTrigger)
 cutTreeData.TAttach(DataTrigger,NoiseFilt)
 cutTreeData.TAttach(NoiseFilt,GoodVertexMonster)
 cutTreeData.TAttach(GoodVertexMonster,VertexPtOverHT)
@@ -662,8 +662,8 @@ cutTreeMC.TAttach(NJet4,nHadStandard375_after_DeadEcal)
 
 
 #Here be plots after all the cuts!!
-cutTreeMC.TAttach(htCut375GeV,alphaT2)
 cutTreeMC.TAttach(DeadEcalCutMC,MHT_METCut)
+cutTreeMC.TAttach(MHT_METCut,alphaT2)
 #cutTreeMC.TAttach(htCut375,MHT_METCut)
 # cutTreeMC.TAttach(alphaT2,HadStandard_3)
 cutTreeMC.TAttach(MHT_METCut,NJet5)
