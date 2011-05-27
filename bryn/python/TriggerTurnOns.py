@@ -172,7 +172,35 @@ JetCorrections = JESCorrections( corPset.ps() ,True)
 NoiseFilt= OP_HadronicHBHEnoiseFilter()
 selection = OP_GoodEventSelection()
 
+HT_Trigger_PS = PSet(
+    Verbose = False,
+    Triggers = [
+        "HLT_HT250_v1",
+        "HLT_HT250_v2",
+        "HLT_HT250_v3",
+        "HLT_HT250_v4",
+        "HLT_HT250_v5",
+        ]
+    )
 
+
+Cross_Trigger_PS = PSet(
+    Verbose = False,
+    Triggers = [
+        "HLT_HT250_AlphaT0p53_v1",
+        "HLT_HT250_AlphaT0p53_v2",
+        "HLT_HT250_AlphaT0p53_v3",
+        "HLT_HT250_AlphaT0p53_v4",
+        "HLT_HT250_AlphaT0p53_v5",
+        ]
+    )
+
+
+
+
+
+HT_Trigger_Filter = OP_MultiTrigger( HT_Trigger_PS.ps() )
+Cross_Trigger_Filter = OP_MultiTrigger( Cross_Trigger_PS.ps() )
 
 
 
