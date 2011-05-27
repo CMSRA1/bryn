@@ -29,7 +29,9 @@ namespace Operation {
     std::string dirName_;
     UInt_t nMin_;
     UInt_t nMax_;
-
+    std::vector<TH1D*> MHT_;
+    std::vector<TH1D*> AlphaT_;
+    std::vector<TH1D*> HT_;
     bool Plots_;
     void Plots();
     bool Plots( Event::Data& );
