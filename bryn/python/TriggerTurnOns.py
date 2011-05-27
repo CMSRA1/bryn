@@ -255,6 +255,10 @@ cutTreeData.TAttach(HT_Trigger_Filter,Cross_Trigger_Filter)
 cutTreeData.TAttach(Cross_Trigger_Filter,Plots_Cross_Trigger)
 
 
+vbtfMuonId_cff = Muon_IDFilter( vbtfmuonidps.ps()  )
+vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
+ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
+
 
 def addCutFlowData(a) :
   # a.AddWeightFilter("Weight",PreScaleWeights)
@@ -262,7 +266,7 @@ def addCutFlowData(a) :
   a.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
   a.AddElectronFilter("PreCC",vbtfElectronIdFilter)
   a.AddMuonFilter("PreCC",vbtfMuonId_cff)
-  a+=cutTree
+  a+=cutTreeData
 
 # AK5 Calo
 
