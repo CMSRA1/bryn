@@ -183,6 +183,7 @@ HT_Trigger_PS = PSet(
         "HLT_HT250_v3",
         "HLT_HT250_v4",
         "HLT_HT250_v5",
+        "HLT_HT250_v6",
         ]
     )
 
