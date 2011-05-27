@@ -170,6 +170,10 @@ JetCorrections = JESCorrections( corPset.ps() ,True)
 NoiseFilt= OP_HadronicHBHEnoiseFilter()
 selection = OP_GoodEventSelection()
 
+
+Plots_HT_Trigger    = PL_TriggerTurnOns( PSet(DirName = "HT_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True).ps())
+Plots_Cross_Trigger = PL_TriggerTurnOns( PSet(DirName = "Cross_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True).ps())
+
 HT_Trigger_PS = PSet(
     Verbose = False,
     Triggers = [
