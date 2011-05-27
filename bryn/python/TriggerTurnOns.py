@@ -254,7 +254,9 @@ cutTreeData.TAttach(HT_Trigger_Filter,Plots_HT_Trigger)
 cutTreeData.TAttach(HT_Trigger_Filter,Cross_Trigger_Filter)
 cutTreeData.TAttach(Cross_Trigger_Filter,Plots_Cross_Trigger)
 
-
+from ra1objectid.vbtfElectronId_cff import *
+from ra1objectid.vbtfMuonId_cff import *
+from ra1objectid.ra3PhotonId_cff import *
 vbtfMuonId_cff = Muon_IDFilter( vbtfmuonidps.ps()  )
 vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
