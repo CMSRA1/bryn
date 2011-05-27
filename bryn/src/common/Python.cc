@@ -1,7 +1,7 @@
 #include <boost/python.hpp>
 #include "WeeklyUpdatePlots.hh"
 #include "Trigger.hh"
-
+#include "TriggerTurnOns.hh"
 using namespace boost::python;
 
 BOOST_PYTHON_MODULE(libbryn) {
