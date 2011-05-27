@@ -17,6 +17,7 @@ from icf.core import PSet,Analysis
 from icf.config import defaultConfig
 from copy import deepcopy
 from icf.JetCorrections import *
+from icf.utils import json_to_pset
 
 # -----------------------------------------------------------------------------
 # Samples
@@ -228,9 +229,11 @@ VertexPtOverHT = OP_SumVertexPtOverHT(0.1)
 # Analyses
 MHT_METCut = OP_MHToverMET(1.25)
 # AK5 Calo
+json = JSONFilter("Json Mask", json_to_pset("goldenJSON_13May2011.txt"))
 
 cutTreeData = Tree("Data")
-cutTreeData.Attach(NoiseFilt)
+cutTreeData.Attach(json)
+cutTreeData.TAttach(json,NoiseFilt)
 cutTreeData.TAttach(NoiseFilt,selection)
 cutTreeData.TAttach(selection,oddMuon)
 cutTreeData.TAttach(oddMuon,oddElectron)
@@ -246,6 +249,7 @@ cutTreeData.TAttach(LeadingJetCut,secondJetET)
 cutTreeData.TAttach(secondJetET,VertexPtOverHT)
 cutTreeData.TAttach(VertexPtOverHT,DeadEcalCutData)
 cutTreeData.TAttach(DeadEcalCutData,MHT_METCut)
+cutTreeData.TAttach(MHT_METCut,HT_Trigger_Filter)
 cutTreeData.TAttach(HT_Trigger_Filter,Plots_HT_Trigger)
 cutTreeData.TAttach(HT_Trigger_Filter,Cross_Trigger_Filter)
 cutTreeData.TAttach(Cross_Trigger_Filter,Plots_Cross_Trigger)
