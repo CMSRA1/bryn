@@ -15,7 +15,7 @@ from batchGolden import *
 # JESUncert(-0.02,true)   means -2% per unit eta
 
 
-
+cutTreeMC,junkVar = MakeMCTree(100.)
 JESUncert = JESUncert("+ve")
 vbtfMuonId_cff = Muon_IDFilter( vbtfmuonidps.ps()  )
 

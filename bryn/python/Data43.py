@@ -5,9 +5,8 @@ from libFrameworkSUSY import *
 from libbryn import *
 from libHadronic import *
 from icf.core import PSet,Analysis
-
 from batchGolden import *
-
+from cutFlow import *
 from ra1objectid.vbtfElectronId_cff import *
 from ra1objectid.vbtfMuonId_cff import *
 from ra1objectid.ra3PhotonId_cff import *
@@ -16,7 +15,12 @@ vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 PreScaleWeights = PreScaleReweighting(datatriggerps.ps())
 
-cutTree,blah = MakeDataTree(100.)
+default_common.Jets.PtCut=43.3
+#  Change the settings from golden to use the lowest scaled bin.
+cutTree,blah = MakeDataTree(86.7)
+
+
+
 
 
 def addCutFlowData(a) :
@@ -51,13 +55,13 @@ tedSkim = PSet(
 Name="TedSkim",
 Format=("ICF",3),
 Weight= 1.0,
-File="~/PO_Plots_4May2011_WithMHTCut/Data/AK5Calo_Jets.root")
+File="../resultsWithSingleTop//Data/AK5Calo_Jets.root")
 #"~elaird1/public_html/73_candidates/v3/350_bin/calo.root")
 
 
 from data.Run2011.HT_Run2011_promptReco_DCS import *
 from data.Run2011.RA1ToBurn import *
-outDir = "../results/Data"#"../results/Data_SmallalphaT_forEtaPhiMap/"
+outDir = "../results/Data43"
 ensure_dir(outDir)
 anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT_Run2011_promptReco_DCS])
 

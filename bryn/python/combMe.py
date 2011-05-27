@@ -44,7 +44,7 @@ fileList = [
 
 resultsDir = sys.argv[1]
 aa = glob.glob(resultsDir)
-print aa
+#print aa
 for a in aa:
   for b in fileList:
     # print a.rpartition("/")[2],b

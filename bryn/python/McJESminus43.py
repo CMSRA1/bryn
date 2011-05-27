@@ -9,12 +9,15 @@ from ra1objectid.vbtfMuonId_cff import *
 from ra1objectid.ra3PhotonId_cff import *
 from batchGolden import *
 
+
+default_common.Jets.PtCut=43.3
+cutTreeMC,junkVar = MakeMCTree(86.7)
 # JESUncert(0.1,false)    means +10%, independent of eta
 # JESUncert(-0.1,false)   means -10%, independent of eta
 # JESUncert(0.02,true)    means +2% per unit eta
 # JESUncert(-0.02,true)   means -2% per unit eta
 vbtfMuonId_cff = Muon_IDFilter( vbtfmuonidps.ps()  )
-cutTreeMC,junkVar = MakeMCTree(100.)
+
 vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 JESUncert = JESUncert("-ve")
@@ -65,7 +68,7 @@ conf_ak7_caloMC.Common = deepcopy(default_common)
 # conf_ak5_calo.Common.print_out()
 anal_ak7_caloMC=Analysis("AK7Calo")
 addCutFlowMC(anal_ak7_caloMC)
-outdir = "../results/JESminus/"
+outdir = "../results/JESminus43/"
 ensure_dir(outdir)
 
 anal_ak5_caloMC.Run(outdir,conf_ak5_caloMC,MC)

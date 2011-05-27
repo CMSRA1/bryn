@@ -150,7 +150,6 @@ SignalRegonPlotsAfterAllCuts = ""
 SignalRegonPlotsAfterAtAllCuts = ""
 temp = Root.TFile.Open(RootFileList[0])
 DirKeys = temp.GetListOfKeys()
-
 HistKeys = [ (dir.ReadObj()).GetListOfKeys() for dir in DirKeys]
 HistNames = [ [k.GetName() for k in D] for D in HistKeys]
 #Loops though all the histograms that have been read from the first input file, this is done by histogram name

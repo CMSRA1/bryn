@@ -9,6 +9,17 @@ source ../../setup.sh
 ./McNoSmear.py -b -n50
 ./McSmeared.py -b -n50
 
+./Data37.py -b -n20
+./McJESminus37.py -b -n50
+./McJESplus37.py -b -n50
+./McNoSmear37.py -b -n50
+./McSmeared37.py -b -n50
+
+./Data43.py -b -n20
+./McJESminus43.py -b -n50
+./McJESplus43.py -b -n50
+./McNoSmear43.py -b -n50
+./McSmeared43.py -b -n50
 # ./Data.py -l
 # ./McJESetaPlus.py -l
 # ./McJESetaMinus.py -l

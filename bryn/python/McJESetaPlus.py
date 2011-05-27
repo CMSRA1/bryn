@@ -11,6 +11,7 @@ from batchGolden import *
 # JESUncert(-0.1,false)   means -10%, independent of eta
 # JESUncert(0.02,true)    means +2% per unit eta
 # JESUncert(-0.02,true)   means -2% per unit eta
+cutTreeMC,junkVar = MakeMCTree(100.)
 JESUncert = JESUncert(0.02,True)
 def addCutFlowMC(b) :
   b.AddJetFilter("PreCC",JESUncert)

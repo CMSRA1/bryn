@@ -12,6 +12,8 @@ vbtfMuonId_cff = Muon_IDFilter( vbtfmuonidps.ps()  )
 vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 JetSmear = JetSmear(0.,0.,0.,0.,0.,0.,True)
+
+cutTreeMC,junkVar = MakeMCTree(100.)
 def addCutFlowMC(b) :
   b.AddJetFilter("PreCC",JetAdd)
   b.AddWeightFilter("Weight", vertex_reweight)

@@ -1,30 +1,28 @@
 #!/usr/bin/env python
 import setupSUSY
 from libFrameworkSUSY import *
-from libHadronic import *
 from libbryn import *
+from libHadronic import *
 from icf.core import PSet,Analysis
+import icf.utils as Utils
+from batchGolden import *
 from ra1objectid.vbtfElectronId_cff import *
 from ra1objectid.vbtfMuonId_cff import *
 from ra1objectid.ra3PhotonId_cff import *
-from batchGolden import *
 
-# JESUncert(0.1,false)    means +10%, independent of eta
-# JESUncert(-0.1,false)   means -10%, independent of eta
-# JESUncert(0.02,true)    means +2% per unit eta
-# JESUncert(-0.02,true)   means -2% per unit eta
+default_common.Jets.PtCut=43.3
+cutTreeMC,junkVar = MakeMCTree(86.7)
+#JetSmear = JetSmear(0.1,30)
 vbtfMuonId_cff = Muon_IDFilter( vbtfmuonidps.ps()  )
-cutTreeMC,junkVar = MakeMCTree(100.)
+
 vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
-JESUncert = JESUncert("-ve")
 def addCutFlowMC(b) :
   b.AddJetFilter("PreCC",JetAdd)
   b.AddWeightFilter("Weight", vertex_reweight)
   b.AddMuonFilter("PreCC",vbtfMuonId_cff)
   b.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
   b.AddElectronFilter("PreCC",vbtfElectronIdFilter)
-  b.AddJetFilter("PreCC",JESUncert)
   b+=cutTreeMC
 
 #AK5 Calo
@@ -65,16 +63,22 @@ conf_ak7_caloMC.Common = deepcopy(default_common)
 # conf_ak5_calo.Common.print_out()
 anal_ak7_caloMC=Analysis("AK7Calo")
 addCutFlowMC(anal_ak7_caloMC)
-outdir = "../results/JESminus/"
-ensure_dir(outdir)
+outDir = "../results/NoSmear43/"
+ensure_dir(outDir)
 
-anal_ak5_caloMC.Run(outdir,conf_ak5_caloMC,MC)
-# anal_ak5_caloMC.Run("../results/JESminus/",conf_ak5_caloMC,[QCD_AllPtBins_7TeV_Pythia])
-# anal_ak5_caloMC.Run("../results/JESminus/",conf_ak5_caloMC,AllMC)#MC+[QCD_AllPtBins_7TeV_Pythia,LM0,LM1,LM5])
-# anal_ak5_pfMC.Run("../results/JESminus/",conf_ak5_pfMC,MC)
-# anal_ak5_pfMC.Run("../results/JESminus/",conf_ak5_pfMC,[QCD_AllPtBins_7TeV_Pythia])
-# anal_ak5_jptMC.Run("../results/JESminus/",conf_ak5_jptMC,MC)
-# anal_ak5_jptMC.Run("../results/JESminus/",conf_ak5_jptMC,[QCD_AllPtBins_7TeV_Pythia])
-# anal_ak7_caloMC.Run("../results/JESminus/",conf_ak7_caloMC,MC)
-# anal_ak7_caloMC.Run("../results/JESminus/",conf_ak7_caloMC,[QCD_AllPtBins_7TeV_Pythia])
+testFile =PSet(
+Name="SingleEvent",
+Format =("ICF",3),
+File ="/home/hep/elaird1/84_darrens_event/event.root",
+Weight =1.0,
+)
+
+
+anal_ak5_caloMC.Run(outDir,conf_ak5_caloMC,MC)
+# anal_ak5_pfMC.Run(outDir,conf_ak5_pfMC,MC)
+# anal_ak5_pfMC.Run("../results/NoSmear",conf_ak5_pfMC,[QCD_AllPtBins_7TeV_Pythia])
+# anal_ak5_jptMC.Run("../results/NoSmear",conf_ak5_jptMC,MC)
+# anal_ak5_jptMC.Run("../results/NoSmear",conf_ak5_jptMC,[QCD_AllPtBins_7TeV_Pythia])
+# anal_ak7_caloMC.Run("../results/NoSmear",conf_ak7_caloMC,MC)
+# anal_ak7_caloMC.Run("../results/NoSmear",conf_ak7_caloMC,[QCD_AllPtBins_7TeV_Pythia])
 
