@@ -26,7 +26,7 @@ eventDump::eventDump() {}
 eventDump::~eventDump(){}
 
 
-eventDump::Process(Event::Data & ev){
+bool eventDump::Process(Event::Data & ev){
     std::stringstream ss;
     ss << " --------------------------------------------------------" << std::endl
        << "[eventDump::eventDump]" << std::endl
