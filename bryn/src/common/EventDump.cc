@@ -30,12 +30,12 @@ bool eventDump::Process(Event::Data & ev){
     std::stringstream ss;
     ss << " --------------------------------------------------------" << std::endl
        << "[eventDump::eventDump]" << std::endl
-       << " Info for this event is: " << ev.RunNumber() << ":"<< ev.LumiSection() << ":"<<  ev.EventNumber() << std::endl
+       << " Info for " << ev.RunNumber() << ":"<< ev.LumiSection() << ":"<<  ev.EventNumber() << std::endl
        << " --------------------------------------------------------" << std::endl
-       << " | HT = " << std::setw(4) << std::setprecision(3) << ev.CommonHT() << std::endl
-       << " | MHT" << std::setw(4) << std::setprecision(3) << ev.CommonMHT().Pt() << std::endl
-       << " | AlphaT (common) " << std::setw(4) << std::setprecision(5) << ev.CommonAlphaT() << std::endl
-       << " | AlphaT (hadronic) " << std::setw(4) << std::setprecision(5) << ev.HadronicAlphaT() << std::endl
+       << " | HT =" << std::setw(4) << std::setprecision(3) << ev.CommonHT() << std::endl
+       << " | MHT =" << std::setw(4) << std::setprecision(3) << ev.CommonMHT().Pt() << std::endl
+       << " | AlphaT (com) " << std::setw(4) << std::setprecision(5) << ev.CommonAlphaT() << std::endl
+       << " | AlphaT (had) " << std::setw(4) << std::setprecision(5) << ev.HadronicAlphaT() << std::endl
        << " --------------------------------------------------------" << std::endl;
       evInfo_ += ss.str();
   return true;
