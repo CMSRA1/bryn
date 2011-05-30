@@ -35,7 +35,7 @@ eventDump::Process(Event::Data & ev){
        << " | HT = " << std::setw(4) << std::setprecision(3) << ev.CommonHT() << std::endl
        << " | MHT" << std::setw(4) << std::setprecision(3) << ev.CommonMHT().Pt() << std::endl
        << " | AlphaT (common) " << std::setw(4) << std::setprecision(5) << ev.CommonAlphaT() << std::endl
-       << " | AlphaT (hadronic) " << std::setw(4) << std::setprecision(5) << ev.HadAlphaT() << std::endl
+       << " | AlphaT (hadronic) " << std::setw(4) << std::setprecision(5) << ev.HadronicAlphaT() << std::endl
        << " | run:lumi:ev " << ev.RunNumber() << ":"<< ev.LumiSection() << ":"<<  ev.EventNumber() << std::endl
        << " --------------------------------------------------------" << std::endl;
       evInfo_ = ss.str();
@@ -50,6 +50,6 @@ void eventDump::End(Event::Data & ev){
   name.append(".txt");
   ofstream file;
   file.open(name.c_str(), ios::out);
-  file << evInfo_.Print();
+  file << evInfo_;
   file.close();
 }
