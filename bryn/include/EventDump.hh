@@ -7,14 +7,10 @@
 //  Created by Bryn Mathias on 2011-05-30.
 //  Copyright (c) 2011 Imperial College. All rights reserved.
 //
-
-
-
 #include "EventData.hh"
 #include "Math/VectorUtil.h"
 #include "Operation.hh"
 #include "TH1F.h"
-#include "DeadECALDR.hh"
 
 
 namespace Operation {
