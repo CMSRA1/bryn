@@ -21,7 +21,6 @@ public:
   eventDump();
   ~eventDump(){};
 
-  void Start( Event::Data & ev );
   bool Process( Event::Data & ev );
   void End( Event::Data & ev );
 

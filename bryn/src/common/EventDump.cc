@@ -53,3 +53,9 @@ void eventDump::End(Event::Data & ev){
   file << evInfo_;
   file.close();
 }
+std::ostream& eventDump::Description( std::ostream &ostrm ) {
+  ostrm << "Dumped event info " << " ";
+  return ostrm;
+}
+
+
