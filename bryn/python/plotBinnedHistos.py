@@ -69,12 +69,28 @@ def GethistFromFolder(DataSetName,folder,hist,col,norm,Legend):
     return hist
 
 
-resultsDir = ["../resultsAllHTbins+0GeV","../resultsAllHTbins+10GeV","../resultsAllHTbins+5GeV"]
+
+def PassingCutNumbers(Hist, name ,lowerBound, Upperbound):
+  lowbin = Hist.FindBin(lowerBound)
+  highbin = Hist.GetNbinsX()
+  # print Hist.GetBinWidth(10) , "THIS IS THE BIN WIDTH"
+  if Upperbound != None:
+    highbin = Hist.FindBin(Upperbound) - 1
+  # print "looking in bin", highbin, "This has a low edge of " , Hist.GetBinLowEdge(highbin), "Lower bin is" , lowbin, "THis has a low bin edge of" , Hist.GetBinLowEdge(lowbin)
+  errorVal = Root.Double(0)
+  passingCut = Hist.IntegralAndError(lowbin,highbin, errorVal)
+  textLine = "Sample = " + DirKeys[dir].GetTitle()  + "   " + str(Hist.GetName()) + "     " + name +  " , Number bewteen cut of   " + str(lowerBound) + " and " + str(Upperbound) +" is " + "       " + str(passingCut)+ " +/- " + str(errorVal) + "\n"
+  CutNumbers.write(textLine)
+
+
+CutNumbers = open(outputfile+"CutTable.txt",'w')
+
+resultsDir = ["../results"]
 outdirTmp = "../Plots/"
 histList = ["JetMultiplicityAfterAlphaT_all","HT_aftar_AlphaT_all"]
 JetThreshList = ["","37","43"]
 for num in JetThreshList:
-  for dir in GetAllSubFiles("../resultsAllHTbins+0GeV/Data/AK5Calo_Jets.root"):
+  for dir in ["AllCutscombined"]:# GetAllSubFiles("../results/Data/AK5Calo_Jets.root"):
     if dir == "susyTree" : continue
     for hist in histList:
       outdir = outdirTmp
@@ -85,27 +101,18 @@ for num in JetThreshList:
       MCCentral.Add( GethistFromFolder(resultsDir[0]+"/NoSmear"+num+"/AK5Calo_TTbar.root",dir,hist,1,intlumi,0) )
       MCCentral.Add( GethistFromFolder(resultsDir[0]+"/NoSmear"+num+"/AK5Calo_WJets.root",dir,hist,1,intlumi,0) )
       MCCentral.Add( GethistFromFolder(resultsDir[0]+"/NoSmear"+num+"/AK5Calo_Zinv.root",dir,hist,1,intlumi,0) )
-      MCplus5 =    GethistFromFolder(resultsDir[1]+"/NoSmear"+num+"/AK5Calo_QCD_All.root",dir,hist,3,intlumi,"+5GeV")
-      MCplus5.Add( GethistFromFolder(resultsDir[1]+"/NoSmear"+num+"/AK5Calo_SingleTop.root",dir,hist,1,intlumi,0) )
-      MCplus5.Add( GethistFromFolder(resultsDir[1]+"/NoSmear"+num+"/AK5Calo_TTbar.root",dir,hist,1,intlumi,0) )
-      MCplus5.Add( GethistFromFolder(resultsDir[1]+"/NoSmear"+num+"/AK5Calo_WJets.root",dir,hist,1,intlumi,0) )
-      MCplus5.Add( GethistFromFolder(resultsDir[1]+"/NoSmear"+num+"/AK5Calo_Zinv.root",dir,hist,1,intlumi,0) )
-      MCplus10 =    GethistFromFolder(resultsDir[2]+"/NoSmear"+num+"/AK5Calo_QCD_All.root",dir,hist,4,intlumi,"+10GeV")
-      MCplus10.Add( GethistFromFolder(resultsDir[2]+"/NoSmear"+num+"/AK5Calo_SingleTop.root",dir,hist,1,intlumi,0) )
-      MCplus10.Add( GethistFromFolder(resultsDir[2]+"/NoSmear"+num+"/AK5Calo_TTbar.root",dir,hist,1,intlumi,0) )
-      MCplus10.Add( GethistFromFolder(resultsDir[2]+"/NoSmear"+num+"/AK5Calo_WJets.root",dir,hist,1,intlumi,0) )
-      MCplus10.Add( GethistFromFolder(resultsDir[2]+"/NoSmear"+num+"/AK5Calo_Zinv.root",dir,hist,1,intlumi,0) )
       c1 = Root.TCanvas("canvas"+hist,"canname"+hist,1200,1200)
-      if False:
-        #Make two pads, one small for the ratio plot and one large for the plot its self
-        mainPad = Root.TPad("","",0.01,0.25,0.99,0.99)
-        mainPad.SetNumber(1)
-        mainPad.Draw()
-        ratioPad = Root.TPad("","",0.01,0.05,0.99,0.26)
-        ratioPad.SetBottomMargin(0.32)
-        ratioPad.SetNumber(2)
-        ratioPad.Draw()
-        ratioPad.Clear()
+      uplist = [325,375,425,475,575,675,775,875,3000]
+      lowlist = [275,325,375,425,475,575,675,775,875]
+      if "HT_after_alphaT_all" == hist :
+        for up, low in zip(uplist , lowlist):
+          PassingCutNumbers(Data, "Data Jet"+num    ,low,up)
+      if "HT_after_alphaT_all" == hist :
+        for up, low in zip(uplist , lowlist):
+          PassingCutNumbers(MCCentral, "Total Background Stat Jet"+num  ,low,up)
+
+
+
       c1.cd(1)
       Data.Draw("p")
       MCCentral.Draw("histsame")
