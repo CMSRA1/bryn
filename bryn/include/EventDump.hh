@@ -19,7 +19,7 @@ class eventDump :public Operation::_Base
 {
 public:
   eventDump();
-  ~eventDump(){};
+  ~eventDump(){;}
 
   bool Process( Event::Data & ev );
   void End( Event::Data & ev );
