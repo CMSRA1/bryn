@@ -36,13 +36,8 @@ bool eventDump::Process(Event::Data & ev){
        << " | MHT =" << std::setw(4) << std::setprecision(3) << ev.CommonMHT().Pt() << std::endl
        << " | AlphaT (com) " << std::setw(4) << std::setprecision(5) << ev.CommonAlphaT() << std::endl
        << " | AlphaT (had) " << std::setw(4) << std::setprecision(5) << ev.HadronicAlphaT() << std::endl
-       << " --------------------------------------------------------" << std::endl
-       << "x-cleaned" << std::endl
-       << ev.PrintStableVisRec()
-       << "all"<< std::endl
-       << ev.PrintStableVisAllRec()
-       << std::endl
        << " --------------------------------------------------------" << std::endl;
+
       evInfo_ += ss.str();
   return true;
 }
@@ -56,6 +51,12 @@ void eventDump::End(Event::Data & ev){
   ofstream file;
   file.open(name.c_str(), ios::out);
   file << evInfo_;
+  file << "x-cleaned" << std::endl;
+  file << ev.PrintStableVisRec();
+  file << "all"<< std::endl;
+  file << ev.PrintStableVisAllRec();
+  file << std::endl;
+  file << " --------------------------------------------------------" << std::endl;
   file.close();
 }
 std::ostream& eventDump::Description( std::ostream &ostrm ) {
