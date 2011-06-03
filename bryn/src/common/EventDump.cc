@@ -74,7 +74,7 @@ bool eventDump::Process(Event::Data & ev){
       << " Eta: " << (*iph)->Eta()
       << " was cc: " << (*iph)->WasItcc()
       << endl;
-    electrons+=election;
+    electrons+=electron;
   }
 
   std::stringstream photons;
