@@ -37,6 +37,12 @@ bool eventDump::Process(Event::Data & ev){
        << " | AlphaT (com) " << std::setw(4) << std::setprecision(5) << ev.CommonAlphaT() << std::endl
        << " | AlphaT (had) " << std::setw(4) << std::setprecision(5) << ev.HadronicAlphaT() << std::endl
        << " --------------------------------------------------------" << std::endl;
+       << "x-cleaned"<<std::endl;
+       << ev.PrintStableVisRec();
+       << "all"<< std::endl;
+       << ev.PrintStableVisAllRec();
+       << std::endl;
+       << " --------------------------------------------------------" << std::endl;
       evInfo_ += ss.str();
   return true;
 }
