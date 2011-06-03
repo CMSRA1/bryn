@@ -30,7 +30,7 @@ eventDump::~eventDump(){}
 
 bool eventDump::Process(Event::Data & ev){
 
-  std::stringstream jets;
+  std::string jets;
 
   LorentzV test(0,0,0,0);
   for (std::vector<Event::Jet const *>::const_iterator iph = JD_CommonJets().accepted.begin();
@@ -45,13 +45,13 @@ bool eventDump::Process(Event::Data & ev){
       <<" fem: "<< (*iph)->GetEmFrac()
       << endl;
     test+=(**iph);
-    jets+=jet;
+    jets+=jet.str();
   }
   std::stringstream MHT;
 
   MHT << "MHT Pt: " << test.Pt() <<" phi " << (-test).Phi() << " "<< CommonRecoilMET().Pt() << endl;
 
-  std::stringstream muons;
+  std::string muons;
   for (std::vector<Event::Lepton const *>::const_iterator iph = LD_CommonMuons().accepted.begin();
   iph != LD_CommonMuons().accepted.end();
   ++iph) {
@@ -61,9 +61,9 @@ bool eventDump::Process(Event::Data & ev){
       << " Eta: " << (*iph)->Eta()
       << " was cc: " << (*iph)->WasItcc()
       << endl;
-    muons+=muon;
+    muons+=muon.str();
   }
-  std::stringstream electrons;
+  std::string electrons;
 
   for (std::vector<Event::Lepton const *>::const_iterator iph = LD_CommonElectrons().accepted.begin();
   iph != LD_CommonElectrons().accepted.end();
@@ -74,10 +74,10 @@ bool eventDump::Process(Event::Data & ev){
       << " Eta: " << (*iph)->Eta()
       << " was cc: " << (*iph)->WasItcc()
       << endl;
-    electrons+=electron;
+    electrons+=electron.str();
   }
 
-  std::stringstream photons;
+  std::string photons;
 
   for (std::vector<Event::Photon const *>::const_iterator iph = PD_CommonPhotons().accepted.begin();
   iph != PD_CommonPhotons().accepted.end();
@@ -87,11 +87,11 @@ bool eventDump::Process(Event::Data & ev){
       << " Phi: " <<  (*iph)->Phi()
       << " Eta: " <<  (*iph)->Eta()
       << " was cc " << (*iph)->WasItcc()<<endl;
-    photons+=photon;
+    photons+=photon.str();
   }
 
     // JJ - bug here - referenced taus not commontaus
-  std::stringstream taus;
+  std::string taus;
 
   for (std::vector<Event::Lepton const *>::const_iterator iph = LD_CommonTaus().accepted.begin();
   iph != LD_CommonTaus().accepted.end();
@@ -100,14 +100,14 @@ bool eventDump::Process(Event::Data & ev){
     tau << "Pt: " << (*iph)->Pt()
       << " Phi: "<< (*iph)->Phi()
       << " Eta: "<< (*iph)->Eta()<<endl;
-    taus += tau;
+    taus += tau.str();
   }
 
 
 
 
   std::stringstream ss;
-  ss << " --------------------------------------------------------" << std::endl
+ ss << " --------------------------------------------------------" << std::endl
     << "[eventDump::eventDump]" << std::endl
     << " Info for " << ev.RunNumber() << ":"<< ev.LumiSection() << ":"<<  ev.EventNumber() << std::endl
     << " --------------------------------------------------------" << std::endl
@@ -117,10 +117,10 @@ bool eventDump::Process(Event::Data & ev){
     << " | AlphaT (had) " << std::setw(4) << std::setprecision(5) << ev.HadronicAlphaT() << std::endl
     << " --------------------------------------------------------" << std::endl;
   evInfo_ += ss.str();
-  evInfo_ += jets.str();
+  evInfo_ += jets;
   evInfo_ += MHT.str();
-  evInfo_+= electrons.str();
-  evInfo_+= muons.str();
+  evInfo_ += electrons;
+  evInfo_ += muons;
   return true;
 }
 
