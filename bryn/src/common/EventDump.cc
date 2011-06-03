@@ -34,6 +34,7 @@ eventDump::~eventDump(){}
 bool eventDump::Process(Event::Data & ev){
 
   std::string jets;
+  jets = "Jets \n";
 
   LorentzV test(0,0,0,0);
   for (std::vector<Event::Jet const *>::const_iterator iph = ev.JD_CommonJets().accepted.begin();
@@ -55,6 +56,7 @@ bool eventDump::Process(Event::Data & ev){
   MHT << "MHT Pt: " << test.Pt() <<" phi " << (-test).Phi() << " "<< ev.CommonRecoilMET().Pt() << endl;
 
   std::string muons;
+  muons = " Muons \n";
   for (std::vector<Event::Lepton const *>::const_iterator iph = ev.LD_CommonMuons().accepted.begin();
   iph != ev.LD_CommonMuons().accepted.end();
   ++iph) {
@@ -67,7 +69,7 @@ bool eventDump::Process(Event::Data & ev){
     muons+=muon.str();
   }
   std::string electrons;
-
+  electrons = " Electrons \n";
   for (std::vector<Event::Lepton const *>::const_iterator iph = ev.LD_CommonElectrons().accepted.begin();
   iph != ev.LD_CommonElectrons().accepted.end();
   ++iph) {
@@ -81,7 +83,7 @@ bool eventDump::Process(Event::Data & ev){
   }
 
   std::string photons;
-
+  photons = "Photons \n";
   for (std::vector<Event::Photon const *>::const_iterator iph = ev.PD_CommonPhotons().accepted.begin();
   iph != ev.PD_CommonPhotons().accepted.end();
   ++iph) {
@@ -95,7 +97,7 @@ bool eventDump::Process(Event::Data & ev){
 
     // JJ - bug here - referenced taus not commontaus
   std::string taus;
-
+  taus = "Taus \n";
   for (std::vector<Event::Lepton const *>::const_iterator iph = ev.LD_CommonTaus().accepted.begin();
   iph != ev.LD_CommonTaus().accepted.end();
   ++iph) {
