@@ -17,7 +17,10 @@
 #include "Jet.hh"
 #include "Lepton.hh"
 #include "EventData.hh"
-
+#include "JetData.hh"
+#include "Compute_Helpers.hh"
+#include "LeptonData.hh"
+#include "PhotonData.hh"
 namespace Operation {
 
 class eventDump :public Operation::_Base
