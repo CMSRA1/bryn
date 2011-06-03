@@ -13,6 +13,10 @@
 #include "TH1F.h"
 #include <iostream>
 #include <fstream>
+#include "Photon.hh"
+#include "Jet.hh"
+#include "Lepton.hh"
+#include "EventData.hh"
 
 namespace Operation {
 
