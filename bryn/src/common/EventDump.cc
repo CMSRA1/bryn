@@ -191,12 +191,14 @@ bool eventDump::Process(Event::Data & ev){
   evInfo_ += "CrossCleaned";
   evInfo_ += jets;
   evInfo_ += MHT.str();
+  evInfo_ += photons;
   evInfo_ += electrons;
   evInfo_ += muons;
   evInfo_ += "Not Cross Cleaned";
   evInfo_ += jetsNcc;
   evInfo_ += MHTNcc.str();
   evInfo_ += electronsNcc;
+  evInfo_ += photonsNcc;
   evInfo_ += muonsNcc;
   return true;
 }
