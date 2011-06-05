@@ -51,6 +51,20 @@ bool eventDump::Process(Event::Data & ev){
     test+=(**iph);
     jets+=jet.str();
   }
+ for (std::vector<Event::Jet const *>::const_iterator iph = ev.JD_CommonJets().baby.begin();
+  iph != ev.JD_CommonJets().baby.end();
+  ++iph) {
+    std::stringstream jet;
+
+    jet << "Pt: " << (*iph)->Pt()
+      << " Phi: "<<  (*iph)->Phi()
+      << " Eta: "<<  (*iph)->Eta()
+      <<" was cc: "<< (*iph)->WasItcc()
+      <<" fem: "<< (*iph)->GetEmFrac()
+      << endl;
+    // test+=(**iph);
+    jets+=jet.str();
+}
   std::stringstream MHT;
 
   MHT << "MHT Pt: " << test.Pt() <<" phi " << (-test).Phi() << " "<< ev.CommonRecoilMET().Pt() << endl;
@@ -108,7 +122,59 @@ bool eventDump::Process(Event::Data & ev){
     taus += tau.str();
   }
 
+  std::string jetsNcc;
+  jetsNcc = "Jets \n";
 
+  LorentzV testNcc(0,0,0,0);
+      for (std::vector<Event::Jet>::const_iterator iph = ev.JD_Jets().begin();
+     iph != ev.JD_Jets().end();
+     ++iph) {
+      std::stringstream jetNcc;
+      jetNcc << "Pt: " << iph->Pt()<< " Phi: "<<  iph->Phi()<< " Eta: "<<  iph->Eta()<<" was cc "<< iph->WasItcc()<< endl;
+      if( iph->Pt()>30)  testNcc+=  (*iph);
+      testNcc+=(*iph);
+      jetsNcc+=jetNcc.str();
+  }
+  std::stringstream MHTNcc;
+
+  MHTNcc << "MHT Pt: " << testNcc.Pt() <<" phi " << (-testNcc).Phi() << " "<< ev.RecoilMET().Pt() << endl;
+
+  std::string muonsNcc;
+  muonsNcc = " Muons \n";
+ if(ev.LD_Muons().size()>0) cout << "Muons:" <<endl;
+    for (std::vector<Event::Lepton>::const_iterator iph = ev.LD_Muons().begin(); iph != ev.LD_Muons().end(); ++iph) {
+    std::stringstream muonNcc;
+      muonNcc << "Pt: " << iph->Pt()<< " Phi: "<<  iph->Phi()<< " Eta: "<<  iph->Eta()<<" was cc "<< iph->WasItcc()<<endl;
+    muonsNcc+=muonNcc.str();
+  }
+  std::string electronsNcc;
+  electronsNcc = " Electrons \n";
+  for (std::vector<Event::Lepton>::const_iterator iph = ev.LD_Electrons().begin(); iph != ev.LD_Electrons().end(); ++iph) {
+    std::stringstream electronNcc;
+    electronNcc << "Pt: " << iph->Pt()<< " Phi: "<<  iph->Phi()<< " Eta: "<<  iph->Eta()<<" was cc "<< iph->WasItcc()<<endl;
+    electronsNcc+=electronNcc.str();
+  }
+
+  std::string photonsNcc;
+  photonsNcc = "Photons \n";
+   for (std::vector<Event::Photon>::const_iterator iph = ev.PD_Photons().begin();
+     iph != ev.PD_Photons().end();
+     ++iph) {
+    std::stringstream photonNcc;
+    photonNcc << "Pt: " << iph->Pt()<< " Phi: "<<  iph->Phi()<< " Eta: "<<  iph->Eta()<<" was cc "<<iph->WasItcc()<<endl;
+    photonsNcc+=photonNcc.str();
+  }
+
+    // JJ - bug here - referenced taus not taus
+  std::string tausNcc;
+  tausNcc = "Taus \n";
+     for (std::vector<Event::Lepton>::const_iterator iph = ev.LD_Taus().begin();
+     iph != ev.LD_Taus().end();
+     ++iph) {
+      std::stringstream tauNcc;
+      tauNcc << "Pt: " << iph->Pt() << " Phi: "<< iph->Phi() << " Eta: "<< iph->Eta() << endl;
+    tausNcc += tauNcc.str();
+  }
 
 
   std::stringstream ss;
@@ -122,10 +188,16 @@ bool eventDump::Process(Event::Data & ev){
     << " | AlphaT (had) " << std::setw(4) << std::setprecision(5) << ev.HadronicAlphaT() << std::endl
     << " --------------------------------------------------------" << std::endl;
   evInfo_ += ss.str();
+  evInfo_ += "CrossCleaned";
   evInfo_ += jets;
   evInfo_ += MHT.str();
   evInfo_ += electrons;
   evInfo_ += muons;
+  evInfo_ += "Not Cross Cleaned";
+  evInfo_ += jetsNcc;
+  evInfo_ += MHTNcc.str();
+  evInfo_ += electronsNcc;
+  evInfo_ += muonsNcc;
   return true;
 }
 
