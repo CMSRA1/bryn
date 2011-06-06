@@ -45,7 +45,6 @@ bool eventDump::Process(Event::Data & ev){
     jet << "Pt: " << (*iph)->Pt()
       << " Phi: "<<  (*iph)->Phi()
       << " Eta: "<<  (*iph)->Eta()
-      <<" was cc: "<< (*iph)->WasItcc()
       <<" fem: "<< (*iph)->GetEmFrac()
       << endl;
     test+=(**iph);
@@ -59,7 +58,6 @@ bool eventDump::Process(Event::Data & ev){
     jet << "Pt: " << (*iph)->Pt()
       << " Phi: "<<  (*iph)->Phi()
       << " Eta: "<<  (*iph)->Eta()
-      <<" was cc: "<< (*iph)->WasItcc()
       <<" fem: "<< (*iph)->GetEmFrac()
       << endl;
     // test+=(**iph);
@@ -78,7 +76,6 @@ bool eventDump::Process(Event::Data & ev){
     muon << "Pt: " << (*iph)->Pt()
       << " Phi: " << (*iph)->Phi()
       << " Eta: " << (*iph)->Eta()
-      << " was cc: " << (*iph)->WasItcc()
       << endl;
     muons+=muon.str();
   }
@@ -91,7 +88,6 @@ bool eventDump::Process(Event::Data & ev){
     electron << "Pt: " << (*iph)->Pt()
       << " Phi: " << (*iph)->Phi()
       << " Eta: " << (*iph)->Eta()
-      << " was cc: " << (*iph)->WasItcc()
       << endl;
     electrons+=electron.str();
   }
@@ -105,7 +101,7 @@ bool eventDump::Process(Event::Data & ev){
     photon << "Pt: " << (*iph)->Pt()
       << " Phi: " <<  (*iph)->Phi()
       << " Eta: " <<  (*iph)->Eta()
-      << " was cc " << (*iph)->WasItcc()<<endl;
+      << endl;
     photons+=photon.str();
   }
 
@@ -130,7 +126,7 @@ bool eventDump::Process(Event::Data & ev){
      iph != ev.JD_Jets().end();
      ++iph) {
       std::stringstream jetNcc;
-      jetNcc << "Pt: " << iph->Pt()<< " Phi: "<<  iph->Phi()<< " Eta: "<<  iph->Eta()<<" was cc "<< iph->WasItcc()<< endl;
+      jetNcc << "Pt: " << iph->Pt()<< " Phi: "<<  iph->Phi()<< " Eta: "<<  iph->Eta()<<" was cc "<<  endl;
       if( iph->Pt()>30)  testNcc+=  (*iph);
       testNcc+=(*iph);
       jetsNcc+=jetNcc.str();
@@ -144,14 +140,14 @@ bool eventDump::Process(Event::Data & ev){
  if(ev.LD_Muons().size()>0) cout << "Muons:" <<endl;
     for (std::vector<Event::Lepton>::const_iterator iph = ev.LD_Muons().begin(); iph != ev.LD_Muons().end(); ++iph) {
     std::stringstream muonNcc;
-      muonNcc << "Pt: " << iph->Pt()<< " Phi: "<<  iph->Phi()<< " Eta: "<<  iph->Eta()<<" was cc "<< iph->WasItcc()<<endl;
+      muonNcc << "Pt: " << iph->Pt()<< " Phi: "<<  iph->Phi()<< " Eta: "<<  iph->Eta()<<" was cc "<<endl;
     muonsNcc+=muonNcc.str();
   }
   std::string electronsNcc;
   electronsNcc = " Electrons \n";
   for (std::vector<Event::Lepton>::const_iterator iph = ev.LD_Electrons().begin(); iph != ev.LD_Electrons().end(); ++iph) {
     std::stringstream electronNcc;
-    electronNcc << "Pt: " << iph->Pt()<< " Phi: "<<  iph->Phi()<< " Eta: "<<  iph->Eta()<<" was cc "<< iph->WasItcc()<<endl;
+    electronNcc << "Pt: " << iph->Pt()<< " Phi: "<<  iph->Phi()<< " Eta: "<<  iph->Eta()<<endl;
     electronsNcc+=electronNcc.str();
   }
 
@@ -161,7 +157,7 @@ bool eventDump::Process(Event::Data & ev){
      iph != ev.PD_Photons().end();
      ++iph) {
     std::stringstream photonNcc;
-    photonNcc << "Pt: " << iph->Pt()<< " Phi: "<<  iph->Phi()<< " Eta: "<<  iph->Eta()<<" was cc "<<iph->WasItcc()<<endl;
+    photonNcc << "Pt: " << iph->Pt()<< " Phi: "<<  iph->Phi()<< " Eta: "<<  iph->Eta()<< endl;
     photonsNcc+=photonNcc.str();
   }
 
