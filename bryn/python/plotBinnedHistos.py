@@ -25,7 +25,7 @@ def ensure_dir(path):
 
 # Global Close List
 closeList = []
-intlumi = 189.
+intlumi = 248.1
 
 leg = Root.TLegend(0.65, 0.45, 0.97, 0.8)
 leg.SetShadowColor(0)
@@ -78,46 +78,37 @@ def PassingCutNumbers(Hist, name ,lowerBound, Upperbound):
     highbin = Hist.FindBin(Upperbound) - 1
   # print "looking in bin", highbin, "This has a low edge of " , Hist.GetBinLowEdge(highbin), "Lower bin is" , lowbin, "THis has a low bin edge of" , Hist.GetBinLowEdge(lowbin)
   errorVal = Root.Double(0)
-  passingCut = Hist.IntegralAndError(lowbin,highbin, errorVal)
-  textLine = "Sample = " + DirKeys[dir].GetTitle()  + "   " + str(Hist.GetName()) + "     " + name +  " , Number bewteen cut of   " + str(lowerBound) + " and " + str(Upperbound) +" is " + "       " + str(passingCut)+ " +/- " + str(errorVal) + "\n"
+  passingCut = Hist.Integral(lowbin,highbin) #Hist.IntegralAndError(lowbin,highbin, errorVal)
+  print passingCut
+  textLine = "Sample = "  +  "   " + str(Hist.GetName()) + "     " + name +  " , Number bewteen cut of   " + str(lowerBound) + " and " + str(Upperbound) +" is " + "       " + str(passingCut)+ " +/- " + str(errorVal) + "\n"
+  print textLine
   CutNumbers.write(textLine)
 
 
-CutNumbers = open(outputfile+"CutTable.txt",'w')
 
 resultsDir = ["../results"]
 outdirTmp = "../Plots/"
-histList = ["JetMultiplicityAfterAlphaT_all","HT_aftar_AlphaT_all"]
+CutNumbers = open(outdirTmp+"CutTable.txt",'w')
+histList = ["HT_aftar_AlphaT_all"]#"JetMultiplicityAfterAlphaT_all",
 JetThreshList = ["","37","43"]
 for num in JetThreshList:
-  for dir in ["AllCutscombined"]:# GetAllSubFiles("../results/Data/AK5Calo_Jets.root"):
+  for dir in GetAllSubFiles("../results/Data/AK5Calo_Jets.root"):
     if dir == "susyTree" : continue
     for hist in histList:
       outdir = outdirTmp
-      print dir,num,hist
+      # print dir,num,hist
       Data =  GethistFromFolder(resultsDir[0]+ "/Data"+num+"/AK5Calo_Jets.root",dir,hist,1,0,"Data")
-      MCCentral =    GethistFromFolder(resultsDir[0]+"/NoSmear"+num+"/AK5Calo_QCD_All.root",dir,hist,2,intlumi,"Central")
+      MCCentral = GethistFromFolder( resultsDir[0]+"/NoSmear"+num+"/AK5Calo_QCD_All.root",dir,hist,2,intlumi,"MC_Central" )
       MCCentral.Add( GethistFromFolder(resultsDir[0]+"/NoSmear"+num+"/AK5Calo_SingleTop.root",dir,hist,1,intlumi,0) )
       MCCentral.Add( GethistFromFolder(resultsDir[0]+"/NoSmear"+num+"/AK5Calo_TTbar.root",dir,hist,1,intlumi,0) )
       MCCentral.Add( GethistFromFolder(resultsDir[0]+"/NoSmear"+num+"/AK5Calo_WJets.root",dir,hist,1,intlumi,0) )
       MCCentral.Add( GethistFromFolder(resultsDir[0]+"/NoSmear"+num+"/AK5Calo_Zinv.root",dir,hist,1,intlumi,0) )
       c1 = Root.TCanvas("canvas"+hist,"canname"+hist,1200,1200)
-      uplist = [325,375,425,475,575,675,775,875,3000]
-      lowlist = [275,325,375,425,475,575,675,775,875]
-      if "HT_after_alphaT_all" == hist :
-        for up, low in zip(uplist , lowlist):
-          PassingCutNumbers(Data, "Data Jet"+num    ,low,up)
-      if "HT_after_alphaT_all" == hist :
-        for up, low in zip(uplist , lowlist):
-          PassingCutNumbers(MCCentral, "Total Background Stat Jet"+num  ,low,up)
-
-
-
+      print "Data",dir,num,hist,Data.Integral(0,-1)#, errorValDa),"+/-",errorValDa
+      print "MC",dir,num,hist, MCCentral.Integral(0,-1)#, errorValMC),"+/-",errorValMC
       c1.cd(1)
       Data.Draw("p")
       MCCentral.Draw("histsame")
-      MCplus5.Draw("histsame")
-      MCplus10.Draw("histsame")
       leg.Draw("same")
       outdir = outdir+"/"+num+"/"
       ensure_dir(outdir)
@@ -125,5 +116,3 @@ for num in JetThreshList:
       leg.Clear()
       for a in closeList:
         a.Close()
-
-
