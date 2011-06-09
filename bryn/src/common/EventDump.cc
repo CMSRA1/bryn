@@ -178,8 +178,9 @@ bool eventDump::Process(Event::Data & ev){
     << "[eventDump::eventDump]" << std::endl
     << " Info for " << ev.RunNumber() << ":"<< ev.LumiSection() << ":"<<  ev.EventNumber() << std::endl
     << " --------------------------------------------------------" << std::endl
-    << " | HT =" << std::setw(4) << std::setprecision(3) << ev.CommonHT() << std::endl
-    << " | MHT =" << std::setw(4) << std::setprecision(3) << ev.CommonMHT().Pt() << std::endl
+    << " | HT =" << std::setw(4) << std::setprecision(6) << ev.CommonHT() << std::endl
+    << " | MHT =" << std::setw(4) << std::setprecision(6) << ev.CommonMHT().Pt() << std::endl
+    << " | Meff =" << std::setw(4) << std::setprecision(6) << ev.CommonHT()+ev.CommonMHT().Pt() << std::endl
     << " | AlphaT (com) " << std::setw(4) << std::setprecision(5) << ev.CommonAlphaT() << std::endl
     << " | AlphaT (had) " << std::setw(4) << std::setprecision(5) << ev.HadronicAlphaT() << std::endl
     << " --------------------------------------------------------" << std::endl;
