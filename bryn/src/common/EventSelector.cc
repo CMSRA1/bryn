@@ -44,7 +44,7 @@ eventselector_t::eventselector_t( const Utils::ParameterSet& ps ) :
     std::vector<int>::iterator iEv   = _ev.begin();
 
 
-    if(iRun != jRun){
+    while(iRun != jRun){
       if( ev.RunNumber() == *iRun && ev.LumiSection() == *iLumi && ev.EventNumber() == *iEv ){ return true; }
       ++iRun;
       ++iLumi;
