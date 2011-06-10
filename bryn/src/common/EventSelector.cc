@@ -50,6 +50,7 @@ eventselector_t::eventselector_t( const Utils::ParameterSet& ps ) :
       ++iLumi;
       ++iEv;
     }
+    return false;
 }
 std::ostream& eventselector_t::Description( std::ostream &ostrm ) {
   ostrm << "selected on events " << " ";
