@@ -27,9 +27,9 @@
 using namespace Operation;
 
 eventselector_t::eventselector_t( const Utils::ParameterSet& ps ) :
-   _run( ps.Get<std::vector<unsigned int> >("Run") ),
-  _lumi( ps.Get<std::vector<unsigned int> >("Lumi") ),
-  _ev( ps.Get<std::vector<unsigned int> >("Event") )
+   _run( ps.Get<std::vector<int> >("Run") ),
+  _lumi( ps.Get<std::vector<int> >("Lumi") ),
+  _ev( ps.Get<std::vector<int> >("Event") )
   {}
 
 
@@ -38,10 +38,10 @@ eventselector_t::eventselector_t( const Utils::ParameterSet& ps ) :
     std::cout << " Please use same size vectors for each of RUN:LUMI:EVENT" << std::endl;
     return false;
     }
-    std::vector<unsigned int>::iterator iRun  = _run.begin();
-    std::vector<unsigned int>::iterator jRun  = _run.end();
-    std::vector<unsigned int>::iterator iLumi = _lumi.begin();
-    std::vector<unsigned int>::iterator iEv   = _ev.begin();
+    std::vector<int>::iterator iRun  = _run.begin();
+    std::vector<int>::iterator jRun  = _run.end();
+    std::vector<int>::iterator iLumi = _lumi.begin();
+    std::vector<int>::iterator iEv   = _ev.begin();
 
 
     if(iRun != jRun){

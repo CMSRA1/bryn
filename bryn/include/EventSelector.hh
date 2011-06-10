@@ -34,9 +34,9 @@ namespace Operation {
 
   private:
     /* data */
-    std::vector<unsigned int> _run;
-    std::vector<unsigned int> _lumi;
-    std::vector<unsigned int> _ev;
+    std::vector<int> _run;
+    std::vector<int> _lumi;
+    std::vector<int> _ev;
   };
 
 }
