@@ -294,6 +294,14 @@ void WeeklyUpdatePlots::StandardPlots() {
     80,0.,2000.,
     nMax_+1, 0, 1, true );
 
+  BookHistArray( AlphatBefore_HT_,
+    "HT_before_alphaT",
+    ";H_{T} (GeV); Events/25 (GeV);",
+    80,0.,2000.,
+    nMax_+1, 0, 1, true );
+
+
+
   BookHistArray( HT_,
     "HT",
     ";H_{T} (GeV); Events/25 GeV;",
@@ -410,7 +418,7 @@ Double_t WeeklyUpdatePlots::DeltaHT( Event::Data& ev){
 
   // Alpha_t variable
   std::vector<bool> pseudo;
-  double alpha_t = AlphaT()( jet, pseudo, false );
+  AlphaT()( jet, pseudo, false );
   if ( pseudo.size() != jet.size() ) { abort(); }
     // use this to get the pseudo jets
 
@@ -444,7 +452,7 @@ std::pair<LorentzV,LorentzV> WeeklyUpdatePlots::PsudoJets( Event::Data & ev ){
 
   // Alpha_t variable
   std::vector<bool> pseudo;
-  double alpha_t = AlphaT()( jet, pseudo, false );
+  AlphaT()( jet, pseudo, false );
   if ( pseudo.size() != jet.size() ) { abort(); }
     // use this to get the pseudo jets
 
@@ -482,7 +490,7 @@ Double_t WeeklyUpdatePlots::MT2( Event::Data& ev){
 
   // Alpha_t variable
   std::vector<bool> pseudo;
-  double alpha_t = AlphaT()( jet, pseudo, false );
+  AlphaT()( jet, pseudo, false );
   if ( pseudo.size() != jet.size() ) { abort(); }
     // use this to get the pseudo jets
 
@@ -842,6 +850,12 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
       CaloMET_[n]->Fill(  LorentzV(*ev.metP4caloTypeII()).Pt(), weight );
     }
 
+    if(ev.CommonAlphaT() < 0.55){
+      if ( n >= nMin_ && n <= nMax_ && n < AlphatBefore_HT_.size() ) {
+        AlphatBefore_HT_[0]->Fill( ev.CommonHT(), weight );
+        AlphatBefore_HT_[n]->Fill( ev.CommonHT(), weight );
+      }
+    }
 
     if(ev.CommonAlphaT() > 0.55){
 
@@ -849,7 +863,7 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
       if ( n >= nMin_ && n <= nMax_ && n < HT_vs_SecondJetPt_after_alphaT_.size()) {
       HT_vs_SecondJetPt_after_alphaT_[0]->Fill(ev.CommonHT(),ev.JD_CommonJets().accepted[1]->Pt(),weight);
       HT_vs_SecondJetPt_after_alphaT_[n]->Fill(ev.CommonHT(),ev.JD_CommonJets().accepted[1]->Pt(),weight);
-    }
+      }
 
 
       if ( n >= nMin_ && n <= nMax_ && n < CaloMET_afteraT_.size() ) {
@@ -901,6 +915,8 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
         AlphatCut_HT_[0]->Fill( ev.CommonHT(), weight );
         AlphatCut_HT_[n]->Fill( ev.CommonHT(), weight );
       }
+
+
 
       if ( n >= nMin_ && n <= nMax_ && n < AlphatCut_Meff_.size()) {
         AlphatCut_Meff_[0]->Fill( ev.CommonMHT().Pt()+ev.CommonHT(), weight );

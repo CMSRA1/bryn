@@ -88,6 +88,7 @@ namespace Operation {
     std::vector<TH2D*> MinBiasDphi_EtaPhiMap_;
     std::vector<TH2D*> HT_vs_SecondJetPt_after_alphaT_;
     std::vector<TH2D*> HT_vs_SecondJetPt_;
+    std::vector<TH1D*> AlphatBefore_HT_;
     // //DeadECAL Plots
     // std::vector<TH1D*>  BiasedDphi_;
     // std::vector<TH1D*> BadJetECALDR_;
@@ -100,8 +101,8 @@ namespace Operation {
     void StandardPlots();
     bool StandardPlots( Event::Data& );
 
-    };
+  };
 
-  }
+}
 
 #endif // hadronic_include_WeeklyUpdatePlots_hh
