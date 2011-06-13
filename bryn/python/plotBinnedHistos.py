@@ -92,8 +92,9 @@ CutNumbers = open(outdirTmp+"CutTable.txt",'w')
 histList = ["HT_aftar_AlphaT_all"]#"JetMultiplicityAfterAlphaT_all",
 JetThreshList = ["","37","43"]
 for num in JetThreshList:
-  for dir in GetAllSubFiles("../results/Data/AK5Calo_Jets.root"):
-    if dir == "susyTree" : continue
+  for dir in ["AllCutscombined"]:# GetAllSubFiles("../results/Data/AK5Calo_Jets.root"): 
+   CutNumbers = open(out+"CutTable.txt",'w')
+   if dir == "susyTree" : continue
     for hist in histList:
       outdir = outdirTmp
       # print dir,num,hist

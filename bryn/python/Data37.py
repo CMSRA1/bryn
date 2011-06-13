@@ -20,7 +20,7 @@ cutTree,blah = MakeDataTree(73.3)
 print cutTree
 
 def addCutFlowData(a) :
-  # a.AddWeightFilter("Weight",PreScaleWeights)
+  a.AddWeightFilter("Weight",PreScaleWeights)
   # a.AddJetFilter("PreCC",JetCorrections)
   a.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
   a.AddElectronFilter("PreCC",vbtfElectronIdFilter)
@@ -56,10 +56,13 @@ File="../resultsWithSingleTop//Data/AK5Calo_Jets.root")
 
 
 from data.Run2011.HT_Run2011_promptReco_DCS import *
+from data.Run2011.HT42_incomplete import *
 from data.Run2011.RA1ToBurn import *
 outDir = "../results/Data37"
 ensure_dir(outDir)
-anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT_Run2011_promptReco_DCS])
+# HT42_incomplete.LastEntry = 100
+# HT42_incomplete.File = HT42_incomplete.File[0:1]
+anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT42_incomplete])
 
 # from data.MultiJet_Run2010B_Nov4ReReco_v1 import *
 

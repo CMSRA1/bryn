@@ -6,7 +6,6 @@ from libbryn import *
 from libHadronic import *
 from icf.core import PSet,Analysis
 from batchGolden import *
-from cutFlow import *
 from ra1objectid.vbtfElectronId_cff import *
 from ra1objectid.vbtfMuonId_cff import *
 from ra1objectid.ra3PhotonId_cff import *
@@ -24,7 +23,7 @@ cutTree,blah = MakeDataTree(86.7)
 
 
 def addCutFlowData(a) :
-  # a.AddWeightFilter("Weight",PreScaleWeights)
+  a.AddWeightFilter("Weight",PreScaleWeights)
   # a.AddJetFilter("PreCC",JetCorrections)
   a.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
   a.AddElectronFilter("PreCC",vbtfElectronIdFilter)
@@ -60,10 +59,11 @@ File="../resultsWithSingleTop//Data/AK5Calo_Jets.root")
 
 
 from data.Run2011.HT_Run2011_promptReco_DCS import *
+from data.Run2011.HT42_incomplete import *
 from data.Run2011.RA1ToBurn import *
 outDir = "../results/Data43"
 ensure_dir(outDir)
-anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT_Run2011_promptReco_DCS])
+anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT42_incomplete])
 
 # from data.MultiJet_Run2010B_Nov4ReReco_v1 import *
 
