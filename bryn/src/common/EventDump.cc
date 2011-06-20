@@ -58,8 +58,9 @@ bool eventDump::Process(Event::Data & ev){
       << " Phi: "<<  (*iph)->Phi()
       << " Eta: "<<  (*iph)->Eta()
       <<" fem: "<< (*iph)->GetEmFrac()
-      << " Itterative HT" << itHT
+      << " Itterative HT " << itHT
       << " Itterative MHT " << test.Pt()
+      << " DeltaHT " << dht
       << " Trigger emu alphaT " << aT
       << endl;
 
@@ -71,6 +72,7 @@ bool eventDump::Process(Event::Data & ev){
     std::stringstream jet;
     itHT += (*iph)->Et();
     nj++;
+    test+=(**iph);
     dht += ( nj < 2 ? (*iph)->Pt() : -1.* (*iph)->Pt() ); //@@ only use for njets < 4
         if ( nj == 2 || nj == 3 ) {
           aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( test.Pt()*test.Pt()  ) ) );
@@ -81,12 +83,14 @@ bool eventDump::Process(Event::Data & ev){
       << " Phi: "<<  (*iph)->Phi()
       << " Eta: "<<  (*iph)->Eta()
       <<" fem: "<< (*iph)->GetEmFrac()
+      << " Itterative HT " << itHT
       << " Itterative MHT " << test.Pt()
+      << " DeltaHT " << dht
       << " Trigger emu alphaT " << aT
       << endl;
 
 
-    // test+=(**iph);
+
     jets+=jet.str();
 }
   std::stringstream MHT;
