@@ -45,7 +45,7 @@ bool eventDump::Process(Event::Data & ev){
   iph != ev.JD_CommonJets().accepted.end();
   ++iph) {
         dht += ( nj < 2 ? (*iph)->Pt() : -1.* (*iph)->Pt() ); //@@ only use for njets < 4
-        }
+
         if ( nj == 2 || nj == 3 ) {
           aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( test.Pt()*test.Pt()  ) ) );
         } else if ( nj > 3 ) {
@@ -70,12 +70,19 @@ bool eventDump::Process(Event::Data & ev){
   ++iph) {
     std::stringstream jet;
     itHT += (*iph)->Et();
+        dht += ( nj < 2 ? (*iph)->Pt() : -1.* (*iph)->Pt() ); //@@ only use for njets < 4
 
+        if ( nj == 2 || nj == 3 ) {
+          aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( test.Pt()*test.Pt()  ) ) );
+        } else if ( nj > 3 ) {
+          aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( test.Pt()*test.Pt()  ) ) );
+        }
     jet << "Pt: " << (*iph)->Pt()
       << " Phi: "<<  (*iph)->Phi()
       << " Eta: "<<  (*iph)->Eta()
       <<" fem: "<< (*iph)->GetEmFrac()
-      << " Itterative HT" << itHT
+      << " Itterative MHT " << test.Pt()
+      << " Trigger emu alphaT " << aT
       << endl;
 
 
