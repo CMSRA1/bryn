@@ -70,8 +70,8 @@ bool eventDump::Process(Event::Data & ev){
   ++iph) {
     std::stringstream jet;
     itHT += (*iph)->Et();
-        dht += ( nj < 2 ? (*iph)->Pt() : -1.* (*iph)->Pt() ); //@@ only use for njets < 4
-
+    nj++;
+    dht += ( nj < 2 ? (*iph)->Pt() : -1.* (*iph)->Pt() ); //@@ only use for njets < 4
         if ( nj == 2 || nj == 3 ) {
           aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( test.Pt()*test.Pt()  ) ) );
         } else if ( nj > 3 ) {
