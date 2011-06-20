@@ -38,18 +38,31 @@ bool eventDump::Process(Event::Data & ev){
 
   LorentzV test(0,0,0,0);
   double itHT = 0.;
+  int nj = 0;
+  double dht = 0.;
+  double aT = 0.;
   for (std::vector<Event::Jet const *>::const_iterator iph = ev.JD_CommonJets().accepted.begin();
   iph != ev.JD_CommonJets().accepted.end();
   ++iph) {
+        dht += ( nj < 2 ? jetVar : -1.* jetVar ); //@@ only use for njets < 4
+        }
+        if ( nj == 2 || nj == 3 ) {
+          aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( test.Pt()*test.Pt()  ) ) );
+        } else if ( nj > 3 ) {
+          aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( test.Pt()*test.Pt()  ) ) );
+        }
     std::stringstream jet;
     itHT += (*iph)->Et();
+    test+=(**iph);
     jet << "Pt: " << (*iph)->Pt()
       << " Phi: "<<  (*iph)->Phi()
       << " Eta: "<<  (*iph)->Eta()
       <<" fem: "<< (*iph)->GetEmFrac()
       << " Itterative HT" << itHT
+      << " Itterative MHT " << test.Pt()
+      << " Trigger emu alphaT " << aT
       << endl;
-    test+=(**iph);
+    nj++;
     jets+=jet.str();
   }
  for (std::vector<Event::Jet const *>::const_iterator iph = ev.JD_CommonJets().baby.begin();
