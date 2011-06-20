@@ -67,7 +67,7 @@ bool eventDump::Process(Event::Data & ev){
       << " Itterative HT " << std::setw(4) << std::setprecision(6) << itHT
       << " Itterative MHT " << std::setw(4) << std::setprecision(6) << test.Pt()
       << " Itterative MHT (from Et projection) " << std::setw(4) << std::setprecision(6) << mHT
-      << " DeltaHT " <<< std::setw(4) << std::setprecision(6) << dht
+      << " DeltaHT " << std::setw(4) << std::setprecision(6) << dht
       << " Trigger emu alphaT " << std::setw(4) << std::setprecision(6) << aT
       << endl;
 
