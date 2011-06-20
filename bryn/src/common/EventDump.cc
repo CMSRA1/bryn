@@ -41,15 +41,21 @@ bool eventDump::Process(Event::Data & ev){
   int nj = 0;
   double dht = 0.;
   double aT = 0.;
+  double mhtx = 0.;
+  double mhty = 0.;
+
   for (std::vector<Event::Jet const *>::const_iterator iph = ev.JD_CommonJets().accepted.begin();
   iph != ev.JD_CommonJets().accepted.end();
   ++iph) {
+          mhtx -= (*iph)->Et()*cos((*iph)->Phi());
+          mhty -= (*iph)->Et()*sin((*iph)->Phi());
+          double mHT = sqrt(mhtx*mhtx + mhty*mhty);
         nj++;
         dht += ( nj < 2 ? (*iph)->Et() : -1.* (*iph)->Et() ); //@@ only use for njets < 4
         if ( nj == 2 || nj == 3 ) {
-          aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( test.Pt()*test.Pt()  ) ) );
+          aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
         } else if ( nj > 3 ) {
-          aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( test.Pt()*test.Pt()  ) ) );
+          aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
         }
     std::stringstream jet;
     itHT += (*iph)->Et();
@@ -60,6 +66,7 @@ bool eventDump::Process(Event::Data & ev){
       <<" fem: "<< std::setw(4) << std::setprecision(6) << (*iph)->GetEmFrac()
       << " Itterative HT " << std::setw(4) << std::setprecision(6) << itHT
       << " Itterative MHT " << std::setw(4) << std::setprecision(6) << test.Pt()
+      << " Itterative MHT (from Et projection) " << std::setw(4) << std::setprecision(6) << mHT
       << " DeltaHT " <<< std::setw(4) << std::setprecision(6) << dht
       << " Trigger emu alphaT " << std::setw(4) << std::setprecision(6) << aT
       << endl;
@@ -73,11 +80,15 @@ bool eventDump::Process(Event::Data & ev){
     itHT += (*iph)->Et();
     nj++;
     test+=(**iph);
-    dht += ( nj < 2 ? (*iph)->Et() : -1.* (*iph)->Et() ); //@@ only use for njets < 4
+     mhtx -= (*iph)->Et()*cos((*iph)->Phi());
+     mhty -= (*iph)->Et()*sin((*iph)->Phi());
+      double mHT = sqrt(mhtx*mhtx + mhty*mhty);
+        nj++;
+        dht += ( nj < 2 ? (*iph)->Et() : -1.* (*iph)->Et() ); //@@ only use for njets < 4
         if ( nj == 2 || nj == 3 ) {
-          aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( test.Pt()*test.Pt()  ) ) );
+          aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
         } else if ( nj > 3 ) {
-          aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( test.Pt()*test.Pt()  ) ) );
+          aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
         }
     jet << "Pt: " << std::setw(4) << std::setprecision(6) << (*iph)->Pt()
       << " Et: " << std::setw(4) << std::setprecision(6) << (*iph)->Et()
@@ -86,6 +97,7 @@ bool eventDump::Process(Event::Data & ev){
       << " fem: "<< std::setw(4) << std::setprecision(6) << (*iph)->GetEmFrac()
       << " Itterative HT " << std::setw(4) << std::setprecision(6) << itHT
       << " Itterative MHT " << std::setw(4) << std::setprecision(6) << test.Pt()
+      << " Itterative MHT (from Et projection) " << std::setw(4) << std::setprecision(6) << mHT
       << " DeltaHT " << std::setw(4) << std::setprecision(6) << dht
       << " Trigger emu alphaT " << std::setw(4) << std::setprecision(6) << aT
       << endl;
