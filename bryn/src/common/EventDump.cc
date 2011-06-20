@@ -44,8 +44,8 @@ bool eventDump::Process(Event::Data & ev){
   for (std::vector<Event::Jet const *>::const_iterator iph = ev.JD_CommonJets().accepted.begin();
   iph != ev.JD_CommonJets().accepted.end();
   ++iph) {
+        nj++;
         dht += ( nj < 2 ? (*iph)->Pt() : -1.* (*iph)->Pt() ); //@@ only use for njets < 4
-
         if ( nj == 2 || nj == 3 ) {
           aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( test.Pt()*test.Pt()  ) ) );
         } else if ( nj > 3 ) {
@@ -62,7 +62,7 @@ bool eventDump::Process(Event::Data & ev){
       << " Itterative MHT " << test.Pt()
       << " Trigger emu alphaT " << aT
       << endl;
-    nj++;
+
     jets+=jet.str();
   }
  for (std::vector<Event::Jet const *>::const_iterator iph = ev.JD_CommonJets().baby.begin();
