@@ -44,7 +44,7 @@ bool eventDump::Process(Event::Data & ev){
   for (std::vector<Event::Jet const *>::const_iterator iph = ev.JD_CommonJets().accepted.begin();
   iph != ev.JD_CommonJets().accepted.end();
   ++iph) {
-        dht += ( nj < 2 ? jetVar : -1.* jetVar ); //@@ only use for njets < 4
+        dht += ( nj < 2 ? (*iph)->Pt() : -1.* (*iph)->Pt() ); //@@ only use for njets < 4
         }
         if ( nj == 2 || nj == 3 ) {
           aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( test.Pt()*test.Pt()  ) ) );
