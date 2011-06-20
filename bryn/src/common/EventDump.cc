@@ -45,7 +45,7 @@ bool eventDump::Process(Event::Data & ev){
   iph != ev.JD_CommonJets().accepted.end();
   ++iph) {
         nj++;
-        dht += ( nj < 2 ? (*iph)->Pt() : -1.* (*iph)->Pt() ); //@@ only use for njets < 4
+        dht += ( nj < 2 ? (*iph)->Et() : -1.* (*iph)->Et() ); //@@ only use for njets < 4
         if ( nj == 2 || nj == 3 ) {
           aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( test.Pt()*test.Pt()  ) ) );
         } else if ( nj > 3 ) {
@@ -54,14 +54,14 @@ bool eventDump::Process(Event::Data & ev){
     std::stringstream jet;
     itHT += (*iph)->Et();
     test+=(**iph);
-    jet << "Pt: " << (*iph)->Pt()
-      << " Phi: "<<  (*iph)->Phi()
-      << " Eta: "<<  (*iph)->Eta()
-      <<" fem: "<< (*iph)->GetEmFrac()
-      << " Itterative HT " << itHT
-      << " Itterative MHT " << test.Pt()
-      << " DeltaHT " << dht
-      << " Trigger emu alphaT " << aT
+    jet << "Pt: " << std::setw(4) << std::setprecision(6) << (*iph)->Pt()
+      << " Phi: "<< std::setw(4) << std::setprecision(6) <<  (*iph)->Phi()
+      << " Eta: "<< std::setw(4) << std::setprecision(6) <<  (*iph)->Eta()
+      <<" fem: "<< std::setw(4) << std::setprecision(6) << (*iph)->GetEmFrac()
+      << " Itterative HT " << std::setw(4) << std::setprecision(6) << itHT
+      << " Itterative MHT " << std::setw(4) << std::setprecision(6) << test.Pt()
+      << " DeltaHT " <<< std::setw(4) << std::setprecision(6) << dht
+      << " Trigger emu alphaT " << std::setw(4) << std::setprecision(6) << aT
       << endl;
 
     jets+=jet.str();
@@ -73,20 +73,21 @@ bool eventDump::Process(Event::Data & ev){
     itHT += (*iph)->Et();
     nj++;
     test+=(**iph);
-    dht += ( nj < 2 ? (*iph)->Pt() : -1.* (*iph)->Pt() ); //@@ only use for njets < 4
+    dht += ( nj < 2 ? (*iph)->Et() : -1.* (*iph)->Et() ); //@@ only use for njets < 4
         if ( nj == 2 || nj == 3 ) {
           aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( test.Pt()*test.Pt()  ) ) );
         } else if ( nj > 3 ) {
           aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( test.Pt()*test.Pt()  ) ) );
         }
-    jet << "Pt: " << (*iph)->Pt()
-      << " Phi: "<<  (*iph)->Phi()
-      << " Eta: "<<  (*iph)->Eta()
-      <<" fem: "<< (*iph)->GetEmFrac()
-      << " Itterative HT " << itHT
-      << " Itterative MHT " << test.Pt()
-      << " DeltaHT " << dht
-      << " Trigger emu alphaT " << aT
+    jet << "Pt: " << std::setw(4) << std::setprecision(6) << (*iph)->Pt()
+      << " Et: " << std::setw(4) << std::setprecision(6) << (*iph)->Et()
+      << " Phi: "<< std::setw(4) << std::setprecision(6) <<  (*iph)->Phi()
+      << " Eta: "<< std::setw(4) << std::setprecision(6) <<  (*iph)->Eta()
+      << " fem: "<< std::setw(4) << std::setprecision(6) << (*iph)->GetEmFrac()
+      << " Itterative HT " << std::setw(4) << std::setprecision(6) << itHT
+      << " Itterative MHT " << std::setw(4) << std::setprecision(6) << test.Pt()
+      << " DeltaHT " << std::setw(4) << std::setprecision(6) << dht
+      << " Trigger emu alphaT " << std::setw(4) << std::setprecision(6) << aT
       << endl;
 
 
@@ -103,9 +104,9 @@ bool eventDump::Process(Event::Data & ev){
   iph != ev.LD_CommonMuons().accepted.end();
   ++iph) {
     std::stringstream muon;
-    muon << "Pt: " << (*iph)->Pt()
-      << " Phi: " << (*iph)->Phi()
-      << " Eta: " << (*iph)->Eta()
+    muon << "Pt: " << std::setw(4) << std::setprecision(6) << (*iph)->Pt()
+      << " Phi: " << std::setw(4) << std::setprecision(6) << (*iph)->Phi()
+      << " Eta: " << std::setw(4) << std::setprecision(6) << (*iph)->Eta()
       << endl;
     muons+=muon.str();
   }
@@ -115,9 +116,9 @@ bool eventDump::Process(Event::Data & ev){
   iph != ev.LD_CommonElectrons().accepted.end();
   ++iph) {
     std::stringstream electron;
-    electron << "Pt: " << (*iph)->Pt()
-      << " Phi: " << (*iph)->Phi()
-      << " Eta: " << (*iph)->Eta()
+    electron << "Pt: " << std::setw(4) << std::setprecision(6) << (*iph)->Pt()
+      << " Phi: " << std::setw(4) << std::setprecision(6) << (*iph)->Phi()
+      << " Eta: " << std::setw(4) << std::setprecision(6) << (*iph)->Eta()
       << endl;
     electrons+=electron.str();
   }
@@ -128,9 +129,9 @@ bool eventDump::Process(Event::Data & ev){
   iph != ev.PD_CommonPhotons().accepted.end();
   ++iph) {
     std::stringstream photon;
-    photon << "Pt: " << (*iph)->Pt()
-      << " Phi: " <<  (*iph)->Phi()
-      << " Eta: " <<  (*iph)->Eta()
+    photon << "Pt: " << std::setw(4) << std::setprecision(6) << (*iph)->Pt()
+      << " Phi: " << std::setw(4) << std::setprecision(6) <<  (*iph)->Phi()
+      << " Eta: " << std::setw(4) << std::setprecision(6) <<  (*iph)->Eta()
       << endl;
     photons+=photon.str();
   }
@@ -142,9 +143,10 @@ bool eventDump::Process(Event::Data & ev){
   iph != ev.LD_CommonTaus().accepted.end();
   ++iph) {
     std::stringstream tau;
-    tau << "Pt: " << (*iph)->Pt()
-      << " Phi: "<< (*iph)->Phi()
-      << " Eta: "<< (*iph)->Eta()<<endl;
+    tau << "Pt: " << std::setw(4) << std::setprecision(6) << (*iph)->Pt()
+      << " Phi: " << std::setw(4) << std::setprecision(6) << (*iph)->Phi()
+      << " Eta: " << std::setw(4) << std::setprecision(6) << (*iph)->Eta()
+      <<endl;
     taus += tau.str();
   }
 
@@ -156,7 +158,7 @@ bool eventDump::Process(Event::Data & ev){
      iph != ev.JD_Jets().end();
      ++iph) {
       std::stringstream jetNcc;
-      jetNcc << "Pt: " << iph->Pt()<< " Phi: "<<  iph->Phi()<< " Eta: "<<  iph->Eta()<<" was cc "<<  endl;
+      jetNcc << "Pt: " << std::setw(4) << std::setprecision(6) << iph->Pt()<< " Phi: " << std::setw(4) << std::setprecision(6) <<  iph->Phi()<< " Eta: " << std::setw(4) << std::setprecision(6) <<  iph->Eta()<<" was cc "<<  endl;
       if( iph->Pt()>30) { testNcc+=(*iph); }
       jetsNcc+=jetNcc.str();
   }
@@ -168,14 +170,14 @@ bool eventDump::Process(Event::Data & ev){
   muonsNcc = " Muons \n";
     for (std::vector<Event::Lepton>::const_iterator iph = ev.LD_Muons().begin(); iph != ev.LD_Muons().end(); ++iph) {
     std::stringstream muonNcc;
-      muonNcc << "Pt: " << iph->Pt()<< " Phi: "<<  iph->Phi()<< " Eta: "<<  iph->Eta()<<" was cc "<<endl;
+      muonNcc << "Pt: " << std::setw(4) << std::setprecision(6) << iph->Pt()<< " Phi: "<< std::setw(4) << std::setprecision(6) <<  iph->Phi()<< " Eta: "<< std::setw(4) << std::setprecision(6) <<  iph->Eta()<<" was cc "<<endl;
     muonsNcc+=muonNcc.str();
   }
   std::string electronsNcc;
   electronsNcc = " Electrons : \n";
   for (std::vector<Event::Lepton>::const_iterator iph = ev.LD_Electrons().begin(); iph != ev.LD_Electrons().end(); ++iph) {
     std::stringstream electronNcc;
-    electronNcc << "Pt: " << iph->Pt()<< " Phi: "<<  iph->Phi()<< " Eta: "<<  iph->Eta()<<endl;
+    electronNcc << "Pt: " << std::setw(4) << std::setprecision(6) << iph->Pt()<< " Phi: " << std::setw(4) << std::setprecision(6) <<  iph->Phi()<< " Eta: " << std::setw(4) << std::setprecision(6) <<  iph->Eta()<<endl;
     electronsNcc+=electronNcc.str();
   }
 
@@ -185,7 +187,7 @@ bool eventDump::Process(Event::Data & ev){
      iph != ev.PD_Photons().end();
      ++iph) {
     std::stringstream photonNcc;
-    photonNcc << "Pt: " << iph->Pt()<< " Phi: "<<  iph->Phi()<< " Eta: "<<  iph->Eta()<< endl;
+    photonNcc << "Pt: " << std::setw(4) << std::setprecision(6) << iph->Pt()<< " Phi: " << std::setw(4) << std::setprecision(6) <<  iph->Phi()<< " Eta: " << std::setw(4) << std::setprecision(6) <<  iph->Eta()<< endl;
     photonsNcc+=photonNcc.str();
   }
 
@@ -196,7 +198,7 @@ bool eventDump::Process(Event::Data & ev){
      iph != ev.LD_Taus().end();
      ++iph) {
       std::stringstream tauNcc;
-      tauNcc << "Pt: " << iph->Pt() << " Phi: "<< iph->Phi() << " Eta: "<< iph->Eta() << endl;
+      tauNcc << "Pt: " << std::setw(4) << std::setprecision(6) << iph->Pt() << " Phi: " << std::setw(4) << std::setprecision(6) << iph->Phi() << " Eta: " << std::setw(4) << std::setprecision(6) << iph->Eta() << endl;
     tausNcc += tauNcc.str();
   }
 
@@ -206,9 +208,9 @@ bool eventDump::Process(Event::Data & ev){
     << "[eventDump::eventDump]" << std::endl
     << " Info for " << ev.RunNumber() << ":"<< ev.LumiSection() << ":"<<  ev.EventNumber() << std::endl
     << " --------------------------------------------------------" << std::endl
-    << " | HT =" << std::setw(4) << std::setprecision(6) << ev.CommonHT() << std::endl
-    << " | MHT =" << std::setw(4) << std::setprecision(6) << ev.CommonMHT().Pt() << std::endl
-    << " | Meff =" << std::setw(4) << std::setprecision(6) << ev.CommonHT()+ev.CommonMHT().Pt() << std::endl
+    << " | HT = " << std::setw(4) << std::setprecision(6) << ev.CommonHT() << std::endl
+    << " | MHT = " << std::setw(4) << std::setprecision(6) << ev.CommonMHT().Pt() << std::endl
+    << " | Meff = " << std::setw(4) << std::setprecision(6) << ev.CommonHT()+ev.CommonMHT().Pt() << std::endl
     << " | AlphaT (com) " << std::setw(4) << std::setprecision(5) << ev.CommonAlphaT() << std::endl
     << " | AlphaT (had) " << std::setw(4) << std::setprecision(5) << ev.HadronicAlphaT() << std::endl
     << " | HBHe Noise Result (had) " << std::setw(4) << (ev.GethbheNoiseFilterResult() ? "Passed" : "Failed") << std::endl
