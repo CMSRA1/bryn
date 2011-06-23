@@ -4,7 +4,7 @@
 """
 Created by Bryn Mathias on 2010-05-07.
 """
-
+bin = 375.
 # -----------------------------------------------------------------------------
 # Necessary includes
 import errno
@@ -60,6 +60,16 @@ Prefix="ic5Jet",
 Suffix="Pat",
 Uncorrected=False,
 )
+SecJets=PSet(
+Prefix="green",
+Suffix="Pat",
+Uncorrected=False, #<TW date="07/11/2010" />
+)
+TerJets=PSet(
+Prefix="blue",
+Suffix="Pat",
+Uncorrected=False,
+)
 default_ntuple.Photons=PSet(
 Prefix="photon",
 Suffix="Pat",
@@ -71,8 +81,8 @@ ic5_calo.Jets.Prefix="ic5Jet"
 ak5_calo = deepcopy(default_ntuple)
 ak5_calo.Jets.Prefix="ak5Jet"
 
-ak5_jpt = deepcopy(default_ntuple)
-ak5_jpt.Jets.Prefix="ak5JetJPT"
+# ak5_jpt = deepcopy(default_ntuple)
+# ak5_jpt.Jets.Prefix="ak5JetJPT"
 
 ak5_pf = deepcopy(default_ntuple)
 ak5_pf.Jets.Prefix="ak5JetPF"
@@ -122,7 +132,7 @@ default_cc.Photons.PhotonIsoTypePtCutoff=30.
 default_common = deepcopy(defaultConfig.Common)
 
 default_common.ApplyXCleaning=True
-default_common.Jets.PtCut=50.0
+default_common.Jets.PtCut=50.0*(bin/375.)
 default_common.Jets.EtaCut=3.0
 default_common.Jets.ApplyID=True
 default_common.Jets.TightID=False
@@ -176,14 +186,16 @@ Plots_HT_Trigger    = PL_TriggerTurnOns( PSet(DirName = "HT_Trigger",MinObjects 
 Plots_Cross_Trigger = PL_TriggerTurnOns( PSet(DirName = "Cross_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True).ps())
 
 HT_Trigger_PS = PSet(
-    Verbose = False,
+    Verbose = True,
     Triggers = [
-        "HLT_HT250_v1",
-        "HLT_HT250_v2",
-        "HLT_HT250_v3",
-        "HLT_HT250_v4",
-        "HLT_HT250_v5",
-        "HLT_HT250_v6",
+        # "HLT_HT150_v*",
+        # "HLT_HT200_v*",
+        # "HLT_HT250_v*",
+        "HLT_Mu5_HT200_v*",
+        "HLT_Mu8_HT200_v*",
+        "HLT_Mu15_HT200_v*",
+        "HLT_Mu20_HT200_v*",
+
         ]
     )
 
@@ -191,11 +203,11 @@ HT_Trigger_PS = PSet(
 Cross_Trigger_PS = PSet(
     Verbose = False,
     Triggers = [
-        "HLT_HT250_AlphaT0p53_v1",
-        "HLT_HT250_AlphaT0p53_v2",
-        "HLT_HT250_AlphaT0p53_v3",
-        "HLT_HT250_AlphaT0p53_v4",
-        "HLT_HT250_AlphaT0p53_v5",
+
+        # "HLT_HT250_MHT60_v*",
+        # "HLT_HT250_MHT70_v*",
+        # "HLT_HT250_MHT80_v*",#
+        "HLT_HT250_AlphaT0p*",
         ]
     )
 
@@ -216,24 +228,28 @@ oddMuon = OP_OddMuon()
 oddElectron = OP_OddElectron()
 oddPhoton = OP_OddPhoton()
 oddJet = OP_OddJet()
-secondJetET = OP_SecondJetEtCut(100.)
+secondJetET = OP_SecondJetEtCut(100.*(bin/375.))
 badMuonInJet = OP_BadMuonInJet()
 numComLeptons = OP_NumComLeptons("<=",0)
 numComPhotons = OP_NumComPhotons("<=",0)
 
-
+ht250= RECO_CommonHTCut(275.)
 DeadEcalCutData = OP_DeadECALCut(0.3,0.3,0.5,30.,10,0,"./deadRegionList_GR10_P_V10.txt")
 # Cross check with the allhadronic analysis
 VertexPtOverHT = OP_SumVertexPtOverHT(0.1)
 # -----------------------------------------------------------------------------
 # Definition of analyses
 # Analyses
-MHT_METCut = OP_MHToverMET(1.25)
+MHT_METCut = OP_MHToverMET(1.25,50.)
 # AK5 Calo
-json = JSONFilter("Json Mask", json_to_pset("goldenJSON_13May2011.txt"))
-
+json_ouput = JSONOutput("filtered")
+alphaT = OP_CommonAlphaTCut(0.53)
+json = JSONFilter("Json Mask", json_to_pset("./602pbjson.txt"))
+evDump = EventDump()
 cutTreeData = Tree("Data")
+
 cutTreeData.Attach(json)
+cutTreeData.TAttach(json,json_ouput)
 cutTreeData.TAttach(json,NoiseFilt)
 cutTreeData.TAttach(NoiseFilt,selection)
 cutTreeData.TAttach(selection,oddMuon)
@@ -246,14 +262,17 @@ cutTreeData.TAttach(LeadingJetEta,badMuonInJet)
 cutTreeData.TAttach(badMuonInJet,oddJet)
 cutTreeData.TAttach(oddJet,LeadingJetCut)
 cutTreeData.TAttach(LeadingJetCut,secondJetET)
-##########DiJet Studies
+# ##########DiJet Studies
 cutTreeData.TAttach(secondJetET,VertexPtOverHT)
 cutTreeData.TAttach(VertexPtOverHT,DeadEcalCutData)
 cutTreeData.TAttach(DeadEcalCutData,MHT_METCut)
-cutTreeData.TAttach(MHT_METCut,HT_Trigger_Filter)
+cutTreeData.TAttach(MHT_METCut,ht250)
+cutTreeData.TAttach(ht250,HT_Trigger_Filter)
 cutTreeData.TAttach(HT_Trigger_Filter,Plots_HT_Trigger)
 cutTreeData.TAttach(HT_Trigger_Filter,Cross_Trigger_Filter)
 cutTreeData.TAttach(Cross_Trigger_Filter,Plots_Cross_Trigger)
+cutTreeData.FAttach(Cross_Trigger_Filter,alphaT)
+cutTreeData.TAttach(alphaT,evDump)
 
 from ra1objectid.vbtfElectronId_cff import *
 from ra1objectid.vbtfMuonId_cff import *
@@ -292,7 +311,12 @@ addCutFlowData(anal_ak5_pfData)
 
 
 from data.Run2011.HT_Run2011_promptReco_DCS import *
-outDir = "../results/TriggerTurnOns/"
+from data.Run2011.HT42_incomplete import *
+from data.Run2011.HT_Run2011A import *
+from data.Run2011.HT42_PromptReco_for_AlphaT_Trigger import *
+from MuHad import *
+outDir = "..//TriggerTurnOns/MuHad/AlphaT/"+str(bin)+"/"
 ensure_dir(outDir)
-anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT_Run2011_promptReco_DCS])
-# anal_ak5_pfData.Run(ourDir,conf_ak5_pfData,[HT_Run2011_promptReco_DCS])
+# MuHad_Run2011A_AllReco_17June.File = MuHad_Run2011A_AllReco_17June.File[1:2]
+anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[MuHad_Run2011A_AllReco_17June])#HT_Run2011A])
+
