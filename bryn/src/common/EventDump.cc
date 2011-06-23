@@ -177,7 +177,7 @@ bool eventDump::Process(Event::Data & ev){
      mhty -= iph->Et()*sin(iph->Phi());
       double mHT = sqrt(mhtx*mhtx + mhty*mhty);
         nj++;
-        dht += ( nj < 2 ? (*iph)->Et() : -1.* iph->Et() ); //@@ only use for njets < 4
+        dht += ( nj < 2 ? iph->Et() : -1.* iph->Et() ); //@@ only use for njets < 4
         if ( nj == 2 || nj == 3 ) {
           aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
         } else if ( nj > 3 ) {
