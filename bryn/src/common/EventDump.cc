@@ -265,7 +265,7 @@ bool eventDump::Process(Event::Data & ev){
       for(std::map<std::string,bool>::const_iterator it2 =ev.hlt()->begin();
       it2!=ev.hlt()->end(); ++it2){
         if(it2->second){
-         ss << it2->first << " = " <<  << std::endl;
+         ss << it2->first <<  std::endl;
         }
       }
     }
