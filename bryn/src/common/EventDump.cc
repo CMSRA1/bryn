@@ -172,7 +172,7 @@ bool eventDump::Process(Event::Data & ev){
       std::stringstream jetNcc;
          itHT += iph->Et();
     nj++;
-    test+=(**iph);
+      if( iph->Pt()>30) { testNcc+=(*iph); }
      mhtx -= iph->Et()*cos(iph->Phi());
      mhty -= iph->Et()*sin(iph->Phi());
       double mHT = sqrt(mhtx*mhtx + mhty*mhty);
@@ -194,7 +194,7 @@ bool eventDump::Process(Event::Data & ev){
       << " DeltaHT " << std::setw(4) << std::setprecision(6) << dht
       << " Trigger emu alphaT " << std::setw(4) << std::setprecision(6) << aT
       << endl;
-      if( iph->Pt()>30) { testNcc+=(*iph); }
+
       jetsNcc+=jetNcc.str();
   }
   std::stringstream MHTNcc;
