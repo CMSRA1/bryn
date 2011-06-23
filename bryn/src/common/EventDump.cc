@@ -69,6 +69,7 @@ bool eventDump::Process(Event::Data & ev){
       << " Itterative MHT (from Et projection) " << std::setw(4) << std::setprecision(6) << mHT
       << " DeltaHT " << std::setw(4) << std::setprecision(6) << dht
       << " Trigger emu alphaT " << std::setw(4) << std::setprecision(6) << aT
+      << "\n AlphaT calc check " <<   ( itHT - fabs(dht)  << "    " << ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) ) << ( ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) ) )
       << endl;
 
     jets+=jet.str();
