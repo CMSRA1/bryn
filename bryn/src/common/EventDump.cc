@@ -47,16 +47,16 @@ bool eventDump::Process(Event::Data & ev){
   for (std::vector<Event::Jet const *>::const_iterator iph = ev.JD_CommonJets().accepted.begin();
   iph != ev.JD_CommonJets().accepted.end();
   ++iph) {
-          mhtx -= (*iph)->Et()*cos((*iph)->Phi());
-          mhty -= (*iph)->Et()*sin((*iph)->Phi());
-          double mHT = sqrt(mhtx*mhtx + mhty*mhty);
-        nj++;
-        dht += ( nj < 2 ? (*iph)->Et() : -1.* (*iph)->Et() ); //@@ only use for njets < 4
-        if ( nj == 2 || nj == 3 ) {
-          aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
-        } else if ( nj > 3 ) {
-          aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
-        }
+    mhtx -= (*iph)->Et()*cos((*iph)->Phi());
+    mhty -= (*iph)->Et()*sin((*iph)->Phi());
+    double mHT = sqrt(mhtx*mhtx + mhty*mhty);
+    nj++;
+    dht += ( nj < 2 ? (*iph)->Et() : -1.* (*iph)->Et() ); //@@ only use for njets < 4
+    if ( nj == 2 || nj == 3 ) {
+      aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
+    } else if ( nj > 3 ) {
+      aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
+    }
     std::stringstream jet;
     itHT += (*iph)->Et();
     test+=(**iph);
@@ -73,23 +73,23 @@ bool eventDump::Process(Event::Data & ev){
 
     jets+=jet.str();
   }
- for (std::vector<Event::Jet const *>::const_iterator iph = ev.JD_CommonJets().baby.begin();
+  for (std::vector<Event::Jet const *>::const_iterator iph = ev.JD_CommonJets().baby.begin();
   iph != ev.JD_CommonJets().baby.end();
   ++iph) {
     std::stringstream jet;
     itHT += (*iph)->Et();
     nj++;
     test+=(**iph);
-     mhtx -= (*iph)->Et()*cos((*iph)->Phi());
-     mhty -= (*iph)->Et()*sin((*iph)->Phi());
-      double mHT = sqrt(mhtx*mhtx + mhty*mhty);
-        nj++;
-        dht += ( nj < 2 ? (*iph)->Et() : -1.* (*iph)->Et() ); //@@ only use for njets < 4
-        if ( nj == 2 || nj == 3 ) {
-          aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
-        } else if ( nj > 3 ) {
-          aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
-        }
+    mhtx -= (*iph)->Et()*cos((*iph)->Phi());
+    mhty -= (*iph)->Et()*sin((*iph)->Phi());
+    double mHT = sqrt(mhtx*mhtx + mhty*mhty);
+    nj++;
+    dht += ( nj < 2 ? (*iph)->Et() : -1.* (*iph)->Et() ); //@@ only use for njets < 4
+    if ( nj == 2 || nj == 3 ) {
+      aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
+    } else if ( nj > 3 ) {
+      aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
+    }
     jet << "Pt: " << std::setw(4) << std::setprecision(6) << (*iph)->Pt()
       << " Et: " << std::setw(4) << std::setprecision(6) << (*iph)->Et()
       << " Phi: "<< std::setw(4) << std::setprecision(6) <<  (*iph)->Phi()
@@ -105,7 +105,7 @@ bool eventDump::Process(Event::Data & ev){
 
 
     jets+=jet.str();
-}
+  }
   std::stringstream MHT;
 
   MHT << "MHT Pt: " << test.Pt() <<" phi " << (-test).Phi() << " "<< ev.CommonRecoilMET().Pt() << endl;
@@ -171,23 +171,24 @@ bool eventDump::Process(Event::Data & ev){
   mhtx = 0.;
   mhty = 0.;
   LorentzV testNcc(0,0,0,0);
-      for (std::vector<Event::Jet>::const_iterator iph = ev.JD_Jets().begin();
-     iph != ev.JD_Jets().end();
-     ++iph) {
-      std::stringstream jetNcc;
-         itHT += iph->Et();
+  for (std::vector<Event::Jet>::const_iterator iph = ev.JD_Jets().begin();
+  iph != ev.JD_Jets().end();
+  ++iph) {
+    std::stringstream jetNcc;
+    itHT += iph->Et();
     nj++;
-      if( iph->Pt()>30) { testNcc+=(*iph); }
-     mhtx -= iph->Et()*cos(iph->Phi());
-     mhty -= iph->Et()*sin(iph->Phi());
-      double mHT = sqrt(mhtx*mhtx + mhty*mhty);
-        nj++;
-        dht += ( nj < 2 ? iph->Et() : -1.* iph->Et() ); //@@ only use for njets < 4
-        if ( nj == 2 || nj == 3 ) {
-          aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
-        } else if ( nj > 3 ) {
-          aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
-        }
+    if( iph->Pt()>30) { testNcc+=(*iph); }
+    mhtx -= iph->Et()*cos(iph->Phi());
+    mhty -= iph->Et()*sin(iph->Phi());
+    double mHT = sqrt(mhtx*mhtx + mhty*mhty);
+    nj++;
+    dht += ( nj < 2 ? iph->Et() : -1.* iph->Et() ); //@@ only use for njets < 4
+    if ( nj == 2 || nj == 3 ) {
+      cout << ( itHT - fabs(dht) ) << " " << ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) << " " <<  ( itHT - fabs(dht) )/( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) << endl;
+      aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
+    } else if ( nj > 3 ) {
+      aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
+    }
     jetNcc << "Pt: " << std::setw(4) << std::setprecision(6) << iph->Pt()
       << " Et: " << std::setw(4) << std::setprecision(6) << iph->Et()
       << " Phi: "<< std::setw(4) << std::setprecision(6) << iph->Phi()
@@ -200,7 +201,7 @@ bool eventDump::Process(Event::Data & ev){
       << " Trigger emu alphaT " << std::setw(4) << std::setprecision(6) << aT
       << endl;
 
-      jetsNcc+=jetNcc.str();
+    jetsNcc+=jetNcc.str();
   }
   std::stringstream MHTNcc;
 
@@ -208,9 +209,9 @@ bool eventDump::Process(Event::Data & ev){
 
   std::string muonsNcc;
   muonsNcc = " Muons \n";
-    for (std::vector<Event::Lepton>::const_iterator iph = ev.LD_Muons().begin(); iph != ev.LD_Muons().end(); ++iph) {
+  for (std::vector<Event::Lepton>::const_iterator iph = ev.LD_Muons().begin(); iph != ev.LD_Muons().end(); ++iph) {
     std::stringstream muonNcc;
-      muonNcc << "Pt: " << std::setw(4) << std::setprecision(6) << iph->Pt()<< " Phi: "<< std::setw(4) << std::setprecision(6) <<  iph->Phi()<< " Eta: "<< std::setw(4) << std::setprecision(6) <<  iph->Eta()<<" was cc "<<endl;
+    muonNcc << "Pt: " << std::setw(4) << std::setprecision(6) << iph->Pt()<< " Phi: "<< std::setw(4) << std::setprecision(6) <<  iph->Phi()<< " Eta: "<< std::setw(4) << std::setprecision(6) <<  iph->Eta()<<" was cc "<<endl;
     muonsNcc+=muonNcc.str();
   }
   std::string electronsNcc;
@@ -223,9 +224,9 @@ bool eventDump::Process(Event::Data & ev){
 
   std::string photonsNcc;
   photonsNcc = "Photons : \n";
-   for (std::vector<Event::Photon>::const_iterator iph = ev.PD_Photons().begin();
-     iph != ev.PD_Photons().end();
-     ++iph) {
+  for (std::vector<Event::Photon>::const_iterator iph = ev.PD_Photons().begin();
+  iph != ev.PD_Photons().end();
+  ++iph) {
     std::stringstream photonNcc;
     photonNcc << "Pt: " << std::setw(4) << std::setprecision(6) << iph->Pt()<< " Phi: " << std::setw(4) << std::setprecision(6) <<  iph->Phi()<< " Eta: " << std::setw(4) << std::setprecision(6) <<  iph->Eta()<< endl;
     photonsNcc+=photonNcc.str();
@@ -234,17 +235,17 @@ bool eventDump::Process(Event::Data & ev){
     // JJ - bug here - referenced taus not taus
   std::string tausNcc;
   tausNcc = "Taus : \n";
-     for (std::vector<Event::Lepton>::const_iterator iph = ev.LD_Taus().begin();
-     iph != ev.LD_Taus().end();
-     ++iph) {
-      std::stringstream tauNcc;
-      tauNcc << "Pt: " << std::setw(4) << std::setprecision(6) << iph->Pt() << " Phi: " << std::setw(4) << std::setprecision(6) << iph->Phi() << " Eta: " << std::setw(4) << std::setprecision(6) << iph->Eta() << endl;
+  for (std::vector<Event::Lepton>::const_iterator iph = ev.LD_Taus().begin();
+  iph != ev.LD_Taus().end();
+  ++iph) {
+    std::stringstream tauNcc;
+    tauNcc << "Pt: " << std::setw(4) << std::setprecision(6) << iph->Pt() << " Phi: " << std::setw(4) << std::setprecision(6) << iph->Phi() << " Eta: " << std::setw(4) << std::setprecision(6) << iph->Eta() << endl;
     tausNcc += tauNcc.str();
   }
 
 
   std::stringstream ss;
- ss << " --------------------------------------------------------" << std::endl
+  ss << " --------------------------------------------------------" << std::endl
     << "[eventDump::eventDump]" << std::endl
     << " Info for " << ev.RunNumber() << ":"<< ev.LumiSection() << ":"<<  ev.EventNumber() << std::endl
     << " --------------------------------------------------------" << std::endl
