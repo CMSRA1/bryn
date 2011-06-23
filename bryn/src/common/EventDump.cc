@@ -48,6 +48,7 @@ bool eventDump::Process(Event::Data & ev){
   iph != ev.JD_CommonJets().accepted.end();
   ++iph) {
     nj++;
+    itHT += (*iph)->Et();
     mhtx -= (*iph)->Et()*cos((*iph)->Phi());
     mhty -= (*iph)->Et()*sin((*iph)->Phi());
     double mHT = sqrt(mhtx*mhtx + mhty*mhty);
@@ -58,7 +59,6 @@ bool eventDump::Process(Event::Data & ev){
       aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
     }
     std::stringstream jet;
-    itHT += (*iph)->Et();
     test+=(**iph);
       jet << "NJ " << nj << "Pt: " << std::setw(4) << std::setprecision(6) << (*iph)->Pt()
       << " Phi: "<< std::setw(4) << std::setprecision(6) <<  (*iph)->Phi()
@@ -69,7 +69,7 @@ bool eventDump::Process(Event::Data & ev){
       << " Itterative MHT (from Et projection) " << std::setw(4) << std::setprecision(6) << mHT
       << " DeltaHT " << std::setw(4) << std::setprecision(6) << dht
       << " Trigger emu alphaT " << std::setw(4) << std::setprecision(6) << aT << endl
-      << " AlphaT calc check " <<   ( itHT - fabs(dht))  << "    " << ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) ) << ( ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) ) )
+      << " AlphaT calc check " <<   ( itHT - fabs(dht))  << "    " << ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) ) << " Final Result" << ( ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) ) )
       << endl;
 
     jets+=jet.str();
