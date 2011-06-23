@@ -170,11 +170,11 @@ bool eventDump::Process(Event::Data & ev){
      iph != ev.JD_Jets().end();
      ++iph) {
       std::stringstream jetNcc;
-         itHT += (*iph)->Et();
+         itHT += iph->Et();
     nj++;
     test+=(**iph);
-     mhtx -= (*iph)->Et()*cos((*iph)->Phi());
-     mhty -= (*iph)->Et()*sin((*iph)->Phi());
+     mhtx -= iph->Et()*cos(iph->Phi());
+     mhty -= iph->Et()*sin(iph->Phi());
       double mHT = sqrt(mhtx*mhtx + mhty*mhty);
         nj++;
         dht += ( nj < 2 ? (*iph)->Et() : -1.* iph->Et() ); //@@ only use for njets < 4
