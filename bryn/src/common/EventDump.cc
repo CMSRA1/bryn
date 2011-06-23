@@ -264,8 +264,8 @@ bool eventDump::Process(Event::Data & ev){
       ss  << " Trigger List" << std::endl;
       for(std::map<std::string,bool>::const_iterator it2 =ev.hlt()->begin();
       it2!=ev.hlt()->end(); ++it2){
-        if(it2->second || itrig->first.find('AlphaT') != string::npos){
-         ss << it2->first <<  std::endl;
+        if(it2->second || it2->first.find('AlphaT') != string::npos){
+         ss << it2->first << " = " << it2->second std::endl;
         }
       }
     }
