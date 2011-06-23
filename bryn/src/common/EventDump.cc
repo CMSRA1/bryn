@@ -47,13 +47,13 @@ bool eventDump::Process(Event::Data & ev){
   for (std::vector<Event::Jet const *>::const_iterator iph = ev.JD_CommonJets().accepted.begin();
   iph != ev.JD_CommonJets().accepted.end();
   ++iph) {
+    nj++;
     mhtx -= (*iph)->Et()*cos((*iph)->Phi());
     mhty -= (*iph)->Et()*sin((*iph)->Phi());
     double mHT = sqrt(mhtx*mhtx + mhty*mhty);
-    nj++;
     dht += ( nj < 2 ? (*iph)->Et() : -1.* (*iph)->Et() ); //@@ only use for njets < 4
     if ( nj == 2 || nj == 3 ) {
-      aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
+      aT =( ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) ) );
     } else if ( nj > 3 ) {
       aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
     }
@@ -85,7 +85,7 @@ bool eventDump::Process(Event::Data & ev){
     double mHT = sqrt(mhtx*mhtx + mhty*mhty);
     dht += ( nj < 2 ? (*iph)->Et() : -1.* (*iph)->Et() ); //@@ only use for njets < 4
     if ( nj == 2 || nj == 3 ) {
-      aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
+      aT =( ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) ) );
     } else if ( nj > 3 ) {
       aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
     }
@@ -100,9 +100,6 @@ bool eventDump::Process(Event::Data & ev){
       << " DeltaHT " << std::setw(4) << std::setprecision(6) << dht
       << " Trigger emu alphaT " << std::setw(4) << std::setprecision(6) << aT
       << endl;
-
-
-
     jets+=jet.str();
   }
   std::stringstream MHT;
@@ -182,7 +179,7 @@ bool eventDump::Process(Event::Data & ev){
     double mHT = sqrt(mhtx*mhtx + mhty*mhty);
     dht += ( nj < 2 ? iph->Et() : -1.* iph->Et() ); //@@ only use for njets < 4
     if ( nj == 2 || nj == 3 ) {
-      aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
+      aT =( ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) ) );
     } else if ( nj > 3 ) {
       aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
     }
@@ -196,7 +193,6 @@ bool eventDump::Process(Event::Data & ev){
       << " Itterative MHT (from Et projection) " << std::setw(4) << std::setprecision(6) << mHT
       << " DeltaHT " << std::setw(4) << std::setprecision(6) << dht
       << " Trigger emu alphaT " << std::setw(4) << std::setprecision(6) << aT
-      << " What the fuck is happening here " << ( itHT - fabs(dht) ) << " " << ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) ) << " " <<  ( itHT - fabs(dht) )/( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) )
       << endl;
 
     jetsNcc+=jetNcc.str();
