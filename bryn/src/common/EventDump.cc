@@ -167,6 +167,7 @@ bool eventDump::Process(Event::Data & ev){
   nj = 0;
   aT = 0.;
   dht = 0.;
+  itHT = 0.;
   LorentzV testNcc(0,0,0,0);
       for (std::vector<Event::Jet>::const_iterator iph = ev.JD_Jets().begin();
      iph != ev.JD_Jets().end();
