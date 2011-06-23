@@ -164,13 +164,36 @@ bool eventDump::Process(Event::Data & ev){
 
   std::string jetsNcc;
   jetsNcc = "Jets \n";
-
+  nj = 0;
   LorentzV testNcc(0,0,0,0);
       for (std::vector<Event::Jet>::const_iterator iph = ev.JD_Jets().begin();
      iph != ev.JD_Jets().end();
      ++iph) {
       std::stringstream jetNcc;
-      jetNcc << "Pt: " << std::setw(4) << std::setprecision(6) << iph->Pt()<< " Phi: " << std::setw(4) << std::setprecision(6) <<  iph->Phi()<< " Eta: " << std::setw(4) << std::setprecision(6) <<  iph->Eta()<<" was cc "<<  endl;
+         itHT += (*iph)->Et();
+    nj++;
+    test+=(**iph);
+     mhtx -= (*iph)->Et()*cos((*iph)->Phi());
+     mhty -= (*iph)->Et()*sin((*iph)->Phi());
+      double mHT = sqrt(mhtx*mhtx + mhty*mhty);
+        nj++;
+        dht += ( nj < 2 ? (*iph)->Et() : -1.* iph->Et() ); //@@ only use for njets < 4
+        if ( nj == 2 || nj == 3 ) {
+          aT = ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
+        } else if ( nj > 3 ) {
+          aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
+        }
+    jetNcc << "Pt: " << std::setw(4) << std::setprecision(6) << iph->Pt()
+      << " Et: " << std::setw(4) << std::setprecision(6) << iph->Et()
+      << " Phi: "<< std::setw(4) << std::setprecision(6) << iph->Phi()
+      << " Eta: "<< std::setw(4) << std::setprecision(6) << iph->Eta()
+      << " fem: "<< std::setw(4) << std::setprecision(6) << iph->GetEmFrac()
+      << " Itterative HT " << std::setw(4) << std::setprecision(6) << itHT
+      << " Itterative MHT " << std::setw(4) << std::setprecision(6) << testNcc.Pt()
+      << " Itterative MHT (from Et projection) " << std::setw(4) << std::setprecision(6) << mHT
+      << " DeltaHT " << std::setw(4) << std::setprecision(6) << dht
+      << " Trigger emu alphaT " << std::setw(4) << std::setprecision(6) << aT
+      << endl;
       if( iph->Pt()>30) { testNcc+=(*iph); }
       jetsNcc+=jetNcc.str();
   }
