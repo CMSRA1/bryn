@@ -259,17 +259,17 @@ bool eventDump::Process(Event::Data & ev){
     << " | Meff = " << std::setw(4) << std::setprecision(6) << ev.CommonHT()+ev.CommonMHT().Pt() << std::endl
     << " | AlphaT (com) " << std::setw(4) << std::setprecision(5) << ev.CommonAlphaT() << std::endl
     << " | AlphaT (had) " << std::setw(4) << std::setprecision(5) << ev.HadronicAlphaT() << std::endl
-    << " | HBHe Noise Result (had) " << std::setw(4) << (ev.GethbheNoiseFilterResult() ? "Passed" : "Failed") << std::endl
+    << " | HBHe Noise Result (had) " << std::setw(4) << (ev.GethbheNoiseFilterResult() ? "Passed" : "Failed") << std::endl;
     if( printTrig ){
-      << " Trigger List" << std::endl
+      ss  << " Trigger List" << std::endl;
       for(std::map<std::string,bool>::const_iterator it2 =ev.hlt()->begin();
       it2!=ev.hlt()->end(); ++it2){
         if(it2->second){
-         << it2->first << " = " <<  << std::endl;
+         ss << it2->first << " = " <<  << std::endl;
         }
       }
     }
-    << " --------------------------------------------------------" << std::endl;
+   ss << " --------------------------------------------------------" << std::endl;
   evInfo_ += ss.str();
   evInfo_ += "CrossCleaned Objects:";
   evInfo_ += jets;
