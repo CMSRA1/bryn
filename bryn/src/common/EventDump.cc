@@ -53,14 +53,14 @@ bool eventDump::Process(Event::Data & ev){
     double mHT = sqrt(mhtx*mhtx + mhty*mhty);
     dht += ( nj < 2 ? (*iph)->Et() : -1.* (*iph)->Et() ); //@@ only use for njets < 4
     if ( nj == 2 || nj == 3 ) {
-      aT =( ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) ) );
+      aT = ( ( itHT - fabs(dht) ) / ( 2. * sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) ) );
     } else if ( nj > 3 ) {
       aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
     }
     std::stringstream jet;
     itHT += (*iph)->Et();
     test+=(**iph);
-    jet << "Pt: " << std::setw(4) << std::setprecision(6) << (*iph)->Pt()
+      jet << "NJ " << nj << "Pt: " << std::setw(4) << std::setprecision(6) << (*iph)->Pt()
       << " Phi: "<< std::setw(4) << std::setprecision(6) <<  (*iph)->Phi()
       << " Eta: "<< std::setw(4) << std::setprecision(6) <<  (*iph)->Eta()
       <<" fem: "<< std::setw(4) << std::setprecision(6) << (*iph)->GetEmFrac()
@@ -89,7 +89,7 @@ bool eventDump::Process(Event::Data & ev){
     } else if ( nj > 3 ) {
       aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
     }
-    jet << "Pt: " << std::setw(4) << std::setprecision(6) << (*iph)->Pt()
+      jet<< "NJ " << nj << "Pt: " << std::setw(4) << std::setprecision(6) << (*iph)->Pt()
       << " Et: " << std::setw(4) << std::setprecision(6) << (*iph)->Et()
       << " Phi: "<< std::setw(4) << std::setprecision(6) <<  (*iph)->Phi()
       << " Eta: "<< std::setw(4) << std::setprecision(6) <<  (*iph)->Eta()
@@ -183,7 +183,7 @@ bool eventDump::Process(Event::Data & ev){
     } else if ( nj > 3 ) {
       aT = itHT / ( 2.*sqrt( ( itHT*itHT ) - ( mHT*mHT  ) ) );
     }
-    jetNcc << "Pt: " << std::setw(4) << std::setprecision(6) << iph->Pt()
+      jetNcc << "NJ " << nj << "Pt: " << std::setw(4) << std::setprecision(6) << iph->Pt()
       << " Et: " << std::setw(4) << std::setprecision(6) << iph->Et()
       << " Phi: "<< std::setw(4) << std::setprecision(6) << iph->Phi()
       << " Eta: "<< std::setw(4) << std::setprecision(6) << iph->Eta()
