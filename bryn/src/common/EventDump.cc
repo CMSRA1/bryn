@@ -248,7 +248,7 @@ bool eventDump::Process(Event::Data & ev){
     tausNcc += tauNcc.str();
   }
 
-
+  bool printTrig = true;
   std::stringstream ss;
   ss << " --------------------------------------------------------" << std::endl
     << "[eventDump::eventDump]" << std::endl
@@ -260,6 +260,15 @@ bool eventDump::Process(Event::Data & ev){
     << " | AlphaT (com) " << std::setw(4) << std::setprecision(5) << ev.CommonAlphaT() << std::endl
     << " | AlphaT (had) " << std::setw(4) << std::setprecision(5) << ev.HadronicAlphaT() << std::endl
     << " | HBHe Noise Result (had) " << std::setw(4) << (ev.GethbheNoiseFilterResult() ? "Passed" : "Failed") << std::endl
+    if( printTrig ){
+      << " Trigger List" << std::endl
+      for(std::map<std::string,bool>::const_iterator it2 =ev.hlt()->begin();
+      it2!=ev.hlt()->end(); ++it2){
+        if(it2->second){
+         << it2->first << " = " <<  << std::endl;
+        }
+      }
+    }
     << " --------------------------------------------------------" << std::endl;
   evInfo_ += ss.str();
   evInfo_ += "CrossCleaned Objects:";
