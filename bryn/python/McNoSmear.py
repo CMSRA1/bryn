@@ -13,7 +13,7 @@ from ra1objectid.ra3PhotonId_cff import *
 
 #JetSmear = JetSmear(0.1,30)
 vbtfMuonId_cff = Muon_IDFilter( vbtfmuonidps.ps()  )
-cutTreeMC,junkVar = MakeMCTree(100.)
+cutTreeMC,junkVar,l = MakeMCTree(100.)
 vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 def addCutFlowMC(b) :

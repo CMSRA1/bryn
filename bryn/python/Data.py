@@ -16,7 +16,7 @@ vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 PreScaleWeights = PreScaleReweighting(datatriggerps.ps())
 
-cutTree,blah = MakeDataTree(100.)
+cutTree,blah,l = MakeDataTree(100.)
 
 
 def addCutFlowData(a) :
@@ -47,24 +47,14 @@ anal_ak5_pfData=Analysis("AK5PF")
 addCutFlowData(anal_ak5_pfData)
 
 
-tedSkim = PSet(
-Name="TedSkim",
-Format=("ICF",3),
-Weight= 1.0,
-File="~/PO_Plots_4May2011_WithMHTCut/Data/AK5Calo_Jets.root")
-#"~elaird1/public_html/73_candidates/v3/350_bin/calo.root")
-
-
 from data.Run2011.HT_Run2011_promptReco_DCS import *
 from data.Run2011.RA1ToBurn import *
 from data.Run2011.HT42_incomplete import *
-outDir = "../results/Data"#"../results/Data_SmallalphaT_forEtaPhiMap/"
-ensure_dir(outDir)
-anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT42_incomplete])
+from data.Run2011.HT_Run2011A import *
+test = PSet(
+Name = "test",
+Format = ("ICF",3),
+Weight = 1.0,
+File = "../../Ntuples/375_newFormat.root")
 
-# from data.MultiJet_Run2010B_Nov4ReReco_v1 import *
-
-#
-# anal_ak5_pfData.Run("../results/Data",conf_ak5_pfData,[HT_Run2011_promptReco_DCS])
-# anal_ak5_jptData.Run("../results/",conf_ak5_jptData,data)
-# anal_ak7_caloData.Run("../results/",conf_ak7_caloData,data)
+anal_ak5_caloData.Run("../results/",conf_ak5_caloData,[HT_Run2011A])
