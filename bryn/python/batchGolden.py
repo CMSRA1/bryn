@@ -504,7 +504,7 @@ datatriggerps = PSet(
 DataTrigger = OP_MultiTrigger( datatriggerps.ps() )
 
 JetAdd = JetAddition(0.)
-# json = JSONFilter("Json Mask", json_to_pset("485pbjson.txt"))
+json = JSONFilter("Json Mask", json_to_pset("24thJuneJson.txt"))
 
 # AlphatTriggerCut(0.52414,50)#
 vertex_reweight = VertexReweighting(
