@@ -207,6 +207,39 @@ MinObjects   = 0,
 MaxObjects   = 15,
 StandardPlots     = True,
 )
+
+
+def makePlotOp(OP = (), cutTree = None, cut = None, label = ""):
+  """docstring for makePlotOp"""
+  out = []
+  if OP[1] != None:
+    plotpset = deepcopy(OP[1])
+    plotpset.DirName = label
+    op = eval(OP[0]+"(plotpset.ps())")
+  else:
+    op = eval(OP[0])
+  out.append(op)
+  cutTree.TAttach(cut,op)
+  return out
+  pass
+
+def AddBinedHist(cutTree = None, OP = (), cut = None, htBins = []):
+  """docstring for AddBinedHist"""
+  out = []
+  for lower,upper in zip(htBins,htBins[1:]+[None]):
+    lowerCut = eval("RECO_CommonHTCut(%d)"%lower)
+    out.append(lowerCut)
+    cutTree.TAttach(cut,lowerCut)
+    if upper:
+      upperCut =  eval("RECO_CommonHTLessThanCut(%d)"%upper)
+      out.append(upperCut)
+      cutTree.TAttach(lowerCut,upperCut)
+    pOps = makePlotOp(cutTree = cutTree, OP = OP, cut = upperCut if upper else lowerCut, label = "%d%s"%(lower, "_%d"%upper if upper else ""))
+    out.append(pOps)
+  return out
+  pass
+
+
 pset1 = PSet(
 DirName      = "275_325Gev",
 MinObjects   = 1,
@@ -292,73 +325,6 @@ MaxObjects   = 2,
 StandardPlots     = True,
 )
 
-dalitz_plots_Inclusive = HadronicPlottingOps( PSet(
-DirName    = "Dalitz_Inclusive",
-MinObjects = 2,
-MaxObjects = 10,
-Verbose    = False,
-Summary    = False,
-CC         = False,
-Dalitz     = True,
-AlphaT     = False,
-PtHat      = False,
-MET        = False,
-Kine       = False,
-Response   = False,
-).ps()
-)
-
-dalitz_plots_275_325 = HadronicPlottingOps( PSet(
-DirName    = "Dalitz_275_325",
-MinObjects = 2,
-MaxObjects = 10,
-Verbose    = False,
-Summary    = False,
-CC         = False,
-Dalitz     = True,
-AlphaT     = False,
-PtHat      = False,
-MET        = False,
-Kine       = False,
-Response   = False,
-).ps()
-)
-
-dalitz_plots_325_375 = HadronicPlottingOps( PSet(
-DirName    = "Dalitz_325_375",
-MinObjects = 2,
-MaxObjects = 10,
-Verbose    = False,
-Summary    = False,
-CC         = False,
-Dalitz     = True,
-AlphaT     = False,
-PtHat      = False,
-MET        = False,
-Kine       = False,
-Response   = False,
-).ps()
-)
-
-dalitz_plots_375 = HadronicPlottingOps( PSet(
-DirName    = "Dalitz_375",
-MinObjects = 2,
-MaxObjects = 10,
-Verbose    = False,
-Summary    = False,
-CC         = False,
-Dalitz     = True,
-AlphaT     = False,
-PtHat      = False,
-MET        = False,
-Kine       = False,
-Response   = False,
-).ps()
-)
-
-
-
-
 HadStandard275_375 = WeeklyUpdatePlots(pset1.ps())
 HadStandard325 = WeeklyUpdatePlots(pset2.ps())
 HadStandard375 = WeeklyUpdatePlots(pset3.ps())
@@ -409,9 +375,6 @@ NVertexJets = OP_NumComJets(">=",3)
 
 LessThan375 = RECO_CommonHTLessThanCut(375.)
 ht250_Trigger = RECO_CommonHTCut(250.)
-htCut275 = RECO_CommonHTCut(275.)
-htCut325 = RECO_CommonHTCut(325.)
-htCut375 = RECO_CommonHTCut(375.)
 htCut275_2 = RECO_CommonHTCut(275.)
 
 ht275_Fail     = RECO_CommonHTCut(275.)
@@ -424,21 +387,6 @@ htLess375_Fail = RECO_CommonHTLessThanCut(375.)
 htCut375GeV = RECO_CommonHTCut(375.)
 htCut375All = RECO_CommonHTCut(375.)
 ht250_Trigger = RECO_CommonHTCut(250.)
-ht275     = RECO_CommonHTCut(275.)
-ht325     = RECO_CommonHTCut(325.)
-ht375     = RECO_CommonHTCut(375.)
-ht475     = RECO_CommonHTCut(475.)
-ht575     = RECO_CommonHTCut(575.)
-ht675     = RECO_CommonHTCut(675.)
-ht775     = RECO_CommonHTCut(775.)
-ht875     = RECO_CommonHTCut(875.)
-htLess325 = RECO_CommonHTLessThanCut(325.)
-htLess375 = RECO_CommonHTLessThanCut(375.)
-htLess475 = RECO_CommonHTLessThanCut(475.)
-htLess575 = RECO_CommonHTLessThanCut(575.)
-htLess675 = RECO_CommonHTLessThanCut(675.)
-htLess775 = RECO_CommonHTLessThanCut(775.)
-htLess875 = RECO_CommonHTLessThanCut(875.)
 htCut275_2 = RECO_CommonHTCut(275.)
 htCut375GeV = RECO_CommonHTCut(375.)
 alphaT0 = OP_CommonAlphaTCut(0.55)
@@ -505,23 +453,6 @@ pset4.DirName = "allCuts"
 Npset4 = deepcopy(Npset)
 Npset4.DirName = "nAllCuts"
 # Define a crap load more plotting ops, for HT exclusive bins
-Plot_275_325_pset = deepcopy(genericPSet)
-Plot_275_325_pset.DirName="275_325"
-Plot_325_375_pset = deepcopy(genericPSet)
-Plot_325_375_pset.DirName="325_375"
-Plot_375_475_pset = deepcopy(genericPSet)
-Plot_375_475_pset.DirName="375_475"
-Plot_475_575_pset = deepcopy(genericPSet)
-Plot_475_575_pset.DirName="475_575"
-Plot_575_675_pset = deepcopy(genericPSet)
-Plot_575_675_pset.DirName="575_675"
-Plot_675_775_pset = deepcopy(genericPSet)
-Plot_675_775_pset.DirName="675_775"
-Plot_775_875_pset = deepcopy(genericPSet)
-Plot_775_875_pset.DirName="775_875"
-Plot_875_pset = deepcopy(genericPSet)
-Plot_875_pset.DirName="875"
-
 Plot_275_325_Fail_pset = deepcopy(genericPSet)
 Plot_275_325_Fail_pset.DirName="275_325Fail"
 Plot_325_375_Fail_pset = deepcopy(genericPSet)
@@ -532,17 +463,6 @@ Plot_275_325Fail = WeeklyUpdatePlots( Plot_275_325_Fail_pset.ps() )
 Plot_325_375Fail = WeeklyUpdatePlots( Plot_325_375_Fail_pset.ps() )
 Plot_375Fail     = WeeklyUpdatePlots( Plot_375_Fail_pset.ps() )
 
-
-
-
-Plot_275_325 = WeeklyUpdatePlots( Plot_275_325_pset.ps() )
-Plot_325_375 = WeeklyUpdatePlots( Plot_325_375_pset.ps() )
-Plot_375_475 = WeeklyUpdatePlots( Plot_375_475_pset.ps() )
-Plot_475_575 = WeeklyUpdatePlots( Plot_475_575_pset.ps() )
-Plot_575_675 = WeeklyUpdatePlots( Plot_575_675_pset.ps() )
-Plot_675_775 = WeeklyUpdatePlots( Plot_675_775_pset.ps() )
-Plot_775_875 = WeeklyUpdatePlots( Plot_775_875_pset.ps() )
-Plot_875     = WeeklyUpdatePlots( Plot_875_pset.ps()     )
 HTplot = WeeklyUpdatePlots(pset.ps())
 nHTplot = WeeklyUpdatePlots(Npset.ps())
 controlRegion = WeeklyUpdatePlots(pset2.ps())
@@ -561,100 +481,30 @@ t3.DirName = "HadronicCommon_3"
 
 t4 = deepcopy(t1)
 t4.DirName = "HadronicCommon_4"
-#
+
 HadStandard_1 = HadronicCommonPlots(t1.ps())
 HadStandard_2 = HadronicCommonPlots(t2.ps())
 HadStandard_3 = HadronicCommonPlots(t3.ps())
 HadStandard_4 = HadronicCommonPlots(t4.ps())
 VertexPtOverHT = OP_SumVertexPtOverHT(0.1)
-# eventDump = OP_EventNoDump("mydump","mydump")
 eventDump = EventDump()
 datatriggerps = PSet(
     Verbose = False,
+    UsePreScaledTriggers = False,
     Triggers = [
-        # "HLT_HT150_v1",
-        # "HLT_HT150_v2",
-        # "HLT_HT150_v3",
-        # "HLT_HT150_v4",
-        # "HLT_HT150_v5",
-        # "HLT_HT150_v6",
-        # "HLT_HT150_v7",
-        # "HLT_HT150_v8",
-        # "HLT_HT200_v1",
-        # "HLT_HT200_v2",
-        # "HLT_HT200_v3",
-        # "HLT_HT200_v4",
-        # "HLT_HT200_v5",
-        # "HLT_HT200_v6",
-        # "HLT_HT200_v7",
-        # "HLT_HT200_v8",
-        "HLT_HT250_v1",
-        "HLT_HT250_v2",
-        "HLT_HT250_v3",
-        "HLT_HT250_v4",
-        "HLT_HT250_v5",
-        "HLT_HT250_v6",
-        "HLT_HT250_v7",
-        "HLT_HT250_v8",
-        "HLT_HT300_v1",
-        "HLT_HT300_v2",
-        "HLT_HT300_v3",
-        "HLT_HT300_v4",
-        "HLT_HT300_v5",
-        "HLT_HT300_v6",
-        "HLT_HT300_v7",
-        "HLT_HT300_v8",
-        "HLT_HT350_v1",
-        "HLT_HT350_v2",
-        "HLT_HT350_v3",
-        "HLT_HT350_v4",
-        "HLT_HT350_v5",
-        "HLT_HT350_v6",
-        "HLT_HT350_v7",
-        "HLT_HT350_v8",
-        "HLT_HT400_v1",
-        "HLT_HT400_v2",
-        "HLT_HT400_v3",
-        "HLT_HT400_v4",
-        "HLT_HT400_v5",
-        "HLT_HT400_v6",
-        "HLT_HT400_v7",
-        "HLT_HT400_v8",
-        "HLT_HT450_v1",
-        "HLT_HT450_v2",
-        "HLT_HT450_v3",
-        "HLT_HT450_v4",
-        "HLT_HT450_v5",
-        "HLT_HT450_v6",
-        "HLT_HT450_v7",
-        "HLT_HT450_v8",
-        "HLT_HT500_v1",
-        "HLT_HT500_v2",
-        "HLT_HT500_v3",
-        "HLT_HT500_v4",
-        "HLT_HT500_v5",
-        "HLT_HT500_v6",
-        "HLT_HT500_v7",
-        "HLT_HT500_v8",
-       "HLT_HT260_MHT60_v1",
-       "HLT_HT260_MHT60_v2",
-       "HLT_HT250_MHT60_v1",
-       "HLT_HT250_MHT60_v2",
-       "HLT_HT250_MHT50_v2",
-       "HLT_HT250_MHT60_v3",
-       "HLT_HT250_MHT70_v1",
-       "HLT_HT250_MHT70_v2",
-       "HLT_HT250_MHT70_v3",
-       "HLT_HT250_MHT60_v3",
-       "HLT_HT250_AlphaT0p53_v1",
-       "HLT_HT250_AlphaT0p53_v2",
-       "HLT_HT250_AlphaT0p53_v3",
+        "HLT_HT250_MHT50_v*",
+        "HLT_HT260_MHT50_v*",
+        "HLT_HT260_MHT60_v*",
+        "HLT_HT250_MHT60_v*",
+        "HLT_HT250_MHT70_v*",
+        "HLT_HT250_MHT80_v*",
+        "HLT_HT250_MHT90_v*",
         ]
     )
 DataTrigger = OP_MultiTrigger( datatriggerps.ps() )
 
 JetAdd = JetAddition(0.)
-json = JSONFilter("Json Mask", json_to_pset("485pbjson.txt"))
+# json = JSONFilter("Json Mask", json_to_pset("485pbjson.txt"))
 
 # AlphatTriggerCut(0.52414,50)#
 vertex_reweight = VertexReweighting(
@@ -667,6 +517,7 @@ PreScaleWeights = PreScaleReweighting(datatriggerps.ps())
 
 json_ouput = JSONOutput("filtered")
 def MakeDataTree(Threshold):
+  out = []
   secondJetET = OP_SecondJetEtCut(Threshold)
   # from batchGolden import *
   cutTreeData = Tree("Data")
@@ -676,7 +527,7 @@ def MakeDataTree(Threshold):
   # cutTreeData.TAttach(evFilter,eventDump)
   cutTreeData.TAttach(json,DataTrigger)
   cutTreeData.TAttach(json,json_ouput)
-  #cutTreeData.Attach(DataTrigger)
+  # cutTreeData.Attach(DataTrigger)
   cutTreeData.TAttach(DataTrigger,NoiseFilt)
   cutTreeData.TAttach(NoiseFilt,GoodVertexMonster)
   cutTreeData.TAttach(GoodVertexMonster,LeadingJetEta)
@@ -690,15 +541,6 @@ def MakeDataTree(Threshold):
   cutTreeData.TAttach(numComLeptons,numComPhotons)
   cutTreeData.TAttach(numComPhotons,VertexPtOverHT)
   cutTreeData.TAttach(VertexPtOverHT,htCut275)
-  cutTreeData.TAttach(numComPhotons,ht275_Fail)
-  cutTreeData.TAttach(numComPhotons,ht325_Fail)
-  cutTreeData.TAttach(ht275_Fail,htLess325_Fail)
-  cutTreeData.TAttach(ht325_Fail,htLess375_Fail)
-  cutTreeData.TAttach(numComPhotons,ht375_Fail)
-  cutTreeData.TAttach(htLess325_Fail,Plot_275_325Fail)
-  cutTreeData.TAttach(htLess375_Fail,Plot_325_375Fail)
-  cutTreeData.TAttach(ht375_Fail,Plot_375Fail)
-  #cutTreeData.TAttach(htCut275,skim)
   #FOR HT > 275Gev Plot
   cutTreeData.TAttach(htCut275,DiJet3)
   cutTreeData.TAttach(htCut275,NJet3)
@@ -708,22 +550,14 @@ def MakeDataTree(Threshold):
   #Begin MHT/MET plot inthe low region.
   cutTreeData.TAttach(htCut275,DeadEcalCutData)
   cutTreeData.TAttach(DeadEcalCutData,LessThan375)
-  #cutTreeData.TAttach(DeadEcalCutData,skim)
   cutTreeData.TAttach(LessThan375,DiJet0)
   cutTreeData.TAttach(LessThan375,NJet0)
   cutTreeData.TAttach(DiJet0,HadStandard275_375)
   cutTreeData.TAttach(NJet0,nHadStandard275_375)
   #for Vertext multiplicity plot at 325geV
-  # cutTreeData.TAttach(htCut275,htCut325)
-  # cutTreeData.TAttach(htCut325,NVertexJets)
-  # cutTreeData.TAttach(htCut325,DiVertexJets)
-  # cutTreeData.TAttach(DiVertexJets,HadStandard325)
-  # cutTreeData.TAttach(NVertexJets,nHadStandard325)
-  # cutTreeData.TAttach(htCut375,dalitz_plots_375)
   cutTreeData.TAttach(htCut275,htCut375GeV)
   cutTreeData.TAttach(htCut375GeV,DiJet2)
   cutTreeData.TAttach(htCut375GeV,NJet2)
-  # cutTreeData.TAttach(htCut375,alphaT0)
   cutTreeData.TAttach(DiJet2,HadStandard375)
   cutTreeData.TAttach(NJet2,nHadStandard375)
   cutTreeData.TAttach(DeadEcalCutData,htCut375)
@@ -732,13 +566,9 @@ def MakeDataTree(Threshold):
   cutTreeData.TAttach(DiJet4,HadStandard375_after_DeadEcal)
   cutTreeData.TAttach(htCut375,NJet4)
   cutTreeData.TAttach(htCut375,alphaT1)
-  # cutTreeData.TAttach(alphaT1,HadStandard_2)
   cutTreeData.TAttach(NJet4,nHadStandard375_after_DeadEcal)
   #Here be plots after all the cuts!!
-  # cutTreeData.TAttach(htCut375GeV,alphaT2)
-  # cutTreeData.TAttach(htCut375,MHT_METCut)
   cutTreeData.TAttach(DeadEcalCutData,MHT_METCut)
-  # cutTreeData.TAttach(alphaT2,HadStandard_3)
   cutTreeData.TAttach(MHT_METCut,htCut375All)
   cutTreeData.TAttach(htCut375All,NJet5)
   cutTreeData.TAttach(htCut375All,DiJet5)
@@ -752,40 +582,21 @@ def MakeDataTree(Threshold):
   # avobe here does one big inclusive bin!
   # Now lets start binning in HT bins
   cutTreeData.TAttach(MHT_METCut,ht275)
-  cutTreeData.TAttach(MHT_METCut,ht325)
-  cutTreeData.TAttach(MHT_METCut,ht375)
-  cutTreeData.TAttach(MHT_METCut,ht475)
-  cutTreeData.TAttach(MHT_METCut,ht575)
-  cutTreeData.TAttach(MHT_METCut,ht675)
-  cutTreeData.TAttach(MHT_METCut,ht775)
-  cutTreeData.TAttach(MHT_METCut,ht875)
-  cutTreeData.TAttach(ht275,htLess325)
-  cutTreeData.TAttach(ht325,htLess375)
-  cutTreeData.TAttach(ht375,htLess475)
-  cutTreeData.TAttach(ht475,htLess575)
-  cutTreeData.TAttach(ht575,htLess675)
-  cutTreeData.TAttach(ht675,htLess775)
-  cutTreeData.TAttach(ht775,htLess875)
-  cutTreeData.TAttach(htLess325,Plot_275_325)
-  cutTreeData.TAttach(htLess375,Plot_325_375)
-  cutTreeData.TAttach(htLess475,Plot_375_475)
-  cutTreeData.TAttach(htLess575,Plot_475_575)
-  cutTreeData.TAttach(htLess675,Plot_575_675)
-  cutTreeData.TAttach(htLess775,Plot_675_775)
-  cutTreeData.TAttach(htLess875,Plot_775_875)
-  cutTreeData.TAttach(ht875,    Plot_875    )
-  return (cutTreeData,secondJetET)
+  out.append(AddBinedHist(cutTree = cutTreeData,
+            OP = ("WeeklyUpdatePlots",genericPSet), cut = MHT_METCut,
+            htBins = [275, 325] + [375+100*i for i in range(6)]) )
+
+  return (cutTreeData,secondJetET,out)
 
 #Second MC!
 
 def MakeMCTree(Threshold):
+  out = []
   secondJetET = OP_SecondJetEtCut(Threshold)
   cutTreeMC = Tree("MC")
   cutTreeMC.Attach(ht250_Trigger)
-# ,MHTCut)
-#   cutTreeMC.TAttach(MHTCut
-
-  cutTreeMC.TAttach(ht250_Trigger,NoiseFilt)
+  cutTreeMC.TAttach(ht250_Trigger,MHTCut)
+  cutTreeMC.TAttach(MHTCut,NoiseFilt)
   cutTreeMC.TAttach(NoiseFilt,GoodVertexMonster)
   cutTreeMC.TAttach(GoodVertexMonster,LeadingJetEta)
   cutTreeMC.TAttach(LeadingJetEta,secondJetET)
@@ -820,20 +631,11 @@ def MakeMCTree(Threshold):
   cutTreeMC.TAttach(DiJet0,HadStandard275_375)
   cutTreeMC.TAttach(NJet0,nHadStandard275_375)
 
-  #for Vertext multiplicity plot at 325geV
-  # cutTreeMC.TAttach(htCut275,htCut325)
-  # cutTreeMC.TAttach(htCut325,NVertexJets)
-  # cutTreeMC.TAttach(htCut325,DiVertexJets)
-  # cutTreeMC.TAttach(DiVertexJets,HadStandard325)
-  # cutTreeMC.TAttach(NVertexJets,nHadStandard325)
-
-
   cutTreeMC.TAttach(DeadEcalCutMC,htCut375)
-  # cutTreeMC.TAttach(htCut375,dalitz_plots_375)
   cutTreeMC.TAttach(htCut275,htCut375GeV)
   cutTreeMC.TAttach(htCut375GeV,DiJet2)
   cutTreeMC.TAttach(htCut375GeV,NJet2)
-  # cutTreeMC.TAttach(htCut375,alphaT0)
+
   cutTreeMC.TAttach(DiJet2,HadStandard375)
   cutTreeMC.TAttach(NJet2,nHadStandard375)
 
@@ -842,44 +644,19 @@ def MakeMCTree(Threshold):
   cutTreeMC.TAttach(DiJet4,HadStandard375_after_DeadEcal)
   cutTreeMC.TAttach(htCut375,NJet4)
   cutTreeMC.TAttach(htCut375,alphaT1)
-  # cutTreeMC.TAttach(alphaT1,HadStandard_2)
   cutTreeMC.TAttach(NJet4,nHadStandard375_after_DeadEcal)
 
 
   #Here be plots after all the cuts!!
   cutTreeMC.TAttach(DeadEcalCutMC,MHT_METCut)
-  # cutTreeMC.TAttach(htCut375,MHT_METCut)
-  # cutTreeMC.TAttach(alphaT2,HadStandard_3)
   cutTreeMC.TAttach(MHT_METCut,alphaT2)
   cutTreeMC.TAttach(MHT_METCut,htCut375All)
   cutTreeMC.TAttach(htCut375All,NJet5)
   cutTreeMC.TAttach(htCut375All,DiJet5)
   cutTreeMC.TAttach(NJet5,nHadStandardAllCuts)
   cutTreeMC.TAttach(DiJet5,HadStandardAllCuts)
-
-
-  cutTreeMC.TAttach(MHT_METCut,ht275)
-  cutTreeMC.TAttach(MHT_METCut,ht325)
-  cutTreeMC.TAttach(MHT_METCut,ht375)
-  cutTreeMC.TAttach(MHT_METCut,ht475)
-  cutTreeMC.TAttach(MHT_METCut,ht575)
-  cutTreeMC.TAttach(MHT_METCut,ht675)
-  cutTreeMC.TAttach(MHT_METCut,ht775)
-  cutTreeMC.TAttach(MHT_METCut,ht875)
-  cutTreeMC.TAttach(ht275,htLess325)
-  cutTreeMC.TAttach(ht325,htLess375)
-  cutTreeMC.TAttach(ht375,htLess475)
-  cutTreeMC.TAttach(ht475,htLess575)
-  cutTreeMC.TAttach(ht575,htLess675)
-  cutTreeMC.TAttach(ht675,htLess775)
-  cutTreeMC.TAttach(ht775,htLess875)
-  cutTreeMC.TAttach(htLess325,Plot_275_325)
-  cutTreeMC.TAttach(htLess375,Plot_325_375)
-  cutTreeMC.TAttach(htLess475,Plot_375_475)
-  cutTreeMC.TAttach(htLess575,Plot_475_575)
-  cutTreeMC.TAttach(htLess675,Plot_575_675)
-  cutTreeMC.TAttach(htLess775,Plot_675_775)
-  cutTreeMC.TAttach(htLess875,Plot_775_875)
-  cutTreeMC.TAttach(ht875,    Plot_875    )
-  return (cutTreeMC,secondJetET)
+  out.append(AddBinedHist(cutTree = cutTreeData,
+            OP = ("WeeklyUpdatePlots",genericPSet), cut = MHT_METCut,
+            htBins = [275, 325] + [375+100*i for i in range(6)]) )
+  return (cutTreeMC,secondJetET,out)
 
