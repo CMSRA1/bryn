@@ -581,7 +581,6 @@ def MakeDataTree(Threshold):
   # cutTreeData.TAttach(alphat,eventDump)#skim)
   # avobe here does one big inclusive bin!
   # Now lets start binning in HT bins
-  cutTreeData.TAttach(MHT_METCut,ht275)
   out.append(AddBinedHist(cutTree = cutTreeData,
             OP = ("WeeklyUpdatePlots",genericPSet), cut = MHT_METCut,
             htBins = [275, 325] + [375+100*i for i in range(6)]) )
