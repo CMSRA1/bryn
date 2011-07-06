@@ -383,7 +383,7 @@ ht375_Fail     = RECO_CommonHTCut(375.)
 htLess325_Fail = RECO_CommonHTLessThanCut(325.)
 htLess375_Fail = RECO_CommonHTLessThanCut(375.)
 
-
+htCut275 = RECO_CommonHTCut(275.)
 htCut375GeV = RECO_CommonHTCut(375.)
 htCut375All = RECO_CommonHTCut(375.)
 ht250_Trigger = RECO_CommonHTCut(250.)
