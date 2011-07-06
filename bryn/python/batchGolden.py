@@ -655,7 +655,7 @@ def MakeMCTree(Threshold):
   cutTreeMC.TAttach(htCut375All,DiJet5)
   cutTreeMC.TAttach(NJet5,nHadStandardAllCuts)
   cutTreeMC.TAttach(DiJet5,HadStandardAllCuts)
-  out.append(AddBinedHist(cutTree = cutTreeData,
+  out.append(AddBinedHist(cutTree = cutTreeMC,
             OP = ("WeeklyUpdatePlots",genericPSet), cut = MHT_METCut,
             htBins = [275, 325] + [375+100*i for i in range(6)]) )
   return (cutTreeMC,secondJetET,out)
