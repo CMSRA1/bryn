@@ -13,7 +13,7 @@ vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 JetSmear = JetSmear(0.,0.,0.,0.,0.,0.,True)
 default_common.Jets.PtCut=50.*(275./375.)
-cutTreeMC, junkVar,l = MakeMCTree(100.*(275./375.)
+cutTreeMC, junkVar,l = MakeMCTree(100.*(275./375.))
 
 def addCutFlowMC(b) :
   b.AddJetFilter("PreCC",JetAdd)
