@@ -16,7 +16,7 @@ PreScaleWeights = PreScaleReweighting( datatriggerps.ps() )
 #  Change the settings from golden to use the lowest scaled bin.
 # secondJetET = OP_SecondJetEtCut(73.3)
 default_common.Jets.PtCut=36.7
-cutTree,blah = MakeDataTree(73.3)
+cutTree,blah,l = MakeDataTree(73.3)
 print cutTree
 
 def addCutFlowData(a) :

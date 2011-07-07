@@ -11,7 +11,7 @@ from batchGolden import *
 
 
 default_common.Jets.PtCut=43.3
-cutTreeMC,junkVar = MakeMCTree(86.7)
+cutTreeMC, junkVar,l = MakeMCTree(86.7)
 # JESUncert(0.1,false)    means +10%, independent of eta
 # JESUncert(-0.1,false)   means -10%, independent of eta
 # JESUncert(0.02,true)    means +2% per unit eta
