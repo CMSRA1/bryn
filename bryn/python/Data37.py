@@ -15,7 +15,7 @@ ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 PreScaleWeights = PreScaleReweighting( datatriggerps.ps() )
 #  Change the settings from golden to use the lowest scaled bin.
 # secondJetET = OP_SecondJetEtCut(73.3)
-default_common.Jets.PtCut=36.7
+default_common.Jets.PtCut=50.*(275./375.)
 cutTree,blah,l = MakeDataTree(73.3)
 print cutTree
 

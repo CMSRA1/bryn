@@ -10,8 +10,8 @@ from ra1objectid.vbtfElectronId_cff import *
 from ra1objectid.vbtfMuonId_cff import *
 from ra1objectid.ra3PhotonId_cff import *
 
-default_common.Jets.PtCut=43.3
-cutTreeMC, junkVar,l = MakeMCTree(86.7)
+default_common.Jets.PtCut=50.*(325./375.)
+cutTreeMC, junkVar,l = MakeMCTree(100.*(325./375.))
 #JetSmear = JetSmear(0.1,30)
 vbtfMuonId_cff = Muon_IDFilter( vbtfmuonidps.ps()  )
 

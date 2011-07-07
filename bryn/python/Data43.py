@@ -14,7 +14,7 @@ vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 PreScaleWeights = PreScaleReweighting(datatriggerps.ps())
 
-default_common.Jets.PtCut=43.3
+default_common.Jets.PtCut=50.*(325./375.)
 #  Change the settings from golden to use the lowest scaled bin.
 cutTree,blah,l = MakeDataTree(86.7)
 

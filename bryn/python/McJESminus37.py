@@ -10,8 +10,8 @@ from ra1objectid.ra3PhotonId_cff import *
 from batchGolden import *
 
 
-default_common.Jets.PtCut=36.7
-cutTreeMC, junkVar,l = MakeMCTree(73.3)
+default_common.Jets.PtCut=50.*(275./375.)
+cutTreeMC, junkVar,l = MakeMCTree(100.*(275./375.)
 
 # JESUncert(0.1,false)    means +10%, independent of eta
 # JESUncert(-0.1,false)   means -10%, independent of eta
