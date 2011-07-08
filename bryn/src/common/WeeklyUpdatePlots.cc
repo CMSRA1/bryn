@@ -93,7 +93,7 @@ void WeeklyUpdatePlots::StandardPlots() {
   BookHistArray( AlphaTVsNoVertex_,
     "AlphaTVsNoVertex",
     ";;#alpha_{T};No.Vertercies;",
-    60,0.,1.5,
+    400,0.,10.,
     10,0.,10,
     nMax_+1, 0, 1, true );
 
@@ -112,13 +112,13 @@ void WeeklyUpdatePlots::StandardPlots() {
   BookHistArray( AlphaTOneVertex_,
     "AlphaTOneVetex",
     ";#alpha_{T};Events/0.025;",
-    60,0.,1.5,
+    400,0.,10.,
     nMax_+1, 0, 1, true );
 
   BookHistArray( AlphaTgOneVertex_,
     "AlphaTGreaterOneVetex",
     ";#alpha_{T};Events/0.025;",
-    60,0.,1.5,
+    400,0.,10.,
     nMax_+1, 0, 1, true );
 
   BookHistArray( AlphaT_components_,
@@ -131,7 +131,7 @@ void WeeklyUpdatePlots::StandardPlots() {
   BookHistArray( AlphaTafterPFMEC_,
     "AlphaT_after_PF_MEC",
     ";#alpha_{T};Events/0.025;",
-    60,0.,1.5,
+    400,0.,10.,
     nMax_+1, 0, 1, true );
 
   BookHistArray( AlphaT_Zoomed_afterPFMEC_,
@@ -143,7 +143,7 @@ void WeeklyUpdatePlots::StandardPlots() {
   BookHistArray( AlphaTafterCaloMEC_,
     "AlphaT_after_Calo_MEC",
     ";#alpha_{T};Events/0.025;",
-    60,0.,1.5,
+    400,0.,10.,
     nMax_+1, 0, 1, true );
 
   BookHistArray( AlphaT_ZoomedafterCaloMEC_,
@@ -188,7 +188,7 @@ void WeeklyUpdatePlots::StandardPlots() {
   BookHistArray( BabyJetMHT_StandardAlphaT_,
     "BabyJetMHT_vs_AlphaT",
     "Cos(Dphi(MHT,MHTbaby));CommonAlphaT;",
-    60,0.,1.5,
+    400,0.,10.,
     20,-1.,1.,
     nMax_+1, 0, 1, true );
 
@@ -261,7 +261,7 @@ void WeeklyUpdatePlots::StandardPlots() {
   BookHistArray( AlphaT_,
     "AlphaT",
     ";#alpha_{T};Events/0.025;",
-    60,0.,1.5,
+    400,0.,10.,
     nMax_+1, 0, 1, true );
 
   BookHistArray( AlphaT_Zoomed_,
@@ -273,7 +273,7 @@ void WeeklyUpdatePlots::StandardPlots() {
   BookHistArray( AlphaT_METCut_,
     "AlphaT_after_MHTRatio",
     ";#alpha_{T};Events/0.025;",
-    60,0.,1.5,
+    400,0.,10.,
     nMax_+1, 0, 1, true );
 
   BookHistArray( AlphaT_Zoomed_METCut_,
@@ -592,6 +592,8 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
 
 
 
+
+
   int nVertex = 0;
   //Make the vertex sum PT for later plots
   double  VertexPt = 0.;
@@ -801,10 +803,19 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
       Mt2_[n]->Fill( WeeklyUpdatePlots::MT2(ev), weight );
     }
 
-    if ( n >= nMin_ && n <= nMax_ && n < BiasedDphi_.size()  ) {
-      BiasedDphi_[0]->Fill( ev.CommonMinBiasDPhi(), weight );
-      BiasedDphi_[n]->Fill( ev.CommonMinBiasDPhi(), weight );
+    if( biasedDPhi < biasedDPhi_baby){
+      if ( n >= nMin_ && n <= nMax_ && n < BiasedDphi_.size()) {
+      MinBiasDphi_EtaPhiMap_[0]->Fill(biasedDPhi,weight);
+      MinBiasDphi_EtaPhiMap_[n]->Fill(biasedDPhi,weight);
+      }
     }
+    if( biasedDPhi > biasedDPhi_baby){
+      if ( n >= nMin_ && n <= nMax_ && n < BiasedDphi_.size()) {
+      BiasedDphi_[0]->Fill(biasedDPhi_baby,weight);
+      BiasedDphi_[n]->Fill(biasedDPhi_baby,weight);
+      }
+    }
+
 
     if( n >= nMin_ && n <= nMax_ && n < DetlaPhi_LeadingJets_.size() ){
       DetlaPhi_LeadingJets_[1]->Fill( fabs( ROOT::Math::VectorUtil::DeltaPhi(*ev.JD_CommonJets().accepted[0],*ev.JD_CommonJets().accepted[1])),weight);
@@ -923,10 +934,20 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
         AlphatCut_Meff_[n]->Fill( ev.CommonMHT().Pt()+ev.CommonHT(), weight );
       }
 
-      if ( n >= nMin_ && n <= nMax_ && n < AlphatCut_BiasedDphi_.size()  ) {
-        AlphatCut_BiasedDphi_[0]->Fill( ev.CommonMinBiasDPhi(), weight );
-        AlphatCut_BiasedDphi_[n]->Fill( ev.CommonMinBiasDPhi(), weight );
+
+    if( biasedDPhi < biasedDPhi_baby){
+      if ( n >= nMin_ && n <= nMax_ && n < AlphatCut_BiasedDphi_.size()) {
+      AlphatCut_BiasedDphi_[0]->Fill(biasedDPhi,weight);
+      AlphatCut_BiasedDphi_[n]->Fill(biasedDPhi,weight);
       }
+    }
+    if( biasedDPhi > biasedDPhi_baby){
+      if ( n >= nMin_ && n <= nMax_ && n < AlphatCut_BiasedDphi_.size()) {
+      AlphatCut_BiasedDphi_[0]->Fill(biasedDPhi_baby,weight);
+      AlphatCut_BiasedDphi_[n]->Fill(biasedDPhi_baby,weight);
+      }
+    }
+
     }
 
 
