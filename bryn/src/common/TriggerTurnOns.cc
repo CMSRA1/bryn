@@ -125,6 +125,18 @@ bool TriggerTurnOns::Plots( Event::Data& ev ) {
         }
       }
     }
+       if(verb_){
+          cout << " The lowest prescale in the event is " << preScaleVal << std::endl;
+          if(preScaleVal == 99999) {
+            std::cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++"<<std::endl;
+            cout << "Triggers that exist in the event:" <<endl;
+              for(std::map<std::string,bool>::const_iterator it2 = ev.hlt()->begin();
+              it2!= ev.hlt()->end(); ++it2){
+                if( it2->second ) std::cout << it2->first << std::endl;
+            }
+            std::cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++"<<std::endl;
+          }
+        }
     double factor = double(preScaleVal);
     weight *= factor;
 
@@ -145,4 +157,5 @@ bool TriggerTurnOns::Plots( Event::Data& ev ) {
     MHT_[n]->Fill(ev.CommonMHT().Pt(),weight);
   }
 
+  return true;
 }
