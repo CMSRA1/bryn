@@ -22,7 +22,8 @@ dirName_( ps.Get<std::string>("DirName") ),
   nMax_( ps.Get<int>("MaxObjects") ),
 // MT2
   Plots_( ps.Get<bool>("Plots") ),
-  ReWeight_(ps.Get< std::vector<std::string> >("TriggerReWeight") ),
+  ReWeight_(ps.Contains("ReWeight") ? ps.Get<bool>("ReWeight") : false ),
+  ReWeightVec_(ps.Get< std::vector<std::string> >("TriggerReWeight") ),
   verb_(ps.Contains("Verbose") ? ps.Get<bool>("Verbose") : false )
   {}
 
@@ -92,12 +93,12 @@ bool TriggerTurnOns::Plots( Event::Data& ev ) {
   UInt_t n = ev.CommonObjects().size();
   Double_t weight = ev.GetEventWeight();
   int preScaleVal = 99999;
-  if(ReWeight_.size() > 0){
+  if(ReWeight_ ){
             if(verb_){
               std::cout << "New Event" << std::endl;
             }
-        std::vector<std::string>::const_iterator it = ReWeight_.begin();
-        std::vector<std::string>::const_iterator ite = ReWeight_.end();
+        std::vector<std::string>::const_iterator it = ReWeightVec_.begin();
+        std::vector<std::string>::const_iterator ite = ReWeightVec_.end();
         for( ; it != ite; ++it){
               if( it->at(it->size()-1) != '*'){
           std::map<std::string, bool>::const_iterator trig = ev.hlt()->find(*it);
@@ -120,7 +121,7 @@ bool TriggerTurnOns::Plots( Event::Data& ev ) {
           str = str.substr(0, str.size() - 1 );
           // cout <<*it<< " compare with " << itrig->first << endl;
           found = itrig->first.find(str);
-          if(found =! string::npos){ preScaleVal = ipre->second; }
+          if(found != string::npos){ preScaleVal = ipre->second; }
           }
         }
       }
