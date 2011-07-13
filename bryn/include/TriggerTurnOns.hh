@@ -4,7 +4,7 @@
 #include "PlottingBase.hh"
 #include "Utils.hh"
 #include "Types.hh"
-
+#include <iostream>
 class TH1D;
 class TH2D;
 
@@ -32,6 +32,8 @@ namespace Operation {
     std::vector<TH1D*> MHT_;
     std::vector<TH1D*> AlphaT_;
     std::vector<TH1D*> HT_;
+    std::vector<std::string> ReWeight_;
+    bool verb_;
     bool Plots_;
     void Plots();
     bool Plots( Event::Data& );
