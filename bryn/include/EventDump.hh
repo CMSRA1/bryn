@@ -23,7 +23,7 @@
 #include "PhotonData.hh"
 namespace Operation {
 
-class eventDump :public Operation::_Base
+class eventDump : public Operation::_Base
 {
 public:
   eventDump();

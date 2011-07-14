@@ -491,7 +491,7 @@ VertexPtOverHT = OP_SumVertexPtOverHT(0.1)
 eventDump = EventDump()
 datatriggerps = PSet(
     Verbose = False,
-    UsePreScaledTriggers = False,
+    UsePreScaledTriggers = True,
     Triggers = [
         "HLT_HT250_MHT50_v*",
         "HLT_HT260_MHT50_v*",
@@ -505,7 +505,7 @@ datatriggerps = PSet(
 DataTrigger = OP_MultiTrigger( datatriggerps.ps() )
 
 JetAdd = JetAddition(0.)
-json = JSONFilter("Json Mask", json_to_pset("24thJuneJson.txt"))
+json = JSONFilter("Json Mask", json_to_pset(" /vols/cms02/bainbrid/qcd/trigger/SUSY2/allhadronic/python/167151_7TeV_PromptReco_Collisions11_JSON.txt"))
 
 # AlphatTriggerCut(0.52414,50)#
 vertex_reweight = VertexReweighting(

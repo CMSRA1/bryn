@@ -14,7 +14,7 @@ from ra1objectid.ra3PhotonId_cff import *
 vbtfMuonId_cff = Muon_IDFilter( vbtfmuonidps.ps()  )
 vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
-PreScaleWeights = PreScaleReweighting(datatriggerps.ps())
+PreScaleWeights      = PreScaleReweighting(datatriggerps.ps())
 
 cutTree,blah,l = MakeDataTree(100.)
 
@@ -57,4 +57,4 @@ Format = ("ICF",3),
 Weight = 1.0,
 File = "../../Ntuples/375_newFormat.root")
 
-anal_ak5_caloData.Run("../results/",conf_ak5_caloData,[HT_Run2011A])
+anal_ak5_caloData.Run("../results/",conf_ak5_caloData,[test])#HT_Run2011A])

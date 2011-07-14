@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-#!/usr/bin/env python
 """
 Created by Bryn Mathias on 2010-05-07.
 """
@@ -191,16 +190,14 @@ HT_Trigger_PS = PSet(
     Verbose = False,
    UsePreScaledTriggers = True,
     Triggers = [
-        #"HLT_HT150_v*",
-        "HLT_HT240_v*",
-  	"HLT_HT200_v*",
-        # "HLT_HT250_v*",
-#        "HLT_Mu5_HT200_v*",
-#        "HLT_Mu8_HT200_v*",
-#        "HLT_Mu15_HT200_v*",
-#        "HLT_Mu20_HT200_v*",
-#  	"HLT_Mu30_HT200_v*",
-#  	"HLT_Mu40_HT200_v*"
+       # "HLT_HT150_v*",
+       # "HLT_HT250_v*",
+       "HLT_Mu5_HT200_v*",
+       "HLT_Mu8_HT200_v*",
+       "HLT_Mu15_HT200_v*",
+       "HLT_Mu20_HT200_v*",
+       "HLT_Mu30_HT200_v*",
+       "HLT_Mu40_HT200_v*"
         ]
     )
 
@@ -209,8 +206,8 @@ Cross_Trigger_PS = PSet(
     Verbose = False,
     UsePreScaledTriggers = True,
     Triggers =[
-       
-	"HLT_HT250_v*",#MHT50_v*",
+
+  "HLT_HT250_v*",#MHT50_v*",
         "HLT_HT260_v*",#MHT50_v*",
 #"HLT_HT300_v2", "HLT_HT350_v2", "HLT_HT350_v3", "HLT_HT350_v4", "HLT_HT350_v5", "HLT_HT350_v6", "HLT_HT350_v7",
 #"HLT_HT300_v2", "HLT_HT300_v3", "HLT_HT300_v4", "HLT_HT300_v5", "HLT_HT300_v6", "HLT_HT300_v7", "HLT_HT300_v8",
@@ -232,7 +229,7 @@ Cross_Trigger_PS = PSet(
 PreScaleWeights = PreScaleReweighting(Cross_Trigger_PS.ps())
 
 Plots_HT_Trigger    = PL_TriggerTurnOns( PSet(DirName = "HT_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = True,TriggerReWeight = HT_Trigger_PS.Triggers, Verbose = False).ps())
-Plots_Cross_Trigger = PL_TriggerTurnOns( PSet(DirName = "Cross_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = True,TriggerReWeight = Cross_Trigger_PS.Triggers,Verbose = False).ps())
+Plots_Cross_Trigger = PL_TriggerTurnOns( PSet(DirName = "Cross_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = False,TriggerReWeight = Cross_Trigger_PS.Triggers,Verbose = False).ps())
 
 HT_Trigger_Filter = OP_MultiTrigger( HT_Trigger_PS.ps() )
 Cross_Trigger_Filter = OP_MultiTrigger( Cross_Trigger_PS.ps() )
@@ -249,16 +246,16 @@ oddPhoton = OP_OddPhoton()
 oddJet = OP_OddJet()
 secondJetET = OP_SecondJetEtCut(100.*(bin/375.))
 badMuonInJet = OP_BadMuonInJet()
-numComElectrons = OP_NumComElectrons("<=",0)
+numComElectrons = OP_NumComElectrons("==",1)
 numComMuons = OP_NumComMuons("<=",0)
 numComPhotons = OP_NumComPhotons("<=",0)
 muDr = RECO_MuonJetDRCut(0.5)
 if bin == 275 or bin == 325:
-  htLow = RECO_CommonHTCut(0.)
+  htLow = RECO_CommonHTCut(bin)
   htUp =  RECO_CommonHTLessThanCut(bin + 50.)
 else :
   htUp = None
-  htLow = RECO_CommonHTCut(0.)
+  htLow = RECO_CommonHTCut(bin)
 VertexPtOverHT = OP_SumVertexPtOverHT(0.1)
 # -----------------------------------------------------------------------------
 # Definition of analyses
@@ -269,6 +266,7 @@ json_ouput = JSONOutput("filtered")
 alphaT = OP_CommonAlphaTCut(0.53)
 json = JSONFilter("Json Mask", json_to_pset("../../hadronic/python/hadronic/ReProcessing_PromptJson_Merged.txt"))
 evDump = EventDump()
+htTriggerEmu = OP_TriggerHT_Emu(250.,40.)
 cutTreeData = Tree("Data")
 
 cutTreeData.Attach(json)
@@ -291,19 +289,19 @@ cutTreeData.TAttach(LeadingJetCut,secondJetET)
 #cutTreeData.TAttach(VertexPtOverHT,DeadEcalCutData)
 #cutTreeData.TAttach(DeadEcalCutData,muDr)
 #cutTreeData.TAttach(muDr,MHT_METCut)
-cutTreeData.TAttach(secondJetET,
-#muDr)
-#cutTreeData.TAttach(muDr,
-htLow)
+cutTreeData.TAttach(secondJetET,muDr)
+cutTreeData.TAttach(muDr,htLow)
 if htUp != None:
   cutTreeData.TAttach(htLow,htUp)
   cutTreeData.TAttach(htUp, HT_Trigger_Filter)
-else:  
+else:
   cutTreeData.TAttach(htLow, HT_Trigger_Filter)
 cutTreeData.TAttach(HT_Trigger_Filter,Plots_HT_Trigger)
-cutTreeData.TAttach(HT_Trigger_Filter,Cross_Trigger_Filter)
-cutTreeData.TAttach(Cross_Trigger_Filter,Plots_Cross_Trigger)
-cutTreeData.FAttach(Cross_Trigger_Filter,#alphaT)
+cutTreeData.TAttach(HT_Trigger_Filter, htTriggerEmu)
+# cutTreeData.TAttach(HT_Trigger_Filter,Cross_Trigger_Filter)
+# cutTreeData.TAttach(Cross_Trigger_Filter,Plots_Cross_Trigger)
+cutTreeData.TAttach(htTriggerEmu,Plots_Cross_Trigger)
+# cutTreeData.FAttach(Cross_Trigger_Filter,#alphaT)
 #cutTreeData.TAttach(alphaT,
 evDump)
 
@@ -355,8 +353,8 @@ addCutFlowData(anal_ak5_pfData)
 
 from data.Run2011.HT_Run2011A import *
 from data.Run2011.MuHad_Run2011A_Complete_V15_03_02 import *
-outDir = "..//TriggerTurnOns/HT/"+str(bin)+"/"
+outDir = "..//TriggerTurnOns/EMUfromMuHad/"+str(bin)+"/"
 ensure_dir(outDir)
 #MuHad_Run2011A_Complete_V15_03_02.File = MuHad_Run2011A_Complete_V15_03_02.File[1:10]
-anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT_Run2011A])#MuHad_Run2011A_Complete_V15_03_02])
+anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[MuHad_Run2011A_Complete_V15_03_02])
 
