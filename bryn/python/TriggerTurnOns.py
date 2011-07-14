@@ -12,8 +12,11 @@ import os
 import setupSUSY
 from libFrameworkSUSY import *
 from libHadronic import *
+from libWPol import *
+from libOneLepton import *
 from libbryn import *
 from icf.core import PSet,Analysis
+from time import strftime
 from icf.config import defaultConfig
 from copy import deepcopy
 from icf.JetCorrections import *
@@ -132,6 +135,7 @@ default_cc.Photons.PhotonIsoTypePtCutoff=30.
 default_common = deepcopy(defaultConfig.Common)
 
 default_common.ApplyXCleaning=True
+default_common.ApplyXCleaning=True
 default_common.Jets.PtCut=50.0*(bin/375.)
 default_common.Jets.EtaCut=3.0
 default_common.Jets.ApplyID=True
@@ -182,44 +186,59 @@ NoiseFilt= OP_HadronicHBHEnoiseFilter()
 selection = OP_GoodEventSelection()
 
 
-Plots_HT_Trigger    = PL_TriggerTurnOns( PSet(DirName = "HT_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True).ps())
-Plots_Cross_Trigger = PL_TriggerTurnOns( PSet(DirName = "Cross_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True).ps())
 
 HT_Trigger_PS = PSet(
-    Verbose = True,
+    Verbose = False,
+   UsePreScaledTriggers = True,
     Triggers = [
-        # "HLT_HT150_v*",
-        # "HLT_HT200_v*",
+        #"HLT_HT150_v*",
+        "HLT_HT240_v*",
+  	"HLT_HT200_v*",
         # "HLT_HT250_v*",
-        "HLT_Mu5_HT200_v*",
-        "HLT_Mu8_HT200_v*",
-        "HLT_Mu15_HT200_v*",
-        "HLT_Mu20_HT200_v*",
-
+#        "HLT_Mu5_HT200_v*",
+#        "HLT_Mu8_HT200_v*",
+#        "HLT_Mu15_HT200_v*",
+#        "HLT_Mu20_HT200_v*",
+#  	"HLT_Mu30_HT200_v*",
+#  	"HLT_Mu40_HT200_v*"
         ]
     )
 
 
 Cross_Trigger_PS = PSet(
     Verbose = False,
-    Triggers = [
-
-        # "HLT_HT250_MHT60_v*",
-        # "HLT_HT250_MHT70_v*",
-        # "HLT_HT250_MHT80_v*",#
-        "HLT_HT250_AlphaT0p*",
+    UsePreScaledTriggers = True,
+    Triggers =[
+       
+	"HLT_HT250_v*",#MHT50_v*",
+        "HLT_HT260_v*",#MHT50_v*",
+#"HLT_HT300_v2", "HLT_HT350_v2", "HLT_HT350_v3", "HLT_HT350_v4", "HLT_HT350_v5", "HLT_HT350_v6", "HLT_HT350_v7",
+#"HLT_HT300_v2", "HLT_HT300_v3", "HLT_HT300_v4", "HLT_HT300_v5", "HLT_HT300_v6", "HLT_HT300_v7", "HLT_HT300_v8",
+#"HLT_HT300_v2", "HLT_HT350_v2", "HLT_HT350_v3", "HLT_HT350_v4", "HLT_HT350_v5", "HLT_HT350_v6", "HLT_HT350_v7",
+#"HLT_HT440_v2", "HLT_HT450_v2", "HLT_HT450_v3", "HLT_HT450_v4", "HLT_HT450_v5", "HLT_HT450_v6", "HLT_HT450_v7",
+#"HLT_HT520_v2", "HLT_HT550_v2", "HLT_HT550_v3", "HLT_HT550_v4", "HLT_HT550_v5", "HLT_HT550_v6", "HLT_HT550_v7",
+#"HLT_HT520_v2", "HLT_HT550_v2", "HLT_HT550_v3", "HLT_HT550_v4", "HLT_HT550_v5", "HLT_HT550_v6", "HLT_HT550_v7",
+#"HLT_HT520_v2", "HLT_HT550_v2", "HLT_HT550_v3", "HLT_HT550_v4", "HLT_HT550_v5", "HLT_HT550_v6", "HLT_HT550_v7",
+#"HLT_HT520_v2", "HLT_HT550_v2", "HLT_HT550_v3", "HLT_HT550_v4", "HLT_HT550_v5", "HLT_HT550_v6", "HLT_HT550_v7",
+        #"HLT_HT260_MHT60_v*",
+        #"HLT_HT250_MHT60_v*",
+        #"HLT_HT250_MHT70_v*",
+        #"HLT_HT250_MHT80_v*",#
+        #"HLT_HT250_MHT90_v*"
+        # "HLT_HT250_AlphaT0p*",
         ]
     )
 
+PreScaleWeights = PreScaleReweighting(Cross_Trigger_PS.ps())
 
-
-
+Plots_HT_Trigger    = PL_TriggerTurnOns( PSet(DirName = "HT_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = True,TriggerReWeight = HT_Trigger_PS.Triggers, Verbose = False).ps())
+Plots_Cross_Trigger = PL_TriggerTurnOns( PSet(DirName = "Cross_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = True,TriggerReWeight = Cross_Trigger_PS.Triggers,Verbose = False).ps())
 
 HT_Trigger_Filter = OP_MultiTrigger( HT_Trigger_PS.ps() )
 Cross_Trigger_Filter = OP_MultiTrigger( Cross_Trigger_PS.ps() )
 
 
-
+DeadEcalCutData = OP_DeadECALCut(0.3,0.3,0.5,30.,10,0,"./deadRegionList_GR10_P_V10.txt")
 #Standard Event Selection
 LeadingJetEta = OP_FirstJetEta(2.5)
 unCorLeadJetCut = OP_UnCorLeadJetCut(0.)
@@ -230,12 +249,16 @@ oddPhoton = OP_OddPhoton()
 oddJet = OP_OddJet()
 secondJetET = OP_SecondJetEtCut(100.*(bin/375.))
 badMuonInJet = OP_BadMuonInJet()
-numComLeptons = OP_NumComLeptons("<=",0)
+numComElectrons = OP_NumComElectrons("<=",0)
+numComMuons = OP_NumComMuons("<=",0)
 numComPhotons = OP_NumComPhotons("<=",0)
-
-ht250= RECO_CommonHTCut(275.)
-DeadEcalCutData = OP_DeadECALCut(0.3,0.3,0.5,30.,10,0,"./deadRegionList_GR10_P_V10.txt")
-# Cross check with the allhadronic analysis
+muDr = RECO_MuonJetDRCut(0.5)
+if bin == 275 or bin == 325:
+  htLow = RECO_CommonHTCut(0.)
+  htUp =  RECO_CommonHTLessThanCut(bin + 50.)
+else :
+  htUp = None
+  htLow = RECO_CommonHTCut(0.)
 VertexPtOverHT = OP_SumVertexPtOverHT(0.1)
 # -----------------------------------------------------------------------------
 # Definition of analyses
@@ -244,7 +267,7 @@ MHT_METCut = OP_MHToverMET(1.25,50.)
 # AK5 Calo
 json_ouput = JSONOutput("filtered")
 alphaT = OP_CommonAlphaTCut(0.53)
-json = JSONFilter("Json Mask", json_to_pset("./602pbjson.txt"))
+json = JSONFilter("Json Mask", json_to_pset("../../hadronic/python/hadronic/ReProcessing_PromptJson_Merged.txt"))
 evDump = EventDump()
 cutTreeData = Tree("Data")
 
@@ -255,24 +278,34 @@ cutTreeData.TAttach(NoiseFilt,selection)
 cutTreeData.TAttach(selection,oddMuon)
 cutTreeData.TAttach(oddMuon,oddElectron)
 cutTreeData.TAttach(oddElectron,oddPhoton)
-cutTreeData.TAttach(oddPhoton,numComLeptons)
-cutTreeData.TAttach(numComLeptons,numComPhotons)
+cutTreeData.TAttach(oddPhoton,numComElectrons)
+cutTreeData.TAttach(numComElectrons,numComMuons)
+cutTreeData.TAttach(numComMuons,numComPhotons)
 cutTreeData.TAttach(numComPhotons,LeadingJetEta)
 cutTreeData.TAttach(LeadingJetEta,badMuonInJet)
 cutTreeData.TAttach(badMuonInJet,oddJet)
 cutTreeData.TAttach(oddJet,LeadingJetCut)
 cutTreeData.TAttach(LeadingJetCut,secondJetET)
 # ##########DiJet Studies
-cutTreeData.TAttach(secondJetET,VertexPtOverHT)
-cutTreeData.TAttach(VertexPtOverHT,DeadEcalCutData)
-cutTreeData.TAttach(DeadEcalCutData,MHT_METCut)
-cutTreeData.TAttach(MHT_METCut,ht250)
-cutTreeData.TAttach(ht250,HT_Trigger_Filter)
+#cutTreeData.TAttach(secondJetET,VertexPtOverHT)
+#cutTreeData.TAttach(VertexPtOverHT,DeadEcalCutData)
+#cutTreeData.TAttach(DeadEcalCutData,muDr)
+#cutTreeData.TAttach(muDr,MHT_METCut)
+cutTreeData.TAttach(secondJetET,
+#muDr)
+#cutTreeData.TAttach(muDr,
+htLow)
+if htUp != None:
+  cutTreeData.TAttach(htLow,htUp)
+  cutTreeData.TAttach(htUp, HT_Trigger_Filter)
+else:  
+  cutTreeData.TAttach(htLow, HT_Trigger_Filter)
 cutTreeData.TAttach(HT_Trigger_Filter,Plots_HT_Trigger)
 cutTreeData.TAttach(HT_Trigger_Filter,Cross_Trigger_Filter)
 cutTreeData.TAttach(Cross_Trigger_Filter,Plots_Cross_Trigger)
-cutTreeData.FAttach(Cross_Trigger_Filter,alphaT)
-cutTreeData.TAttach(alphaT,evDump)
+cutTreeData.FAttach(Cross_Trigger_Filter,#alphaT)
+#cutTreeData.TAttach(alphaT,
+evDump)
 
 from ra1objectid.vbtfElectronId_cff import *
 from ra1objectid.vbtfMuonId_cff import *
@@ -280,11 +313,22 @@ from ra1objectid.ra3PhotonId_cff import *
 vbtfMuonId_cff = Muon_IDFilter( vbtfmuonidps.ps()  )
 vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
-
-
+mu_id = PSet(
+   MuID = "Tight",
+   MinPt = 10.,
+   MaxEta = 2.5,
+   MaxIsolation = 0.1,
+   DRMuJet = 0.3,
+   MaxGlbTrkDxy = 0.02,
+   MinGlbTrkNumOfValidHits = 11,
+   SegMatch2GlbMu = 1,
+   PixelHitsOnInrTrk = 1,
+   MaxInrTrkDz = 1.,
+   doJetLoop = False,
+   )
+vbtfMuonId_cff = CustomVBTFMuID(mu_id.ps())
 def addCutFlowData(a) :
-  # a.AddWeightFilter("Weight",PreScaleWeights)
-  # a.AddJetFilter("PreCC",JetCorrections)
+#  a.AddWeightFilter("Weight",PreScaleWeights)
   a.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
   a.AddElectronFilter("PreCC",vbtfElectronIdFilter)
   a.AddMuonFilter("PreCC",vbtfMuonId_cff)
@@ -309,14 +353,10 @@ conf_ak5_pfData.Common = deepcopy(default_common)
 anal_ak5_pfData=Analysis("AK5PF")
 addCutFlowData(anal_ak5_pfData)
 
-
-from data.Run2011.HT_Run2011_promptReco_DCS import *
-from data.Run2011.HT42_incomplete import *
 from data.Run2011.HT_Run2011A import *
-from data.Run2011.HT42_PromptReco_for_AlphaT_Trigger import *
-from MuHad import *
-outDir = "..//TriggerTurnOns/MuHad/AlphaT/"+str(bin)+"/"
+from data.Run2011.MuHad_Run2011A_Complete_V15_03_02 import *
+outDir = "..//TriggerTurnOns/HT/"+str(bin)+"/"
 ensure_dir(outDir)
-# MuHad_Run2011A_AllReco_17June.File = MuHad_Run2011A_AllReco_17June.File[1:2]
-anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[MuHad_Run2011A_AllReco_17June])#HT_Run2011A])
+#MuHad_Run2011A_Complete_V15_03_02.File = MuHad_Run2011A_Complete_V15_03_02.File[1:10]
+anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT_Run2011A])#MuHad_Run2011A_Complete_V15_03_02])
 
