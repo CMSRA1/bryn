@@ -1,9 +1,7 @@
 #!/usr/bin/env python
-
 """
 Created by Bryn Mathias on 2010-05-07.
 """
-
 # -----------------------------------------------------------------------------
 # Necessary includes
 import errno
@@ -17,8 +15,6 @@ from time import strftime
 from icf.config import defaultConfig
 from icf.utils import json_to_pset
 from copy import deepcopy
-# from icf.JetCorrections import *
-
 # -----------------------------------------------------------------------------
 # Samples
 #import yours in your running script
@@ -574,7 +570,7 @@ def MakeDataTree(Threshold):
   cutTreeData.TAttach(htCut375,alphaT1)
   cutTreeData.TAttach(NJet4,nHadStandard375_after_DeadEcal)
   #Here be plots after all the cuts!!
-  cutTreeData.TAttach(DeadEcalCutData,
+  # cutTreeData.TAttach(DeadEcalCutData,
   cutTreeData.TAttach(htCut275,MHT_METCut)
   cutTreeData.TAttach(MHT_METCut,htCut375All)
   cutTreeData.TAttach(htCut375All,NJet5)
