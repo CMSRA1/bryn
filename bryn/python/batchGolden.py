@@ -489,18 +489,18 @@ datatriggerps = PSet(
         "HLT_HT250_MHT80_v*",
         "HLT_HT250_MHT90_v*",
      #  "HLT_HT250_MHT60_v2",
-#	"HLT_HT250_MHT60_v3",
-#	"HLT_HT250_MHT60_v4",
-#	"HLT_HT250_MHT60_v6",
-#	"HLT_HT250_MHT60_v7",
-#	"HLT_HT250_MHT70_v1",
-#	"HLT_HT250_MHT70_v3",
-#	"HLT_HT250_MHT70_v4",
-#	"HLT_HT250_MHT80_v3",
-#	"HLT_HT250_MHT80_v4",
-#	"HLT_HT250_MHT90_v1",
-#	"HLT_HT260_MHT60_v2", 
-	]
+# "HLT_HT250_MHT60_v3",
+# "HLT_HT250_MHT60_v4",
+# "HLT_HT250_MHT60_v6",
+# "HLT_HT250_MHT60_v7",
+# "HLT_HT250_MHT70_v1",
+# "HLT_HT250_MHT70_v3",
+# "HLT_HT250_MHT70_v4",
+# "HLT_HT250_MHT80_v3",
+# "HLT_HT250_MHT80_v4",
+# "HLT_HT250_MHT90_v1",
+# "HLT_HT260_MHT60_v2",
+  ]
     )
 DataTrigger = OP_MultiTrigger( datatriggerps.ps() )
 
@@ -532,8 +532,9 @@ def MakeDataTree(Threshold):
   cutTreeData.TAttach(DataTrigger,MHTCut)
   cutTreeData.TAttach(MHTCut,NoiseFilt)
   cutTreeData.TAttach(NoiseFilt,GoodVertexMonster)
-  cutTreeData.TAttach(GoodVertexMonster,recHitCut)
-  cutTreeData.TAttach(recHitCut,LeadingJetEta)
+  cutTreeData.TAttach(GoodVertexMonster,#recHitCut)
+  # cutTreeData.TAttach(recHitCut,
+  LeadingJetEta)
   cutTreeData.TAttach(LeadingJetEta,secondJetET)
   cutTreeData.TAttach(secondJetET,oddJet)
   cutTreeData.TAttach(oddJet,badMuonInJet)
@@ -542,8 +543,10 @@ def MakeDataTree(Threshold):
   cutTreeData.TAttach(oddElectron,oddPhoton)
   cutTreeData.TAttach(oddPhoton,numComLeptons)
   cutTreeData.TAttach(numComLeptons,numComPhotons)
-  cutTreeData.TAttach(numComPhotons,VertexPtOverHT)
-  cutTreeData.TAttach(VertexPtOverHT,htCut275)
+  cutTreeData.TAttach(numComPhotons,
+  #VertexPtOverHT)
+  #cutTreeData.TAttach(VertexPtOverHT,
+  htCut275)
   #FOR HT > 275Gev Plot
   cutTreeData.TAttach(htCut275,DiJet3)
   cutTreeData.TAttach(htCut275,NJet3)
@@ -571,7 +574,8 @@ def MakeDataTree(Threshold):
   cutTreeData.TAttach(htCut375,alphaT1)
   cutTreeData.TAttach(NJet4,nHadStandard375_after_DeadEcal)
   #Here be plots after all the cuts!!
-  cutTreeData.TAttach(DeadEcalCutData,MHT_METCut)
+  cutTreeData.TAttach(DeadEcalCutData,
+  cutTreeData.TAttach(htCut275,MHT_METCut)
   cutTreeData.TAttach(MHT_METCut,htCut375All)
   cutTreeData.TAttach(htCut375All,NJet5)
   cutTreeData.TAttach(htCut375All,DiJet5)
@@ -600,8 +604,10 @@ def MakeMCTree(Threshold):
   cutTreeMC.TAttach(ht250_Trigger,MHTCut)
   cutTreeMC.TAttach(MHTCut,NoiseFilt)
   cutTreeMC.TAttach(NoiseFilt,GoodVertexMonster)
-  cutTreeMC.TAttach(GoodVertexMonster,recHitCut)
-  cutTreeMC.TAttach(recHitCut,LeadingJetEta)
+  cutTreeMC.TAttach(GoodVertexMonster,
+  # recHitCut)
+  # cutTreeMC.TAttach(recHitCut,
+  LeadingJetEta)
   cutTreeMC.TAttach(LeadingJetEta,secondJetET)
   cutTreeMC.TAttach(secondJetET,oddJet)
   cutTreeMC.TAttach(oddJet,badMuonInJet)
@@ -610,8 +616,10 @@ def MakeMCTree(Threshold):
   cutTreeMC.TAttach(oddElectron,oddPhoton)
   cutTreeMC.TAttach(oddPhoton,numComLeptons)
   cutTreeMC.TAttach(numComLeptons,numComPhotons)
-  cutTreeMC.TAttach(numComPhotons,VertexPtOverHT)
-  cutTreeMC.TAttach(VertexPtOverHT,htCut275)
+  cutTreeMC.TAttach(numComPhotons,
+  # VertexPtOverHT)
+  # cutTreeMC.TAttach(VertexPtOverHT,
+  htCut275)
   # cutTreeMC.TAttach(numComPhotons,ht275_Fail)
   # cutTreeMC.TAttach(numComPhotons,ht325_Fail)
   # cutTreeMC.TAttach(ht275_Fail,htLess325_Fail)
@@ -651,7 +659,8 @@ def MakeMCTree(Threshold):
 
 
   #Here be plots after all the cuts!!
-  cutTreeMC.TAttach(DeadEcalCutMC,MHT_METCut)
+  # cutTreeMC.TAttach(DeadEcalCutMC,
+  cutTreeMC.TAttach(htCut275,MHT_METCut)
   cutTreeMC.TAttach(MHT_METCut,alphaT2)
   cutTreeMC.TAttach(MHT_METCut,htCut375All)
   cutTreeMC.TAttach(htCut375All,NJet5)
