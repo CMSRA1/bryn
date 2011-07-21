@@ -5,6 +5,7 @@ from libFrameworkSUSY import *
 from libbryn import *
 from libHadronic import *
 from icf.core import PSet,Analysis
+from time import strftime
 
 from AtTriggerGoldern2 import *
 from ra1objectid.vbtfElectronId_cff import *
@@ -3073,6 +3074,6 @@ anal_ak5_caloData.Run("../MHTovHT/Onep25/",conf_ak5_caloData,[RA1_Full35pb_Data]
 
 
 #
-#anal_ak5_pfData.Run("../results/",conf_ak5_pfData,data38)
-# anal_ak5_jptData.Run("../results/",conf_ak5_jptData,data)
-# anal_ak7_caloData.Run("../results/",conf_ak7_caloData,data)
+#anal_ak5_pfData.Run("../results_"+strftime("%d_%b_%H")+"//",conf_ak5_pfData,data38)
+# anal_ak5_jptData.Run("../results_"+strftime("%d_%b_%H")+"//",conf_ak5_jptData,data)
+# anal_ak7_caloData.Run("../results_"+strftime("%d_%b_%H")+"//",conf_ak7_caloData,data)

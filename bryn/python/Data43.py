@@ -5,6 +5,7 @@ from libFrameworkSUSY import *
 from libbryn import *
 from libHadronic import *
 from icf.core import PSet,Analysis
+from time import strftime
 from batchGolden import *
 from ra1objectid.vbtfElectronId_cff import *
 from ra1objectid.vbtfMuonId_cff import *
@@ -23,7 +24,7 @@ cutTree,blah,l = MakeDataTree(86.7)
 
 
 def addCutFlowData(a) :
-  a.AddWeightFilter("Weight",PreScaleWeights)
+ # a.AddWeightFilter("Weight",PreScaleWeights)
   # a.AddJetFilter("PreCC",JetCorrections)
   a.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
   a.AddElectronFilter("PreCC",vbtfElectronIdFilter)
@@ -54,20 +55,20 @@ tedSkim = PSet(
 Name="TedSkim",
 Format=("ICF",3),
 Weight= 1.0,
-File="../resultsWithSingleTop//Data/AK5Calo_Jets.root")
+File="../results_"+strftime("%d_%b_%H")+"/WithSingleTop//Data/AK5Calo_Jets.root")
 #"~elaird1/public_html/73_candidates/v3/350_bin/calo.root")
 
 
 from data.Run2011.HT_Run2011_promptReco_DCS import *
 from data.Run2011.HT42_incomplete import *
 from data.Run2011.RA1ToBurn import *
-outDir = "../results/Data43"
+outDir = "../results_"+strftime("%d_%b_%H")+"//Data43"
 ensure_dir(outDir)
 anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT42_incomplete])
 
 # from data.MultiJet_Run2010B_Nov4ReReco_v1 import *
 
 #
-# anal_ak5_pfData.Run("../results/Data",conf_ak5_pfData,[HT_Run2011_promptReco_DCS])
-# anal_ak5_jptData.Run("../results/",conf_ak5_jptData,data)
-# anal_ak7_caloData.Run("../results/",conf_ak7_caloData,data)
+# anal_ak5_pfData.Run("../results_"+strftime("%d_%b_%H")+"//Data",conf_ak5_pfData,[HT_Run2011_promptReco_DCS])
+# anal_ak5_jptData.Run("../results_"+strftime("%d_%b_%H")+"//",conf_ak5_jptData,data)
+# anal_ak7_caloData.Run("../results_"+strftime("%d_%b_%H")+"//",conf_ak7_caloData,data)

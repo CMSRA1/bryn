@@ -5,7 +5,8 @@ from libFrameworkSUSY import *
 from libbryn import *
 from libHadronic import *
 from icf.core import PSet,Analysis
-
+from time import strftime
+from time import strftime
 from batchGolden import *
 
 from ra1objectid.vbtfElectronId_cff import *
@@ -20,7 +21,6 @@ cutTree,blah,l = MakeDataTree(100.)
 
 
 def addCutFlowData(a) :
-  a.AddWeightFilter("Weight",PreScaleWeights)
   # a.AddJetFilter("PreCC",JetCorrections)
   a.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
   a.AddElectronFilter("PreCC",vbtfElectronIdFilter)
@@ -56,5 +56,6 @@ Name = "test",
 Format = ("ICF",3),
 Weight = 1.0,
 File = "../../Ntuples/375_newFormat.root")
-
-anal_ak5_caloData.Run("../results/",conf_ak5_caloData,[test])#HT_Run2011A])
+outdir = "../results_"+strftime("%d_%b_%H")+"/Data/"
+ensure_dir(outdir)
+anal_ak5_caloData.Run(outdir,conf_ak5_caloData,[HT_Run2011A])

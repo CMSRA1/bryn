@@ -4,6 +4,7 @@ from libFrameworkSUSY import *
 from libbryn import *
 from libHadronic import *
 from icf.core import PSet,Analysis
+from time import strftime
 import icf.utils as Utils
 from batchGolden import *
 from ra1objectid.vbtfElectronId_cff import *
@@ -19,7 +20,7 @@ vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 def addCutFlowMC(b) :
   b.AddJetFilter("PreCC",JetAdd)
-  b.AddWeightFilter("Weight", vertex_reweight)
+#  b.AddWeightFilter("Weight", vertex_reweight)
   b.AddMuonFilter("PreCC",vbtfMuonId_cff)
   b.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
   b.AddElectronFilter("PreCC",vbtfElectronIdFilter)
@@ -63,7 +64,7 @@ conf_ak7_caloMC.Common = deepcopy(default_common)
 # conf_ak5_calo.Common.print_out()
 anal_ak7_caloMC=Analysis("AK7Calo")
 addCutFlowMC(anal_ak7_caloMC)
-outDir = "../results/NoSmear43/"
+outDir = "../results_"+strftime("%d_%b_%H")+"//NoSmear43/"
 ensure_dir(outDir)
 
 testFile =PSet(
@@ -76,9 +77,9 @@ Weight =1.0,
 
 anal_ak5_caloMC.Run(outDir,conf_ak5_caloMC,MC)
 # anal_ak5_pfMC.Run(outDir,conf_ak5_pfMC,MC)
-# anal_ak5_pfMC.Run("../results/NoSmear",conf_ak5_pfMC,[QCD_AllPtBins_7TeV_Pythia])
-# anal_ak5_jptMC.Run("../results/NoSmear",conf_ak5_jptMC,MC)
-# anal_ak5_jptMC.Run("../results/NoSmear",conf_ak5_jptMC,[QCD_AllPtBins_7TeV_Pythia])
-# anal_ak7_caloMC.Run("../results/NoSmear",conf_ak7_caloMC,MC)
-# anal_ak7_caloMC.Run("../results/NoSmear",conf_ak7_caloMC,[QCD_AllPtBins_7TeV_Pythia])
+# anal_ak5_pfMC.Run("../results_"+strftime("%d_%b_%H")+"//NoSmear",conf_ak5_pfMC,[QCD_AllPtBins_7TeV_Pythia])
+# anal_ak5_jptMC.Run("../results_"+strftime("%d_%b_%H")+"//NoSmear",conf_ak5_jptMC,MC)
+# anal_ak5_jptMC.Run("../results_"+strftime("%d_%b_%H")+"//NoSmear",conf_ak5_jptMC,[QCD_AllPtBins_7TeV_Pythia])
+# anal_ak7_caloMC.Run("../results_"+strftime("%d_%b_%H")+"//NoSmear",conf_ak7_caloMC,MC)
+# anal_ak7_caloMC.Run("../results_"+strftime("%d_%b_%H")+"//NoSmear",conf_ak7_caloMC,[QCD_AllPtBins_7TeV_Pythia])
 

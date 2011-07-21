@@ -4,6 +4,7 @@ from libFrameworkSUSY import *
 from libHadronic import *
 from libbryn import *
 from icf.core import PSet,Analysis
+from time import strftime
 from ra1objectid.vbtfElectronId_cff import *
 from ra1objectid.vbtfMuonId_cff import *
 from ra1objectid.ra3PhotonId_cff import *
@@ -24,7 +25,7 @@ ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
 JESUncert = JESUncert("-ve")
 def addCutFlowMC(b) :
   b.AddJetFilter("PreCC",JetAdd)
-  b.AddWeightFilter("Weight", vertex_reweight)
+#  b.AddWeightFilter("Weight", vertex_reweight)
   b.AddMuonFilter("PreCC",vbtfMuonId_cff)
   b.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
   b.AddElectronFilter("PreCC",vbtfElectronIdFilter)
@@ -69,16 +70,16 @@ conf_ak7_caloMC.Common = deepcopy(default_common)
 # conf_ak5_calo.Common.print_out()
 anal_ak7_caloMC=Analysis("AK7Calo")
 addCutFlowMC(anal_ak7_caloMC)
-outdir = "../results/JESminus37/"
+outdir = "../results_"+strftime("%d_%b_%H")+"//JESminus37/"
 ensure_dir(outdir)
 
 anal_ak5_caloMC.Run(outdir,conf_ak5_caloMC,MC)
-# anal_ak5_caloMC.Run("../results/JESminus/",conf_ak5_caloMC,[QCD_AllPtBins_7TeV_Pythia])
-# anal_ak5_caloMC.Run("../results/JESminus/",conf_ak5_caloMC,AllMC)#MC+[QCD_AllPtBins_7TeV_Pythia,LM0,LM1,LM5])
-# anal_ak5_pfMC.Run("../results/JESminus/",conf_ak5_pfMC,MC)
-# anal_ak5_pfMC.Run("../results/JESminus/",conf_ak5_pfMC,[QCD_AllPtBins_7TeV_Pythia])
-# anal_ak5_jptMC.Run("../results/JESminus/",conf_ak5_jptMC,MC)
-# anal_ak5_jptMC.Run("../results/JESminus/",conf_ak5_jptMC,[QCD_AllPtBins_7TeV_Pythia])
-# anal_ak7_caloMC.Run("../results/JESminus/",conf_ak7_caloMC,MC)
-# anal_ak7_caloMC.Run("../results/JESminus/",conf_ak7_caloMC,[QCD_AllPtBins_7TeV_Pythia])
+# anal_ak5_caloMC.Run("../results_"+strftime("%d_%b_%H")+"//JESminus/",conf_ak5_caloMC,[QCD_AllPtBins_7TeV_Pythia])
+# anal_ak5_caloMC.Run("../results_"+strftime("%d_%b_%H")+"//JESminus/",conf_ak5_caloMC,AllMC)#MC+[QCD_AllPtBins_7TeV_Pythia,LM0,LM1,LM5])
+# anal_ak5_pfMC.Run("../results_"+strftime("%d_%b_%H")+"//JESminus/",conf_ak5_pfMC,MC)
+# anal_ak5_pfMC.Run("../results_"+strftime("%d_%b_%H")+"//JESminus/",conf_ak5_pfMC,[QCD_AllPtBins_7TeV_Pythia])
+# anal_ak5_jptMC.Run("../results_"+strftime("%d_%b_%H")+"//JESminus/",conf_ak5_jptMC,MC)
+# anal_ak5_jptMC.Run("../results_"+strftime("%d_%b_%H")+"//JESminus/",conf_ak5_jptMC,[QCD_AllPtBins_7TeV_Pythia])
+# anal_ak7_caloMC.Run("../results_"+strftime("%d_%b_%H")+"//JESminus/",conf_ak7_caloMC,MC)
+# anal_ak7_caloMC.Run("../results_"+strftime("%d_%b_%H")+"//JESminus/",conf_ak7_caloMC,[QCD_AllPtBins_7TeV_Pythia])
 
