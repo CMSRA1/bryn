@@ -56,7 +56,6 @@ def GetHist(DataSetName,col,norm,Legend):
     # Now we check that the errors for the bin are correct - effects us in low stats cases!
     newWeight = 1.0
     if "Zinv" in DataSetName: newWeight =  intlumi / 378.8
-    if "SingleTop" in DataSetName: newWeight =
     if "TTbar" in DataSetName: newWeight =  intlumi / 378.8
     if "WJets" in DataSetName: newWeight = intlumi / 473.3
     for bin in range(0,Hist.GetNbinsX()):
