@@ -771,7 +771,7 @@ for num in [""]:#,"37","43"]:
         MaxX = 1500.
       if "HT_all" == hist:
         MinX = 250.
-  Total.GetYaxis().SetTitle("Events / 25 GeV")
+        Total.GetYaxis().SetTitle("Events / 25 GeV")
       if "AlphaT_all" == hist:
         Total.GetYaxis().SetTitle("Events / 0.025")
         Root.gStyle.SetPadTickY(0)
