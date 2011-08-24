@@ -61,7 +61,7 @@ def GetHist(DataSetName,col,norm,Legend):
     for bin in range(0,Hist.GetNbinsX()):
       if Hist.GetBinContent(bin)/newWeight < 10.:
         n = int(Hist.GetBinContent(bin)/newWeight)
-        Hist.SetBinError(math.sqrt(eh[n]**2 + el[n]**2))
+        Hist.SetBinError(bin,math.sqrt(eh[n]**2 + el[n]**2))
     Hist.SetLineWidth(3)
     Hist.SetLineColor(col) #set colour
     Hist.SetBinContent(Hist.GetNbinsX() ,Hist.GetBinContent(Hist.GetNbinsX())+Hist.GetBinContent(Hist.GetNbinsX()+1))
