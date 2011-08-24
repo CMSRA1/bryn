@@ -867,8 +867,8 @@ for num in [""]:#,"37","43"]:
           Pythia8.SetTitleOffset(1.3, "Y")
       #    QCD.Draw("9histsame")
           if DrawErrors == True :
-          AsymErrors.Draw("2same")
-          Total.Draw("2samehist")
+            AsymErrors.Draw("2same")
+            Total.Draw("2samehist")
     # LM2.Draw("9SAMEh")
           # LM3.Draw("9SAMEh")
           # LM4.Draw("9SAMEh")
