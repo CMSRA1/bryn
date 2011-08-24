@@ -43,9 +43,8 @@ ensure_dir(outputfile)
 
 def GetHist(DataSetName,col,norm,Legend):
      # //@@ 68% CL intervals from http://www.slac.stanford.edu/BFROOT/www/Statistics/Report/report.pdf
-     eh =  [1.15, 1.36, 1.53, 1.73, 1.98, 2.21, 2.42, 2.61, 2.80, 3.00 ]
-     el =  [0.00, 1.00, 2.00, 2.14, 2.30, 2.49, 2.68, 2.86, 3.03, 3.19 ]
-
+    eh =  [1.15, 1.36, 1.53, 1.73, 1.98, 2.21, 2.42, 2.61, 2.80, 3.00 ]
+    el =  [0.00, 1.00, 2.00, 2.14, 2.30, 2.49, 2.68, 2.86, 3.03, 3.19 ]
     a = Root.TFile.Open(DataSetName) #open the file
     closeList.append(a) # append the file to the close list
     b = a.Get(DirKeys[dir].GetTitle()) #open the directory in the root file
@@ -61,7 +60,7 @@ def GetHist(DataSetName,col,norm,Legend):
     if "TTbar" in DataSetName: newWeight =  intlumi / 378.8
     if "WJets" in DataSetName: newWeight = intlumi / 473.3
     for bin in range(0,Hist.GetNbinsX()):
-      if Hist.GetBinContent(bin)/newWeight < 10:
+      if Hist.GetBinContent(bin)/newWeight < 10.:
         n = int(Hist.GetBinContent(bin)/newWeight)
         Hist.SetBinError(math.sqrt(eh[n]**2 + el[n]**2))
     Hist.SetLineWidth(3)
