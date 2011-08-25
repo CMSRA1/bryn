@@ -58,7 +58,7 @@ def GetHist(DataSetName,col,norm,Legend):
     eh =  [1.15, 1.36, 1.53, 1.73, 1.98, 2.21, 2.42, 2.61, 2.80, 3.00 ]
     el =  [0.00, 1.00, 2.00, 2.14, 2.30, 2.49, 2.68, 2.86, 3.03, 3.19 ]
     if "Zinv" in DataSetName: newWeight =  intlumi / 378.8
-    if "TTbar" in DataSetName: newWeight = intlumi / 378.8
+    if "TTbar" in DataSetName: newWeight = intlumi / 13500.
     if "WJets" in DataSetName: newWeight = intlumi / 473.3
     if "QCD" not in DataSetName:
       for bin in range(0,Hist.GetNbinsX()):
