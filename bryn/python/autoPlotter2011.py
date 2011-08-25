@@ -63,6 +63,7 @@ def GetHist(DataSetName,col,norm,Legend):
     for bin in range(0,Hist.GetNbinsX()):
       if Hist.GetBinContent(bin)/newWeight < 10.:
         n = int(Hist.GetBinContent(bin)/newWeight)
+        print "new Bin error is",eh[n]*newWeight
         Hist.SetBinError(bin,eh[n]*newWeight)
     Hist.SetLineWidth(3)
     Hist.SetLineColor(col) #set colour
@@ -179,13 +180,13 @@ for num in [""]:#,"37","43"]:
       # Root.tdrStyle.SetPadRightMargin(0.06)#tweak
       # if "CaloMET_after_alphaT_all" in hist: Draw = True
       if "EffectiveMass_after_alphaT_55_all" in hist:
-        Draw = True
+        Draw = False
         DrawLog = False
       if "HT_after_alphaT_all" == hist:
-        Draw = True
+        Draw = False
         DrawLog = False
       if "BiasedDeltaPhi_after_alphaT_55_all" in hist:
-        Draw = True
+        Draw = False
         DrawLog = False
       # if "CosDetlaPhi_MHT_MHTBaby__all" in hist: Draw = True
       # if "HT_before_alphaT_all" == hist: Draw = True
@@ -198,19 +199,19 @@ for num in [""]:#,"37","43"]:
       # if "CaloMET_all" in hist: Draw = True
       # if "MHTovMET_all" in hist: Draw = True
       # if "MHTovMET_afterAlphaT_all" in hist: Draw = True
-      if "Mt2_LeadingJets_all" in hist: Draw = True
-      if "Mt2_all" in hist: Draw = True
+      if "Mt2_LeadingJets_all" in hist: Draw = False
+      if "Mt2_all" in hist: Draw = False
       if "AlphaT_all" ==  hist: Draw = True
-      if "AlphaT_Zoomed_all" in hist: Draw = True
-      if "HT_all" == hist: Draw = True
-      if "EffectiveMass_all" in hist: Draw = True
+      if "AlphaT_Zoomed_all" in hist: Draw = False
+      if "HT_all" == hist: Draw = False
+      if "EffectiveMass_all" in hist: Draw = False
       # if "BiasedDeltaPhi_all" in hist: Draw = True
       # if "MHToverHT_all" in hist: Draw = True
-      if "MHT_all" == hist: Draw = True
+      if "MHT_all" == hist: Draw = False
       if "JetMultiplicityAfterAlphaT_all" in hist:
-        Draw = True
+        Draw = False
         DrawLog = False
-      if "JetMultiplicity_all" in hist: Draw = True
+      if "JetMultiplicity_all" in hist: Draw = False
       # if "JetEta_" in hist: Draw = True
       # if "JetPt_" in hist: Draw = True
       # if "fem__all" in hist: Draw = True
