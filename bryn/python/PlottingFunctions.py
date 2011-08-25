@@ -95,7 +95,7 @@ def SystematicsSmear(H1,H2):
 #         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 # <html xmlns="http://www.w3.org/1999/xhtml">
 
-def Header(intLumi):
+def Header(intLumi,fromFile):
   """docstring for Header"""
   header = '''
 
@@ -104,8 +104,7 @@ def Header(intLumi):
     <?xml version="1.0"?>
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <title> ''' "RA1 Plots using " +str(intLumi) + "pb of data" + ''' </title>
-  </head>
+<title> ''' "RA1 Plots using " +str(intLumi) + "pb of data. ResutsDir was" + fromFile + ''' </title>  </head>
 <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 
     <style type="text/css" >
@@ -353,8 +352,7 @@ border-collapse:collapse;
 
 
   <h1>Comparison of Basic quantities for N=2, N>=3 &amp; N>=2 Jets </h1>
-  <h2>Data = JetMetTau ''' + str(intLumi) + ''', contact email bryn.mathias AT cern DOT ch </h2>
-'''
+<h2>Data = JetMetTau ''' + str(intLumi) + " ResultsDir was:"+fromFile+''', contact email bryn.mathias AT cern DOT ch </h2>'''
   return header
 
   pass
