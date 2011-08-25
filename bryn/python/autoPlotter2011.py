@@ -51,24 +51,25 @@ def GetHist(DataSetName,col,norm,Legend):
       Hist = Root.TH1D()
     if Legend != 0:
       leg.AddEntry(Hist,Legend,"LP") # add a legend entry
+    if norm != 0:
+       Hist.Scale(intlumi/100.) #if not data normilse to the data by lumi, MC is by default weighted to 100pb^{-1}, if you have changed this change here!
     # Now we check that the errors for the bin are correct - effects us in low stats cases!
     newWeight = 1.0
     eh =  [1.15, 1.36, 1.53, 1.73, 1.98, 2.21, 2.42, 2.61, 2.80, 3.00 ]
     el =  [0.00, 1.00, 2.00, 2.14, 2.30, 2.49, 2.68, 2.86, 3.03, 3.19 ]
-    if "Zinv" in DataSetName: newWeight =  100. / 378.8
-    if "TTbar" in DataSetName: newWeight =  100. / 378.8
-    if "WJets" in DataSetName: newWeight = 100. / 473.3
+    if "Zinv" in DataSetName: newWeight =  intlumi / 378.8
+    if "TTbar" in DataSetName: newWeight = intlumi / 378.8
+    if "WJets" in DataSetName: newWeight = intlumi / 473.3
     for bin in range(0,Hist.GetNbinsX()):
       if Hist.GetBinContent(bin)/newWeight < 10.:
         n = int(Hist.GetBinContent(bin)/newWeight)
-        Hist.SetBinError(bin,math.sqrt(eh[n]**2 + el[n]**2))
+        Hist.SetBinError(bin,eh[n]*newWeight))
     Hist.SetLineWidth(3)
     Hist.SetLineColor(col) #set colour
     Hist.SetBinContent(Hist.GetNbinsX() ,Hist.GetBinContent(Hist.GetNbinsX())+Hist.GetBinContent(Hist.GetNbinsX()+1))
     Hist.SetBinError(Hist.GetNbinsX() ,math.sqrt((Hist.GetBinError(Hist.GetNbinsX()))**2 + (Hist.GetBinError(Hist.GetNbinsX()+1))**2))
     Hist.SetBinContent(Hist.GetNbinsX()+1,0)
-    if norm != 0:
-       Hist.Scale(intlumi/100.) #if not data normilse to the data by lumi, MC is by default weighted to 100pb-1, if you have changed this change here!
+
     return Hist
 
 
