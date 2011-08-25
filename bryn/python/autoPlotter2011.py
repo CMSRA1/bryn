@@ -433,17 +433,17 @@ for num in [""]:#,"37","43"]:
           ScaledDown.Rebin(4)
           Smeared.Rebin(4)
       #AsymErrors = Systematics(EWK,EWK,EWK,EWK ,"TGraph")
-      AsymErrors = Systematics(Total,Total,Total,Total ,"TGraph")
+      # AsymErrors = Systematics(Total,Total,Total,Total ,"TGraph")
       #AsymErrors = Systematics(Total,Total,Total,Smeared ,"TGraph")
-      # AsymErrors = Systematics(Total,ScaledUp,ScaledDown,Smeared ,"TGraph")
+      AsymErrors = Systematics(Total,ScaledUp,ScaledDown,Smeared ,"TGraph")
       AsymErrors.SetLineColor(Root.kAzure+2)#kTeal+3)
       AsymErrors.SetFillColor(Root.kAzure+2)#kTeal+3)
       AsymErrors.SetLineWidth(3)
 
       AsymErrors.SetFillStyle(3245)#(3245)
 
-      # SMBackGrounds = Systematics(Total,ScaledUp,ScaledDown,Smeared,"TH1")
-      SMBackGrounds = Systematics(Total,Total,Total,Total,"TH1")
+      SMBackGrounds = Systematics(Total,ScaledUp,ScaledDown,Smeared,"TH1")
+      # SMBackGrounds = Systematics(Total,Total,Total,Total,"TH1")
       if SMBackGrounds.Integral(0,SMBackGrounds.GetNbinsX()) == 0 : Draw = False
 
       drawEWK = True
