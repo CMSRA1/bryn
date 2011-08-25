@@ -60,11 +60,12 @@ def GetHist(DataSetName,col,norm,Legend):
     if "Zinv" in DataSetName: newWeight =  intlumi / 378.8
     if "TTbar" in DataSetName: newWeight = intlumi / 378.8
     if "WJets" in DataSetName: newWeight = intlumi / 473.3
-    for bin in range(0,Hist.GetNbinsX()):
-      if Hist.GetBinContent(bin)/newWeight < 10.:
-        n = int(Hist.GetBinContent(bin)/newWeight)
-        print "new Bin error is",eh[n]*newWeight
-        Hist.SetBinError(bin,eh[n]*newWeight)
+    if "QCD" not in DataSetName:
+      for bin in range(0,Hist.GetNbinsX()):
+        if Hist.GetBinContent(bin)/newWeight < 10.:
+          n = int(Hist.GetBinContent(bin)/newWeight)
+          print "BinContent is %f, New Error is %d"%(n,eg[n]*newWeight)
+          Hist.SetBinError(bin,eh[n]*newWeight)
     Hist.SetLineWidth(3)
     Hist.SetLineColor(col) #set colour
     Hist.SetBinContent(Hist.GetNbinsX() ,Hist.GetBinContent(Hist.GetNbinsX())+Hist.GetBinContent(Hist.GetNbinsX()+1))
