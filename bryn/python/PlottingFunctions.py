@@ -71,7 +71,7 @@ def Systematics(H1,H2,H3,Smeared,outType):
       down = (UpperError.GetBinContent(bin)-H1.GetBinContent(bin))**2
 
       # print H1.GetBinCenter(bin),H1.GetBinContent(bin), SmearDown
-    if H1.GetBinLowEdge(bin) is 1.8:
+    if H1.GetBinLowEdge(bin) = 1.8:
       print "UpError, LowError (%f, %f)"%(math.sqrt((H1.GetBinError(bin))**2 + up + SmearUp),math.sqrt((H1.GetBinError(bin))**2 + down + SmearDown))
     if outType == "TGraph":
       Standard.SetPointError(bin-1, H1.GetBinWidth(bin)/2, H1.GetBinWidth(bin)/2,math.sqrt((H1.GetBinError(bin))**2 + down + SmearDown), math.sqrt((H1.GetBinError(bin))**2 + up + SmearUp))
