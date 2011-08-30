@@ -82,7 +82,7 @@ def HistToGraph(Hist):
   for bin in range(1,Hist.GetNbinsX()):
     if Hist.GetBinContent(bin) < 10.:
       n = int(Hist.GetBinContent(bin))
-      Graph.SetPointError(bin-1,0.,0.,el[n],eh[n])
+      if n is not 0: Graph.SetPointError(bin-1,0.,0.,el[n],eh[n])
   return Graph
   pass
 
@@ -178,7 +178,7 @@ HistNames =  [k.GetName() for k in HistKeys]
 # #print HistNames
 closeList = []
 # print HistNames
-for num in [""]#,"37","43"]:
+for num in [""]:#,"37","43"]:
   ensure_dir(outputfile+"/"+num)
   for dir in range(0,len(DirKeys)):
     # #print DirKeys[dir].GetTitle(), dir
