@@ -83,6 +83,7 @@ def HistToGraph(Hist):
     if Hist.GetBinContent(bin) < 10.:
       n = int(Hist.GetBinContent(bin))
       if n is not 0: Graph.SetPointError(bin-1,0.,0.,el[n],eh[n])
+      if n is 0: Graph.SetPointError(bin-1,0.,0.,0.,0.)
   return Graph
   pass
 
