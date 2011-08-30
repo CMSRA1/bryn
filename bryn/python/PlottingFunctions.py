@@ -1,7 +1,7 @@
 
 import errno
 
-import ROOT as Root
+import ROOT as r
 import math
 from time import strftime
 import os, commands
@@ -41,7 +41,7 @@ def HistogramMaxX(H):
 
 
 def Systematics(H1,H2,H3,Smeared,outType):
-  if outType == "TGraph":   Standard = Root.TGraphAsymmErrors(H1)
+  if outType == "TGraph":   Standard = r.TGraphAsymmErrors(H1)
   if outType == "TH1":  Standard = H1.Clone()
   UpperError = H2.Clone()
   LowerError = H3.Clone()
