@@ -87,6 +87,7 @@ def HistToGraph(Hist):
      if n > 10:
       errorLow , errorHigh = Hist.GetBinError(bin),Hist.GetBinError(bin)
      if n is 0: errorLow, errorHigh = 0.,0.
+     print "BinContent is: %d, errorLow,errorHigh: (%f,%f)"%(Hist.GetBinContent(bin),errorLow,errorHigh)
      Graph.SetPointError(bin-1,0.,0.,errorLow,errorHigh)
   return Graph
   pass
