@@ -81,17 +81,21 @@ def HistToGraph(Hist):
   Graph = r.TGraphAsymmErrors(Hist)
   for bin in range(1,Hist.GetNbinsX()):
      n = int(Hist.GetBinContent(bin))
+     print n
      if n < 10:
-      errorLow = el[n]
-      errorHigh = eh[n]
+      errorLow,errorHigh = el[n],eh[n]
      if n > 10:
       errorLow , errorHigh = Hist.GetBinError(bin),Hist.GetBinError(bin)
      if n is 0: errorLow, errorHigh = 0.,0.
      print "BinContent is: %d, errorLow,errorHigh: (%f,%f)"%(Hist.GetBinContent(bin),errorLow,errorHigh)
      Graph.SetPointError(bin-1,0.,0.,errorLow,errorHigh)
   return Graph
-  pass
 
+def PrintBinErrors(Hist):
+  """docstring for PrintBinErrors"""
+  for bin in range(1,Hist.GetNbinsX()):
+    print "BinContent is: %d, errorLow: (%f)"%(Hist.GetBinContent(bin),Hist.GetBinError(bin))
+  pass
 
 
 def GetHistFromFolder(DataSetName,folder,col,norm,Legend):
@@ -850,7 +854,8 @@ for num in [""]:#,"37","43"]:
       # if "after" in hist:
         # c1.SetLogy(r.kFlase)
       drawEWK = False
-      Data = HistToGraph(Data)
+      # Data = HistToGraph(Data)
+      asdf = PrintBinErrors(Data)
       if DrawNorm == True:
         # Pythia8.SetTitleOffset(1.3, "Y")
         # Pythia8.DrawNormalized("9hist")
