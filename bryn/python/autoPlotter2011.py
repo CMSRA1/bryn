@@ -80,10 +80,14 @@ def HistToGraph(Hist):
   el =  [0.00, 1.00, 2.00, 2.14, 2.30, 2.49, 2.68, 2.86, 3.03, 3.19 ]
   Graph = r.TGraphAsymmErrors(Hist)
   for bin in range(1,Hist.GetNbinsX()):
-    if Hist.GetBinContent(bin) < 10.:
-      n = int(Hist.GetBinContent(bin))
-      if n is not 0: Graph.SetPointError(bin-1,0.,0.,el[n],eh[n])
-      if n is 0: Graph.SetPointError(bin-1,0.,0.,0.,0.)
+     n = int(Hist.GetBinContent(bin))
+     if n < 10:
+      errorLow = el[n]
+      errorHigh = eh[n]
+     if n > 10:
+      errorLow , errorHigh = Hist.GetBinError(bin),Hist.GetBinError(bin)
+     if n is 0: errorLow, errorHigh = 0.,0.
+     Graph.SetPointError(bin-1,0.,0.,errorLow,errorHigh)
   return Graph
   pass
 
