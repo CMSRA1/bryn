@@ -854,8 +854,8 @@ for num in [""]:#,"37","43"]:
       # if "after" in hist:
         # c1.SetLogy(r.kFlase)
       drawEWK = False
-      # Data = HistToGraph(Data)
-      asdf = PrintBinErrors(Data)
+      Data = HistToGraph(Data)
+      # asdf = PrintBinErrors(Data)
       if DrawNorm == True:
         # Pythia8.SetTitleOffset(1.3, "Y")
         # Pythia8.DrawNormalized("9hist")
@@ -986,7 +986,7 @@ for num in [""]:#,"37","43"]:
         for i in vertDist:
           vertDistNorm.append(i/vertTot)
         #print vertDistNorm
-      Data.Draw("9SAMEP")
+      Data.Draw("SAMEP")
       if DrawLog : c1.SetLogy()
       c1.Update()
       if Total.GetEntries() == 0: Draw = False
