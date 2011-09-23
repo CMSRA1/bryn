@@ -167,13 +167,13 @@ def addCutFlowData(a):
 
 
 #AK5 Calo
-conf_ak5_caloMC = deepcopy(defaultConfig)
-conf_ak5_caloMC.Ntuple = deepcopy(ak5_calo)
-conf_ak5_caloMC.XCleaning = deepcopy(default_cc)
-conf_ak5_caloMC.Common = deepcopy(default_common)
-# conf_ak5_caloMC.Common.print_out()
-anal_ak5_caloMC=Analysis("AK5Calo")
-addCutFlowMC(anal_ak5_caloMC)
+# conf_ak5_caloMC = deepcopy(defaultConfig)
+# conf_ak5_caloMC.Ntuple = deepcopy(ak5_calo)
+# conf_ak5_caloMC.XCleaning = deepcopy(default_cc)
+# conf_ak5_caloMC.Common = deepcopy(default_common)
+# # conf_ak5_caloMC.Common.print_out()
+# anal_ak5_caloMC=Analysis("AK5Calo")
+# addCutFlowMC(anal_ak5_caloMC)
 
 #AK5 Calo
 conf_ak5_caloData = deepcopy(defaultConfig)
