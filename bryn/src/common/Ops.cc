@@ -24,12 +24,12 @@ bool confHT::Process( Event::Data& ev){
   double HT  = 0.;
   for(; ijet!=jjet; ++ijet){
     if( (*ijet)->Et() > JetEt_){
-      HT += (*ijet)->Et();
+      HT += ((*ijet)->E()/cosh((*ijet)->Eta()));
     }
   }
   for( ; ibaby!=jbaby; ++ibaby){
     if( (*ibaby)->pt() > JetEt_ ){
-      HT += (*ibaby)->Et();
+      HT += ((*ibaby)->E()/cosh((*ibaby)->Eta()));
     }
   }
 
