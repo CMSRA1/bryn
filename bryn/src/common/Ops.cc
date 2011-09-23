@@ -71,8 +71,8 @@ bool alphaTriggerEmu::Process( Event::Data &ev){
   std::vector<Event::Jet>::const_iterator ijet = ev.JD_Jets().begin();
   std::vector<Event::Jet>::const_iterator jjet = ev.JD_Jets().end();
     for(; ijet!=jjet; ++ijet){
-      if( ((*ijet)->E()/cosh((*ijet)->Eta())) > JetEt_ && fabs((*ijet)->Eta) < 3.0){
-        if(triggerJets.size() < maxNjets_){ triggerJets.push_back((**ijet)); }
+      if( ((ijet)->E()/cosh((ijet)->Eta())) > JetEt_ && fabs((ijet)->Eta) < 3.0){
+        if(triggerJets.size() < maxNjets_){ triggerJets.push_back((*ijet)); }
       }
 
   double ht = 0.;
