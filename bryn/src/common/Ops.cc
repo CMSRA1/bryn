@@ -88,6 +88,7 @@ bool alphaTriggerEmu::Process( Event::Data &ev){
       } else if ( nJets > 3 ) {
         aT =  ( ht ) / ( 2. * sqrt( ( ht*ht ) - ( mHT*mHT ) ) ); // Calc Beta T if more jets
       }
+      printf("Itertion no %d, alphat %f ht %f",nJets,aT,ht);
       if(aT > aTCut_ && ht > HtCut_){
         return true;
       }
