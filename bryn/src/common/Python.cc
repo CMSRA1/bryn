@@ -4,6 +4,7 @@
 #include "TriggerTurnOns.hh"
 #include "EventDump.hh"
 #include "EventSelector.hh"
+#include "Ops.hh"
 using namespace boost::python;
 
 BOOST_PYTHON_MODULE(libbryn) {
@@ -22,5 +23,10 @@ BOOST_PYTHON_MODULE(libbryn) {
                     init<const Utils::ParameterSet&>());
 
   class_<Operation::eventDump, bases<Operation::_Base> >( "EventDump", init<>());
+
+  class_<Operation::alphaTriggerEmu, bases<Operation::_Base> >("AlphaTEmu",
+                    init<float,float,float,int>());
+
+  class_<Operation::confHT, bases<Operation::_Base> >("confHT", init<float,float>());
 
 }
