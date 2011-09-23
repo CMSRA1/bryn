@@ -261,7 +261,7 @@ void WeeklyUpdatePlots::StandardPlots() {
   BookHistArray( AlphaT_,
     "AlphaT",
     ";#alpha_{T};Events/0.025;",
-    400,0.,10.,
+    1000,0.,10.,
     nMax_+1, 0, 1, true );
 
   BookHistArray( AlphaT_Zoomed_,
@@ -912,14 +912,12 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
           ev.JD_CommonJets().babyHT.Pt()/ev.CommonMHT().Pt(),weight);
         DPhi_MHT_MHTbaby_vsMHTbabyOverMHT_AfterAlphaT_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),
           ev.JD_CommonJets().babyHT.Pt()/ev.CommonMHT().Pt(),weight);
-
       }
 
 
       if ( n >= nMin_ && n <= nMax_ && n < DPhi_MHT_MHTbaby_AfterAlphaT_.size()) {
         DPhi_MHT_MHTbaby_AfterAlphaT_[0]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),weight);
         DPhi_MHT_MHTbaby_AfterAlphaT_[n]->Fill(cos(ROOT::Math::VectorUtil::DeltaPhi(ev.CommonMHT(),ev.JD_CommonJets().babyHT)),weight);
-
       }
 
       if ( n >= nMin_ && n <= nMax_ && n < AlphatCut_HT_.size() ) {
@@ -927,13 +925,10 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
         AlphatCut_HT_[n]->Fill( ev.CommonHT(), weight );
       }
 
-
-
       if ( n >= nMin_ && n <= nMax_ && n < AlphatCut_Meff_.size()) {
         AlphatCut_Meff_[0]->Fill( ev.CommonMHT().Pt()+ev.CommonHT(), weight );
         AlphatCut_Meff_[n]->Fill( ev.CommonMHT().Pt()+ev.CommonHT(), weight );
       }
-
 
     if( biasedDPhi < biasedDPhi_baby){
       if ( n >= nMin_ && n <= nMax_ && n < AlphatCut_BiasedDphi_.size()) {
@@ -949,30 +944,6 @@ bool WeeklyUpdatePlots::StandardPlots( Event::Data& ev ) {
     }
 
     }
-
-
-
-
-    // if(!ev.pthat.enabled()){
-      // if(ev.CommonAlphaT() > 0.55 || WeeklyUpdatePlots::MT2_Leading(ev) > 200. || WeeklyUpdatePlots::MT2(ev) > 200. || ev.CommonMHT().Pt() > 250.){
-      // if(ev.CommonAlphaT() > 0.55 && ev.CommonHT() > 350.){
-      //   LorentzV lv1(0.,0.,0.,0.);
-      //   LorentzV lv2(0.,0.,0.,0.);
-      //   lv1 += *(ev.JD_CommonJets().accepted[0]);
-      //   lv2 += *(ev.JD_CommonJets().accepted[1]);
-      //   // cout << " This event passes offline cuts!!! " <<endl;
-      //   cout << "Alpha T is " << ev.CommonAlphaT() << " HT is "<< ev.CommonHT() <<" MHT is  " << ev.CommonMHT().Pt() << " and MT2 is " << WeeklyUpdatePlots::MT2_Leading(ev) << " Bised delta phi is " << ev.CommonMinBiasDPhi()<< " Meff is " << ev.CommonMHT().Pt()+ev.CommonHT()<< " run : " <<  ev.RunNumber() << ":"<< ev.LumiSection() <<  ":"<<  ev.EventNumber() << endl;
-      //   // if(WeeklyUpdatePlots::MT2_Leading(ev) > 300.){ cout << "MT2 Variables are: px,py, Leading Jet " <<
-      //     // ev.JD_CommonJets().accepted[0]->Px() << "," << ev.JD_CommonJets().accepted[0]->Py() << "," <<" px,py, Second Jet " << ev.JD_CommonJets().accepted[1]->Px()  <<"," <<  ev.JD_CommonJets().accepted[1]->Py() << "," << endl;}
-      //   // cout << " run : " <<  ev.RunNumber() << "lumi Section "<< ev.LumiSection() <<  " event : "<<  ev.EventNumber() << " Alpha T is" << ev.CommonAlphaT() << " Effective mass is : " << ev.CommonMHT().Pt()+ev.CommonHT() << " Dijet Mass is " << (lv1+lv2).M() << endl;
-      //   // cout << "x-cleaned"<<endl;
-      //   // ev.PrintStableVisRec();
-      //   // cout << "all"<<endl;
-      //   // ev.PrintStableVisAllRec();
-      //
-      // }
-
-    // }
 
   }
 
