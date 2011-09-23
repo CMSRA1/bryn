@@ -74,8 +74,8 @@ bool alphaTriggerEmu::Process( Event::Data &ev){
   double dht = 0.;
   std::vector<Event::Jet>::iterator i  = triggerJets.begin();
   std::vector<Event::Jet>::iterator j  = triggerJets.end();
-  printf("Size of jet collection %d",triggerJets.size());
-  for(; ijet!=jjet; ++ijet){
+  printf("Size of jet collection %d \n",triggerJets.size());
+  for(; i!=j; ++i){
     double mHT = 0.;
     double aT = 0.;
     ht += ((i)->E()/cosh((i)->Eta())); // HT
@@ -89,7 +89,7 @@ bool alphaTriggerEmu::Process( Event::Data &ev){
       } else if ( nJets > 3 ) {
         aT =  ( ht ) / ( 2. * sqrt( ( ht*ht ) - ( mHT*mHT ) ) ); // Calc Beta T if more jets
       }
-      printf("Itertion no %d, alphat %f ht %f",nJets,aT,ht);
+      printf("Itertion no %d, alphat %f ht %f \n",nJets,aT,ht);
       if(aT > aTCut_ && ht > HtCut_){
         return true;
       }
