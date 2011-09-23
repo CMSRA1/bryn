@@ -120,7 +120,7 @@ HLTrigger = OP_MultiTrigger( datatriggerps.ps() )
 # dump = OP_Dump()
 def an(jetThreshold):
   out = []
-  secondJetET = OP_SecondJetEtCut(100.*(375./275.))
+  secondJetET = OP_SecondJetEtCut(jetThreshold)
   cutTreeData= Tree("Data")
   cutTreeData.Attach(json)
   cutTreeData.TAttach(json,NoiseFilt)
@@ -144,11 +144,12 @@ def an(jetThreshold):
   cutTreeData.TAttach(emuAlphaT,PlotsAlphaT)
   out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = confHT, label = "afterConfHT"))
   out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = emuAlphaT, label = "afterEmuAlphaT"))
-
+  return (cutTreeData,secondJetET,out)
 from ra1objectid.vbtfElectronId_cff import *
 from ra1objectid.vbtfMuonId_cff import *
 from ra1objectid.ra3PhotonId_cff import *
 
+cutTree,blah,l = MakeDataTree(100.*(375./275.))
 
 #JetSmear = JetSmear(0.1,30)
 vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
@@ -162,7 +163,7 @@ def addCutFlowMC(b) :
 def addCutFlowData(a):
   a.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
   a.AddElectronFilter("PreCC",vbtfElectronIdFilter)
-  a+=cutTreeData
+  a+=cutTree
 
 
 #AK5 Calo
@@ -194,9 +195,12 @@ File = ["../../Ntuples/AK5Calo_tedSync_newFormat.root"]
 
 # Triggersamples =[LM0,LM1,LM2,LM3,LM4]
 # from data.Run2011.HT_Run2011_promptReco import *
-outDir = "../results/DataTrigger/"
+outDir = "../results/test/"
 ensure_dir(outDir)
-anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[testFile])
+from data.Run2011.HT_Run2011A import *
+
+# anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[testFile])
+anal_ak5_caloData.Run(outdir,conf_ak5_caloData,[HT_Run2011A])
 
 # anal_ak5_caloMC.Run("../results/Triggers/",conf_ak5_caloMC,Triggersamples)
 
