@@ -154,10 +154,10 @@ cutTree,blah,l = MakeDataTree(100.*(375./275.))
 #JetSmear = JetSmear(0.1,30)
 vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
 ra3PhotonIdFilter    = Photon_IDFilter( ra3photonidps.ps() )
-def addCutFlowMC(b) :
-  b.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
-  b.AddElectronFilter("PreCC",vbtfElectronIdFilter)
-  b+=cutTreeMC
+# def addCutFlowMC(b) :
+#   b.AddPhotonFilter("PreCC",ra3PhotonIdFilter)
+#   b.AddElectronFilter("PreCC",vbtfElectronIdFilter)
+#   b+=cutTreeMC
 
 
 def addCutFlowData(a):
