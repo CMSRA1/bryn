@@ -74,6 +74,7 @@ bool alphaTriggerEmu::Process( Event::Data &ev){
   double dht = 0.;
   std::vector<Event::Jet>::iterator i  = triggerJets.begin();
   std::vector<Event::Jet>::iterator j  = triggerJets.end();
+  printf("Size of jet collection %d",triggerJets.size());
   for(; ijet!=jjet; ++ijet){
     double mHT = 0.;
     double aT = 0.;
