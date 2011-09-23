@@ -71,7 +71,9 @@ namespace Operation {
     bool StandardPlots_;
     void StandardPlots();
     bool StandardPlots( Event::Data& );
-
+    bool AlphaT_;
+    bool Alphat( Event::Data &);
+    void Alphat();
     };
 
   }
