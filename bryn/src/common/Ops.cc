@@ -53,20 +53,27 @@ alphaTriggerEmu::alphaTriggerEmu(float aT_Thresh,float JetEtThreshold, float HTT
 
 bool alphaTriggerEmu::Process( Event::Data &ev){
   std::vector<Event::Jet> triggerJets;
-  std::vector<Event::Jet const *>::const_iterator ijet  = ev.JD_CommonJets().accepted.begin();
-  std::vector<Event::Jet const *>::const_iterator jjet  = ev.JD_CommonJets().accepted.end();
-  std::vector<Event::Jet const *>::const_iterator ibaby = ev.JD_CommonJets().baby.begin();
-  std::vector<Event::Jet const *>::const_iterator jbaby = ev.JD_CommonJets().baby.end();
-  for(; ijet!=jjet; ++ijet){
-    if( ((*ijet)->E()/cosh((*ijet)->Eta())) > JetEt_){
-      if(triggerJets.size() < maxNjets_){ triggerJets.push_back((**ijet)); }
-    }
-  }
-  for( ; ibaby!=jbaby; ++ibaby){
-    if( ((*ibaby)->E()/cosh((*ibaby)->Eta())) > JetEt_ ){
-      if(triggerJets.size() < maxNjets_){triggerJets.push_back((**ibaby));}
-    }
-  }
+    //  Cross cleaning fucks us around here need to use JD_Jets
+    // std::vector<Event::Jet const *>::const_iterator ijet  = ev.JD_CommonJets().accepted.begin();
+    // std::vector<Event::Jet const *>::const_iterator jjet  = ev.JD_CommonJets().accepted.end();
+    // std::vector<Event::Jet const *>::const_iterator ibaby = ev.JD_CommonJets().baby.begin();
+    // std::vector<Event::Jet const *>::const_iterator jbaby = ev.JD_CommonJets().baby.end();
+    // for(; ijet!=jjet; ++ijet){
+    //   if( ((*ijet)->E()/cosh((*ijet)->Eta())) > JetEt_){
+    //     if(triggerJets.size() < maxNjets_){ triggerJets.push_back((**ijet)); }
+    //   }
+    // }
+    // for( ; ibaby!=jbaby; ++ibaby){
+    //   if( ((*ibaby)->E()/cosh((*ibaby)->Eta())) > JetEt_ ){
+    //     if(triggerJets.size() < maxNjets_){triggerJets.push_back((**ibaby));}
+    //   }
+    // }
+  std::vector<Event::Jet>::const_iterator ijet = ev.JD_Jets().begin();
+  std::vector<Event::Jet>::const_iterator jjet = ev.JD_Jets().end();
+    for(; ijet!=jjet; ++ijet){
+      if( ((*ijet)->E()/cosh((*ijet)->Eta())) > JetEt_ && fabs((*ijet)->Eta) < 3.0){
+        if(triggerJets.size() < maxNjets_){ triggerJets.push_back((**ijet)); }
+      }
 
   double ht = 0.;
   double mhtx = 0., mhty = 0.;
