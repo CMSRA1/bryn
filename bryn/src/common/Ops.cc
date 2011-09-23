@@ -74,7 +74,7 @@ bool alphaTriggerEmu::Process( Event::Data &ev){
       if( ((ijet)->E()/cosh((ijet)->Eta())) > JetEt_ && fabs((ijet)->Eta) < 3.0){
         if(triggerJets.size() < maxNjets_){ triggerJets.push_back((*ijet)); }
       }
-
+    }
   double ht = 0.;
   double mhtx = 0., mhty = 0.;
   int nJets = 0;
