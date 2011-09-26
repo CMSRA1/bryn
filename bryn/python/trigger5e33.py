@@ -110,7 +110,7 @@ datatriggerps = PSet(
     Verbose = False,
     UsePreScaledTriggers = True,
     Triggers = [
-        "HLT_HT200_v*",
+        "HLT_HT250_AlphaT0p55_v*",
     ]
     )
 
@@ -144,6 +144,7 @@ def an(jetThreshold):
   cutTreeData.TAttach(htCut275,HLTrigger)
   cutTreeData.TAttach(HLTrigger,confHT)
   cutTreeData.TAttach(HLTrigger,emuAlphaT)
+  cutTreeData.FAttach(emuAlphaT,dump)
   out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = HLTrigger, label = "afterConfHT"))
   out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = emuAlphaT, label = "afterEmuAlphaT"))
   return (cutTreeData,secondJetET,out)
@@ -197,12 +198,12 @@ File = ["../../Ntuples/AK5Calo_tedSync_newFormat.root"]
 
 # Triggersamples =[LM0,LM1,LM2,LM3,LM4]
 # from data.Run2011.HT_Run2011_promptReco import *
-outdir = "../results/Trigger6Jets_HT200HLT/"
+outdir = "../results/TriggerDump/"
 ensure_dir(outdir)
 from data.Run2011.HT_Run2011A import *
 #HT_Run2011A.File = HT_Run2011A.File[0:1]
 # anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[testFile])
-anal_ak5_caloData.Run(outdir,conf_ak5_caloData,[HT_Run2011A])
+anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT_Run2011A])
 
 # anal_ak5_caloMC.Run("../results/Triggers/",conf_ak5_caloMC,Triggersamples)
 
