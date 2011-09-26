@@ -203,7 +203,7 @@ ensure_dir(outdir)
 from data.Run2011.HT_Run2011A import *
 #HT_Run2011A.File = HT_Run2011A.File[0:1]
 # anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[testFile])
-anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT_Run2011A])
+anal_ak5_caloData.Run(outdir,conf_ak5_caloData,[HT_Run2011A])
 
 # anal_ak5_caloMC.Run("../results/Triggers/",conf_ak5_caloMC,Triggersamples)
 
