@@ -144,7 +144,7 @@ def an(jetThreshold):
   cutTreeData.TAttach(htCut275,HLTrigger)
   cutTreeData.TAttach(HLTrigger,confHT)
   cutTreeData.TAttach(HLTrigger,emuAlphaT)
-  cutTreeData.FAttach(emuAlphaT,dump)
+  cutTreeData.FAttach(emuAlphaT,eventDump)
   out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = HLTrigger, label = "afterConfHT"))
   out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = emuAlphaT, label = "afterEmuAlphaT"))
   return (cutTreeData,secondJetET,out)
