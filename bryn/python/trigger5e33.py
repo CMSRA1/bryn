@@ -110,7 +110,7 @@ datatriggerps = PSet(
     Verbose = False,
     UsePreScaledTriggers = True,
     Triggers = [
-        "HLT_HT250_v*",
+        "HLT_HT200_v*",
     ]
     )
 
@@ -118,6 +118,10 @@ HLTrigger = OP_MultiTrigger( datatriggerps.ps() )
 
 # TriggerTwo = OP_MultiTrigger(PSet(Triggers = ["HLT_HT250_AlphaT0p55_v1","HLT_HT250_AlphaT0p55_v2"],Verbose = False).ps())
 # dump = OP_Dump()
+
+
+confHT = confHT(40.,250.)
+emuAlphaT = AlphaTEmu(0.55,40.,250.,6)
 def an(jetThreshold):
   out = []
   secondJetET = OP_SecondJetEtCut(jetThreshold)
@@ -139,17 +143,15 @@ def an(jetThreshold):
   cutTreeData.TAttach(VertexPtOverHT,htCut275)
   cutTreeData.TAttach(htCut275,HLTrigger)
   cutTreeData.TAttach(HLTrigger,confHT)
-  cutTreeData.TAttach(confHT,PlotsHT)
-  cutTreeData.TAttach(confHT,emuAlphaT)
-  cutTreeData.TAttach(emuAlphaT,PlotsAlphaT)
-  out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = confHT, label = "afterConfHT"))
+  cutTreeData.TAttach(HLTrigger,emuAlphaT)
+  out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = HLTrigger, label = "afterConfHT"))
   out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = emuAlphaT, label = "afterEmuAlphaT"))
   return (cutTreeData,secondJetET,out)
 from ra1objectid.vbtfElectronId_cff import *
 from ra1objectid.vbtfMuonId_cff import *
 from ra1objectid.ra3PhotonId_cff import *
 
-cutTree,blah,l = MakeDataTree(100.*(375./275.))
+cutTree,blah,l = an(100.*(375./275.))
 
 #JetSmear = JetSmear(0.1,30)
 vbtfElectronIdFilter = Electron_IDFilter( vbtfelectronidWP95ps.ps() )
@@ -195,10 +197,10 @@ File = ["../../Ntuples/AK5Calo_tedSync_newFormat.root"]
 
 # Triggersamples =[LM0,LM1,LM2,LM3,LM4]
 # from data.Run2011.HT_Run2011_promptReco import *
-outDir = "../results/test/"
-ensure_dir(outDir)
+outdir = "../results/Trigger6Jets_HT200HLT/"
+ensure_dir(outdir)
 from data.Run2011.HT_Run2011A import *
-
+#HT_Run2011A.File = HT_Run2011A.File[0:1]
 # anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[testFile])
 anal_ak5_caloData.Run(outdir,conf_ak5_caloData,[HT_Run2011A])
 
