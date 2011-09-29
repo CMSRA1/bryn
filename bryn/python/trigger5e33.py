@@ -110,11 +110,13 @@ datatriggerps = PSet(
     Verbose = False,
     UsePreScaledTriggers = True,
     Triggers = [
-        "HLT_HT250_AlphaT0p55_v*",
+        "HLT_HT200_v*",
     ]
     )
-
+alphatrigger = datatriggerps
+alphatrigger.Triggers = ["HLT_HT250_AlphaT0p55_v*",]
 HLTrigger = OP_MultiTrigger( datatriggerps.ps() )
+HLTriggerAlphaT = OP_MultiTrigger(alphatrigger.ps())
 
 # TriggerTwo = OP_MultiTrigger(PSet(Triggers = ["HLT_HT250_AlphaT0p55_v1","HLT_HT250_AlphaT0p55_v2"],Verbose = False).ps())
 # dump = OP_Dump()
@@ -127,7 +129,9 @@ def an(jetThreshold):
   secondJetET = OP_SecondJetEtCut(jetThreshold)
   cutTreeData= Tree("Data")
   cutTreeData.Attach(json)
-  cutTreeData.TAttach(json,NoiseFilt)
+  cutTreeData.TAttach(json,HLTriggerAlphaT)
+  out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = HLTriggerAlphaT, label = "TriggerOnly"))
+  cutTreeData.TAttach(HLTriggerAlphaT,NoiseFilt)
   cutTreeData.TAttach(NoiseFilt,GoodVertexMonster)
   cutTreeData.TAttach(GoodVertexMonster,recHitCut)
   cutTreeData.TAttach(recHitCut,LeadingJetEta)
@@ -140,13 +144,16 @@ def an(jetThreshold):
   cutTreeData.TAttach(oddPhoton,numComLeptons)
   cutTreeData.TAttach(numComLeptons,numComPhotons)
   cutTreeData.TAttach(numComPhotons,VertexPtOverHT)
-  cutTreeData.TAttach(VertexPtOverHT,htCut275)
-  cutTreeData.TAttach(htCut275,HLTrigger)
-  cutTreeData.TAttach(HLTrigger,confHT)
-  cutTreeData.TAttach(HLTrigger,alphaT1)
+  cutTreeData.TAttach(VertexPtOverHT,
+  # HLTrigger)
+  # cutTreeData.TAttach(HLTrigger,
+  htCut275)
+  # cutTreeData.TAttach(htCut275,HLTrigger)
+  cutTreeData.TAttach(htCut275,confHT)
+  cutTreeData.TAttach(htCut275,alphaT1)
   cutTreeData.TAttach(alphaT1,emuAlphaT)
   cutTreeData.FAttach(emuAlphaT,eventDump)
-  out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = HLTrigger, label = "afterConfHT"))
+  out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = alphaT1, label = "afterAlphaT"))
   out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = emuAlphaT, label = "afterEmuAlphaT"))
   return (cutTreeData,secondJetET,out)
 from ra1objectid.vbtfElectronId_cff import *
@@ -204,7 +211,7 @@ ensure_dir(outdir)
 from data.Run2011.HT_Run2011A import *
 #HT_Run2011A.File = HT_Run2011A.File[0:1]
 # anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[testFile])
-anal_ak5_caloData.Run(outdir,conf_ak5_caloData,[HT_Run2011A])
+anal_ak5_caloData.Run(outdir,conf_ak5_caloData,[testFile])#HT_Run2011A])
 
 # anal_ak5_caloMC.Run("../results/Triggers/",conf_ak5_caloMC,Triggersamples)
 
