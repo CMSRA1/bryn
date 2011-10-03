@@ -195,6 +195,8 @@ StandardPlots     = True,
 def makePlotOp(OP = (), cutTree = None, cut = None, label = ""):
   """docstring for makePlotOp"""
   out = []
+  # if label is "325" or label is "375":
+    # return out
   if OP[1] != None:
     plotpset = deepcopy(OP[1])
     plotpset.DirName = label
@@ -217,8 +219,10 @@ def AddBinedHist(cutTree = None, OP = (), cut = None, htBins = []):
   """docstring for AddBinedHist"""
   out = []
   for lower,upper in zip(htBins,htBins[1:]+[None]):
-    if int(lower) is 275: upper = 325.
-    if int(lower) is 325: upper = 375.
+    # print "Lower , Upper =", lower , upper
+    if int(lower) == 325 and upper is None: continue
+    if int(lower) == 375 and upper is None: continue
+    # print "continue should have happened now"
     lowerCut = eval("RECO_CommonHTCut(%d)"%lower)
     out.append(lowerCut)
     cutTree.TAttach(cut,lowerCut)
@@ -486,16 +490,17 @@ datatriggerps = PSet(
     Verbose = False,
     UsePreScaledTriggers = False,
     Triggers = [
-        "HLT_HT250_MHT50_v*",
-        "HLT_HT260_MHT50_v*",
-        "HLT_HT260_MHT60_v*",
-        "HLT_HT250_MHT60_v*",
-        "HLT_HT250_MHT70_v*",
-        "HLT_HT250_MHT80_v*",
-        "HLT_HT250_MHT90_v*",
+        # "HLT_HT250_MHT50_v*",
+        # "HLT_HT260_MHT50_v*",
+        # "HLT_HT260_MHT60_v*",
+        # "HLT_HT250_MHT60_v*",
+        # "HLT_HT250_MHT70_v*",
+        # "HLT_HT250_MHT80_v*",
+        # "HLT_HT250_MHT90_v*",
+        "HLT_HT200_AlphaT*"
         "HLT_HT250_AlphaT*",
-        "HLT_HT300_AlphaT",
-        "HLT_HT350_AlphaT"
+        "HLT_HT300_AlphaT*",
+        "HLT_HT350_AlphaT*"
      #  "HLT_HT250_MHT60_v2",
 # "HLT_HT250_MHT60_v3",
 # "HLT_HT250_MHT60_v4",
@@ -516,13 +521,13 @@ JetAdd = JetAddition(0.)
 json = JSONFilter("Json Mask", json_to_pset("./ReProcess_Prompt.json"))
 
 # AlphatTriggerCut(0.52414,50)#
-vertex_reweight = VertexReweighting(
-PSet(
-VertexWeights =[0.20, 0.63, 1.19, 1.57, 1.62, 1.42, 1.09, 0.80 ,0.57, 0.42, 0.30, 0.20]
-# VertexWeights = [0.0, 0.027442995662725636, 0.12682983875287387, 0.28326829632076572, 0.40618954180036759, 0.41605144586432974, 0.33147399297403923, 0.21562021576661147, 0.1140047132529971]
-).ps())
+# vertex_reweight = VertexReweighting(
+# PSet(
+# VertexWeights =[0.20, 0.63, 1.19, 1.57, 1.62, 1.42, 1.09, 0.80 ,0.57, 0.42, 0.30, 0.20]
+# # VertexWeights = [0.0, 0.027442995662725636, 0.12682983875287387, 0.28326829632076572, 0.40618954180036759, 0.41605144586432974, 0.33147399297403923, 0.21562021576661147, 0.1140047132529971]
+# ).ps())
 
-PreScaleWeights = PreScaleReweighting(datatriggerps.ps())
+# PreScaleWeights = PreScaleReweighting(datatriggerps.ps())
 recHitCut = OP_SumRecHitPtCut(30.)
 json_ouput = JSONOutput("filtered")
 def MakeDataTree(Threshold):
@@ -531,8 +536,8 @@ def MakeDataTree(Threshold):
   secondJetET = OP_SecondJetEtCut(Threshold)
   HTBins = []
   if int(Threshold) is 100 : HTBins = [375+100*i for i in range(6)]
-  if int(Threshold) is 73 : HTBins = [275.]
-  if int(Threshold) is  86 : HTBins = [325.]
+  if int(Threshold) is 73 : HTBins = [275.,325.]
+  if int(Threshold) is  86 : HTBins = [325.,375.]
   # from batchGolden import *
   cutTreeData = Tree("Data")
   cutTreeData.Attach(json)
