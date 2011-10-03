@@ -198,6 +198,7 @@ def makePlotOp(OP = (), cutTree = None, cut = None, label = ""):
   if OP[1] != None:
     plotpset = deepcopy(OP[1])
     plotpset.DirName = label
+    print plotpset.DirName
     op = eval(OP[0]+"(plotpset.ps())")
   else:
     op = eval(OP[0])
@@ -210,6 +211,8 @@ def AddBinedHist(cutTree = None, OP = (), cut = None, htBins = []):
   """docstring for AddBinedHist"""
   out = []
   for lower,upper in zip(htBins,htBins[1:]+[None]):
+    if lower = 275.: upper = 325.
+    if lower = 325.: upper = 375.
     lowerCut = eval("RECO_CommonHTCut(%d)"%lower)
     out.append(lowerCut)
     cutTree.TAttach(cut,lowerCut)
@@ -516,6 +519,9 @@ json_ouput = JSONOutput("filtered")
 def MakeDataTree(Threshold):
   out = []
   secondJetET = OP_SecondJetEtCut(Threshold)
+  HTBins = [375+100*i for i in range(6)]
+  if Threshold is 100.*(275./375.) : HTBins = [275.]
+  if Threshold is  100.*(275./375.) : HTBins = [325.]
   # from batchGolden import *
   cutTreeData = Tree("Data")
   cutTreeData.Attach(json)
@@ -584,9 +590,12 @@ def MakeDataTree(Threshold):
   # cutTreeData.TAttach(alphat,eventDump)#skim)
   # avobe here does one big inclusive bin!
   # Now lets start binning in HT bins
+  # So we can HADD the files at the end and get a chorent set to save the book keeping nightmare:
+  # we arrange the HT bins so they are not repoduced though out threshold runs.
+
   out.append(AddBinedHist(cutTree = cutTreeData,
             OP = ("WeeklyUpdatePlots",genericPSet), cut = MHT_METCut,
-            htBins = [275, 325] + [375+100*i for i in range(6)]) )
+            htBins = HTBins) )
 
   return (cutTreeData,secondJetET,out)
 
@@ -594,6 +603,9 @@ def MakeDataTree(Threshold):
 
 def MakeMCTree(Threshold):
   out = []
+  HTBins = [375+100*i for i in range(6)]
+  if Threshold is 100.*(275./375.) : HTBins = [275.]
+  if Threshold is  100.*(275./375.) : HTBins = [325.]
   secondJetET = OP_SecondJetEtCut(Threshold)
   cutTreeMC = Tree("MC")
   cutTreeMC.Attach(ht250_Trigger)
@@ -665,6 +677,6 @@ def MakeMCTree(Threshold):
   cutTreeMC.TAttach(DiJet5,HadStandardAllCuts)
   out.append(AddBinedHist(cutTree = cutTreeMC,
             OP = ("WeeklyUpdatePlots",genericPSet), cut = MHT_METCut,
-            htBins = [275, 325] + [375+100*i for i in range(6)]) )
+            htBins = HTBins) )
   return (cutTreeMC,secondJetET,out)
 
