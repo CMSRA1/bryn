@@ -618,8 +618,8 @@ def MakeMCTree(Threshold):
   out = []
   HTBins = []
   if int(Threshold) is 100 : HTBins = [375+100*i for i in range(6)]
-  if int(Threshold) is 73 : HTBins = [275.]
-  if int(Threshold) is  86 : HTBins = [325.]
+  if int(Threshold) is 73 : HTBins = [275.,325.]
+  if int(Threshold) is  86 : HTBins = [325.,375.]
   secondJetET = OP_SecondJetEtCut(Threshold)
   cutTreeMC = Tree("MC")
   cutTreeMC.Attach(ht250_Trigger)
