@@ -204,6 +204,12 @@ def makePlotOp(OP = (), cutTree = None, cut = None, label = ""):
     op = eval(OP[0])
   out.append(op)
   cutTree.TAttach(cut,op)
+  alpha = OP_CommonAlphaTCut(0.55)
+  dump = EventDump()
+  cutTree.TAttach(cut,alpha)
+  cutTree.TAttach(alpha,dump)
+  out.append(alpha)
+  out.append(dump)
   return out
   pass
 
@@ -211,8 +217,8 @@ def AddBinedHist(cutTree = None, OP = (), cut = None, htBins = []):
   """docstring for AddBinedHist"""
   out = []
   for lower,upper in zip(htBins,htBins[1:]+[None]):
-    if lower is 275.: upper = 325.
-    if lower is 325.: upper = 375.
+    if int(lower) is 275: upper = 325.
+    if int(lower) is 325: upper = 375.
     lowerCut = eval("RECO_CommonHTCut(%d)"%lower)
     out.append(lowerCut)
     cutTree.TAttach(cut,lowerCut)
@@ -487,6 +493,9 @@ datatriggerps = PSet(
         "HLT_HT250_MHT70_v*",
         "HLT_HT250_MHT80_v*",
         "HLT_HT250_MHT90_v*",
+        "HLT_HT250_AlphaT*",
+        "HLT_HT300_AlphaT",
+        "HLT_HT350_AlphaT"
      #  "HLT_HT250_MHT60_v2",
 # "HLT_HT250_MHT60_v3",
 # "HLT_HT250_MHT60_v4",
@@ -504,7 +513,7 @@ datatriggerps = PSet(
 DataTrigger = OP_MultiTrigger( datatriggerps.ps() )
 
 JetAdd = JetAddition(0.)
-json = JSONFilter("Json Mask", json_to_pset("../../hadronic/python/hadronic/ReProcessing_PromptJson_Merged.txt"))
+json = JSONFilter("Json Mask", json_to_pset("./ReProcess_Prompt.json"))
 
 # AlphatTriggerCut(0.52414,50)#
 vertex_reweight = VertexReweighting(
@@ -536,9 +545,8 @@ def MakeDataTree(Threshold):
   cutTreeData.TAttach(DataTrigger,MHTCut)
   cutTreeData.TAttach(MHTCut,NoiseFilt)
   cutTreeData.TAttach(NoiseFilt,GoodVertexMonster)
-  cutTreeData.TAttach(GoodVertexMonster,#recHitCut)
-  # cutTreeData.TAttach(recHitCut,
-  LeadingJetEta)
+  cutTreeData.TAttach(GoodVertexMonster,recHitCut)
+  cutTreeData.TAttach(recHitCut,LeadingJetEta)
   cutTreeData.TAttach(LeadingJetEta,secondJetET)
   cutTreeData.TAttach(secondJetET,oddJet)
   cutTreeData.TAttach(oddJet,badMuonInJet)
@@ -547,10 +555,8 @@ def MakeDataTree(Threshold):
   cutTreeData.TAttach(oddElectron,oddPhoton)
   cutTreeData.TAttach(oddPhoton,numComLeptons)
   cutTreeData.TAttach(numComLeptons,numComPhotons)
-  cutTreeData.TAttach(numComPhotons,
-  #VertexPtOverHT)
-  #cutTreeData.TAttach(VertexPtOverHT,
-  htCut275)
+  cutTreeData.TAttach(numComPhotons,VertexPtOverHT)
+  cutTreeData.TAttach(VertexPtOverHT,htCut275)
   #FOR HT > 275Gev Plot
   cutTreeData.TAttach(htCut275,DiJet3)
   cutTreeData.TAttach(htCut275,NJet3)
@@ -584,7 +590,7 @@ def MakeDataTree(Threshold):
   cutTreeData.TAttach(htCut375All,NJet5)
   cutTreeData.TAttach(htCut375All,DiJet5)
   cutTreeData.TAttach(htCut375All,alphat)
-  cutTreeData.TAttach(alphat,eventDump)
+  # cutTreeData.TAttach(alphat,eventDump)
 #  cutTreeData.TAttach(alphat,skim)
   cutTreeData.TAttach(NJet5,nHadStandardAllCuts)
   cutTreeData.TAttach(DiJet5,HadStandardAllCuts)
