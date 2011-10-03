@@ -59,11 +59,13 @@ File="../results_"+strftime("%d_%b_%H")+"/WithSingleTop//Data/AK5Calo_Jets.root"
 from data.Run2011.HT_Run2011_promptReco_DCS import *
 from data.Run2011.HT42_incomplete import *
 from data.Run2011.RA1ToBurn import *
+from data.Run2011.HTRun2011AB import *
+
 outDir = "../results_"+strftime("%d_%b_%H")+"//Data37"
 ensure_dir(outDir)
 # HT42_incomplete.LastEntry = 100
 # HT42_incomplete.File = HT42_incomplete.File[0:1]
-anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HT42_incomplete])
+anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HTRun2011AB])
 
 # from data.MultiJet_Run2010B_Nov4ReReco_v1 import *
 
