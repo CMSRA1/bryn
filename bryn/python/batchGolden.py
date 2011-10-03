@@ -521,9 +521,9 @@ def MakeDataTree(Threshold):
   out = []
   secondJetET = OP_SecondJetEtCut(Threshold)
   HTBins = []
-  if Threshold is 100. : HTBins = [375+100*i for i in range(6)]
-  if Threshold is 100.*(275./375.) : HTBins = [275.]
-  if Threshold is  100.*(275./375.) : HTBins = [325.]
+  if int(Threshold) is 100 : HTBins = [375+100*i for i in range(6)]
+  if int(Threshold) is 73 : HTBins = [275.]
+  if int(Threshold) is  86 : HTBins = [325.]
   # from batchGolden import *
   cutTreeData = Tree("Data")
   cutTreeData.Attach(json)
