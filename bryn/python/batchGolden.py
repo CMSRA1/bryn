@@ -211,8 +211,8 @@ def AddBinedHist(cutTree = None, OP = (), cut = None, htBins = []):
   """docstring for AddBinedHist"""
   out = []
   for lower,upper in zip(htBins,htBins[1:]+[None]):
-    if lower = 275.: upper = 325.
-    if lower = 325.: upper = 375.
+    if lower is 275.: upper = 325.
+    if lower is 325.: upper = 375.
     lowerCut = eval("RECO_CommonHTCut(%d)"%lower)
     out.append(lowerCut)
     cutTree.TAttach(cut,lowerCut)
