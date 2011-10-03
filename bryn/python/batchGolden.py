@@ -517,6 +517,7 @@ PreScaleWeights = PreScaleReweighting(datatriggerps.ps())
 recHitCut = OP_SumRecHitPtCut(30.)
 json_ouput = JSONOutput("filtered")
 def MakeDataTree(Threshold):
+  print int(Threshold)
   out = []
   secondJetET = OP_SecondJetEtCut(Threshold)
   HTBins = []
