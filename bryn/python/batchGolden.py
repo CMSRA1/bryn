@@ -621,10 +621,8 @@ def MakeMCTree(Threshold):
   cutTreeMC.TAttach(ht250_Trigger,MHTCut)
   cutTreeMC.TAttach(MHTCut,NoiseFilt)
   cutTreeMC.TAttach(NoiseFilt,GoodVertexMonster)
-  cutTreeMC.TAttach(GoodVertexMonster,
-  # recHitCut)
-  # cutTreeMC.TAttach(recHitCut,
-  LeadingJetEta)
+  cutTreeMC.TAttach(GoodVertexMonster,recHitCut)
+  cutTreeMC.TAttach(recHitCut,LeadingJetEta)
   cutTreeMC.TAttach(LeadingJetEta,secondJetET)
   cutTreeMC.TAttach(secondJetET,oddJet)
   cutTreeMC.TAttach(oddJet,badMuonInJet)
@@ -633,10 +631,8 @@ def MakeMCTree(Threshold):
   cutTreeMC.TAttach(oddElectron,oddPhoton)
   cutTreeMC.TAttach(oddPhoton,numComLeptons)
   cutTreeMC.TAttach(numComLeptons,numComPhotons)
-  cutTreeMC.TAttach(numComPhotons,
-  # VertexPtOverHT)
-  # cutTreeMC.TAttach(VertexPtOverHT,
-  htCut275)
+  cutTreeMC.TAttach(numComPhotons,VertexPtOverHT)
+  cutTreeMC.TAttach(VertexPtOverHT,htCut275)
   # cutTreeMC.TAttach(numComPhotons,ht275_Fail)
   # cutTreeMC.TAttach(numComPhotons,ht325_Fail)
   # cutTreeMC.TAttach(ht275_Fail,htLess325_Fail)
