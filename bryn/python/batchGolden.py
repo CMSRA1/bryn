@@ -519,7 +519,8 @@ json_ouput = JSONOutput("filtered")
 def MakeDataTree(Threshold):
   out = []
   secondJetET = OP_SecondJetEtCut(Threshold)
-  HTBins = [375+100*i for i in range(6)]
+  HTBins = []
+  if Threshold is 100. : HTBins = [375+100*i for i in range(6)]
   if Threshold is 100.*(275./375.) : HTBins = [275.]
   if Threshold is  100.*(275./375.) : HTBins = [325.]
   # from batchGolden import *
