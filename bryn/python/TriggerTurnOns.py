@@ -188,7 +188,7 @@ selection = OP_GoodEventSelection()
 
 HT_Trigger_PS = PSet(
     Verbose = False,
-    UsePreScaledTriggers = True,
+    UsePreScaledTriggers = False,
     Triggers = [
        # "HLT_HT150_v*",
        # "HLT_HT250_v*",
@@ -204,7 +204,7 @@ HT_Trigger_PS = PSet(
 
 Cross_Trigger_PS = PSet(
     Verbose = False,
-    UsePreScaledTriggers = True,
+    UsePreScaledTriggers = False,
     Triggers =[
 
   # "HLT_HT250_v*",#MHT50_v*",
@@ -228,7 +228,7 @@ Cross_Trigger_PS = PSet(
 
 PreScaleWeights = PreScaleReweighting(Cross_Trigger_PS.ps())
 
-Plots_HT_Trigger    = PL_TriggerTurnOns( PSet(DirName = "HT_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = True,TriggerReWeight = HT_Trigger_PS.Triggers, Verbose = False).ps())
+Plots_HT_Trigger    = PL_TriggerTurnOns( PSet(DirName = "HT_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = False,TriggerReWeight = HT_Trigger_PS.Triggers, Verbose = False).ps())
 Plots_Cross_Trigger = PL_TriggerTurnOns( PSet(DirName = "Cross_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = False,TriggerReWeight = Cross_Trigger_PS.Triggers,Verbose = False).ps())
 
 HT_Trigger_Filter = OP_MultiTrigger( HT_Trigger_PS.ps() )
@@ -267,7 +267,7 @@ json_ouput = JSONOutput("filtered")
 alphaT = OP_CommonAlphaTCut(0.53)
 json = JSONFilter("Json Mask", json_to_pset("./ReProcess_Prompt.json"))
 evDump = EventDump()
-htTriggerEmu = OP_TriggerHT_Emu(250.,40.)
+# htTriggerEmu = OP_TriggerHT_Emu(250.,40.)
 cutTreeData = Tree("Data")
 
 cutTreeData.Attach(json)
@@ -298,10 +298,10 @@ if htUp != None:
 else:
   cutTreeData.TAttach(htLow, HT_Trigger_Filter)
 cutTreeData.TAttach(HT_Trigger_Filter,Plots_HT_Trigger)
-cutTreeData.TAttach(HT_Trigger_Filter, htTriggerEmu)
-# cutTreeData.TAttach(HT_Trigger_Filter,Cross_Trigger_Filter)
-# cutTreeData.TAttach(Cross_Trigger_Filter,Plots_Cross_Trigger)
-cutTreeData.TAttach(htTriggerEmu,Plots_Cross_Trigger)
+# cutTreeData.TAttach(HT_Trigger_Filter, htTriggerEmu)
+cutTreeData.TAttach(HT_Trigger_Filter,Cross_Trigger_Filter)
+cutTreeData.TAttach(Cross_Trigger_Filter,Plots_Cross_Trigger)
+# cutTreeData.TAttach(htTriggerEmu,Plots_Cross_Trigger)
 # cutTreeData.FAttach(Cross_Trigger_Filter,#alphaT)
 #cutTreeData.TAttach(alphaT,
 # evDump)
