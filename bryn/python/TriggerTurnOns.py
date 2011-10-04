@@ -3,7 +3,7 @@
 """
 Created by Bryn Mathias on 2010-05-07.
 """
-bin = 375.
+bin = 275.
 # -----------------------------------------------------------------------------
 # Necessary includes
 import errno
@@ -146,7 +146,7 @@ default_common.Electrons.CombIsoCut=0.15
 default_common.Electrons.ApplyID = True
 default_common.Electrons.TightID = False
 default_common.Electrons.RequireLooseForOdd = True
-default_common.Muons.PtCut=10.0
+default_common.Muons.PtCut=40.0
 default_common.Muons.EtaCut=2.5
 default_common.Muons.TrkIsoCut=-1.
 default_common.Muons.CombIsoCut=0.15
@@ -188,15 +188,15 @@ selection = OP_GoodEventSelection()
 
 HT_Trigger_PS = PSet(
     Verbose = False,
-   UsePreScaledTriggers = True,
+    UsePreScaledTriggers = True,
     Triggers = [
        # "HLT_HT150_v*",
        # "HLT_HT250_v*",
-       "HLT_Mu5_HT200_v*",
-       "HLT_Mu8_HT200_v*",
-       "HLT_Mu15_HT200_v*",
-       "HLT_Mu20_HT200_v*",
-       "HLT_Mu30_HT200_v*",
+       # "HLT_Mu5_HT200_v*",
+       # "HLT_Mu8_HT200_v*",
+       # "HLT_Mu15_HT200_v*",
+       # "HLT_Mu20_HT200_v*",
+       # "HLT_Mu30_HT200_v*",
        "HLT_Mu40_HT200_v*"
         ]
     )
@@ -207,8 +207,8 @@ Cross_Trigger_PS = PSet(
     UsePreScaledTriggers = True,
     Triggers =[
 
-  "HLT_HT250_v*",#MHT50_v*",
-        "HLT_HT260_v*",#MHT50_v*",
+  # "HLT_HT250_v*",#MHT50_v*",
+        # "HLT_HT260_v*",#MHT50_v*",
 #"HLT_HT300_v2", "HLT_HT350_v2", "HLT_HT350_v3", "HLT_HT350_v4", "HLT_HT350_v5", "HLT_HT350_v6", "HLT_HT350_v7",
 #"HLT_HT300_v2", "HLT_HT300_v3", "HLT_HT300_v4", "HLT_HT300_v5", "HLT_HT300_v6", "HLT_HT300_v7", "HLT_HT300_v8",
 #"HLT_HT300_v2", "HLT_HT350_v2", "HLT_HT350_v3", "HLT_HT350_v4", "HLT_HT350_v5", "HLT_HT350_v6", "HLT_HT350_v7",
@@ -222,7 +222,7 @@ Cross_Trigger_PS = PSet(
         #"HLT_HT250_MHT70_v*",
         #"HLT_HT250_MHT80_v*",#
         #"HLT_HT250_MHT90_v*"
-        # "HLT_HT250_AlphaT0p*",
+        "HLT_HT250_AlphaT0p55_v*",
         ]
     )
 
@@ -246,13 +246,14 @@ oddPhoton = OP_OddPhoton()
 oddJet = OP_OddJet()
 secondJetET = OP_SecondJetEtCut(100.*(bin/375.))
 badMuonInJet = OP_BadMuonInJet()
-numComElectrons = OP_NumComElectrons("==",1)
-numComMuons = OP_NumComMuons("<=",0)
+numComElectrons = OP_NumComElectrons("<=",0)
+numComMuons = OP_NumComMuons("==",1)
 numComPhotons = OP_NumComPhotons("<=",0)
 muDr = RECO_MuonJetDRCut(0.5)
 if bin == 275 or bin == 325:
   htLow = RECO_CommonHTCut(bin)
   htUp =  RECO_CommonHTLessThanCut(bin + 50.)
+  htUp = None
 else :
   htUp = None
   htLow = RECO_CommonHTCut(bin)
@@ -303,7 +304,7 @@ cutTreeData.TAttach(HT_Trigger_Filter, htTriggerEmu)
 cutTreeData.TAttach(htTriggerEmu,Plots_Cross_Trigger)
 # cutTreeData.FAttach(Cross_Trigger_Filter,#alphaT)
 #cutTreeData.TAttach(alphaT,
-evDump)
+# evDump)
 
 from ra1objectid.vbtfElectronId_cff import *
 from ra1objectid.vbtfMuonId_cff import *
@@ -351,10 +352,10 @@ conf_ak5_pfData.Common = deepcopy(default_common)
 anal_ak5_pfData=Analysis("AK5PF")
 addCutFlowData(anal_ak5_pfData)
 
-from data.Run2011.HT_Run2011A import *
+from data.Run2011.HTRun2011AB import *
 from data.Run2011.MuHad_Run2011A_Complete_V15_03_02 import *
-outDir = "..//TriggerTurnOns/EMUfromMuHad/"+str(bin)+"/"
+outDir = "..//TriggerTurnOns_TriggerReview/EMUfromMuHad/"+str(bin)+"/"
 ensure_dir(outDir)
 #MuHad_Run2011A_Complete_V15_03_02.File = MuHad_Run2011A_Complete_V15_03_02.File[1:10]
-anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[MuHad_Run2011A_Complete_V15_03_02])
+anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HTRun2011AB])
 
