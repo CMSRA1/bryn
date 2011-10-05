@@ -121,7 +121,7 @@ HLTriggerAlphaT = OP_MultiTrigger(alphatrigger.ps())
 # TriggerTwo = OP_MultiTrigger(PSet(Triggers = ["HLT_HT250_AlphaT0p55_v1","HLT_HT250_AlphaT0p55_v2"],Verbose = False).ps())
 # dump = OP_Dump()
 
-
+htCut270 = RECO_CommonHTCut(270.)
 confHT = confHT(40.,250.)
 emuAlphaT = AlphaTEmu(0.55,40.,250.,6)
 def an(jetThreshold):
@@ -144,17 +144,17 @@ def an(jetThreshold):
   cutTreeData.TAttach(oddPhoton,numComLeptons)
   cutTreeData.TAttach(numComLeptons,numComPhotons)
   cutTreeData.TAttach(numComPhotons,VertexPtOverHT)
-  cutTreeData.TAttach(VertexPtOverHT,
+  cutTreeData.TAttach(VertexPtOverHT,  htCut275)
+  cutTreeData.TAttach(VertexPtOverHT,htCut270)
   # HLTrigger)
   # cutTreeData.TAttach(HLTrigger,
-  htCut275)
   # cutTreeData.TAttach(htCut275,HLTrigger)
-  cutTreeData.TAttach(htCut275,confHT)
-  cutTreeData.TAttach(htCut275,alphaT1)
-  cutTreeData.TAttach(alphaT1,emuAlphaT)
-  cutTreeData.FAttach(emuAlphaT,eventDump)
-  out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = alphaT1, label = "afterAlphaT"))
-  out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = emuAlphaT, label = "afterEmuAlphaT"))
+  # cutTreeData.TAttach(htCut275,confHT)
+  # cutTreeData.TAttach(htCut275,alphaT1)
+  # cutTreeData.TAttach(alphaT1,emuAlphaT)
+  # cutTreeData.FAttach(emuAlphaT,eventDump)
+  out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = htCut275, label = "FullOffLine275"))
+  out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = htCut270, label = "FullOffLine270"))
   return (cutTreeData,secondJetET,out)
 from ra1objectid.vbtfElectronId_cff import *
 from ra1objectid.vbtfMuonId_cff import *
@@ -206,12 +206,12 @@ File = ["../../Ntuples/AK5Calo_tedSync_newFormat.root"]
 
 # Triggersamples =[LM0,LM1,LM2,LM3,LM4]
 # from data.Run2011.HT_Run2011_promptReco import *
-outdir = "../results/TriggerDump/"
+outdir = "../results/TriggerPurities/"
 ensure_dir(outdir)
-from data.Run2011.HT_Run2011A import *
+from data.Run2011.HTRun2011AB import *
 #HT_Run2011A.File = HT_Run2011A.File[0:1]
 # anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[testFile])
-anal_ak5_caloData.Run(outdir,conf_ak5_caloData,[testFile])#HT_Run2011A])
+anal_ak5_caloData.Run(outdir,conf_ak5_caloData,[HTRun2011AB])
 
 # anal_ak5_caloMC.Run("../results/Triggers/",conf_ak5_caloMC,Triggersamples)
 
