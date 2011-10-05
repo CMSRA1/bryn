@@ -186,7 +186,7 @@ skim = SkimOp(skim_ps.ps())
 
 genericPSet = PSet(
 DirName      = "275_325Gev",
-MinObjects   = 0,
+MinObjects   = 2,
 MaxObjects   = 15,
 StandardPlots     = True,
 )
@@ -195,8 +195,6 @@ StandardPlots     = True,
 def makePlotOp(OP = (), cutTree = None, cut = None, label = ""):
   """docstring for makePlotOp"""
   out = []
-  # if label is "325" or label is "375":
-    # return out
   if OP[1] != None:
     plotpset = deepcopy(OP[1])
     plotpset.DirName = label
@@ -537,7 +535,7 @@ def MakeDataTree(Threshold):
   HTBins = []
   if int(Threshold) is 100 : HTBins = [375+100*i for i in range(6)]
   if int(Threshold) is 73 : HTBins = [275.,325.]
-  if int(Threshold) is  86 : HTBins = [325.,375.]
+  if int(Threshold) is 86 : HTBins = [325.,375.]
   # from batchGolden import *
   cutTreeData = Tree("Data")
   cutTreeData.Attach(json)
@@ -619,7 +617,7 @@ def MakeMCTree(Threshold):
   HTBins = []
   if int(Threshold) is 100 : HTBins = [375+100*i for i in range(6)]
   if int(Threshold) is 73 : HTBins = [275.,325.]
-  if int(Threshold) is  86 : HTBins = [325.,375.]
+  if int(Threshold) is 86 : HTBins = [325.,375.]
   secondJetET = OP_SecondJetEtCut(Threshold)
   cutTreeMC = Tree("MC")
   cutTreeMC.Attach(ht250_Trigger)
