@@ -120,7 +120,9 @@ HLTriggerAlphaT = OP_MultiTrigger(alphatrigger.ps())
 
 # TriggerTwo = OP_MultiTrigger(PSet(Triggers = ["HLT_HT250_AlphaT0p55_v1","HLT_HT250_AlphaT0p55_v2"],Verbose = False).ps())
 # dump = OP_Dump()
-
+Plots_TriggerOnly = PL_TriggerTurnOns( PSet(DirName = "TriggerOnly", MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = False,TriggerReWeight = Cross_Trigger_PS.Triggers,Verbose = False).ps())
+Plots_HT270 = PL_TriggerTurnOns( PSet(DirName = "Plots_HT270", MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = False,TriggerReWeight = Cross_Trigger_PS.Triggers,Verbose = False).ps())
+Plots_HT275 = PL_TriggerTurnOns( PSet(DirName = "Plots_HT275", MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = False,TriggerReWeight = Cross_Trigger_PS.Triggers,Verbose = False).ps())
 htCut270 = RECO_CommonHTCut(270.)
 confHT = confHT(40.,250.)
 emuAlphaT = AlphaTEmu(0.55,40.,250.,6)
@@ -130,7 +132,7 @@ def an(jetThreshold):
   cutTreeData= Tree("Data")
   cutTreeData.Attach(json)
   cutTreeData.TAttach(json,HLTriggerAlphaT)
-  out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = HLTriggerAlphaT, label = "TriggerOnly"))
+  cutTreeData.TAttach(HLTriggerAlphaT,Plots_TriggerOnly)
   cutTreeData.TAttach(HLTriggerAlphaT,NoiseFilt)
   cutTreeData.TAttach(NoiseFilt,GoodVertexMonster)
   cutTreeData.TAttach(GoodVertexMonster,recHitCut)
@@ -146,15 +148,8 @@ def an(jetThreshold):
   cutTreeData.TAttach(numComPhotons,VertexPtOverHT)
   cutTreeData.TAttach(VertexPtOverHT,  htCut275)
   cutTreeData.TAttach(VertexPtOverHT,htCut270)
-  # HLTrigger)
-  # cutTreeData.TAttach(HLTrigger,
-  # cutTreeData.TAttach(htCut275,HLTrigger)
-  # cutTreeData.TAttach(htCut275,confHT)
-  # cutTreeData.TAttach(htCut275,alphaT1)
-  # cutTreeData.TAttach(alphaT1,emuAlphaT)
-  # cutTreeData.FAttach(emuAlphaT,eventDump)
-  out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = htCut275, label = "FullOffLine275"))
-  out.append(makePlotOp(OP =("WeeklyUpdatePlots",genericPSet), cutTree = cutTreeData, cut = htCut270, label = "FullOffLine270"))
+  cutTreeData.TAttach(htCut270,Plots_HT270)
+  cutTreeData.TAttach(htCut275,Plots_HT275)
   return (cutTreeData,secondJetET,out)
 from ra1objectid.vbtfElectronId_cff import *
 from ra1objectid.vbtfMuonId_cff import *
