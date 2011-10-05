@@ -230,6 +230,9 @@ PreScaleWeights = PreScaleReweighting(Cross_Trigger_PS.ps())
 
 Plots_HT_Trigger    = PL_TriggerTurnOns( PSet(DirName = "HT_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = False,TriggerReWeight = HT_Trigger_PS.Triggers, Verbose = False).ps())
 Plots_Cross_Trigger = PL_TriggerTurnOns( PSet(DirName = "Cross_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = False,TriggerReWeight = Cross_Trigger_PS.Triggers,Verbose = False).ps())
+Plots_TriggerOnly = PL_TriggerTurnOns( PSet(DirName = "TriggerOnly", MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = False,TriggerReWeight = Cross_Trigger_PS.Triggers,Verbose = False).ps())
+
+AlphaT_Trigger_Filter = OP_MultiTrigger( Cross_Trigger_PS.ps() )
 
 HT_Trigger_Filter = OP_MultiTrigger( HT_Trigger_PS.ps() )
 Cross_Trigger_Filter = OP_MultiTrigger( Cross_Trigger_PS.ps() )
@@ -272,6 +275,8 @@ cutTreeData = Tree("Data")
 
 cutTreeData.Attach(json)
 cutTreeData.TAttach(json,json_ouput)
+cutTreeData.TAttach(json,AlphaT_Trigger_Filter)
+cutTreeData.TAttach(AlphaT_Trigger_Filter,Plots_TriggerOnly)
 cutTreeData.TAttach(json,NoiseFilt)
 cutTreeData.TAttach(NoiseFilt,selection)
 cutTreeData.TAttach(selection,oddMuon)
@@ -354,8 +359,9 @@ addCutFlowData(anal_ak5_pfData)
 
 from data.Run2011.HTRun2011AB import *
 from data.Run2011.MuHad_Run2011A_Complete_V15_03_02 import *
-outDir = "..//TriggerTurnOns_TriggerReview/EMUfromMuHad/"+str(bin)+"/"
+from data.Run2011.MuHadRun2011AB import *
+outDir = "..//TriggerTurnOns_TriggerReview/MuHad/"+str(bin)+"/"
 ensure_dir(outDir)
 #MuHad_Run2011A_Complete_V15_03_02.File = MuHad_Run2011A_Complete_V15_03_02.File[1:10]
-anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HTRun2011AB])
+anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[MuHadRun2011AB])
 
