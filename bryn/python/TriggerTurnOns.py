@@ -359,9 +359,9 @@ addCutFlowData(anal_ak5_pfData)
 
 from data.Run2011.HTRun2011AB import *
 from data.Run2011.MuHad_Run2011A_Complete_V15_03_02 import *
-from data.Run2011.MuHadRun2011AB import *
+from data.Run2011.MuHad2011AB import *
 outDir = "..//TriggerTurnOns_TriggerReview/MuHad/"+str(bin)+"/"
 ensure_dir(outDir)
 #MuHad_Run2011A_Complete_V15_03_02.File = MuHad_Run2011A_Complete_V15_03_02.File[1:10]
-anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[MuHadRun2011AB])
+anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[MuHad2011AB])
 
