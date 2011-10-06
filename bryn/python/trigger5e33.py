@@ -150,7 +150,7 @@ def an(jetThreshold):
   cutTreeData.TAttach(numComPhotons,htCut275_NoCleaning)
   cutTreeData.TAttach(numComPhotons,htCut270_NoCleaning)
   cutTreeData.TAttach(htCut270_NoCleaning,Plots_NoCleaningCuts_270)
-  cutTreeData.TAttach(htCut275_NoCleaning,Plots_NoCleaningCuts)
+  cutTreeData.TAttach(htCut275_NoCleaning,Plots_NoCleaningCuts_275)
   cutTreeData.TAttach(numComPhotons,recHitCut)
   cutTreeData.TAttach(recHitCut,LeadingJetEta)
   cutTreeData.TAttach(LeadingJetEta,secondJetET)
