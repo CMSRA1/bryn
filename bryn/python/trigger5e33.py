@@ -127,7 +127,7 @@ Plots_NoCleaningCuts_275 = PL_TriggerTurnOns( PSet(DirName = "Plots_HT275_NoClea
 Plots_NoCleaningCuts_270 = PL_TriggerTurnOns( PSet(DirName = "Plots_HT270_NoCleaning", MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = False,TriggerReWeight = datatriggerps.Triggers,Verbose = False).ps())
 htCut270 = RECO_CommonHTCut(270.)
 htCut275_NoCleaning = RECO_CommonHTCut(275.)
-htCut275_NoCleaning = RECO_CommonHTCut(270.)
+htCut270_NoCleaning = RECO_CommonHTCut(270.)
 
 confHT = confHT(40.,250.)
 emuAlphaT = AlphaTEmu(0.55,40.,250.,6)
