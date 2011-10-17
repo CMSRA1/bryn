@@ -202,7 +202,7 @@ Cross_Trigger_PS = PSet(
 
 
 
-Plots_TriggerOnly = PL_TriggerTurnOns( PSet(DirName = "TriggerOnly", MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = False,TriggerReWeight = Cross_Trigger_PS.Triggers,Verbose = False).ps())
+
 
 def AddHistPair(cutTree = None,cut = None, RefTrig = None, TestTrig = None):
   """docstring for AddBinedHist"""
@@ -289,8 +289,8 @@ cutTreeData.TAttach(secondJetET,oneMuon)
 cutTreeData.TAttach(secondJetET,zeroMuon)
 
 # If no preslection:
-cutTreeData.TAttach(json,AlphaT_Trigger_Filter)
-cutTreeData.TAttach(AlphaT_Trigger_Filter,Plots_TriggerOnly)
+# cutTreeData.TAttach(json,AlphaT_Trigger_Filter)
+# cutTreeData.TAttach(AlphaT_Trigger_Filter,Plots_TriggerOnly)
 
 
 # If muon required --- AlphaT and Meff Turn ons
