@@ -488,35 +488,23 @@ datatriggerps = PSet(
     Verbose = False,
     UsePreScaledTriggers = False,
     Triggers = [
-        # "HLT_HT250_MHT50_v*",
-        # "HLT_HT260_MHT50_v*",
-        # "HLT_HT260_MHT60_v*",
-        # "HLT_HT250_MHT60_v*",
-        # "HLT_HT250_MHT70_v*",
-        # "HLT_HT250_MHT80_v*",
-        # "HLT_HT250_MHT90_v*",
-        "HLT_HT200_AlphaT*"
-        "HLT_HT250_AlphaT*",
-        "HLT_HT300_AlphaT*",
-        "HLT_HT350_AlphaT*"
-     #  "HLT_HT250_MHT60_v2",
-# "HLT_HT250_MHT60_v3",
-# "HLT_HT250_MHT60_v4",
-# "HLT_HT250_MHT60_v6",
-# "HLT_HT250_MHT60_v7",
-# "HLT_HT250_MHT70_v1",
-# "HLT_HT250_MHT70_v3",
-# "HLT_HT250_MHT70_v4",
-# "HLT_HT250_MHT80_v3",
-# "HLT_HT250_MHT80_v4",
-# "HLT_HT250_MHT90_v1",
-# "HLT_HT260_MHT60_v2",
+"HT250_AlphaT0p53_v2",
+"HT250_AlphaT0p53_v3",
+"HT250_AlphaT0p53_v4",
+"HT250_AlphaT0p53_v5",
+"HT250_AlphaT0p53_v6",
+"HT250_AlphaT0p54_v2",
+"HT250_AlphaT0p54_v3",
+"HT250_AlphaT0p54_v4",
+"HT250_AlphaT0p55_v1",
+"HT250_AlphaT0p62_v1",
+"HT250_AlphaT0p62_v2",
   ]
-    )
+)
 DataTrigger = OP_MultiTrigger( datatriggerps.ps() )
 
 JetAdd = JetAddition(0.)
-json = JSONFilter("Json Mask", json_to_pset("./ReProcess_Prompt.json"))
+json = JSONFilter("Json Mask", json_to_pset("~rjb3/public_html/golden.json"))
 
 # AlphatTriggerCut(0.52414,50)#
 # vertex_reweight = VertexReweighting(

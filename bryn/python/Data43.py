@@ -17,7 +17,7 @@ PreScaleWeights = PreScaleReweighting(datatriggerps.ps())
 
 default_common.Jets.PtCut=50.*(325./375.)
 #  Change the settings from golden to use the lowest scaled bin.
-cutTree,blah,l = MakeDataTree(86.7)
+cutTree,blah,l = MakeDataTree(100.*(325./375.))
 
 
 
