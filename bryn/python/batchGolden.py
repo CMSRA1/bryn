@@ -488,17 +488,17 @@ datatriggerps = PSet(
     Verbose = False,
     UsePreScaledTriggers = False,
     Triggers = [
-"HT250_AlphaT0p53_v2",
-"HT250_AlphaT0p53_v3",
-"HT250_AlphaT0p53_v4",
-"HT250_AlphaT0p53_v5",
-"HT250_AlphaT0p53_v6",
-"HT250_AlphaT0p54_v2",
-"HT250_AlphaT0p54_v3",
-"HT250_AlphaT0p54_v4",
-"HT250_AlphaT0p55_v1",
-"HT250_AlphaT0p62_v1",
-"HT250_AlphaT0p62_v2",
+"HLT_HT250_AlphaT0p53_v2",
+"HLT_HT250_AlphaT0p53_v3",
+"HLT_HT250_AlphaT0p53_v4",
+"HLT_HT250_AlphaT0p53_v5",
+"HLT_HT250_AlphaT0p53_v6",
+"HLT_HT250_AlphaT0p54_v2",
+"HLT_HT250_AlphaT0p54_v3",
+"HLT_HT250_AlphaT0p54_v4",
+"HLT_HT250_AlphaT0p55_v1",
+"HLT_HT250_AlphaT0p62_v1",
+"HLT_HT250_AlphaT0p62_v2",
   ]
 )
 DataTrigger = OP_MultiTrigger( datatriggerps.ps() )
