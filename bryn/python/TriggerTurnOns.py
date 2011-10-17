@@ -190,13 +190,6 @@ HT_Trigger_PS = PSet(
     Verbose = False,
     UsePreScaledTriggers = False,
     Triggers = [
-       # "HLT_HT150_v*",
-       # "HLT_HT250_v*",
-       # "HLT_Mu5_HT200_v*",
-       # "HLT_Mu8_HT200_v*",
-       # "HLT_Mu15_HT200_v*",
-       # "HLT_Mu20_HT200_v*",
-       # "HLT_Mu30_HT200_v*",
        "HLT_Mu40_HT200_v*"
         ]
     )
@@ -205,25 +198,7 @@ HT_Trigger_PS = PSet(
 Cross_Trigger_PS = PSet(
     Verbose = False,
     UsePreScaledTriggers = False,
-    Triggers =[
-
-  # "HLT_HT250_v*",#MHT50_v*",
-        # "HLT_HT260_v*",#MHT50_v*",
-#"HLT_HT300_v2", "HLT_HT350_v2", "HLT_HT350_v3", "HLT_HT350_v4", "HLT_HT350_v5", "HLT_HT350_v6", "HLT_HT350_v7",
-#"HLT_HT300_v2", "HLT_HT300_v3", "HLT_HT300_v4", "HLT_HT300_v5", "HLT_HT300_v6", "HLT_HT300_v7", "HLT_HT300_v8",
-#"HLT_HT300_v2", "HLT_HT350_v2", "HLT_HT350_v3", "HLT_HT350_v4", "HLT_HT350_v5", "HLT_HT350_v6", "HLT_HT350_v7",
-#"HLT_HT440_v2", "HLT_HT450_v2", "HLT_HT450_v3", "HLT_HT450_v4", "HLT_HT450_v5", "HLT_HT450_v6", "HLT_HT450_v7",
-#"HLT_HT520_v2", "HLT_HT550_v2", "HLT_HT550_v3", "HLT_HT550_v4", "HLT_HT550_v5", "HLT_HT550_v6", "HLT_HT550_v7",
-#"HLT_HT520_v2", "HLT_HT550_v2", "HLT_HT550_v3", "HLT_HT550_v4", "HLT_HT550_v5", "HLT_HT550_v6", "HLT_HT550_v7",
-#"HLT_HT520_v2", "HLT_HT550_v2", "HLT_HT550_v3", "HLT_HT550_v4", "HLT_HT550_v5", "HLT_HT550_v6", "HLT_HT550_v7",
-#"HLT_HT520_v2", "HLT_HT550_v2", "HLT_HT550_v3", "HLT_HT550_v4", "HLT_HT550_v5", "HLT_HT550_v6", "HLT_HT550_v7",
-        #"HLT_HT260_MHT60_v*",
-        #"HLT_HT250_MHT60_v*",
-        #"HLT_HT250_MHT70_v*",
-        #"HLT_HT250_MHT80_v*",#
-        #"HLT_HT250_MHT90_v*"
-        "HLT_HT250_AlphaT0p55_v*",
-        ]
+    Triggers =["HLT_HT250_AlphaT0p55_v*"]
     )
 
 PreScaleWeights = PreScaleReweighting(Cross_Trigger_PS.ps())
@@ -231,6 +206,32 @@ PreScaleWeights = PreScaleReweighting(Cross_Trigger_PS.ps())
 Plots_HT_Trigger    = PL_TriggerTurnOns( PSet(DirName = "HT_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = False,TriggerReWeight = HT_Trigger_PS.Triggers, Verbose = False).ps())
 Plots_Cross_Trigger = PL_TriggerTurnOns( PSet(DirName = "Cross_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = False,TriggerReWeight = Cross_Trigger_PS.Triggers,Verbose = False).ps())
 Plots_TriggerOnly = PL_TriggerTurnOns( PSet(DirName = "TriggerOnly", MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = False,TriggerReWeight = Cross_Trigger_PS.Triggers,Verbose = False).ps())
+
+def AddHistPair(cutTree = None,cut = None, RefTrig = None, TestTrig = None):
+  """docstring for AddBinedHist"""
+  out = []
+  refPlots = PL_TriggerTurnOns( PSet(DirName = RefTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,TriggerReWeight = None,Verbose = False).ps())
+  testTrigPlots = PL_TriggerTurnOns( PSet(DirName = RefTrig[:-3]+"_From_"+TestTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,TriggerReWeight = None,Verbose = False).ps())
+  trigPS = PSet(Verbose = False,UsePreScaledTriggers = False,Triggers = None )
+  refTrigPS = trigPS
+  refTrigPS.Triggers = RefTrig
+  refTrigOP = OP_MultiTrigger( refTrigPS.ps() )
+  testTrigPS = trigPS
+  testTrigPS.Triggers = TestTrig
+  testTrigOP = OP_MultiTrigger( testTrigPS.ps() )
+  cutTree.TAttach(cut,refTrigOP)
+  cutTree.TAttach(refTrigOP,refPlots)
+  cutTree.TAttach(refTrigOP,testTrigOP)
+  cutTree.TAttach(testTrigOP,testTrigPlots)
+  out.append(refTrigOP)
+  out.append(refPlots)
+  out.append(testTrigPlots)
+  out.append(testTrigOP)
+  return out
+  pass
+
+
+
 
 AlphaT_Trigger_Filter = OP_MultiTrigger( Cross_Trigger_PS.ps() )
 
@@ -272,44 +273,45 @@ json = JSONFilter("Json Mask", json_to_pset("./ReProcess_Prompt.json"))
 evDump = EventDump()
 # htTriggerEmu = OP_TriggerHT_Emu(250.,40.)
 cutTreeData = Tree("Data")
-
+out = []
 cutTreeData.Attach(json)
 cutTreeData.TAttach(json,json_ouput)
-cutTreeData.TAttach(json,AlphaT_Trigger_Filter)
-cutTreeData.TAttach(AlphaT_Trigger_Filter,Plots_TriggerOnly)
 cutTreeData.TAttach(json,NoiseFilt)
 cutTreeData.TAttach(NoiseFilt,selection)
 cutTreeData.TAttach(selection,oddMuon)
 cutTreeData.TAttach(oddMuon,oddElectron)
 cutTreeData.TAttach(oddElectron,oddPhoton)
 cutTreeData.TAttach(oddPhoton,numComElectrons)
-cutTreeData.TAttach(numComElectrons,numComMuons)
-cutTreeData.TAttach(numComMuons,numComPhotons)
+cutTreeData.TAttach(numComElectrons,numComPhotons)
 cutTreeData.TAttach(numComPhotons,LeadingJetEta)
 cutTreeData.TAttach(LeadingJetEta,badMuonInJet)
 cutTreeData.TAttach(badMuonInJet,oddJet)
 cutTreeData.TAttach(oddJet,LeadingJetCut)
 cutTreeData.TAttach(LeadingJetCut,secondJetET)
-# ##########DiJet Studies
-cutTreeData.TAttach(secondJetET,VertexPtOverHT)
-cutTreeData.TAttach(VertexPtOverHT,DeadEcalCutData)
-cutTreeData.TAttach(DeadEcalCutData,muDr)
+
+
+# If no preslection:
+cutTreeData.TAttach(json,AlphaT_Trigger_Filter)
+cutTreeData.TAttach(AlphaT_Trigger_Filter,Plots_TriggerOnly)
+
+
+# If muon required --- AlphaT and Meff Turn ons
+cutTreeData.TAttach(secondJetET,muDr)
+cutTreeData.TAttach(muDr,numComMuons)
+refTrigList = ["HLT_Mu40_HT200_v*"]
+TestTrigList = ["HLT_HT250_AlphaT0p53_v*"]
+for ref,test in zip(refTrigList,TestTrigList):
+  out.append(AddHistPair(cutTreeData,secondJetEt,ref,test))
+
+# If muon is not required
+refTrigList = ["HLT_HT150_v*"]
+TestTrigList = ["HLT_HT200_v*"]
+for ref,test in zip(refTrigList,TestTrigList):
+  out.append(AddHistPair(cutTreeData,secondJetEt,ref,test))
+
 # cutTreeData.TAttach(muDr,MHT_METCut)
 # cutTreeData.TAttach(secondJetET,muDr)
-cutTreeData.TAttach(muDr,htLow)
-if htUp != None:
-  cutTreeData.TAttach(htLow,htUp)
-  cutTreeData.TAttach(htUp, HT_Trigger_Filter)
-else:
-  cutTreeData.TAttach(htLow, HT_Trigger_Filter)
-cutTreeData.TAttach(HT_Trigger_Filter,Plots_HT_Trigger)
-# cutTreeData.TAttach(HT_Trigger_Filter, htTriggerEmu)
-cutTreeData.TAttach(HT_Trigger_Filter,Cross_Trigger_Filter)
-cutTreeData.TAttach(Cross_Trigger_Filter,Plots_Cross_Trigger)
-# cutTreeData.TAttach(htTriggerEmu,Plots_Cross_Trigger)
-# cutTreeData.FAttach(Cross_Trigger_Filter,#alphaT)
-#cutTreeData.TAttach(alphaT,
-# evDump)
+
 
 from ra1objectid.vbtfElectronId_cff import *
 from ra1objectid.vbtfMuonId_cff import *
@@ -360,8 +362,8 @@ addCutFlowData(anal_ak5_pfData)
 from data.Run2011.HTRun2011AB import *
 from data.Run2011.MuHad_Run2011A_Complete_V15_03_02 import *
 from data.Run2011.MuHad2011AB import *
-outDir = "..//TriggerTurnOns_TriggerReview/MuHad/"+str(bin)+"/"
+outDir = "../TestWithNewMethod"
 ensure_dir(outDir)
 #MuHad_Run2011A_Complete_V15_03_02.File = MuHad_Run2011A_Complete_V15_03_02.File[1:10]
-anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[MuHad2011AB])
+anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HTRun2011AB])
 

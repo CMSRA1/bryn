@@ -32,6 +32,7 @@ namespace Operation {
     std::vector<TH1D*> MHT_;
     std::vector<TH1D*> AlphaT_;
     std::vector<TH1D*> HT_;
+    std::vector<TH1D*> MEff_;
     bool ReWeight_;
     std::vector<std::string> ReWeightVec_;
     bool verb_;
