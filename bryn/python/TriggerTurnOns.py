@@ -254,7 +254,7 @@ badMuonInJet = OP_BadMuonInJet()
 numComElectrons = OP_NumComElectrons("<=",0)
 numComMuons = OP_NumComMuons("==",1)
 oneMuon = OP_NumComMuons("==",1)
-zeroMuon numComMuons = OP_NumComMuons("<=",0)
+zeroMuon = OP_NumComMuons("<=",0)
 
 numComPhotons = OP_NumComPhotons("<=",0)
 muDr = RECO_MuonJetDRCut(0.5)
