@@ -210,8 +210,8 @@ Plots_TriggerOnly = PL_TriggerTurnOns( PSet(DirName = "TriggerOnly", MinObjects 
 def AddHistPair(cutTree = None,cut = None, RefTrig = None, TestTrig = None):
   """docstring for AddBinedHist"""
   out = []
-  refPlots = PL_TriggerTurnOns( PSet(DirName = RefTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,TriggerReWeight = RefTrig,Verbose = False).ps())
-  testTrigPlots = PL_TriggerTurnOns( PSet(DirName = RefTrig[:-3]+"_From_"+TestTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,TriggerReWeight = TestTrig,Verbose = False).ps())
+  refPlots = PL_TriggerTurnOns( PSet(DirName = RefTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,TriggerReWeight = [RefTrig],Verbose = False).ps())
+  testTrigPlots = PL_TriggerTurnOns( PSet(DirName = RefTrig[:-3]+"_From_"+TestTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,TriggerReWeight = [TestTrig],Verbose = False).ps())
   trigPS = PSet(Verbose = False,UsePreScaledTriggers = False,Triggers = None )
   refTrigPS = trigPS
   refTrigPS.Triggers = RefTrig
