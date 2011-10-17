@@ -218,6 +218,7 @@ def AddHistPair(cutTree = None,cut = None, RefTrig = None, TestTrig = None):
   refTrigOP = OP_MultiTrigger( refTrigPS.ps() )
   testTrigPS = trigPS
   testTrigPS.Triggers = [TestTrig]
+  print "RefTrig = %s, testTrig = %s"%(refTrigPS.Triggers[0],testTrigPS.Triggers[0])
   testTrigOP = OP_MultiTrigger( testTrigPS.ps() )
   cutTree.TAttach(cut,refTrigOP)
   cutTree.TAttach(refTrigOP,refPlots)
