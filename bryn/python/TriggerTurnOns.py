@@ -301,8 +301,8 @@ for ref,test in zip(refTrigList,TestTrigList):
   out.append(AddHistPair(cutTreeData,muDr,ref,test))
 
 # If muon is not required
-refTrigList = ["HLT_HT150_v*","HLT_HT200_v*","HLT_HT250_v*","HLT_HT300_v*","HLT_HT350_v*","HLT_HT400_v*","HLT_HT450_v*","HLT_HT500_v*","HLT_HT550_v*","HLT_HT200_v*"]
-TestTrigList = ["HLT_HT200_v*","HLT_HT250_v*","HLT_HT300_v*","HLT_HT350_v*","HLT_HT400_v*","HLT_HT450_v*","HLT_HT500_v*","HLT_HT550_v*","HLT_HT600_v*","HLT_HT150_v*"]
+refTrigList = ["HLT_HT150_v*","HLT_HT200_v*","HLT_HT250_v*","HLT_HT300_v*","HLT_HT350_v*","HLT_HT400_v*","HLT_HT450_v*","HLT_HT500_v*","HLT_HT550_v*",]
+TestTrigList = ["HLT_HT200_v*","HLT_HT250_v*","HLT_HT300_v*","HLT_HT350_v*","HLT_HT400_v*","HLT_HT450_v*","HLT_HT500_v*","HLT_HT550_v*","HLT_HT600_v*",]
 for ref,test in zip(refTrigList,TestTrigList):
   out.append(AddHistPair(cutTreeData,zeroMuon,ref,test))
 
