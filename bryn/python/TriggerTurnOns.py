@@ -209,7 +209,7 @@ def AddHistPair(cutTree = None,cut = None, RefTrig = None, TestTrig = None):
   out = []
   refPlots = PL_TriggerTurnOns( PSet(DirName = RefTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,ReWeight = False,TriggerReWeight = [RefTrig],Verbose = False).ps())
   testTrigPlots = PL_TriggerTurnOns( PSet(DirName = TestTrig[:-3]+"_From_"+RefTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,ReWeight = False,TriggerReWeight = [TestTrig],Verbose = False).ps())
-  refTrigPS = = PSet(Verbose = False,UsePreScaledTriggers = True,Triggers = None )
+  refTrigPS =  PSet(Verbose = False,UsePreScaledTriggers = True,Triggers = None )
   refTrigPS.Triggers = [RefTrig]
   refTrigOP = OP_MultiTrigger( refTrigPS.ps() )
   testTrigPS = PSet(Verbose = False,UsePreScaledTriggers = True,Triggers = None )
