@@ -214,10 +214,10 @@ def AddHistPair(cutTree = None,cut = None, RefTrig = None, TestTrig = None):
   testTrigPlots = PL_TriggerTurnOns( PSet(DirName = RefTrig[:-3]+"_From_"+TestTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,TriggerReWeight = [TestTrig],Verbose = False).ps())
   trigPS = PSet(Verbose = False,UsePreScaledTriggers = False,Triggers = None )
   refTrigPS = trigPS
-  refTrigPS.Triggers = RefTrig
+  refTrigPS.Triggers = [RefTrig]
   refTrigOP = OP_MultiTrigger( refTrigPS.ps() )
   testTrigPS = trigPS
-  testTrigPS.Triggers = TestTrig
+  testTrigPS.Triggers = [TestTrig]
   testTrigOP = OP_MultiTrigger( testTrigPS.ps() )
   cutTree.TAttach(cut,refTrigOP)
   cutTree.TAttach(refTrigOP,refPlots)
