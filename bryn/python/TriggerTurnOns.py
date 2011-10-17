@@ -270,7 +270,7 @@ MHT_METCut = OP_MHToverMET(1.25,50.)
 # AK5 Calo
 json_ouput = JSONOutput("filtered")
 alphaT = OP_CommonAlphaTCut(0.53)
-json = JSONFilter("Json Mask", json_to_pset("./ReProcess_Prompt.json"))
+json = JSONFilter("Json Mask", json_to_pset("/home/hep/rjb3/public_html/golden.json"))
 evDump = EventDump()
 # htTriggerEmu = OP_TriggerHT_Emu(250.,40.)
 cutTreeData = Tree("Data")
