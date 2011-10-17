@@ -301,12 +301,11 @@ cutTreeData.TAttach(AlphaT_Trigger_Filter,Plots_TriggerOnly)
 
 
 # If muon required --- AlphaT and Meff Turn ons
-cutTreeData.TAttach(secondJetET,muDr)
-cutTreeData.TAttach(muDr,oneMuon)
+cutTreeData.TAttach(oneMuon,muDr)
 refTrigList = ["HLT_Mu40_HT200_v*"]
 TestTrigList = ["HLT_HT250_AlphaT0p53_v*"]
 for ref,test in zip(refTrigList,TestTrigList):
-  out.append(AddHistPair(cutTreeData,oneMuon,ref,test))
+  out.append(AddHistPair(cutTreeData,muDr,ref,test))
 
 # If muon is not required
 refTrigList = ["HLT_HT150_v*","HLT_HT200_v*"]
