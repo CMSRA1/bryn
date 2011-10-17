@@ -190,7 +190,6 @@ HT_Trigger_PS = PSet(
     Verbose = False,
     UsePreScaledTriggers = False,
     Triggers = [
-       "HLT_Mu40_HT200_v*"
         ]
     )
 
@@ -198,20 +197,18 @@ HT_Trigger_PS = PSet(
 Cross_Trigger_PS = PSet(
     Verbose = False,
     UsePreScaledTriggers = False,
-    Triggers =["HLT_HT250_AlphaT0p55_v*"]
+    Triggers =[]
     )
 
-PreScaleWeights = PreScaleReweighting(Cross_Trigger_PS.ps())
 
-Plots_HT_Trigger    = PL_TriggerTurnOns( PSet(DirName = "HT_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = False,TriggerReWeight = HT_Trigger_PS.Triggers, Verbose = False).ps())
-Plots_Cross_Trigger = PL_TriggerTurnOns( PSet(DirName = "Cross_Trigger",MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = False,TriggerReWeight = Cross_Trigger_PS.Triggers,Verbose = False).ps())
+
 Plots_TriggerOnly = PL_TriggerTurnOns( PSet(DirName = "TriggerOnly", MinObjects =0 ,MaxObjects = 15,Plots = True, ReWeight = False,TriggerReWeight = Cross_Trigger_PS.Triggers,Verbose = False).ps())
 
 def AddHistPair(cutTree = None,cut = None, RefTrig = None, TestTrig = None):
   """docstring for AddBinedHist"""
   out = []
-  refPlots = PL_TriggerTurnOns( PSet(DirName = RefTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,TriggerReWeight = [RefTrig],Verbose = False).ps())
-  testTrigPlots = PL_TriggerTurnOns( PSet(DirName = RefTrig[:-3]+"_From_"+TestTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,TriggerReWeight = [TestTrig],Verbose = False).ps())
+  refPlots = PL_TriggerTurnOns( PSet(DirName = RefTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,ReWeight = False,TriggerReWeight = [RefTrig],Verbose = False).ps())
+  testTrigPlots = PL_TriggerTurnOns( PSet(DirName = TestTrig[:-3]+"_From_"+RefTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,ReWeight = False,TriggerReWeight = [TestTrig],Verbose = False).ps())
   trigPS = PSet(Verbose = False,UsePreScaledTriggers = True,Triggers = None )
   refTrigPS = trigPS
   refTrigPS.Triggers = [RefTrig]
@@ -234,10 +231,6 @@ def AddHistPair(cutTree = None,cut = None, RefTrig = None, TestTrig = None):
 
 
 
-AlphaT_Trigger_Filter = OP_MultiTrigger( Cross_Trigger_PS.ps() )
-
-HT_Trigger_Filter = OP_MultiTrigger( HT_Trigger_PS.ps() )
-Cross_Trigger_Filter = OP_MultiTrigger( Cross_Trigger_PS.ps() )
 
 
 DeadEcalCutData = OP_DeadECALCut(0.3,0.3,0.5,30.,10,0,"./deadRegionList_GR10_P_V10.txt")
@@ -303,13 +296,13 @@ cutTreeData.TAttach(AlphaT_Trigger_Filter,Plots_TriggerOnly)
 # If muon required --- AlphaT and Meff Turn ons
 cutTreeData.TAttach(oneMuon,muDr)
 refTrigList = ["HLT_Mu40_HT200_v*"]
-TestTrigList = ["HLT_HT250_AlphaT0p53_v*"]
+TestTrigList = ["HLT_HT250_AlphaT0p55_v*"]
 for ref,test in zip(refTrigList,TestTrigList):
   out.append(AddHistPair(cutTreeData,muDr,ref,test))
 
 # If muon is not required
-refTrigList = ["HLT_HT150_v*","HLT_HT200_v*","HLT_HT250_v*","HLT_HT300_v*","HLT_HT350_v*","HLT_HT400_v*","HLT_HT450_v*","HLT_HT500_v*","HLT_HT550_v*"]
-TestTrigList = ["HLT_HT200_v*","HLT_HT250_v*","HLT_HT300_v*","HLT_HT350_v*","HLT_HT400_v*","HLT_HT450_v*","HLT_HT500_v*","HLT_HT550_v*","HLT_HT600_v*"]
+refTrigList = ["HLT_HT150_v*","HLT_HT200_v*","HLT_HT250_v*","HLT_HT300_v*","HLT_HT350_v*","HLT_HT400_v*","HLT_HT450_v*","HLT_HT500_v*","HLT_HT550_v*" ,"HLT_HT200_v*"]
+TestTrigList = ["HLT_HT200_v*","HLT_HT250_v*","HLT_HT300_v*","HLT_HT350_v*","HLT_HT400_v*","HLT_HT450_v*","HLT_HT500_v*","HLT_HT550_v*","HLT_HT600_v*","HLT_HT150_v*"]
 for ref,test in zip(refTrigList,TestTrigList):
   out.append(AddHistPair(cutTreeData,zeroMuon,ref,test))
 
