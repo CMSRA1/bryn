@@ -253,6 +253,9 @@ secondJetET = OP_SecondJetEtCut(100.*(bin/375.))
 badMuonInJet = OP_BadMuonInJet()
 numComElectrons = OP_NumComElectrons("<=",0)
 numComMuons = OP_NumComMuons("==",1)
+oneMuon = OP_NumComMuons("==",1)
+zeroMuon numComMuons = OP_NumComMuons("<=",0)
+
 numComPhotons = OP_NumComPhotons("<=",0)
 muDr = RECO_MuonJetDRCut(0.5)
 if bin == 275 or bin == 325:
@@ -289,7 +292,8 @@ cutTreeData.TAttach(LeadingJetEta,badMuonInJet)
 cutTreeData.TAttach(badMuonInJet,oddJet)
 cutTreeData.TAttach(oddJet,LeadingJetCut)
 cutTreeData.TAttach(LeadingJetCut,secondJetET)
-
+cutTreeData.TAttach(secondJetET,oneMuon)
+cutTreeData.TAttach(secondJetET,zeroMuon)
 
 # If no preslection:
 cutTreeData.TAttach(json,AlphaT_Trigger_Filter)
@@ -298,17 +302,17 @@ cutTreeData.TAttach(AlphaT_Trigger_Filter,Plots_TriggerOnly)
 
 # If muon required --- AlphaT and Meff Turn ons
 cutTreeData.TAttach(secondJetET,muDr)
-cutTreeData.TAttach(muDr,numComMuons)
+cutTreeData.TAttach(muDr,oneMuon)
 refTrigList = ["HLT_Mu40_HT200_v*"]
 TestTrigList = ["HLT_HT250_AlphaT0p53_v*"]
 for ref,test in zip(refTrigList,TestTrigList):
-  out.append(AddHistPair(cutTreeData,secondJetEt,ref,test))
+  out.append(AddHistPair(cutTreeData,oneMuon,ref,test))
 
 # If muon is not required
-refTrigList = ["HLT_HT150_v*"]
-TestTrigList = ["HLT_HT200_v*"]
+refTrigList = ["HLT_HT150_v*","HLT_HT200_v*"]
+TestTrigList = ["HLT_HT200_v*","HLT_HT250_v*"]
 for ref,test in zip(refTrigList,TestTrigList):
-  out.append(AddHistPair(cutTreeData,secondJetET,ref,test))
+  out.append(AddHistPair(cutTreeData,zeroMuon,ref,test))
 
 # cutTreeData.TAttach(muDr,MHT_METCut)
 # cutTreeData.TAttach(secondJetET,muDr)
