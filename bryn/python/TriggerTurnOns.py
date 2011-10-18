@@ -294,7 +294,7 @@ htLess325 = RECO_CommonHTLessThanCut(375.)
 # If muon required --- AlphaT and Meff Turn ons
 cutTreeData.TAttach(oneMuon,muDr)
 cutTreeData.TAttach(muDr,ht325)
-cutTreeData.TAttach(ht275,htLess325)
+cutTreeData.TAttach(ht325,htLess325)
 refTrigList =  ["HLT_Mu40_HT200_v*","HLT_Mu40_HT200_v*"]
 TestTrigList = ["HLT_HT250_AlphaT0p53_v6","HLT_HT250_AlphaT0p55_v*"]
 for ref,test in zip(refTrigList,TestTrigList):
