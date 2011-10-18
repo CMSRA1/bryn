@@ -362,7 +362,7 @@ addCutFlowData(anal_ak5_pfData)
 from data.Run2011.HTRun2011AB import *
 from data.Run2011.MuHad_Run2011A_Complete_V15_03_02 import *
 from data.Run2011.MuHad2011AB import *
-outDir = "../TestWithNewMethod"
+outDir = "../TestWithNewMethod/PreScaleWeightingNew/"
 ensure_dir(outDir)
 #MuHad_Run2011A_Complete_V15_03_02.File = MuHad_Run2011A_Complete_V15_03_02.File[1:10]
 anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HTRun2011AB])
