@@ -207,7 +207,7 @@ Cross_Trigger_PS = PSet(
 def AddHistPair(cutTree = None,cut = None, RefTrig = None, TestTrig = None):
   """docstring for AddBinedHist"""
   out = []
-  refPlots = PL_TriggerTurnOns( PSet(DirName = RefTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,ReWeight = True,TriggerReWeight = [RefTrig],Verbose = False).ps())
+  refPlots = PL_TriggerTurnOns( PSet(DirName = RefTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,ReWeight = False,TriggerReWeight = [RefTrig],Verbose = False).ps())
   testTrigPlots = PL_TriggerTurnOns( PSet(DirName = TestTrig[:-3]+"_From_"+RefTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,ReWeight = True,TriggerReWeight = [TestTrig],Verbose = False).ps())
   refTrigPS =  PSet(Verbose = False,UsePreScaledTriggers = True,Triggers = [] )
   refTrigPS.Triggers = [RefTrig]
