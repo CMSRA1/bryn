@@ -65,7 +65,7 @@ void TriggerTurnOns::Plots() {
   BookHistArray( HT_,
     "HT",
     ";H_{T} GeV",
-    3000,0.,3000.,
+    300,0.,3000.,
     nMax_+1, 0, 1, true );
 
   BookHistArray( AlphaT_,
@@ -78,14 +78,14 @@ void TriggerTurnOns::Plots() {
   BookHistArray( MHT_,
     "MHT",
     ";#slash{H}_{T}",
-    1000,0.,1000.,
+    100,0.,1000.,
     nMax_+1, 0, 1, true );
 
 
   BookHistArray( MEff_,
     "Meff",
     ";M_{eff} GeV",
-    1000,0.,1000.,
+    100,0.,1000.,
     nMax_+1, 0, 1, true );
 
 }
