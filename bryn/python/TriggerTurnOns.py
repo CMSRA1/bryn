@@ -3,7 +3,7 @@
 """
 Created by Bryn Mathias on 2010-05-07.
 """
-bin = 275.
+bin = 325.
 # -----------------------------------------------------------------------------
 # Necessary includes
 import errno
@@ -289,11 +289,11 @@ cutTreeData.TAttach(secondJetET,zeroMuon)
 # If no preslection:
 # cutTreeData.TAttach(json,AlphaT_Trigger_Filter)
 # cutTreeData.TAttach(AlphaT_Trigger_Filter,Plots_TriggerOnly)
-
-htLess325 = RECO_CommonHTLessThanCut(325.)
+ht325 = RECO_CommonHTCut(325.)
+htLess325 = RECO_CommonHTLessThanCut(375.)
 # If muon required --- AlphaT and Meff Turn ons
 cutTreeData.TAttach(oneMuon,muDr)
-cutTreeData.TAttach(muDr,ht275)
+cutTreeData.TAttach(muDr,ht325)
 cutTreeData.TAttach(ht275,htLess325)
 refTrigList =  ["HLT_Mu40_HT200_v*","HLT_Mu40_HT200_v*"]
 TestTrigList = ["HLT_HT250_AlphaT0p53_v6","HLT_HT250_AlphaT0p55_v*"]
@@ -361,7 +361,7 @@ addCutFlowData(anal_ak5_pfData)
 from data.Run2011.HTRun2011AB import *
 from data.Run2011.MuHad_Run2011A_Complete_V15_03_02 import *
 from data.Run2011.MuHad2011AB import *
-outDir = "../TestWithNewMethod/MuHad2011AB/ht275_325/"
+outDir = "../TestWithNewMethod/MuHad2011AB/ht325_375/"
 ensure_dir(outDir)
 #MuHad_Run2011A_Complete_V15_03_02.File = MuHad_Run2011A_Complete_V15_03_02.File[1:10]
 anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[MuHad2011AB])
