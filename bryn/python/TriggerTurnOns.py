@@ -207,12 +207,12 @@ Cross_Trigger_PS = PSet(
 def AddHistPair(cutTree = None,cut = None, RefTrig = None, TestTrig = None):
   """docstring for AddBinedHist"""
   out = []
-  refPlots = PL_TriggerTurnOns( PSet(DirName = RefTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,ReWeight = False,TriggerReWeight = [RefTrig],Verbose = False).ps())
-  testTrigPlots = PL_TriggerTurnOns( PSet(DirName = TestTrig[:-3]+"_From_"+RefTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,ReWeight = False,TriggerReWeight = [TestTrig],Verbose = False).ps())
-  refTrigPS =  PSet(Verbose = False,UsePreScaledTriggers = True,Triggers = None )
+  refPlots = PL_TriggerTurnOns( PSet(DirName = RefTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,ReWeight = True,TriggerReWeight = [RefTrig],Verbose = False).ps())
+  testTrigPlots = PL_TriggerTurnOns( PSet(DirName = TestTrig[:-3]+"_From_"+RefTrig[:-3],MinObjects =0 ,MaxObjects = 15,Plots = True,ReWeight = True,TriggerReWeight = [TestTrig],Verbose = False).ps())
+  refTrigPS =  PSet(Verbose = False,UsePreScaledTriggers = True,Triggers = [] )
   refTrigPS.Triggers = [RefTrig]
   refTrigOP = OP_MultiTrigger( refTrigPS.ps() )
-  testTrigPS = PSet(Verbose = False,UsePreScaledTriggers = True,Triggers = None )
+  testTrigPS = PSet(Verbose = False,UsePreScaledTriggers = True,Triggers = [] )
   testTrigPS.Triggers = [TestTrig]
   print "RefTrig = %s, testTrig = %s"%(refTrigPS.Triggers[0],testTrigPS.Triggers[0])
   testTrigOP = OP_MultiTrigger( testTrigPS.ps() )
@@ -300,8 +300,8 @@ for ref,test in zip(refTrigList,TestTrigList):
   out.append(AddHistPair(cutTreeData,muDr,ref,test))
 
 # If muon is not required
-refTrigList = ["HLT_HT150_v*","HLT_HT200_v*","HLT_HT250_v*","HLT_HT300_v*","HLT_HT350_v*","HLT_HT400_v*","HLT_HT450_v*","HLT_HT500_v*","HLT_HT550_v*",]
-TestTrigList = ["HLT_HT200_v*","HLT_HT250_v*","HLT_HT300_v*","HLT_HT350_v*","HLT_HT400_v*","HLT_HT450_v*","HLT_HT500_v*","HLT_HT550_v*","HLT_HT600_v*",]
+refTrigList =  ["HLT_HT200_v8","HLT_HT250_v8","HLT_HT400_v8","HLT_HT450_v8","HLT_HT600_v1","HLT_HT500_v*","HLT_HT550_v*",]
+TestTrigList = ["HLT_HT250_v8","HLT_HT300_v9","HLT_HT450_v8","HLT_HT500_v8","HLT_HT650_v1","HLT_HT550_v*","HLT_HT600_v*",]
 for ref,test in zip(refTrigList,TestTrigList):
   out.append(AddHistPair(cutTreeData,zeroMuon,ref,test))
 
