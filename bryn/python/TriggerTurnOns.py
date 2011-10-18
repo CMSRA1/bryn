@@ -3,7 +3,7 @@
 """
 Created by Bryn Mathias on 2010-05-07.
 """
-bin = 275.
+bin = 375.
 # -----------------------------------------------------------------------------
 # Necessary includes
 import errno
@@ -250,6 +250,7 @@ zeroMuon = OP_NumComMuons("<=",0)
 
 numComPhotons = OP_NumComPhotons("<=",0)
 muDr = RECO_MuonJetDRCut(0.5)
+ht275= RECO_CommonHTCut(275.0)
 if bin == 275 or bin == 325:
   htLow = RECO_CommonHTCut(bin)
   htUp =  RECO_CommonHTLessThanCut(bin + 50.)
@@ -294,10 +295,11 @@ cutTreeData.TAttach(secondJetET,zeroMuon)
 
 # If muon required --- AlphaT and Meff Turn ons
 cutTreeData.TAttach(oneMuon,muDr)
+cutTreeData.TAttach(muDr,ht275)
 refTrigList = ["HLT_Mu40_HT200_v*"]
 TestTrigList = ["HLT_HT250_AlphaT0p55_v*"]
 for ref,test in zip(refTrigList,TestTrigList):
-  out.append(AddHistPair(cutTreeData,muDr,ref,test))
+  out.append(AddHistPair(cutTreeData,ht275,ref,test))
 
 # If muon is not required
 refTrigList =  ["HLT_HT200_v8","HLT_HT250_v8","HLT_HT400_v8","HLT_HT450_v8","HLT_HT600_v1","HLT_HT500_v*","HLT_HT550_v*",]
