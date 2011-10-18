@@ -88,6 +88,13 @@ void TriggerTurnOns::Plots() {
     100,0.,1000.,
     nMax_+1, 0, 1, true );
 
+  BookHistArray( preScale_,
+    "PreScale",
+    ";M_{eff} GeV",
+    100000,0.,100000.,
+    1, 0, 1, true );
+
+
 }
 
 
@@ -146,7 +153,7 @@ bool TriggerTurnOns::Plots( Event::Data& ev ) {
 
   }
 
-
+	preScale_[0]->Fill(weight,1.);
 
   if ( n >= nMin_ && n <= nMax_ && n < HT_.size()) {
     HT_[0]->Fill(ev.CommonHT(),weight);
