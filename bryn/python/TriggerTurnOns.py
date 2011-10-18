@@ -132,8 +132,6 @@ default_cc.Photons.PhotonIsoTypePtCutoff=30.
 # -----------------------------------------------------------------------------
 # Definition of common objects
 default_common = deepcopy(defaultConfig.Common)
-
-default_common.ApplyXCleaning=True
 default_common.ApplyXCleaning=True
 default_common.Jets.PtCut=50.0*(bin/375.)
 default_common.Jets.EtaCut=3.0
@@ -207,7 +205,7 @@ Cross_Trigger_PS = PSet(
 def AddHistPair(cutTree = None,cut = None, RefTrig = None, TestTrig = None):
   """docstring for AddBinedHist"""
   out = []
-  refPlots = PL_TriggerTurnOns( PSet(DirName = RefTrig+"_For_"+TestTrig,MinObjects =0 ,MaxObjects = 15,Plots = True,ReWeight = True,TriggerReWeight = [RefTrig,TestTrig],Verbose = False).ps())
+  refPlots = PL_TriggerTurnOns( PSet(DirName = RefTrig+"_For_"+TestTrig,MinObjects =0 ,MaxObjects = 15,Plots = True,ReWeight = True,TriggerReWeight = [TestTrig],Verbose = False).ps())
   testTrigPlots = PL_TriggerTurnOns( PSet(DirName = TestTrig+"_From_"+RefTrig,MinObjects =0 ,MaxObjects = 15,Plots = True,ReWeight = True,TriggerReWeight = [TestTrig],Verbose = False).ps())
   refTrigPS =  PSet(Verbose = False,UsePreScaledTriggers = True,Triggers = [] )
   refTrigPS.Triggers = [RefTrig]
@@ -300,8 +298,8 @@ refTrigList = ["HLT_Mu40_HT200_v*"]
 TestTrigList = ["HLT_HT250_AlphaT0p55_v*"]
 for ref,test in zip(refTrigList,TestTrigList):
   out.append(AddHistPair(cutTreeData,ht275,ref,test))
-"HLT_HT150_v8","HLT_HT200_v8","HLT_HT250_v8","HLT_HT400_v8","HLT_HT450_v8","HLT_HT600_v1"
-"HLT_HT200_v8","HLT_HT250_v8","HLT_HT300_v9","HLT_HT450_v8","HLT_HT500_v8","HLT_HT650_v1"
+# "HLT_HT150_v8","HLT_HT200_v8","HLT_HT250_v8","HLT_HT400_v8","HLT_HT450_v8","HLT_HT600_v1"
+# "HLT_HT200_v8","HLT_HT250_v8","HLT_HT300_v9","HLT_HT450_v8","HLT_HT500_v8","HLT_HT650_v1"
 
 # If muon is not required
 refTrigList =  ["HLT_HT500_v8","HLT_HT400_v8","HLT_HT450_v8","HLT_HT350_v8","HLT_HT300_v9","HLT_HT250_v8","HLT_HT250_v8","HLT_HT200_v8","HLT_HT200_v8","HLT_HT150_v8"]
@@ -362,7 +360,7 @@ addCutFlowData(anal_ak5_pfData)
 from data.Run2011.HTRun2011AB import *
 from data.Run2011.MuHad_Run2011A_Complete_V15_03_02 import *
 from data.Run2011.MuHad2011AB import *
-outDir = "../TestWithNewMethod/PreScaleWeightingNew/"
+outDir = "../TestWithNewMethod/WeightOnlyIfPassSigWithSigPreScale/"
 ensure_dir(outDir)
 #MuHad_Run2011A_Complete_V15_03_02.File = MuHad_Run2011A_Complete_V15_03_02.File[1:10]
 anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HTRun2011AB])

@@ -145,15 +145,15 @@ bool TriggerTurnOns::Plots( Event::Data& ev ) {
           if( it2->second ) std::cout << it2->first << std::endl;
         }
         std::cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++"<<std::endl;
-        preScaleVal = 0;
       }
     }
+    if(preScaleVal == 99999) preScaleVal = 1;
     double factor = double(preScaleVal);
     weight *= factor;
 
   }
 
-	preScale_[0]->Fill(weight,1.);
+  preScale_[0]->Fill(weight,1.);
 
   if ( n >= nMin_ && n <= nMax_ && n < HT_.size()) {
     HT_[0]->Fill(ev.CommonHT(),weight);
