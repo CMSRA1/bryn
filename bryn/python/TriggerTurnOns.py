@@ -3,7 +3,7 @@
 """
 Created by Bryn Mathias on 2010-05-07.
 """
-bin = 275.
+bin = 375.
 # -----------------------------------------------------------------------------
 # Necessary includes
 import errno
@@ -297,18 +297,18 @@ htLess325 = RECO_CommonHTLessThanCut(375.)
 htLess475 = RECO_CommonHTLessThanCut(475.)
 # If muon required --- AlphaT and Meff Turn ons
 cutTreeData.TAttach(oneMuon,muDr)
-cutTreeData.TAttach(muDr,ht275)
+cutTreeData.TAttach(muDr,ht375)
 # cutTreeData.TAttach(ht375,htLess475)
 refTrigList =  ["HLT_Mu40_HT200_v*","HLT_Mu40_HT200_v*"]
 TestTrigList = ["HLT_HT250_AlphaT0p53_v6","HLT_HT250_AlphaT0p55_v*"]
 for ref,test in zip(refTrigList,TestTrigList):
-  out.append(AddHistPair(cutTreeData,ht275,ref,test))
+  out.append(AddHistPair(cutTreeData,ht375,ref,test))
 # "HLT_HT150_v8","HLT_HT200_v8","HLT_HT250_v8","HLT_HT400_v8","HLT_HT450_v8","HLT_HT600_v1"
 # "HLT_HT200_v8","HLT_HT250_v8","HLT_HT300_v9","HLT_HT450_v8","HLT_HT500_v8","HLT_HT650_v1"
 
 # If muon is not required
-refTrigList =  ["HLT_HT500_v8","HLT_HT400_v8","HLT_HT450_v8","HLT_HT350_v8","HLT_HT300_v9","HLT_HT250_v8","HLT_HT250_v8","HLT_HT200_v8","HLT_HT200_v8","HLT_HT150_v8"]
-TestTrigList = ["HLT_HT600_v1","HLT_HT500_v8","HLT_HT550_v8","HLT_HT450_v8","HLT_HT400_v8","HLT_HT400_v8","HLT_HT350_v8","HLT_HT350_v8","HLT_HT300_v9","HLT_HT300_v9"]
+refTrigList =  ["HLT_HT450_v8","HLT_HT350_v8","HLT_HT300_v9"]#,"HLT_HT350_v8","HLT_HT300_v9","HLT_HT250_v8","HLT_HT250_v8","HLT_HT200_v8","HLT_HT200_v8","HLT_HT150_v8"]
+TestTrigList = ["HLT_HT600_v1","HLT_HT500_v8","HLT_HT550_v8"]#,"HLT_HT450_v8","HLT_HT400_v8","HLT_HT400_v8","HLT_HT350_v8","HLT_HT350_v8","HLT_HT300_v9","HLT_HT300_v9"]
 for ref,test in zip(refTrigList,TestTrigList):
   out.append(AddHistPair(cutTreeData,zeroMuon,ref,test))
 
@@ -365,8 +365,8 @@ addCutFlowData(anal_ak5_pfData)
 from data.Run2011.HTRun2011AB import *
 from data.Run2011.MuHad_Run2011A_Complete_V15_03_02 import *
 from data.Run2011.MuHad2011AB import *
-outDir = "../TestWithNewMethod/MuHad2011AB/ht275NoUpper/"
+outDir = "../TestWithNewMethod/HT2011AB/ht375NoUpper/"
 ensure_dir(outDir)
 #MuHad_Run2011A_Complete_V15_03_02.File = MuHad_Run2011A_Complete_V15_03_02.File[1:10]
-anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[MuHad2011AB])
+anal_ak5_caloData.Run(outDir,conf_ak5_caloData,[HTRun2011AB])
 
