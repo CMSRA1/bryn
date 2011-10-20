@@ -308,11 +308,11 @@ refTrigList =  ["HLT_Mu40_HT200_v*","HLT_Mu40_HT200_v*"]
 TestTrigList = ["HLT_HT250_AlphaT0p53_v6","HLT_HT250_AlphaT0p55_v*"]
 
 for ref,test in zip(refTrigList,TestTrigList):
-  if int(bin) = 275:
+  if int(bin) is 275:
     out.append(AddHistPair(cutTreeData,ht275,ref,test))
-  if int(bin) = 325:
+  if int(bin) is 325:
     out.append(AddHistPair(cutTreeData,ht325,ref,test))
-  if int(bin) = 375:
+  if int(bin) is 375:
     out.append(AddHistPair(cutTreeData,ht375,ref,test))
 # "HLT_HT150_v8","HLT_HT200_v8","HLT_HT250_v8","HLT_HT400_v8","HLT_HT450_v8","HLT_HT600_v1"
 # "HLT_HT200_v8","HLT_HT250_v8","HLT_HT300_v9","HLT_HT450_v8","HLT_HT500_v8","HLT_HT650_v1"
